@@ -55,5 +55,11 @@
   },
   "engines": {
     "node": "^16.0.0"
+  },
+  "lint-staged": {
+    "*.{js,json,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint"
+    ]
   }
 }
