@@ -4,6 +4,8 @@ import { withAdminAccess } from "src/components/higherOrder/AdminGuard";
 import { parseJobKeywords } from "src/lib/JobKeywordParse/jobKeywordParse";
 import { IJobKeyword, Requests } from "src/lib/requests/Requests";
 import styled from "styled-components";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
 
 const KeywordsPage = () => {
   const [jobKeywords, setJobKeywords] = useState<IJobKeyword[]>(
@@ -48,44 +50,49 @@ const KeywordsPage = () => {
     setJobKeywords(out);
   };
   return (
-    <div>
+    <MainWrapper>
       <h1>Job Keywords</h1>
       <div>
-        <label>JSON Input</label>
-        <br />
-        <label>
+        <ErrorText>
           <b>WARNING: All values are overwritten and replaced with new input</b>
-        </label>
-        <br />
+        </ErrorText>
+        <label>JSON Input</label> <br />
         <textarea
           value={data}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
             setData(e.target.value);
           }}
           disabled={loading}
-          cols={30}
-          rows={10}
+          cols={40}
+          rows={20}
         />
       </div>
       <br />
-      <button disabled={loading || error !== ""} onClick={handleSubmit}>
+      <Button
+        disabled={loading || error !== ""}
+        onClick={handleSubmit}
+        variant="contained"
+      >
         submit
-      </button>
+      </Button>
+      <Title>Live Database Values:</Title>
       {error ? <ErrorText>Bad Input: {error}</ErrorText> : null}
       <ol>
-        {jobKeywords.map(job => (
-          <React.Fragment key={job.jobID}>
-            <h2>JobID: {job.jobID}</h2>
-            <h3>Keywords:</h3>
+        {jobKeywords.map((job, i) => (
+          <PaperWrapper key={job.jobID} variant="outlined">
+            <h4>
+              {`${i + 1}. `}JobID: {job.jobID}
+            </h4>
+            <p>Keywords:</p>
             <ul>
               {job.keywords.map(keyword => (
                 <li key={keyword}>{keyword}</li>
               ))}
             </ul>
-          </React.Fragment>
+          </PaperWrapper>
         ))}
       </ol>
-    </div>
+    </MainWrapper>
   );
 };
 
@@ -93,4 +100,21 @@ export default withAdminAccess(KeywordsPage);
 
 const ErrorText = styled.p`
   color: red;
+`;
+
+const MainWrapper = styled.div`
+  && {
+    font-family: Roboto;
+    color: #131313;
+  }
+`;
+
+const PaperWrapper = styled(Paper)`
+  padding: 16px;
+  padding-top: 0;
+  margin-bottom: 8px;
+`;
+
+const Title = styled.h2`
+  text-align: center;
 `;
