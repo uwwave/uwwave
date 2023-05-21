@@ -41,18 +41,8 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   await connectToDb();
   try {
+    await JobKeywordsDocuments.deleteMany({});
     for (const job of newKeywords) {
-      const existingDoc = await JobKeywordsDocuments.findOne({
-        jobID: job.jobID,
-      });
-
-      if (existingDoc) {
-        // Document exists, update its values
-        existingDoc.keywords = job.keywords;
-        await existingDoc.save();
-        continue;
-      }
-
       // Document doesn't exist, create a new one
       const newDoc = new JobKeywordsDocuments({
         jobID: job.jobID,
