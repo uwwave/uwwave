@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import connectToDb from "src/database/mongo-db";
 import JobKeywordsDocuments from "src/database/models/JobKeywords";
 import { IJobKeyword } from "src/lib/requests/Requests";
+import { parseJobKeywords } from "src/lib/JobKeywordParse/jobKeywordParse";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -39,6 +40,11 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.body.password !== process.env.DB_PASS) {
     res.status(403).end();
   }
+  try {
+    parseJobKeywords(JSON.stringify(newKeywords));
+  } catch (error) {
+    res.status(400).end();
+  }
   await connectToDb();
   try {
     await JobKeywordsDocuments.deleteMany({});
@@ -55,6 +61,6 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).send(out);
   } catch (error) {
     console.error("Error handling GET request:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(400).json({ error: "somthing went wrong" });
   }
 };
