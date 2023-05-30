@@ -6,8 +6,10 @@ export interface IJobKeyword {
 }
 
 export class Requests {
-  static async getJobKeywords(): Promise<IJobKeyword[]> {
-    return axios.get("/api/keywords").then(x => x.data);
+  static async getJobKeywords(jobIDs: string[] = []): Promise<IJobKeyword[]> {
+    return axios
+      .get(`/api/keywords?jobIDs=${JSON.stringify(jobIDs)}`)
+      .then(x => x.data);
   }
 
   static async updateJobKeywords(

@@ -6,6 +6,7 @@ import { IJobKeyword, Requests } from "src/lib/requests/Requests";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
 
 const KeywordsPage = () => {
   const [jobKeywords, setJobKeywords] = useState<IJobKeyword[]>(
@@ -15,6 +16,7 @@ const KeywordsPage = () => {
   const [jsonData, setJsonData] = useState<IJobKeyword[]>([] as IJobKeyword[]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  const [jobIDs, setJobIDs] = useState<string>("");
   const router = useRouter();
   // Retrieve the token from the query parameter
   const { token } = router.query;
@@ -49,34 +51,61 @@ const KeywordsPage = () => {
     setLoading(false);
     setJobKeywords(out);
   };
+
+  const handleFetch = async () => {
+    setLoading(true);
+    const jobs = jobIDs.split(",").map(x => x.trim());
+    if (jobs[jobs.length - 1] === "") {
+      jobs.pop();
+    }
+    const newJobs = await Requests.getJobKeywords(jobs);
+    jobs.forEach((x: any) => {
+      delete x.id;
+      delete x.__v;
+    });
+    setJobKeywords(newJobs);
+    setLoading(false);
+  };
   return (
     <MainWrapper>
       <h1>Job Keywords</h1>
-      <div>
-        <ErrorText>
-          <b>WARNING: All values are overwritten and replaced with new input</b>
-        </ErrorText>
-        <label>JSON Input</label> <br />
-        <textarea
-          value={data}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setData(e.target.value);
-          }}
-          disabled={loading}
-          cols={40}
-          rows={20}
-        />
-      </div>
+      <ErrorText>
+        <b>WARNING: All values are overwritten and replaced with new input</b>
+      </ErrorText>
+      <label>Update Keywords (JSON Input)</label> <br />
+      <textarea
+        value={data}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+          setData(e.target.value);
+        }}
+        disabled={loading}
+        cols={40}
+        rows={20}
+      />
       <br />
+      {error ? <ErrorText>Bad Input: {error}</ErrorText> : null}
       <Button
         disabled={loading || error !== ""}
         onClick={handleSubmit}
         variant="contained"
       >
-        submit
+        Update
       </Button>
       <Title>Live Database Values:</Title>
-      {error ? <ErrorText>Bad Input: {error}</ErrorText> : null}
+      <FetchButtonsWrapper>
+        <TextField
+          placeholder="jobID1, jobID2, jobID3"
+          variant="outlined"
+          size="small"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setJobIDs(e.target.value);
+          }}
+          value={jobIDs}
+        />
+        <Button variant="contained" onClick={handleFetch}>
+          Fetch
+        </Button>
+      </FetchButtonsWrapper>
       <ol>
         {jobKeywords.map((job, i) => (
           <PaperWrapper key={job.jobID} variant="outlined">
@@ -106,6 +135,9 @@ const MainWrapper = styled.div`
   && {
     font-family: Roboto;
     color: #131313;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -113,8 +145,15 @@ const PaperWrapper = styled(Paper)`
   padding: 16px;
   padding-top: 0;
   margin-bottom: 8px;
+  min-width: 300px;
 `;
 
 const Title = styled.h2`
   text-align: center;
+`;
+
+const FetchButtonsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;

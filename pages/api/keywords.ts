@@ -8,7 +8,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     switch (req.method) {
       case "GET":
-        await handleGet(res);
+        await handleGet(req, res);
         break;
       case "POST":
         await handlePost(req, res);
@@ -23,12 +23,29 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 export default handler;
 
-const handleGet = async (res: NextApiResponse) => {
+const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await connectToDb();
-    const jobKeywords = await JobKeywordsDocuments.find();
-    const out = jobKeywords.map(x => x.toObject());
-    res.status(200).json(out);
+    const jobIDs = JSON.parse(req.query.jobIDs as string) as string[];
+    if (!jobIDs || jobIDs.length === 0) {
+      const jobKeywords = await JobKeywordsDocuments.find();
+      const out = jobKeywords.map(x => x.toObject());
+      res.status(200).json(out);
+    } else {
+      const out = [];
+      for (const id of jobIDs) {
+        const job = await JobKeywordsDocuments.findOne({ jobID: id });
+        if (job) {
+          out.push(job.toObject());
+        } else {
+          out.push({
+            jobID: id,
+            keywords: [],
+          });
+        }
+      }
+      res.status(200).json(out);
+    }
   } catch (error) {
     console.error("Error handling GET request:", error);
     res.status(500).json({ error: "Internal Server Error" });
