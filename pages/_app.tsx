@@ -10,12 +10,13 @@ const theme = createTheme({
 
 function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
   const AnyComponent = Component as any;
+  const Provider = ThemeProvider as any;
 
   return (
-    <ThemeProvider theme={theme}>
+    <Provider theme={theme}>
       <CssBaseline />
       <AnyComponent {...pageProps} />
-    </ThemeProvider>
+    </Provider>
   );
 }
 export default MyApp;

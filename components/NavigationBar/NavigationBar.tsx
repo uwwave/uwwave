@@ -20,20 +20,6 @@ type PageItem = {
   pageUrl: string;
 };
 
-const StyledLink = styled(Link)`
-  && {
-    &:active {
-      text-decoration: underline;
-    }
-  }
-`;
-
-const LogoWrapper = styled.div`
-  display: flex;
-  align-items: left;
-  flex-grow: 1;
-`;
-
 const pages: PageItem[] = [
   {
     pageName: "Setup",
@@ -61,7 +47,7 @@ export const NavigationBar = (props: INavigationBar) => {
               </Link>
             </LogoWrapper>
             {pages.map((pageItem: PageItem, i) => (
-              <React.Fragment key={pageItem.pageUrl}>
+              <TextWrapper key={pageItem.pageUrl}>
                 <MUITypography>
                   <StyledLink
                     variant="subtitle1"
@@ -73,7 +59,7 @@ export const NavigationBar = (props: INavigationBar) => {
                   </StyledLink>
                 </MUITypography>
                 {i < pages.length - 1 ? <Spacer width={24} /> : null}
-              </React.Fragment>
+              </TextWrapper>
             ))}
           </Toolbar>
         </Container>
@@ -81,3 +67,21 @@ export const NavigationBar = (props: INavigationBar) => {
     </>
   );
 };
+
+const StyledLink = styled(Link)`
+  && {
+    &:active {
+      text-decoration: underline;
+    }
+  }
+`;
+
+const LogoWrapper = styled.div`
+  display: flex;
+  align-items: left;
+  flex-grow: 1;
+`;
+
+const TextWrapper = styled.div`
+  display: flex;
+`;
