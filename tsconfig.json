@@ -18,7 +18,14 @@
       "src/*": ["./*"],
       "src/classes/*": ["./class/*"]
     },
+    "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_document.js", "next.config.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "pages/_document.js",
+    "next.config.js"
+  ],
   "exclude": ["node_modules"]
 }
