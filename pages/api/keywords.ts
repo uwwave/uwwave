@@ -29,7 +29,7 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
     const jobIDs = JSON.parse(req.query.jobIDs as string) as string[];
     if (!jobIDs || jobIDs.length === 0) {
       const jobKeywords = await JobKeywordsDocuments.find();
-      const out = jobKeywords.map(x => x.toObject());
+      const out = jobKeywords.map(x => x.toObject()) as any;
       const outObject: { [key: string]: string[] } = {};
       for (const job of out) {
         outObject[job.jobID] = [...job.keywords];
@@ -84,7 +84,7 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     const jobKeywords = await JobKeywordsDocuments.find();
     const jobKeywordsObjects = jobKeywords.map(x => x.toObject());
     const out: { [key: string]: string[] } = {};
-    for (const job of jobKeywordsObjects) {
+    for (const job of jobKeywordsObjects as any) {
       out[job.jobID] = [...job.keywords];
     }
     res.status(200).send({ jobs: out });
