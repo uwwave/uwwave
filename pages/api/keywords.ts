@@ -30,7 +30,11 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!jobIDs || jobIDs.length === 0) {
       const jobKeywords = await JobKeywordsDocuments.find();
       const out = jobKeywords.map(x => x.toObject());
-      res.status(200).json(out);
+      const outObject: { [key: string]: string[] } = {};
+      for (const job of out) {
+        outObject[job.jobID] = [...job.keywords];
+      }
+      res.status(200).json({ jobs: outObject });
     } else {
       const out = [];
       for (const id of jobIDs) {
@@ -44,7 +48,11 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
           });
         }
       }
-      res.status(200).json(out);
+      const outObject: { [key: string]: string[] } = {};
+      for (const job of out) {
+        outObject[job.jobID] = [...job.keywords];
+      }
+      res.status(200).json({ jobs: outObject });
     }
   } catch (error) {
     console.error("Error handling GET request:", error);
@@ -74,8 +82,12 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
       await newDoc.save();
     }
     const jobKeywords = await JobKeywordsDocuments.find();
-    const out = jobKeywords.map(x => x.toObject());
-    res.status(200).send(out);
+    const jobKeywordsObjects = jobKeywords.map(x => x.toObject());
+    const out: { [key: string]: string[] } = {};
+    for (const job of jobKeywordsObjects) {
+      out[job.jobID] = [...job.keywords];
+    }
+    res.status(200).send({ jobs: out });
   } catch (error) {
     console.error("Error handling GET request:", error);
     res.status(400).json({ error: "somthing went wrong" });

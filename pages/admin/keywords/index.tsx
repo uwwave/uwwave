@@ -23,7 +23,10 @@ const KeywordsPage = () => {
 
   useEffect(() => {
     const fire = async () => {
-      const jobs = await Requests.getJobKeywords();
+      const out = await Requests.getJobKeywords();
+      const jobs = Object.entries(out.jobs).map(x => {
+        return { jobID: x[0], keywords: x[1] };
+      });
       jobs.forEach((x: any) => {
         delete x.id;
         delete x.__v;
@@ -48,8 +51,11 @@ const KeywordsPage = () => {
   const handleSubmit = async () => {
     setLoading(true);
     const out = await Requests.updateJobKeywords(jsonData, token as string);
+    const newJobs = Object.entries(out.jobs).map(x => {
+      return { jobID: x[0], keywords: x[1] };
+    });
+    setJobKeywords(newJobs);
     setLoading(false);
-    setJobKeywords(out);
   };
 
   const handleFetch = async () => {
@@ -58,10 +64,9 @@ const KeywordsPage = () => {
     if (jobs[jobs.length - 1] === "") {
       jobs.pop();
     }
-    const newJobs = await Requests.getJobKeywords(jobs);
-    jobs.forEach((x: any) => {
-      delete x.id;
-      delete x.__v;
+    const out = await Requests.getJobKeywords(jobs);
+    const newJobs = Object.entries(out.jobs).map(x => {
+      return { jobID: x[0], keywords: x[1] };
     });
     setJobKeywords(newJobs);
     setLoading(false);

@@ -5,8 +5,14 @@ export interface IJobKeyword {
   keywords: string[];
 }
 
+export interface IJobKeywordObject {
+  jobs: { [key: string]: string[] };
+}
+
 export class Requests {
-  static async getJobKeywords(jobIDs: string[] = []): Promise<IJobKeyword[]> {
+  static async getJobKeywords(
+    jobIDs: string[] = []
+  ): Promise<IJobKeywordObject> {
     return axios
       .get(`/api/keywords?jobIDs=${JSON.stringify(jobIDs)}`)
       .then(x => x.data);
@@ -15,7 +21,7 @@ export class Requests {
   static async updateJobKeywords(
     jobKeywords: IJobKeyword[],
     adminPassword: string
-  ): Promise<IJobKeyword[]> {
+  ): Promise<IJobKeywordObject> {
     return axios
       .post("/api/keywords", { jobKeywords, password: adminPassword })
       .then(x => x.data);
