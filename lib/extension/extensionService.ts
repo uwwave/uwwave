@@ -38,7 +38,6 @@ export const sendMessageOnLoadAndSetupListenerHook = (
 
   window.addEventListener("message", receiveExtensionLoadedMessage, false);
 
-  sendMessageToExtension(request);
   // Specify how to clean up after this effect:
   return function cleanup() {
     if (receiveExtensionMessage) {
