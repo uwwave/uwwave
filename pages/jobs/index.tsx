@@ -4,7 +4,6 @@ import { Spacer } from "src/components/Spacer/Spacer";
 import Box from "@mui/material/Box";
 import styled from "styled-components";
 import moment from "moment/moment";
-import axios from "axios";
 import {
   DataGrid,
   GridColDef,
@@ -22,11 +21,12 @@ import {
   DAYS_TO_STALE_DATA,
   LocalStorageMetadataKeys,
 } from "src/lib/extension/shared/userProfile";
-import { Color } from "src/styles/color";
+import { BackgroundColor, Color } from "src/styles/color";
 import { JobsPageRowData } from "src/lib/jobsList/jobsList";
 import { useExtensionData } from "src/lib/extension/hooks/useExtensionData";
 import { WarningIcon } from "src/components/icons/WarningIcon";
 import { CheckIcon } from "src/components/icons/CheckIcon";
+import { IJobKeywordObject, Requests } from "src/lib/requests/Requests";
 export interface JobsPageProps {
   jobs: JobsPageRowData[];
   jobBoard: JobBoard;
@@ -198,16 +198,17 @@ export default function JobsListPage() {
       dateScraped ? `Last scraped: ${getTimeDiffString(dateScraped)}` : ""
     );
 
+    if (jobs.length === 0) {
+      return;
+    }
     // get keywords for jobs
-    axios
-      .get(
-        `api/keywords?jobIDs=[${jobs.map(item => item.id as any as string)}]`
-      )
-      .then((res: any) => {
-        setJobKeywords(res);
+    Requests.getJobKeywords(jobs.map(item => item.id as any as string))
+      .then((res: IJobKeywordObject) => {
+        setJobKeywords(res.jobs);
       })
       .catch((err: any) => err);
   }, [jobs, dateScraped]);
+  console.log(jobKeywords);
 
   return (
     <>
@@ -294,11 +295,6 @@ const WaterWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   width: 100%;
-  background: linear-gradient(
-    153.7deg,
-    #058dda 32.98%,
-    #004aa0 53.06%,
-    #032544 81.36%
-  );
+  background-color: ${BackgroundColor.dark};
   min-height: 100vh;
 `;

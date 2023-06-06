@@ -14,7 +14,9 @@ export class Requests {
     jobIDs: string[] = []
   ): Promise<IJobKeywordObject> {
     return axios
-      .get(`/api/keywords?jobIDs=${JSON.stringify(jobIDs)}`)
+      .post(`/api/keywords/fetch`, {
+        jobIDs,
+      })
       .then(x => x.data);
   }
 
