@@ -32,6 +32,8 @@ export const sendMessageOnLoadAndSetupListenerHook = (
     }
   );
 
+  sendMessageToExtension(request);
+
   if (receiveExtensionMessage) {
     window.addEventListener("message", receiveExtensionMessage, false);
   }

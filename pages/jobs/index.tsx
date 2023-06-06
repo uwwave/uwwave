@@ -27,6 +27,13 @@ import { useExtensionData } from "src/lib/extension/hooks/useExtensionData";
 import { WarningIcon } from "src/components/icons/WarningIcon";
 import { CheckIcon } from "src/components/icons/CheckIcon";
 import { IJobKeywordObject, Requests } from "src/lib/requests/Requests";
+import {
+  SearchBarJobsList,
+  ISearchChip,
+} from "components/SearchBar/SearchBarJobsList";
+import lunr from "lunr";
+import { getSearchTypeField, SearchTypes } from "src/lib/search/Search";
+
 export interface JobsPageProps {
   jobs: JobsPageRowData[];
   jobBoard: JobBoard;
@@ -189,6 +196,13 @@ export default function JobsListPage() {
   const dateScraped = extensionData[LocalStorageMetadataKeys.SCRAPE_AT];
   const loading = !isDataReady;
 
+  const [jobsList, setJobsList] = useState<any>({});
+  const [displayJobs, setDisplayJobs] = useState<JobsPageRowData[]>(jobs);
+  const [searchChips, setSearchChips] = useState<ISearchChip[]>([]);
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const [searchIndex, setSearchIndex] = useState(lunr(() => {}));
+
   useEffect(() => {
     // get last scraped time
     setIsStale(
@@ -208,7 +222,64 @@ export default function JobsListPage() {
       })
       .catch((err: any) => err);
   }, [jobs, dateScraped]);
-  console.log(jobKeywords);
+
+  useEffect(() => {
+    const newJobsList: any = {};
+
+    jobs.forEach(job => {
+      newJobsList[job.id] = {
+        ...job,
+      };
+    });
+    setJobsList(newJobsList);
+  }, [jobs]);
+
+  useEffect(() => {
+    setSearchIndex(
+      // eslint-disable-next-line func-names
+      // lunr(function (this: lunr) {
+      lunr(function (this: any) {
+        //TODO: Temp fix for above line
+        this.ref("id");
+        Object.values(SearchTypes).forEach(type => {
+          typeof type === "number" && this.field(getSearchTypeField(type));
+        }, this);
+
+        Object.values(jobsList).forEach(job => {
+          this.add(job);
+        });
+      })
+    );
+  }, [jobsList]);
+
+  useEffect(() => {
+    let queryString = "";
+    searchChips.forEach(chip => {
+      const terms = chip.searchVal.split(" ");
+      const typeName = getSearchTypeField(chip.searchType);
+
+      terms.forEach(term => {
+        if (queryString !== "") {
+          queryString += " ";
+        }
+        queryString += "+";
+        if (typeName !== "") {
+          queryString += `${typeName}:`;
+        }
+        queryString += term;
+      });
+    });
+
+    let newJobs: JobsPageRowData[] = Object.values(jobsList);
+    if (queryString !== "") {
+      const searchRankings = searchIndex.search(queryString);
+      newJobs = searchRankings.map((searchResult: any) => {
+        return jobsList[searchResult.ref];
+      });
+    }
+
+    setDisplayJobs(newJobs);
+  }, [jobsList, searchIndex, searchChips]);
 
   return (
     <>
@@ -234,6 +305,7 @@ export default function JobsListPage() {
       <WaterWrapper>
         <Spacer height={32} />
         <Container>
+          <SearchBarJobsList onSearchUpdated={setSearchChips} />
           <MainWrapper>
             <Box
               sx={{
@@ -249,7 +321,7 @@ export default function JobsListPage() {
                 disableColumnFilter
                 disableColumnSelector
                 disableDensitySelector
-                rows={jobs}
+                rows={displayJobs}
                 columns={columns}
                 pageSize={pageSize}
                 loading={loading}

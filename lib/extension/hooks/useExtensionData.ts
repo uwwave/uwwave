@@ -31,6 +31,9 @@ export const useExtensionData = () => {
         console.info("Received callback to get extension data.");
         if (result) {
           setExtensionData(result);
+          if (result.length) {
+            setIsDataReady(true);
+          }
           console.info("Successfully set extension data.");
         } else {
           console.warn(
@@ -46,15 +49,6 @@ export const useExtensionData = () => {
       listener();
     };
   }, []);
-
-  useEffect(() => {
-    console.info(
-      `Extension data updated: ${Object.values(extensionData).length}`
-    );
-    if (Object.values(extensionData).length) {
-      setIsDataReady(true);
-    }
-  }, [extensionData]);
 
   return {
     isDataReady,
