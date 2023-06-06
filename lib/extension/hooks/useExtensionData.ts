@@ -9,7 +9,9 @@ import { RequestName } from "src/lib/extension/shared/dataBridge";
 
 export const useExtensionData = () => {
   const [isDataReady, setIsDataReady] = useState(false);
-  const [extensionData, setExtensionData] = useState({});
+  const [extensionData, setExtensionData] = useState<{ [key: string]: string }>(
+    {}
+  );
   const coopJobsListPageRows = useMemo(
     () => buildCoopJobsListFromExtensionData(extensionData),
     [extensionData]
@@ -54,5 +56,10 @@ export const useExtensionData = () => {
     }
   }, [extensionData]);
 
-  return { isDataReady, coopJobsListPageRows, fulltimeJobsListPageRows };
+  return {
+    isDataReady,
+    coopJobsListPageRows,
+    fulltimeJobsListPageRows,
+    extensionData,
+  };
 };

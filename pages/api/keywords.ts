@@ -36,18 +36,14 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
       }
       res.status(200).json({ jobs: outObject });
     } else {
-      const out = [];
-      for (const id of jobIDs) {
-        const job = await JobKeywordsDocuments.findOne({ jobID: id });
-        if (job) {
-          out.push(job.toObject());
-        } else {
-          out.push({
-            jobID: id,
-            keywords: [],
-          });
-        }
-      }
+      const jobs = await JobKeywordsDocuments.find(
+        { jobID: { $in: jobIDs } },
+        { _id: 0 }
+      ).lean();
+      const jobMap = new Map(jobs.map(job => [job.jobID, job]));
+      const out = jobIDs.map(
+        id => jobMap.get(id) || { jobID: id, keywords: [] }
+      );
       const outObject: { [key: string]: string[] } = {};
       for (const job of out) {
         outObject[job.jobID] = [...job.keywords];

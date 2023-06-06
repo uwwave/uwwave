@@ -124,7 +124,9 @@ export function buildCoopJobWithJobID(
   extensionData: Record<string, any>,
   jobId: number
 ) {
-  console.log(extensionData);
+  if (!jobId) {
+    return null;
+  }
   const jobInfo = extensionData[`coopJob_${jobId}`];
   if (Object.keys(extensionData).length === 0) {
     return null;

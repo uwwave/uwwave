@@ -11,7 +11,14 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head>{this.props.emotionStyleTags}</Head>
+        <Head>
+          {this.props.emotionStyleTags}
+          <link
+            href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
+            rel="stylesheet"
+          />
+          <title>Wave</title>
+        </Head>
         <body>
           <Main />
           <NextScript />
