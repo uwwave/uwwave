@@ -173,7 +173,7 @@ const SpecificJobPage = () => {
             item.text && (
               <SpecificJobPageSection
                 jobSectionTitle={item.title}
-                jobSectionDescription={ReactHtmlParser(item.text)}
+                jobSectionDescription={ReactHtmlParser(item.text) as any}
               />
             )
           );
