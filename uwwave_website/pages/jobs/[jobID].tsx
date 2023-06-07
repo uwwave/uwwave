@@ -140,7 +140,10 @@ const SpecificJobPage = () => {
           setImageURL("/logo.png");
         }
       })
-      .catch((err: any) => err);
+      .catch((err: any) => {
+        console.error(err);
+        setImageURL("/logo.png");
+      });
   }, [companyInfo, jobInfo]);
 
   useEffect(() => {

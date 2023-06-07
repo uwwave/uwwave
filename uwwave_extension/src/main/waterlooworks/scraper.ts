@@ -25,14 +25,16 @@ import { getJobDataKey, JobPosting } from '../shared/job'
 import { getCompanyDivisionDataKey } from '../shared/company'
 import { JOB_BOARD_SPEC, JobBoard } from '../shared/jobBoard'
 import {
-    getJobBoardSetting,
-    getTargetSearchActionSetting,
     LocalStorageMetadataKeys,
     ScrapeStatus,
     TargetSearchAction,
     UserSyncStorageKeys,
 } from '../shared/userProfile'
 import moment from 'moment'
+import {
+    getJobBoardSetting,
+    getTargetSearchActionSetting,
+} from '../common/appStatus'
 
 const DASHBOARD_URL =
     'https://waterlooworks.uwaterloo.ca/myAccount/dashboard.htm'
