@@ -172,6 +172,7 @@ const SpecificJobPage = () => {
           return (
             item.text && (
               <SpecificJobPageSection
+                key={item.title}
                 jobSectionTitle={item.title}
                 jobSectionDescription={ReactHtmlParser(item.text) as any}
               />
@@ -206,6 +207,7 @@ const SpecificJobPage = () => {
               borderRadius: "16px",
               p: 2,
               m: 4,
+              overflowWrap: "break-word",
             }}
           >
             <Button
@@ -221,12 +223,12 @@ const SpecificJobPage = () => {
               extraInfo.map((item: { title: string; text: string }) => {
                 return (
                   item.text && (
-                    <>
+                    <div key={`${item.title}_title`}>
                       <Typography variant="h6" fontWeight="bold">
                         {item.title}
                       </Typography>
                       <Typography>{ReactHtmlParser(item.text)}</Typography>
-                    </>
+                    </div>
                   )
                 );
               })}

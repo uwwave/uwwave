@@ -31,9 +31,7 @@ export const useExtensionData = () => {
         console.info("Received callback to get extension data.");
         if (result) {
           setExtensionData(result);
-          if (result.length) {
-            setIsDataReady(true);
-          }
+          setIsDataReady(true);
           console.info("Successfully set extension data.");
         } else {
           console.warn(
