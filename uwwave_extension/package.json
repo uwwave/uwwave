@@ -2,7 +2,6 @@
     "name": "uwwave_extension",
     "version": "1.0.0",
     "description": "browser extension for uwwave",
-    "repository": "https://github.com/UWColonelKernel/uwwave",
     "license": "MIT",
     "scripts": {
         "clean": "rm -rf dist/* .parcel-cache",
