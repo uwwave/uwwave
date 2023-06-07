@@ -17,7 +17,7 @@ const AboutPage = () => {
         <MainWrapper>
           <Spacer height={64} />
           <Typography variant="h6">
-            uwWave is a Capstone Project lead by a team of SE24s
+            UW Wave is a Capstone Project lead by a team of SE24s
           </Typography>
           <Spacer height={64} />
           <Typography variant="h4">
