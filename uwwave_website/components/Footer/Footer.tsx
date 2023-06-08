@@ -87,7 +87,7 @@ export const Footer = () => {
 };
 
 const BottomFooterWrapper = styled.div`
-  background-color: #021021;
+  background-color: ${BackgroundColor.darker};
   display: flex;
   justify-content: center;
   align-items: center;

@@ -162,7 +162,5 @@ export function buildCoopJobWithJobID(
         JobInfoFieldsCoop.compensationAndBenefitsInformation
       ] ?? "";
   }
-  console.log(job);
-
   return job;
 }
