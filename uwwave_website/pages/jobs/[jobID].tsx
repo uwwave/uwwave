@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Spacer } from "src/components/Spacer/Spacer";
-import { Button } from "components/MUI/Button";
 // import { SearchBar } from 'components/SearchBar/SearchBar'
 import { CompanyCard } from "components/CompanyCard/CompanyCard";
-import { Box, Container, Tab, Tabs, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
 import styled from "styled-components";
 import axios from "axios";
 import { buildCoopJobWithJobID } from "src/lib/jobsList/jobsList";
@@ -14,17 +14,24 @@ import { SpecificJobPageSection } from "src/components/SpecificJobPageSection/Sp
 import { useRouter } from "next/router";
 import { useExtensionData } from "src/lib/extension/hooks/useExtensionData";
 import { Footer } from "src/components/Footer/Footer";
+import { BackgroundColor } from "src/styles/color";
+import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
+import { SecondaryButton } from "src/components/Buttons/SecondaryButton";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { JobRatingCard } from "src/components/JobRatingCard/JobRatingCard";
+import TodayIcon from "@mui/icons-material/Today";
+import { JobInfoTile } from "src/components/JobInfoTile/JobInfoTile";
+import ScheduleIcon from "@mui/icons-material/Schedule";
+import PeopleIcon from "@mui/icons-material/People";
+import PaidIcon from "@mui/icons-material/Paid";
+import LocationCityIcon from "@mui/icons-material/LocationCity";
+import { calculateDaysFromNow } from "src/lib/dates/dates";
 
 type CompanyCard = {
   companyName: string;
   city: string;
   country: string;
   positionTitle: string;
-};
-
-type ExtraInfo = {
-  title: string;
-  text: string;
 };
 
 type JobInfo = {
@@ -53,9 +60,7 @@ const SpecificJobPage = () => {
     country: "",
     positionTitle: "",
   });
-  console.log(jobInfo);
 
-  const [extraInfo, setExtraInfo] = useState<ExtraInfo[]>([]);
   const [tabSelected, setTabSelected] = useState(0);
   const handleTabChange = (event: any, newTab: number) => {
     setTabSelected(newTab);
@@ -95,17 +100,6 @@ const SpecificJobPage = () => {
       country: job?.country ?? "",
       positionTitle: job?.jobName ?? "",
     });
-
-    setExtraInfo([
-      {
-        title: "Deadline",
-        text: job?.appDeadline ?? "",
-      },
-      {
-        title: "Compensation/Benefits",
-        text: job?.compensationAndBenefitsInformation ?? "",
-      },
-    ]);
   }, [job]);
 
   useEffect(() => {
@@ -150,115 +144,129 @@ const SpecificJobPage = () => {
     document.title = `Wave - ${job?.jobName}`;
   }, [job]);
 
-  const CompanyHeader = () => (
-    <>
-      {imageURL !== "" && (
-        <>
-          <Grid item xs={12} md={8}>
-            <CompanyCard
-              imageURL={imageURL}
-              companyName={companyInfo.companyName}
-              city={companyInfo.city}
-              country={companyInfo.country}
-              positionTitle={companyInfo.positionTitle}
-            />
-          </Grid>
-        </>
-      )}
-    </>
+  const renderCompanyHeader = () => (
+    <CompanyHeaderWrapper>
+      <div>
+        <CompanyCard
+          imageURL={imageURL}
+          companyName={companyInfo.companyName}
+          city={companyInfo.city}
+          country={companyInfo.country}
+          positionTitle={companyInfo.positionTitle}
+        />
+        <Spacer height={24} />
+        <ButtonsWrapper>
+          <a
+            href={`https://waterlooworks.uwaterloo.ca/myAccount/co-op/coop-postings.htm?ck_jobid=${jobID}`}
+            target="_blank"
+          >
+            <PrimaryButton>Apply</PrimaryButton>
+          </a>
+          <Spacer width={8} />
+          <SecondaryButton>
+            <FavoriteBorderIcon sx={{ mr: 1 }} /> Favorite
+          </SecondaryButton>
+        </ButtonsWrapper>
+      </div>
+      <JobRatingCard
+        rating="4.2"
+        salary="50-60"
+        score="10%"
+        ratingVal={job ? Math.random() * 100 : 0}
+        salaryVal={job ? Math.random() * 100 : 0}
+        scoreVal={job ? Math.random() * 100 : 0}
+      />
+    </CompanyHeaderWrapper>
+  );
+
+  const renderCompanyFastFacts = () => (
+    <JobFastFactsWrapper>
+      {job?.appDeadline ? (
+        <JobInfoTile
+          icon={<TodayIcon />}
+          title="Deadline"
+          value={calculateDaysFromNow(new Date(job.appDeadline))}
+          subValue={job.appDeadline}
+        />
+      ) : null}
+      {job?.appDeadline ? (
+        <JobInfoTile
+          icon={<ScheduleIcon />}
+          title="Duration"
+          value={"4 months"}
+        />
+      ) : null}
+      {job?.openings ? (
+        <JobInfoTile
+          icon={<PeopleIcon />}
+          title="Openings"
+          value={job.openings.toString()}
+        />
+      ) : null}
+
+      {job?.compensationAndBenefitsInformation ? (
+        <JobInfoTile
+          icon={<PaidIcon />}
+          title="Salary/Perks"
+          value={job.compensationAndBenefitsInformation}
+        />
+      ) : null}
+      <JobInfoTile
+        icon={<LocationCityIcon />}
+        title="Address"
+        value={"Address line 1"}
+        subValue={"Maybe address line 2, POSTAL CODE"}
+      />
+    </JobFastFactsWrapper>
   );
 
   const Description = () => (
-    <Box style={{ marginLeft: "110px", maxWidth: "60%", padding: "16px" }}>
-      {jobInfo &&
-        jobInfo.map((item: { title: string; text: string }) => {
-          return (
-            item.text && (
-              <SpecificJobPageSection
-                key={item.title}
-                jobSectionTitle={item.title}
-                jobSectionDescription={ReactHtmlParser(item.text) as any}
-              />
-            )
-          );
-        })}
-    </Box>
+    <>
+      {jobInfo.map((item: { title: string; text: string }) => {
+        return (
+          item.text && (
+            <SpecificJobPageSection
+              key={item.title}
+              jobSectionTitle={item.title}
+              jobSectionDescription={ReactHtmlParser(item.text) as any}
+            />
+          )
+        );
+      })}
+    </>
   );
 
   const JobBody = () => (
     <div>
+      <Spacer height={16} />
       {imageURL !== "" && (
         <Tabs
           TabIndicatorProps={{ style: { backgroundColor: "white" } }}
           value={tabSelected}
           onChange={handleTabChange}
-          sx={{ marginLeft: "150px", paddingTop: "16px" }}
         >
           <StyledTab label="Details" />
-          {/* <StyledTab label="Reviews" /> */}
         </Tabs>
       )}
-      {imageURL !== "" && (
-        <Box sx={{ display: tabSelected === 0 ? "flex" : "none" }}>
-          <Description />
-          <Box
-            bgcolor="white"
-            sx={{
-              alignSelf: "flex-start",
-              minWidth: "15vw",
-              maxWidth: "20%",
-              borderRadius: "16px",
-              p: 2,
-              m: 4,
-              overflowWrap: "break-word",
-            }}
-          >
-            <Button
-              sx={{ borderRadius: "50px", marginBottom: "10px" }}
-              className="BlueGradientBackground"
-              width="100%"
-              href={`https://waterlooworks.uwaterloo.ca/myAccount/co-op/coop-postings.htm?ck_jobid=${jobID}`}
-              target="_blank"
-            >
-              Apply
-            </Button>
-            {extraInfo &&
-              extraInfo.map((item: { title: string; text: string }) => {
-                return (
-                  item.text && (
-                    <div key={`${item.title}_title`}>
-                      <Typography variant="h6" fontWeight="bold">
-                        {item.title}
-                      </Typography>
-                      <Typography>{ReactHtmlParser(item.text)}</Typography>
-                    </div>
-                  )
-                );
-              })}
-            <Typography variant="h6" fontWeight="bold" />
-          </Box>
-        </Box>
-      )}
-      {/* <Box sx={{ display: tabSelected === 1 ? 'flex' : 'none' }}>bonjour</Box> */}
+      <Description />
     </div>
   );
 
   return (
     <>
       <NavigationBar />
-      <Container style={{ paddingLeft: "170px" }}>
-        <MainWrapper>
-          <Spacer height={48} />
-          <CompanyHeader />
-          <Spacer height={32} />
-        </MainWrapper>
+      <Container>
+        <Spacer height={48} />
+        {renderCompanyHeader()}
+        <Spacer height={32} />
+        {renderCompanyFastFacts()}
+        <Spacer height={32} />
       </Container>
       <WaterWrapper>
         <Container>
-          <MainWrapper>
-            <JobBody />
-          </MainWrapper>
+          <JobBody />
         </Container>
+        <Spacer height={128} />
       </WaterWrapper>
       <Footer />
     </>
@@ -267,23 +275,12 @@ const SpecificJobPage = () => {
 
 export default SpecificJobPage;
 
-const MainWrapper = styled.div`
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-`;
-
 const WaterWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
   width: 100%;
-  background: linear-gradient(
-    153.7deg,
-    #058dda 32.98%,
-    #004aa0 53.06%,
-    #032544 81.36%
-  );
+  background-color: ${BackgroundColor.darker};
   min-height: 100vh;
 `;
 
@@ -292,3 +289,19 @@ const StyledTab = styled(Tab)({
     color: "white",
   },
 });
+
+const ButtonsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const CompanyHeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const JobFastFactsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 64px;
+`;

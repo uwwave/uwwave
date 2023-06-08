@@ -6,6 +6,19 @@ const theme = createTheme({
   typography: {
     fontFamily: ["Lato", "san-serif"].join(","),
   },
+  components: {
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          backgroundColor: "#0a0a0a",
+          padding: "16px",
+        },
+        arrow: {
+          color: "#0a0a0a",
+        },
+      },
+    },
+  },
 });
 
 function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {

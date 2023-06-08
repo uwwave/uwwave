@@ -10,6 +10,6 @@ export enum Color {
 }
 
 export enum BackgroundColor {
-  dark = "#061E39",
-  darker = "#021021",
+  dark = "#092648",
+  darker = "#01142B",
 }
