@@ -15,7 +15,7 @@ enum Tech {
   FIGMA = "Figma",
   FIREBASE = "Firebase",
   FLUTTER = "Flutter",
-  GIT = "Git",
+  GIT = "\\bGit\\b",
   GITHUB = "Github",
   GITLAB = "Gitlab",
   GRAPHQL = "GraphQL",

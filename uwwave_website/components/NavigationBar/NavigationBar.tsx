@@ -38,33 +38,36 @@ export const NavigationBar = (props: INavigationBar) => {
   return (
     <>
       <AppBar position="static" elevation={0} sx={{ bgcolor: backgroundColor }}>
-        <MainWrapper>
-          <LogoWrapper>
-            <Link href="/">
-              <WaveLogo color={color} />
-            </Link>
-          </LogoWrapper>
-          {pages.map((pageItem: PageItem, i) => (
-            <TextWrapper key={pageItem.pageUrl}>
-              <MUITypography>
-                <StyledLink
-                  variant="subtitle1"
-                  href={pageItem.pageUrl}
-                  color={color}
-                  underline={path === pageItem.pageUrl ? "always" : "hover"}
-                >
-                  {pageItem.pageName}
-                </StyledLink>
-              </MUITypography>
-              {i < pages.length - 1 ? <Spacer width={24} /> : null}
-            </TextWrapper>
-          ))}
-        </MainWrapper>
+        <Container>
+          <FlexWrapper>
+            <LogoWrapper>
+              <Link href="/">
+                <WaveLogo color={color} />
+              </Link>
+            </LogoWrapper>
+            {pages.map((pageItem: PageItem, i) => (
+              <TextWrapper key={pageItem.pageUrl}>
+                <MUITypography>
+                  <StyledLink
+                    variant="subtitle1"
+                    href={pageItem.pageUrl}
+                    color={color}
+                    underline={path === pageItem.pageUrl ? "always" : "hover"}
+                  >
+                    {pageItem.pageName}
+                  </StyledLink>
+                </MUITypography>
+                {i < pages.length - 1 ? <Spacer width={24} /> : null}
+              </TextWrapper>
+            ))}
+          </FlexWrapper>
+        </Container>
       </AppBar>
     </>
   );
 };
-const MainWrapper = styled(Container)`
+
+const FlexWrapper = styled.div`
   display: flex;
   align-items: center;
   padding-top: 8px;
