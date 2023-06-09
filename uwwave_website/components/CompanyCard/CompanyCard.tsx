@@ -4,6 +4,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Typography from "@mui/material/Typography";
 import { Spacer } from "../Spacer/Spacer";
 import { getCountryFlag } from "../CountryFlag/CountryFlag";
+import Skeleton from "@mui/material/Skeleton";
 
 interface CompanyCardProps {
   imageURL: string;
@@ -27,9 +28,6 @@ export const CompanyCard = ({
   city,
   country,
   positionTitle,
-  //   reviewCount,
-  //   ratingValue,
-  //   subtitle,
   isOutlined,
 }: CompanyCardProps) => {
   const countryFlag = getCountryFlag(country ?? "");
@@ -55,6 +53,21 @@ export const CompanyCard = ({
             {getCountryFlag(country ?? "")}
           </LocationWrapper>
         ) : null}
+      </NameWrapper>
+    </MainWrapper>
+  );
+};
+
+export const LoadingCompanyCard = () => {
+  return (
+    <MainWrapper elevation={0}>
+      <Skeleton variant="rounded" width={160} height={160} />
+      <Spacer width={16} />
+      <NameWrapper>
+        <Skeleton variant="text" sx={{ fontSize: "3rem" }} width={300} />
+        <Skeleton variant="text" sx={{ fontSize: "1rem" }} width={160} />
+        <Spacer height={16} />
+        <Skeleton variant="text" sx={{ fontSize: "1rem" }} width={110} />
       </NameWrapper>
     </MainWrapper>
   );

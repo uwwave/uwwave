@@ -5,6 +5,7 @@ import ExtensionIcon from "@mui/icons-material/Extension";
 import Typography from "@mui/material/Typography";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import { useEffect, useState } from "react";
 
 interface IJobRatingCard {
   rating: string;
@@ -17,16 +18,29 @@ interface IJobRatingCard {
 
 export const JobRatingCard = (props: IJobRatingCard) => {
   const { rating, salary, score, ratingVal, salaryVal, scoreVal } = props;
+  const [ratingValState, setRatingValState] = useState(0);
+  const [salarayValState, setSalaryValState] = useState(0);
+  const [scoreValState, setScoreValState] = useState(0);
+
+  useEffect(() => {
+    setRatingValState(ratingVal);
+  }, [ratingVal]);
+  useEffect(() => {
+    setSalaryValState(salaryVal);
+  }, [salaryVal]);
+  useEffect(() => {
+    setScoreValState(scoreVal);
+  }, [scoreVal]);
   return (
     <MainWrapper>
       <Pillar>
-        <InnerPillar1 val={ratingVal} />
+        <InnerPillar1 val={ratingValState} />
       </Pillar>
       <Pillar>
-        <InnerPillar2 val={salaryVal} />
+        <InnerPillar2 val={salarayValState} />
       </Pillar>
       <Pillar>
-        <InnerPillar3 val={scoreVal} />
+        <InnerPillar3 val={scoreValState} />
       </Pillar>
       <div>
         <Value color={Color.rating}>
@@ -92,6 +106,7 @@ const InnerPillar2 = styled.div<IInnerPillar>`
   display: flex;
   align-items: center;
   transition: height 0.8s ease;
+  transition-delay: 0.2s;
 `;
 
 const InnerPillar3 = styled.div<IInnerPillar>`
@@ -103,6 +118,7 @@ const InnerPillar3 = styled.div<IInnerPillar>`
   display: flex;
   align-items: center;
   transition: height 0.8s ease;
+  transition-delay: 0.3s;
 `;
 
 interface IValue {
