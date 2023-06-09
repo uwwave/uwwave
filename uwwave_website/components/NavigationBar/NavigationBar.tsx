@@ -1,5 +1,4 @@
 import { AppBar } from "@mui/material";
-import Toolbar from "@mui/material/Toolbar";
 import MUITypography from "@mui/material/Typography";
 import styled from "styled-components";
 import { Color } from "styles/color";
@@ -39,35 +38,38 @@ export const NavigationBar = (props: INavigationBar) => {
   return (
     <>
       <AppBar position="static" elevation={0} sx={{ bgcolor: backgroundColor }}>
-        <Container>
-          <Toolbar>
-            <LogoWrapper>
-              <Link href="/">
-                <WaveLogo color={color} />
-              </Link>
-            </LogoWrapper>
-            {pages.map((pageItem: PageItem, i) => (
-              <TextWrapper key={pageItem.pageUrl}>
-                <MUITypography>
-                  <StyledLink
-                    variant="subtitle1"
-                    href={pageItem.pageUrl}
-                    color={color}
-                    underline={path === pageItem.pageUrl ? "always" : "hover"}
-                  >
-                    {pageItem.pageName}
-                  </StyledLink>
-                </MUITypography>
-                {i < pages.length - 1 ? <Spacer width={24} /> : null}
-              </TextWrapper>
-            ))}
-          </Toolbar>
-        </Container>
+        <MainWrapper>
+          <LogoWrapper>
+            <Link href="/">
+              <WaveLogo color={color} />
+            </Link>
+          </LogoWrapper>
+          {pages.map((pageItem: PageItem, i) => (
+            <TextWrapper key={pageItem.pageUrl}>
+              <MUITypography>
+                <StyledLink
+                  variant="subtitle1"
+                  href={pageItem.pageUrl}
+                  color={color}
+                  underline={path === pageItem.pageUrl ? "always" : "hover"}
+                >
+                  {pageItem.pageName}
+                </StyledLink>
+              </MUITypography>
+              {i < pages.length - 1 ? <Spacer width={24} /> : null}
+            </TextWrapper>
+          ))}
+        </MainWrapper>
       </AppBar>
     </>
   );
 };
-
+const MainWrapper = styled(Container)`
+  display: flex;
+  align-items: center;
+  padding-top: 8px;
+  padding-bottom: 8px;
+`;
 const StyledLink = styled(Link)`
   && {
     &:active {

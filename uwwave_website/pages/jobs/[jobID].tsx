@@ -1,23 +1,21 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Spacer } from "src/components/Spacer/Spacer";
 // import { SearchBar } from 'components/SearchBar/SearchBar'
-import { CompanyCard } from "components/CompanyCard/CompanyCard";
+import {
+  CompanyCard,
+  LoadingCompanyCard,
+} from "components/CompanyCard/CompanyCard";
 import Container from "@mui/material/Container";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import styled from "styled-components";
-import axios from "axios";
-import { buildCoopJobWithJobID } from "src/lib/jobsList/jobsList";
 import ReactHtmlParser from "react-html-parser";
 import { NavigationBar } from "src/components/NavigationBar/NavigationBar";
 import { SpecificJobPageSection } from "src/components/SpecificJobPageSection/SpecificJobPageSection";
 import { useRouter } from "next/router";
-import { useExtensionData } from "src/lib/extension/hooks/useExtensionData";
 import { Footer } from "src/components/Footer/Footer";
 import { BackgroundColor } from "src/styles/color";
 import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
-import { SecondaryButton } from "src/components/Buttons/SecondaryButton";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { JobRatingCard } from "src/components/JobRatingCard/JobRatingCard";
 import TodayIcon from "@mui/icons-material/Today";
 import { JobInfoTile } from "src/components/JobInfoTile/JobInfoTile";
@@ -26,220 +24,198 @@ import PeopleIcon from "@mui/icons-material/People";
 import PaidIcon from "@mui/icons-material/Paid";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import { calculateDaysFromNow } from "src/lib/dates/dates";
-
-type CompanyCard = {
-  companyName: string;
-  city: string;
-  country: string;
-  positionTitle: string;
-};
-
-type JobInfo = {
-  title: string;
-  text: string;
-};
+import { useJobePage } from "src/lib/hooks/useJobPage";
+import Skeleton from "@mui/material/Skeleton";
+import Paper from "@mui/material/Paper";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import { FavoriteButton } from "src/components/Buttons/FavoriteButton";
 
 // jobInfo: { title: string; text: string }[]
 // companyInfo: { imageURL: string; companyName: string; city: string; country:string; positionTitle: string }
 // jobId: string
 const SpecificJobPage = () => {
   const router = useRouter();
-  const [imageURL, setImageURL] = useState<string>("");
-  const { jobID } = router.query;
-  const { extensionData: jobs } = useExtensionData();
-
-  const job = useMemo(
-    () => buildCoopJobWithJobID(jobs, jobID as unknown as number),
-    [jobs, jobID]
-  );
-  const [jobInfo, setJobInfo] = useState<JobInfo[]>([]);
-
-  const [companyInfo, setCompanyInfo] = useState<CompanyCard>({
-    companyName: "",
-    city: "",
-    country: "",
-    positionTitle: "",
-  });
-
-  const [tabSelected, setTabSelected] = useState(0);
-  const handleTabChange = (event: any, newTab: number) => {
+  const jobID = router.query.jobID;
+  const {
+    imageURL,
+    companyInfo,
+    job,
+    tabSelected,
+    setTabSelected,
+    jobInfo,
+    isLoading,
+    techIcons,
+  } = useJobePage(jobID as string | undefined);
+  const [bookmarked, setBookmarked] = useState(false);
+  const handleTabChange = (_: any, newTab: number) => {
     setTabSelected(newTab);
   };
-
   useEffect(() => {
-    setJobInfo([
-      {
-        title: "Job Summary",
-        text:
-          job?.jobSummary.replace(
-            /<\s*(?:table|tr)[^>]*>|<\/\s*(?:table|tr)\s*>/g,
-            ""
-          ) ?? "",
-      },
-      {
-        title: "Job Responsibilities",
-        text:
-          job?.jobResponsibilities.replace(
-            /<\s*(?:table|tr)[^>]*>|<\/\s*(?:table|tr)\s*>/g,
-            ""
-          ) ?? "",
-      },
-      {
-        title: "Required Skills",
-        text:
-          job?.requiredSkills.replace(
-            /<\s*(?:table|tr)[^>]*>|<\/\s*(?:table|tr)\s*>/g,
-            ""
-          ) ?? "",
-      },
-    ]);
-
-    setCompanyInfo({
-      companyName: job?.companyName ?? "",
-      city: job?.city ?? "",
-      country: job?.country ?? "",
-      positionTitle: job?.jobName ?? "",
-    });
+    if (!job) {
+      return;
+    }
+    document.title = job.companyName;
   }, [job]);
 
-  useEffect(() => {
-    axios
-      .get(
-        `https://842gb0w279.execute-api.ca-central-1.amazonaws.com/items/${companyInfo.companyName}`
-      )
-      .then((res: any) => {
-        if (res.data.Item) {
-          setImageURL(res.data.Item.logo);
-
-          const dashIndex = res.data.Item.salary.indexOf("-");
-          let salary = `$${res.data.Item.salary}`;
-          if (dashIndex >= 0)
-            salary = `${salary.slice(0, dashIndex + 2)}$${salary.slice(
-              dashIndex + 2
-            )}`;
-          if (res.data.Item.Currency) salary += ` ${res.data.Item.Currency}`;
-
-          setJobInfo([
-            ...jobInfo,
-            {
-              title: "Salary",
-              text: salary,
-            },
-            {
-              title: "Company Website",
-              text: `<a href=//${res.data.Item.domain} target='_blank'>${res.data.Item.domain}</a>`,
-            },
-          ]);
-        } else {
-          setImageURL("/logo.png");
-        }
-      })
-      .catch((err: any) => {
-        console.error(err);
-        setImageURL("/logo.png");
-      });
-  }, [companyInfo, jobInfo]);
-
-  useEffect(() => {
-    document.title = `Wave - ${job?.jobName}`;
-  }, [job]);
-
-  const renderCompanyHeader = () => (
-    <CompanyHeaderWrapper>
-      <div>
-        <CompanyCard
-          imageURL={imageURL}
-          companyName={companyInfo.companyName}
-          city={companyInfo.city}
-          country={companyInfo.country}
-          positionTitle={companyInfo.positionTitle}
-        />
-        <Spacer height={24} />
-        <ButtonsWrapper>
-          <a
-            href={`https://waterlooworks.uwaterloo.ca/myAccount/co-op/coop-postings.htm?ck_jobid=${jobID}`}
-            target="_blank"
-          >
-            <PrimaryButton>Apply</PrimaryButton>
-          </a>
-          <Spacer width={8} />
-          <SecondaryButton>
-            <FavoriteBorderIcon sx={{ mr: 1 }} /> Favorite
-          </SecondaryButton>
-        </ButtonsWrapper>
-      </div>
-      <JobRatingCard
-        rating="4.2"
-        salary="50-60"
-        score="10%"
-        ratingVal={job ? Math.random() * 100 : 0}
-        salaryVal={job ? Math.random() * 100 : 0}
-        scoreVal={job ? Math.random() * 100 : 0}
-      />
-    </CompanyHeaderWrapper>
-  );
-
-  const renderCompanyFastFacts = () => (
-    <JobFastFactsWrapper>
-      {job?.appDeadline ? (
-        <JobInfoTile
-          icon={<TodayIcon />}
-          title="Deadline"
-          value={calculateDaysFromNow(new Date(job.appDeadline))}
-          subValue={job.appDeadline}
-        />
-      ) : null}
-      {job?.appDeadline ? (
-        <JobInfoTile
-          icon={<ScheduleIcon />}
-          title="Duration"
-          value={"4 months"}
-        />
-      ) : null}
-      {job?.openings ? (
-        <JobInfoTile
-          icon={<PeopleIcon />}
-          title="Openings"
-          value={job.openings.toString()}
-        />
-      ) : null}
-
-      {job?.compensationAndBenefitsInformation ? (
-        <JobInfoTile
-          icon={<PaidIcon />}
-          title="Salary/Perks"
-          value={job.compensationAndBenefitsInformation}
-        />
-      ) : null}
-      <JobInfoTile
-        icon={<LocationCityIcon />}
-        title="Address"
-        value={"Address line 1"}
-        subValue={"Maybe address line 2, POSTAL CODE"}
-      />
-    </JobFastFactsWrapper>
-  );
-
-  const Description = () => (
-    <>
-      {jobInfo.map((item: { title: string; text: string }) => {
-        return (
-          item.text && (
-            <SpecificJobPageSection
-              key={item.title}
-              jobSectionTitle={item.title}
-              jobSectionDescription={ReactHtmlParser(item.text) as any}
+  const renderCompanyHeader = () => {
+    if (isLoading) {
+      return (
+        <CompanyHeaderWrapper>
+          <div>
+            <LoadingCompanyCard />
+            <Spacer height={24} />
+            <ButtonsWrapper>
+              <Skeleton variant="rounded" width={180} height={48} />
+              <Spacer width={8} />
+              <Skeleton variant="rounded" width={180} height={48} />
+            </ButtonsWrapper>
+          </div>
+          <Skeleton variant="rounded" width={320} height={240} />
+        </CompanyHeaderWrapper>
+      );
+    }
+    return (
+      <CompanyHeaderWrapper>
+        <div>
+          <CompanyCard
+            imageURL={imageURL}
+            companyName={companyInfo.companyName}
+            city={companyInfo.city}
+            country={companyInfo.country}
+            positionTitle={companyInfo.positionTitle}
+          />
+          <Spacer height={24} />
+          <ButtonsWrapper>
+            <a
+              href={`https://waterlooworks.uwaterloo.ca/myAccount/co-op/coop-postings.htm?ck_jobid=${jobID}`}
+              target="_blank"
+            >
+              <PrimaryButton>Apply</PrimaryButton>
+            </a>
+            <Spacer width={8} />
+            <FavoriteButton
+              selected={bookmarked}
+              onClick={() => {
+                setBookmarked(!bookmarked);
+              }}
             />
-          )
-        );
-      })}
-    </>
-  );
+          </ButtonsWrapper>
+        </div>
+        <JobRatingCard
+          rating="4.2"
+          salary="50-60"
+          score="10%"
+          ratingVal={job ? Math.random() * 100 : 0}
+          salaryVal={job ? Math.random() * 100 : 0}
+          scoreVal={job ? Math.random() * 100 : 0}
+        />
+      </CompanyHeaderWrapper>
+    );
+  };
+
+  const renderCompanyFastFacts = () => {
+    if (isLoading) {
+      return (
+        <JobFastFactsWrapperLoading>
+          <Skeleton variant="rounded" width={"25%"} height={80} />
+          <Skeleton variant="rounded" width={"25%"} height={80} />
+          <Skeleton variant="rounded" width={"25%"} height={80} />
+          <Skeleton variant="rounded" width={"25%"} height={80} />
+        </JobFastFactsWrapperLoading>
+      );
+    }
+    return (
+      <JobFastFactsWrapper>
+        {job?.appDeadline ? (
+          <JobInfoTile
+            icon={<TodayIcon />}
+            title="Deadline"
+            value={calculateDaysFromNow(new Date(job.appDeadline))}
+            subValue={job.appDeadline}
+          />
+        ) : null}
+        {job?.appDeadline ? (
+          <JobInfoTile
+            icon={<ScheduleIcon />}
+            title="Duration"
+            value={"4 months"}
+          />
+        ) : null}
+        {job?.openings ? (
+          <JobInfoTile
+            icon={<PeopleIcon />}
+            title="Openings"
+            value={job.openings.toString()}
+          />
+        ) : null}
+
+        {job?.compensationAndBenefitsInformation ? (
+          <JobInfoTile
+            icon={<PaidIcon />}
+            title="Salary/Perks"
+            value={job.compensationAndBenefitsInformation}
+          />
+        ) : null}
+        <JobInfoTile
+          icon={<LocationCityIcon />}
+          title="Address"
+          value={"Address line 1"}
+          subValue={"Maybe address line 2, POSTAL CODE"}
+        />
+      </JobFastFactsWrapper>
+    );
+  };
+
+  const Description = () => {
+    if (isLoading) {
+      return (
+        <>
+          <Spacer height={16} />
+          <Skeleton
+            variant="rounded"
+            width={"100%"}
+            height={240}
+            sx={{ bgcolor: BackgroundColor.dark }}
+          />
+          <Spacer height={16} />
+          <Skeleton
+            variant="rounded"
+            width={"100%"}
+            height={240}
+            sx={{ bgcolor: BackgroundColor.dark }}
+          />
+          <Spacer height={16} />
+          <Skeleton
+            variant="rounded"
+            width={"100%"}
+            height={240}
+            sx={{ bgcolor: BackgroundColor.dark }}
+          />
+        </>
+      );
+    }
+    return (
+      <>
+        {jobInfo.map((item: { title: string; text: string }) => {
+          return (
+            item.text && (
+              <SpecificJobPageSection
+                key={item.title}
+                jobSectionTitle={item.title}
+                jobSectionDescription={ReactHtmlParser(item.text) as any}
+              />
+            )
+          );
+        })}
+      </>
+    );
+  };
 
   const JobBody = () => (
     <div>
       <Spacer height={16} />
-      {imageURL !== "" && (
+      {!isLoading ? (
         <Tabs
           TabIndicatorProps={{ style: { backgroundColor: "white" } }}
           value={tabSelected}
@@ -247,21 +223,50 @@ const SpecificJobPage = () => {
         >
           <StyledTab label="Details" />
         </Tabs>
-      )}
+      ) : null}
       <Description />
     </div>
   );
 
+  const renderTech = () => {
+    if (techIcons.filter(x => x.icon !== undefined).length === 0) {
+      return null;
+    }
+    return (
+      <TechWrapper>
+        <Typography color="gray">Tech Stack </Typography>
+        {techIcons.map(icon => {
+          if (icon.icon === undefined) {
+            return null;
+          }
+          return (
+            <TooltipWrapper
+              title={<Typography>{icon.name}</Typography>}
+              arrow
+              key={icon.name}
+              placement="top"
+            >
+              {icon.icon}
+            </TooltipWrapper>
+          );
+        })}
+      </TechWrapper>
+    );
+  };
+
   return (
-    <>
-      <NavigationBar />
+    <Main>
+      <NavigationBar backgroundColor="white" />
       <Container>
-        <Spacer height={48} />
+        <Spacer height={40} />
         {renderCompanyHeader()}
-        <Spacer height={32} />
+        <Spacer height={16} />
         {renderCompanyFastFacts()}
-        <Spacer height={32} />
+        <Spacer height={16} />
+        {renderTech()}
+        <Spacer height={40} />
       </Container>
+      <Shadow />
       <WaterWrapper>
         <Container>
           <JobBody />
@@ -269,7 +274,7 @@ const SpecificJobPage = () => {
         <Spacer height={128} />
       </WaterWrapper>
       <Footer />
-    </>
+    </Main>
   );
 };
 
@@ -295,13 +300,55 @@ const ButtonsWrapper = styled.div`
   align-items: center;
 `;
 
-const CompanyHeaderWrapper = styled.div`
+const CompanyHeaderWrapper = styled(Paper).attrs({
+  elevation: 0,
+})`
   display: flex;
   justify-content: space-between;
+  padding: 32px;
 `;
 
-const JobFastFactsWrapper = styled.div`
+const JobFastFactsWrapper = styled(Paper).attrs({
+  elevation: 0,
+})`
   display: flex;
   flex-wrap: wrap;
   gap: 8px 64px;
+  padding: 32px;
+`;
+
+const JobFastFactsWrapperLoading = styled(Paper).attrs({
+  elevation: 0,
+})`
+  display: flex;
+  gap: 8px;
+  padding: 32px;
+`;
+
+const TechWrapper = styled(Paper).attrs({
+  elevation: 0,
+})`
+  display: flex;
+  padding: 8px;
+  gap: 8px;
+  align-items: center;
+  padding-left: 32px;
+  filter: grayscale(0.5);
+`;
+
+const Main = styled.div`
+  background-color: ${BackgroundColor.offWhite};
+`;
+
+const Shadow = styled.div`
+  height: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 21.88%,
+    rgba(139, 139, 139, 0.88) 100%
+  );
+`;
+
+const TooltipWrapper = styled(Tooltip)`
+  cursor: pointer;
 `;
