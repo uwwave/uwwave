@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ICompanyDomain } from "src/database/models/CompanyDomains";
 
 export interface IJobKeyword {
   jobID: string;
@@ -33,5 +34,20 @@ export class Requests {
     return axios
       .get(`/api/checkadminaccess?token=${token}`)
       .then(x => x.data.isAdmin);
+  }
+
+  static async addCompanyDomain(
+    companyName: string,
+    domain: string
+  ): Promise<ICompanyDomain> {
+    return axios
+      .post(`/api/companyInfo`, { companyName, domain })
+      .then(x => x.data);
+  }
+
+  static async getCompanyInfo(companyName: string): Promise<any> {
+    return axios
+      .get(`/api/companyInfo?companyName=${companyName}`)
+      .then(x => x.data);
   }
 }
