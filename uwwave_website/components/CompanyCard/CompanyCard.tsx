@@ -5,6 +5,10 @@ import Typography from "@mui/material/Typography";
 import { Spacer } from "../Spacer/Spacer";
 import { getCountryFlag } from "../CountryFlag/CountryFlag";
 import Skeleton from "@mui/material/Skeleton";
+import LaunchIcon from "@mui/icons-material/Launch";
+import { Color } from "src/styles/color";
+import EditIcon from "@mui/icons-material/Edit";
+import IconButton from "@mui/material/IconButton";
 
 interface CompanyCardProps {
   imageURL: string;
@@ -17,10 +21,40 @@ interface CompanyCardProps {
   ratingValue?: number;
   subtitle?: string;
   isOutlined?: boolean;
+  companyURL?: string;
+  onOpenSubmitDomain: () => void;
 }
 interface MainWrapperProps {
   isOutlined?: boolean;
 }
+
+interface IOptionalExternalLink {
+  text: string;
+  link?: string;
+  onOpenSubmitDomain: () => void;
+}
+const OptionalExternalLink = (props: IOptionalExternalLink) => {
+  const { text, link, onOpenSubmitDomain } = props;
+
+  if (!link) {
+    return (
+      <LinkWrapper onClick={onOpenSubmitDomain}>
+        <Typography>{text}</Typography>
+        <IconButton>
+          <EditIcon />
+        </IconButton>
+      </LinkWrapper>
+    );
+  }
+  return (
+    <LinkWrapper>
+      <a href={`https://${link}`} target="_blank">
+        <Typography>{text}</Typography>
+        <LaunchIcon />
+      </a>
+    </LinkWrapper>
+  );
+};
 
 export const CompanyCard = ({
   imageURL,
@@ -29,6 +63,8 @@ export const CompanyCard = ({
   country,
   positionTitle,
   isOutlined,
+  companyURL,
+  onOpenSubmitDomain,
 }: CompanyCardProps) => {
   const countryFlag = getCountryFlag(country ?? "");
   return (
@@ -41,7 +77,11 @@ export const CompanyCard = ({
             <b>{positionTitle}</b>
           </Typography>
         ) : null}
-        <Typography>{companyName}</Typography>
+        <OptionalExternalLink
+          text={companyName}
+          link={companyURL}
+          onOpenSubmitDomain={onOpenSubmitDomain}
+        />
         <Spacer height={24} />
         {city && country ? (
           <LocationWrapper>
@@ -90,7 +130,7 @@ const ImageWrapper = styled.div<IImageWrapper>`
   border: 1px solid #ddd;
   border-radius: 16px;
   background-image: url(${props => props.src});
-  background-size: cover;
+  background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
 `;
@@ -99,7 +139,6 @@ const NameWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex: 1;
 `;
 
 const LocationWrapper = styled.div`
@@ -112,5 +151,20 @@ const IconWrapper = styled(LocationOnIcon).attrs({
 })`
   && {
     fill: gray;
+  }
+`;
+
+const LinkWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  && svg {
+    color: ${Color.primaryButton};
+  }
+  & a {
+    display: flex;
+    align-items: center;
+    color: ${Color.primaryButton};
+    text-decoration-color: ${Color.primaryButton};
   }
 `;

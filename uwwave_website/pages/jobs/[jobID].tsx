@@ -6,8 +6,7 @@ import {
   LoadingCompanyCard,
 } from "components/CompanyCard/CompanyCard";
 import Container from "@mui/material/Container";
-import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
+import { Tabs } from "src/components/Tabs/Tabs";
 import styled from "styled-components";
 import ReactHtmlParser from "react-html-parser";
 import { NavigationBar } from "src/components/NavigationBar/NavigationBar";
@@ -30,7 +29,10 @@ import Paper from "@mui/material/Paper";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { FavoriteButton } from "src/components/Buttons/FavoriteButton";
-
+import { UploadDomainModal } from "src/components/Modals/variants/UploadDomainModal";
+import { JobPagePaper } from "src/components/Paper/JobPagePaper";
+import EditIcon from "@mui/icons-material/Edit";
+import IconButton from "@mui/material/IconButton";
 // jobInfo: { title: string; text: string }[]
 // companyInfo: { imageURL: string; companyName: string; city: string; country:string; positionTitle: string }
 // jobId: string
@@ -46,11 +48,11 @@ const SpecificJobPage = () => {
     jobInfo,
     isLoading,
     techIcons,
+    companyURL,
+    onClearbitData,
   } = useJobePage(jobID as string | undefined);
   const [bookmarked, setBookmarked] = useState(false);
-  const handleTabChange = (_: any, newTab: number) => {
-    setTabSelected(newTab);
-  };
+  const [submitDomainModal, setSubmitDomainModal] = useState(false);
   useEffect(() => {
     if (!job) {
       return;
@@ -84,6 +86,10 @@ const SpecificJobPage = () => {
             city={companyInfo.city}
             country={companyInfo.country}
             positionTitle={companyInfo.positionTitle}
+            companyURL={companyURL}
+            onOpenSubmitDomain={() => {
+              setSubmitDomainModal(true);
+            }}
           />
           <Spacer height={24} />
           <ButtonsWrapper>
@@ -212,24 +218,50 @@ const SpecificJobPage = () => {
     );
   };
 
-  const JobBody = () => (
-    <div>
+  const renderConfigTab = () => {
+    return (
+      <JobPagePaper>
+        <Typography variant="h5" color="white">
+          Settings
+        </Typography>
+        <Spacer height={32} />
+        <DomainSettingsWrapper>
+          <Typography color="white">
+            <b>Domain:</b>
+          </Typography>
+          <Spacer width={8} />
+          <Typography color="white">{companyURL}</Typography>
+          <IconButton
+            color="inherit"
+            onClick={() => {
+              setSubmitDomainModal(true);
+            }}
+          >
+            <EditIcon color="inherit" />
+          </IconButton>
+        </DomainSettingsWrapper>
+      </JobPagePaper>
+    );
+  };
+  const renderJobBody = () => (
+    <>
       <Spacer height={16} />
       {!isLoading ? (
         <Tabs
-          TabIndicatorProps={{ style: { backgroundColor: "white" } }}
-          value={tabSelected}
-          onChange={handleTabChange}
-        >
-          <StyledTab label="Details" />
-        </Tabs>
+          tabs={[{ label: "Details" }, { label: "Settings" }]}
+          currentTab={tabSelected}
+          onSelectTab={(i: number) => {
+            setTabSelected(i);
+          }}
+        />
       ) : null}
-      <Description />
-    </div>
+      {tabSelected === 0 ? <Description /> : null}
+      {tabSelected === 1 ? renderConfigTab() : null}
+    </>
   );
 
   const renderTech = () => {
-    if (techIcons.filter(x => x.icon !== undefined).length === 0) {
+    if (techIcons.filter(x => x.icon !== undefined).length === 0 || isLoading) {
       return null;
     }
     return (
@@ -256,6 +288,18 @@ const SpecificJobPage = () => {
 
   return (
     <Main>
+      {!isLoading ? (
+        <UploadDomainModal
+          companyName={companyInfo.companyName}
+          isOpen={submitDomainModal}
+          onClose={() => {
+            setSubmitDomainModal(false);
+          }}
+          onClearbitCompanyData={onClearbitData}
+          url={companyURL}
+        />
+      ) : null}
+
       <NavigationBar backgroundColor="white" />
       <Container>
         <Spacer height={40} />
@@ -268,9 +312,7 @@ const SpecificJobPage = () => {
       </Container>
       <Shadow />
       <WaterWrapper>
-        <Container>
-          <JobBody />
-        </Container>
+        <Container>{renderJobBody()}</Container>
         <Spacer height={128} />
       </WaterWrapper>
       <Footer />
@@ -288,12 +330,6 @@ const WaterWrapper = styled.div`
   background-color: ${BackgroundColor.darker};
   min-height: 100vh;
 `;
-
-const StyledTab = styled(Tab)({
-  "&.MuiTab-textColorPrimary": {
-    color: "white",
-  },
-});
 
 const ButtonsWrapper = styled.div`
   display: flex;
@@ -351,4 +387,9 @@ const Shadow = styled.div`
 
 const TooltipWrapper = styled(Tooltip)`
   cursor: pointer;
+`;
+
+const DomainSettingsWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;

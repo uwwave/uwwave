@@ -51,8 +51,8 @@ const getTechFriendlyName = (tech: Tech) => {
       return "C";
     case Tech.CPLUSPLUS:
       return "C++";
-    case Tech.CSHARP:
-      return "C#";
+    case Tech.GIT:
+      return "Git";
     default:
       return tech;
   }
