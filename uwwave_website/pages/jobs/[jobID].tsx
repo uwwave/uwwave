@@ -132,7 +132,7 @@ const SpecificJobPage = () => {
       );
     }
     return (
-      <JobFastFactsWrapper>
+      <JobFastFactsWrapper bottomPadding={hideTechStack}>
         {job?.appDeadline ? (
           <JobInfoTile
             icon={<TodayIcon />}
@@ -260,29 +260,35 @@ const SpecificJobPage = () => {
     </>
   );
 
+  const hideTechStack =
+    techIcons.filter(x => x.icon !== undefined).length === 0 || isLoading;
+
   const renderTech = () => {
-    if (techIcons.filter(x => x.icon !== undefined).length === 0 || isLoading) {
+    if (hideTechStack) {
       return null;
     }
     return (
-      <TechWrapper>
-        <Typography color="gray">Tech Stack </Typography>
-        {techIcons.map(icon => {
-          if (icon.icon === undefined) {
-            return null;
-          }
-          return (
-            <TooltipWrapper
-              title={<Typography>{icon.name}</Typography>}
-              arrow
-              key={icon.name}
-              placement="top"
-            >
-              {icon.icon}
-            </TooltipWrapper>
-          );
-        })}
-      </TechWrapper>
+      <>
+        <Spacer height={2} />
+        <TechWrapper bottomPadding>
+          <Typography color="gray">Tech Stack</Typography>
+          {techIcons.map(icon => {
+            if (icon.icon === undefined) {
+              return null;
+            }
+            return (
+              <TooltipWrapper
+                title={<Typography>{icon.name}</Typography>}
+                arrow
+                key={icon.name}
+                placement="top"
+              >
+                {icon.icon}
+              </TooltipWrapper>
+            );
+          })}
+        </TechWrapper>
+      </>
     );
   };
 
@@ -304,11 +310,9 @@ const SpecificJobPage = () => {
       <Container>
         <Spacer height={40} />
         {renderCompanyHeader()}
-        <Spacer height={16} />
+        <Spacer height={2} />
         {renderCompanyFastFacts()}
-        <Spacer height={16} />
         {renderTech()}
-        <Spacer height={40} />
       </Container>
       <Shadow />
       <WaterWrapper>
@@ -329,6 +333,8 @@ const WaterWrapper = styled.div`
   width: 100%;
   background-color: ${BackgroundColor.darker};
   min-height: 100vh;
+  z-index: 1;
+  position: relative;
 `;
 
 const ButtonsWrapper = styled.div`
@@ -346,11 +352,12 @@ const CompanyHeaderWrapper = styled(Paper).attrs({
 
 const JobFastFactsWrapper = styled(Paper).attrs({
   elevation: 0,
-})`
+})<IBottomPadding>`
   display: flex;
   flex-wrap: wrap;
   gap: 8px 64px;
   padding: 32px;
+  ${props => (props.bottomPadding ? "padding-bottom: 64px;" : "")}
 `;
 
 const JobFastFactsWrapperLoading = styled(Paper).attrs({
@@ -359,13 +366,18 @@ const JobFastFactsWrapperLoading = styled(Paper).attrs({
   display: flex;
   gap: 8px;
   padding: 32px;
+  padding-bottom: 64px;
 `;
 
+interface IBottomPadding {
+  bottomPadding: boolean;
+}
 const TechWrapper = styled(Paper).attrs({
   elevation: 0,
-})`
+})<IBottomPadding>`
   display: flex;
-  padding: 8px;
+  padding: 16px;
+  ${props => (props.bottomPadding ? "padding-bottom: 56px;" : "")}
   gap: 8px;
   align-items: center;
   padding-left: 32px;
@@ -377,6 +389,9 @@ const Main = styled.div`
 `;
 
 const Shadow = styled.div`
+  margin-top: -32px;
+  z-index: 1;
+  position: relative;
   height: 16px;
   background: linear-gradient(
     180deg,

@@ -76,7 +76,6 @@ export const useJobePage = (jobID?: string) => {
   }, [companyInfo, jobInfo]);
 
   const onClearbitData = (data: any) => {
-    console.log(data);
     setImageURL(data.logo);
     setCompanyURL(data.domain);
   };

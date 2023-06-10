@@ -1,14 +1,13 @@
 import Paper from "@mui/material/Paper";
 import styled from "styled-components";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Typography from "@mui/material/Typography";
 import { Spacer } from "../Spacer/Spacer";
-import { getCountryFlag } from "../CountryFlag/CountryFlag";
 import Skeleton from "@mui/material/Skeleton";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { Color } from "src/styles/color";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
+import { LocationText } from "../LocationText/LocationText";
 
 interface CompanyCardProps {
   imageURL: string;
@@ -66,14 +65,13 @@ export const CompanyCard = ({
   companyURL,
   onOpenSubmitDomain,
 }: CompanyCardProps) => {
-  const countryFlag = getCountryFlag(country ?? "");
   return (
     <MainWrapper variant={isOutlined ? "outlined" : "elevation"} elevation={0}>
       <ImageWrapper src={imageURL} />
       <Spacer width={16} />
       <NameWrapper>
         {positionTitle ? (
-          <Typography variant="h4">
+          <Typography variant="h5">
             <b>{positionTitle}</b>
           </Typography>
         ) : null}
@@ -83,16 +81,7 @@ export const CompanyCard = ({
           onOpenSubmitDomain={onOpenSubmitDomain}
         />
         <Spacer height={24} />
-        {city && country ? (
-          <LocationWrapper>
-            <IconWrapper />
-            <Typography color="gray">
-              {`${city}${!countryFlag ? `, ${country}` : ""}`}
-            </Typography>
-            <Spacer width={8} />
-            {getCountryFlag(country ?? "")}
-          </LocationWrapper>
-        ) : null}
+        <LocationText icon city={city} country={country} />
       </NameWrapper>
     </MainWrapper>
   );
@@ -125,10 +114,10 @@ interface IImageWrapper {
   src: string;
 }
 const ImageWrapper = styled.div<IImageWrapper>`
-  width: 160px;
+  min-width: 160px;
   height: 160px;
   border: 1px solid #ddd;
-  border-radius: 16px;
+  border-radius: 8px;
   background-image: url(${props => props.src});
   background-size: contain;
   background-position: center center;
@@ -139,19 +128,7 @@ const NameWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`;
-
-const LocationWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const IconWrapper = styled(LocationOnIcon).attrs({
-  fontSize: "small",
-})`
-  && {
-    fill: gray;
-  }
+  padding-right: 32px;
 `;
 
 const LinkWrapper = styled.div`
