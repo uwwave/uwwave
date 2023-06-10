@@ -30,6 +30,7 @@ let dummyJobs: JobsPageRowData[] = [
       "<ul>\n  \n\t \n <li>Understanding of marketing elements (including traditional and digital marketing such as SEO/social media etc.) and market research methods</li>\n\t \n <li>Attention to detail and ability to lead several projects simultaneously</li>\n\t \n <li>Strong analytical and critical thinking skills</li>\n\t \n <li>Must be able to interact with end-users in a professional and service-centered manner</li>\n\t \n <li>Solid computer skills, including MS Office, marketing software (CRM) and applications (Web analytics, Google AdWords etc.)</li>\n\t \n <li>Experience of graphic software like Photoshop and Coreldraw</li>\n\t \n <li>Exceptional communication and writing skills</li>\n \n</ul>",
     compensationAndBenefitsInformation: "",
     isBookmarked: true,
+    location: "Waterloo, Canada",
   },
   {
     id: 313958,
@@ -51,6 +52,7 @@ let dummyJobs: JobsPageRowData[] = [
     compensationAndBenefitsInformation:
       "McRae's office has on-premises parking for all employees.&nbsp; There is an employee gym with showers, as well as table tennis. \n<br>\n \n<br>\nWe also provide hot beverages (espresso, coffee, tea, hot chocolate) for employees and guests. \n<br>\n \n<br>\nOccasional staff lunches (company provided).",
     isBookmarked: true,
+    location: "Waterloo, Canada",
   },
   {
     id: 313971,
@@ -71,6 +73,7 @@ let dummyJobs: JobsPageRowData[] = [
       "The candidate needs to perform coding and software development. The following experiences are required:\n \n<ul>\n  \n\t \n <li>Experience in MATLAB, C++, and/or JavaScript</li>\n\t \n <li>Experience in software testing and debugging</li>\n \n</ul>\nExperience in research and scientific writing",
     compensationAndBenefitsInformation: "",
     isBookmarked: true,
+    location: "Waterloo, Canada",
   },
   {
     id: 313975,
@@ -92,6 +95,7 @@ let dummyJobs: JobsPageRowData[] = [
     compensationAndBenefitsInformation:
       "The compensation range for these positions is&nbsp;$22.00 - $24.00 per hour and will commensurate with experience. \n<br>\n&nbsp;",
     isBookmarked: true,
+    location: "Waterloo, Canada",
   },
   {
     id: 314011,
@@ -112,6 +116,7 @@ let dummyJobs: JobsPageRowData[] = [
       "<strong>Knowledge of Business and Finance:</strong>\n\n \n<ul>\n  \n\t \n <li>Short to long range financial planning, forecasting, and budget allocation</li>\n\t \n <li>Performing calculations, conducting analysis, and preparing reports&nbsp;</li>\n \n</ul>\n<strong>Oral and Written Communication Skills:</strong>\n\n \n<ul>\n  \n\t \n <li>You can draft correspondence, prepare business cases, reports and presentations</li>\n\t \n <li>You can present information/advice in a clear, concise, and accurate manner&nbsp;</li>\n \n</ul>\n<strong>Research and Analytical Skills:</strong>\n\n \n<ul>\n  \n\t \n <li>You can collect, organize, and analyze data to identify trends, issues, and opportunities</li>\n\t \n <li>You can identify key business objectives and establish appropriate organizational goals</li>\n\t \n <li>You can make recommendations to address gaps and report on results&nbsp;</li>\n \n</ul>\n<strong>Project Management and Organizational Skills:</strong>\n\n \n<ul>\n  \n\t \n <li>You are able to plan, organize, and manage multiple tasks and projects with competing deadlines&nbsp;&nbsp;</li>\n \n</ul>\n<strong>Teamwork Skills:</strong>\n\n \n<ul>\n  \n\t \n <li>You can establish and maintain effective working relationships with colleagues and stakeholders at varying levels</li>\n\t \n <li>You can participate and contribute to committees and projects&nbsp;</li>\n \n</ul>\n<strong>Computer Skills:</strong>\n\n \n<ul>\n  \n\t \n <li>You are proficient in common software applications, such as Excel, Word and Acces. Draft documents and reports, prepare presentations, conduct analysis, and perform research on the internet &nbsp;</li>\n \n</ul>",
     compensationAndBenefitsInformation: "",
     isBookmarked: true,
+    location: "Waterloo, Canada",
   },
   {
     id: 314012,
@@ -132,6 +137,7 @@ let dummyJobs: JobsPageRowData[] = [
       "<strong>The knowledge and skills we look for that support these activities include:</strong> \n<br>\n&nbsp; \n<br>\n<strong>Technical knowledge:</strong>\n\n \n<ul>\n  \n\t \n <li>You have knowledge of performance measurement, data collection, analysis and synthesis.</li>\n\t \n <li>You have knowledge and skills in MS Access and Excel.</li>\n\t \n <li>You have knowledge of theories, principles and best practices in the field of analytics, information management, data standards, data modelling, data mining and evidence informed decision-making</li>\n \n</ul>\n<strong>Research and Analytical Skills:</strong>\n\n \n<ul>\n  \n\t \n <li>You can collect, organize, and analyze data to identify trends, issues, and opportunities</li>\n\t \n <li>You have demonstrated analytical and problem solving skills to plan and conduct assigned projects.</li>\n\t \n <li>You can make recommendations to address gaps and data improvements</li>\n\t \n <li>You have the ability to anticipate, analyse, monitor and assess complex and large scale issues and&nbsp;identify impacts of issues.</li>\n\t \n <li>You have the ability to conduct research, synthesize information, prepare analyses, reports and recommendations.</li>\n \n</ul>\n<strong>Project Management and Organizational Skills:</strong>\n\n \n<ul>\n  \n\t \n <li>You are able to plan, organize, and manage multiple tasks and projects with competing deadlines</li>\n \n</ul>\n<strong>Teamwork Skills:</strong>\n\n \n<ul>\n  \n\t \n <li>You can establish and maintain effective working relationships with colleagues and stakeholders at varying levels</li>\n\t \n <li>You can participate and contribute to committees and projects</li>\n \n</ul>",
     compensationAndBenefitsInformation: "",
     isBookmarked: true,
+    location: "Waterloo, Canada",
   },
   {
     id: 314038,
@@ -153,6 +159,7 @@ let dummyJobs: JobsPageRowData[] = [
     compensationAndBenefitsInformation:
       "<strong>Salary Range: </strong>$15-25 (The rate of pay will be based on the number of post-secondary years successfully completed as well as relevant work experience and is a standard rate for the federal government student placements.) \n<br>\n&nbsp;",
     isBookmarked: true,
+    location: "Waterloo, Canada",
   },
   {
     id: 314039,
@@ -174,6 +181,7 @@ let dummyJobs: JobsPageRowData[] = [
     compensationAndBenefitsInformation:
       "<strong>Salary Range: </strong>$15-25 (The rate of pay will be based on the number of post-secondary years successfully completed as well as relevant work experience and is a standard rate for the federal government student placements.) \n<br>\n&nbsp;",
     isBookmarked: true,
+    location: "Waterloo, Canada",
   },
   {
     id: 314040,
@@ -195,6 +203,7 @@ let dummyJobs: JobsPageRowData[] = [
     compensationAndBenefitsInformation:
       "<strong>Salary Range: </strong>$15-25 (The rate of pay will be based on the number of post-secondary years successfully completed as well as relevant work experience and is a standard rate for the federal government student placements.) \n<br>\n&nbsp;",
     isBookmarked: true,
+    location: "Waterloo, Canada",
   },
   {
     id: 314080,
@@ -216,8 +225,11 @@ let dummyJobs: JobsPageRowData[] = [
     compensationAndBenefitsInformation:
       "Salary: NT$30,000 (for each month) \n<br>\n \n<br>\nStudents are responsible for the cost of obtaining a work visa (Working Holiday visa).&nbsp; Students must secure a visa in Canada prior to travelling.&nbsp; It is recommended to secure health insurance prior to travelling as well.",
     isBookmarked: true,
+    location: "Waterloo, Canada",
   },
 ];
+
+dummyJobs = dummyJobs.map(x => ({ ...x, location: `${x.country}, ${x.city}` }));
 
 //TODO: End of code to remove
 
