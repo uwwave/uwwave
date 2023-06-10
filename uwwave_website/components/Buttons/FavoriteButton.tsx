@@ -44,4 +44,9 @@ const StyledButton = styled(SecondaryButton)<IFavoriteButton>`
     border-color: ${Color.bookmarked};
     box-shadow: 2px 3px ${Color.bookmarkedShadow};
   }
+
+  &&:hover {
+    background-color: ${props =>
+      props.selected ? Color.bookmarked : "initial"};
+  }
 `;

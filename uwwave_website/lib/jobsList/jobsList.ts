@@ -23,6 +23,8 @@ export interface JobsPageRowData {
   jobSummary: string;
   requiredSkills: string;
   compensationAndBenefitsInformation: string;
+  isBookmarked?: boolean;
+  location: string;
 }
 
 export function buildCoopJobsListFromExtensionData(
@@ -43,6 +45,7 @@ export function buildCoopJobsListFromExtensionData(
         openings: job.postingListData.openings,
         city: "",
         country: "",
+        location: "",
         industryTag: "",
         keywords: [],
         jobSummary: "",
@@ -58,6 +61,9 @@ export function buildCoopJobsListFromExtensionData(
           jobPostingInformation[JobInfoFieldsCoop.jobCity];
         jobList[job.jobId].country =
           jobPostingInformation[JobInfoFieldsCoop.jobCountry];
+        jobList[job.jobId].location = `${jobList[job.jobId].country}, ${
+          jobList[job.jobId].city
+        }`;
         jobList[job.jobId].jobSummary =
           jobPostingInformation[JobInfoFieldsCoop.jobSummary];
         jobList[job.jobId].jobResponsibilities =
@@ -98,6 +104,7 @@ export function buildFulltimeJobsListFromExtensionData(
         jobResponsibilities: "",
         requiredSkills: "",
         compensationAndBenefitsInformation: "",
+        location: "",
       };
 
       const jobInfo = job.pageData[PostingSections.jobPostingInformation];
@@ -106,6 +113,9 @@ export function buildFulltimeJobsListFromExtensionData(
         if (region) {
           jobList[job.jobId].country = region.split("-")[0].trim();
         }
+        jobList[job.jobId].location = `${jobList[job.jobId].country}, ${
+          jobList[job.jobId].city
+        }`;
         jobList[job.jobId].jobSummary =
           jobInfo[JobInfoFieldsFulltime.jobSummary];
         jobList[job.jobId].jobResponsibilities =
@@ -146,12 +156,14 @@ export function buildCoopJobWithJobID(
     jobResponsibilities: "",
     requiredSkills: "",
     compensationAndBenefitsInformation: "",
+    location: "",
   };
   const jobPostingInformation =
     jobInfo.pageData[PostingSections.jobPostingInformation];
   if (jobPostingInformation !== undefined) {
     job.city = jobPostingInformation[JobInfoFieldsCoop.jobCity];
     job.country = jobPostingInformation[JobInfoFieldsCoop.jobCountry];
+    job.location = `${job.country}, ${job.city}`;
     job.jobSummary = jobPostingInformation[JobInfoFieldsCoop.jobSummary];
     job.jobResponsibilities =
       jobPostingInformation[JobInfoFieldsCoop.jobResponsibilities];

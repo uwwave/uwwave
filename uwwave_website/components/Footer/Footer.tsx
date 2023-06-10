@@ -6,7 +6,6 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import { WaveLogo } from "src/components/icons/logo/Footer";
 import Link from "@mui/material/Link";
 import MUITypography from "@mui/material/Typography";
-import Typography from "@mui/material/Typography";
 import { Spacer } from "../Spacer/Spacer";
 import { useRouter } from "next/router";
 
@@ -22,10 +21,14 @@ const FooterWrapper = styled.div<IFooterWrapper>`
   padding: 20px;
 `;
 
-export const Footer = () => {
+interface IFooter {
+  dark?: boolean;
+}
+export const Footer = (props: IFooter) => {
+  const { dark } = props;
   const router = useRouter();
   const pathname = router.pathname;
-  const useDarkFooter = pathname === "/" || pathname === "/about";
+  const useDarkFooter = pathname === "/" || pathname === "/about" || dark;
   return (
     <>
       <FooterWrapper
@@ -77,31 +80,11 @@ export const Footer = () => {
           <WaveLogo color="white" />
         </IconWrapper>
       </FooterWrapper>
-      <BottomFooterWrapper>
-        <StyledTypography color={Color.textPrimary} fontWeight="normal">
-          © 2023 Wave. All rights reserved.
-        </StyledTypography>
-      </BottomFooterWrapper>
     </>
   );
 };
 
-const BottomFooterWrapper = styled.div`
-  background-color: ${BackgroundColor.darker};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 15px;
-  padding-top: 10px;
-`;
-
 const StyledLink = styled(Link)`
-  && {
-    font-size: 1rem;
-  }
-`;
-
-const StyledTypography = styled(Typography)`
   && {
     font-size: 1rem;
   }

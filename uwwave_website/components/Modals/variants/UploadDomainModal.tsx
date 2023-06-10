@@ -51,8 +51,8 @@ export const UploadDomainModal = (props: IUploadDomainModal) => {
       <Typography align="center">{companyName}</Typography>
       <Spacer height={32} />
       <Typography align="center">
-        This helps us uncover valuable information that benefit you and fellow
-        job seekers.
+        This helps us find valuable info that benefit you and fellow job
+        seekers.
       </Typography>
       <Spacer height={32} />
       <Center>
