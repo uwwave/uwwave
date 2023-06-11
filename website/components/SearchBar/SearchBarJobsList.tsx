@@ -108,7 +108,7 @@ const SearchBarJobsListInner = (props: ISearchBarJobsListInner) => {
               setSearchValue(event.target.value);
             }}
           />
-          <StyledButton variant="outline-primary">
+          <StyledButton>
             <SearchIcon />
           </StyledButton>
         </SearchInputWrapper>
@@ -196,6 +196,7 @@ const StyledButton = styled(Button)`
   && {
     position: relative;
     border-radius: 0 4px 0 0;
+    background-color: ${Color.primaryButton};
   }
 `;
 
@@ -206,7 +207,7 @@ const StyledSelect = styled(Select)`
     z-index: 1;
     border-radius: 4px 0px 0px 4px;
     margin-left: -4px;
-    background-color: ${Color.primary};
+    background-color: ${Color.primaryButton};
     color: white;
     font-weight: bold;
   }

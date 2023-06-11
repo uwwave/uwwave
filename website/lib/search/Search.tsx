@@ -4,7 +4,7 @@ import NotesIcon from "@mui/icons-material/Notes";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import StarBorderPurple500Icon from "@mui/icons-material/StarBorderPurple500";
 // import FactoryIcon from '@mui/icons-material/Factory'
-import SearchIcon from "@mui/icons-material/ContactSupport";
+import SearchIcon from "@mui/icons-material/Search";
 
 // TODO: Replace Industry with Keywords(?)
 export enum SearchTypes {

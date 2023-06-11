@@ -85,7 +85,7 @@ export const useJobPage = (jobID?: string) => {
       if (!jobID || gotInitTags) {
         return;
       }
-      const tagsSelected = await ExtensionRequests.getSelecedTags(
+      const tagsSelected = await ExtensionRequests.getSelectedTags(
         jobID as unknown as number
       );
       const allTags = await ExtensionRequests.getAllTags();

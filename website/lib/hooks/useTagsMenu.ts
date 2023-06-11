@@ -33,7 +33,7 @@ export const useTagsMenu = (
         return;
       }
       const tagsSelected =
-        userSelectedTabs ?? (await ExtensionRequests.getSelecedTags(jobID));
+        userSelectedTabs ?? (await ExtensionRequests.getSelectedTags(jobID));
       const allTags = userTags ?? (await ExtensionRequests.getAllTags());
       const filteredTags = allTags.filter(
         otherTag =>
