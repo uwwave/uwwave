@@ -41,7 +41,6 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
     {
       field: "companyName",
       headerName: "Company",
-      flex: 1,
       renderHeader: headerComponent,
       renderCell: rowData => (
         <JobTitleCell
@@ -51,18 +50,19 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
           imageURL={companyLogos?.companyNameToLogo[rowData.row.companyName]}
         />
       ),
+      colSpan: 2,
     },
     {
       field: "jobName",
       headerName: "Job Title",
       renderHeader: headerComponent,
       renderCell: () => <></>,
+      flex: 1,
     },
     {
       field: "keywords",
       headerName: "Keywords",
       sortable: false,
-      flex: 0.5,
       renderHeader: headerComponent,
       renderCell: rowData => (
         <div style={{ margin: "2px" }}>
