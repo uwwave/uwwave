@@ -40,7 +40,7 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
   const columns: GridColDef<JobsPageRowData>[] = [
     {
       field: "companyName",
-      headerName: "Job Title",
+      headerName: "Company",
       flex: 1,
       renderHeader: headerComponent,
       renderCell: rowData => (
@@ -51,6 +51,12 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
           imageURL={companyLogos?.companyNameToLogo[rowData.row.companyName]}
         />
       ),
+    },
+    {
+      field: "jobName",
+      headerName: "Job Title",
+      renderHeader: headerComponent,
+      renderCell: () => <></>,
     },
     {
       field: "keywords",
@@ -150,7 +156,7 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
         rowsPerPageOptions={[10, 25, 100]}
         pagination
         autoHeight
-        rowHeight={88}
+        rowHeight={96}
         disableSelectionOnClick
         sx={{
           ".MuiDataGrid-root, .MuiDataGrid-cell": {
