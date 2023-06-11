@@ -6,22 +6,26 @@ import {
   GridToolbar,
 } from "@mui/x-data-grid";
 import { JobsPageRowData } from "src/lib/jobsList/jobsList";
-import { BackgroundColor, Color } from "src/styles/color";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { BackgroundColor } from "src/styles/color";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
-import styled from "styled-components";
-import IconButton from "@mui/material/IconButton";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import { LocationText, Orientation } from "../LocationText/LocationText";
+import {
+  LocationText,
+  Orientation,
+} from "src/components/LocationText/LocationText";
+import { JobTitleCell } from "src/components/JobsDataGrid/components/JobTitleCell";
+import { ActionsCell } from "src/components/JobsDataGrid/components/ActionsCell";
+import { IGetCompanyLogosResponse } from "src/lib/requests/Requests";
+import { RatingsCell } from "src/components/JobsDataGrid/components/RatingCell";
 
 interface IJobsDataGrid {
   jobKeywords: { [key: string]: string[] };
   jobs: JobsPageRowData[];
   loading?: boolean;
+  companyLogos?: IGetCompanyLogosResponse;
 }
 export const JobsDataGrid = (props: IJobsDataGrid) => {
-  const { jobKeywords, jobs, loading } = props;
+  const { jobKeywords, jobs, loading, companyLogos } = props;
 
   const [pageSize, setPageSize] = useState(10);
 
@@ -36,35 +40,23 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
   const columns: GridColDef<JobsPageRowData>[] = [
     {
       field: "companyName",
-      headerName: "Company",
-      flex: 1,
-      renderHeader: headerComponent,
-      renderCell: rowData => (
-        <div style={{ margin: "2px" }}>
-          {rowData.row.companyName}
-          <br />
-          <div style={{ color: "grey", fontSize: "0.7rem" }}>
-            {rowData.row.division}
-            <br />
-          </div>
-        </div>
-      ),
-    },
-    {
-      field: "jobName",
       headerName: "Job Title",
       flex: 1,
       renderHeader: headerComponent,
       renderCell: rowData => (
-        <StyledA href={`/jobs/${rowData.id}`} target="_blank">
-          {rowData.row.jobName}
-        </StyledA>
+        <JobTitleCell
+          company={rowData.row.companyName}
+          jobID={rowData.id.toString()}
+          jobName={rowData.row.jobName}
+          imageURL={companyLogos?.companyNameToLogo[rowData.row.companyName]}
+        />
       ),
     },
     {
       field: "keywords",
       headerName: "Keywords",
       sortable: false,
+      flex: 0.5,
       renderHeader: headerComponent,
       renderCell: rowData => (
         <div style={{ margin: "2px" }}>
@@ -82,6 +74,20 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
               );
             })}
         </div>
+      ),
+    },
+    {
+      field: "score",
+      headerName: "Score",
+      align: "center",
+      headerAlign: "center",
+      renderHeader: headerComponent,
+      renderCell: () => (
+        <RatingsCell
+          ratingPercentage={95}
+          moneyPercentage={70}
+          scorePercenatge={50}
+        />
       ),
     },
     {
@@ -124,19 +130,7 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
       renderHeader: headerComponent,
       sortable: false,
       renderCell: rowData => (
-        <ActionsWrapper>
-          <IconButton>
-            <StyledBookmarkBorderIcon />
-          </IconButton>
-          <StyledA
-            href={`https://waterlooworks.uwaterloo.ca/myAccount/co-op/coop-postings.htm?ck_jobid=${rowData.id}`}
-            target="_blank"
-          >
-            <IconButton>
-              <OpenInNewIcon />
-            </IconButton>
-          </StyledA>
-        </ActionsWrapper>
+        <ActionsCell jobID={rowData.id.toString()} selectedTags={[]} />
       ),
     },
   ];
@@ -156,18 +150,26 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
         rowsPerPageOptions={[10, 25, 100]}
         pagination
         autoHeight
-        rowHeight={100}
+        rowHeight={88}
         disableSelectionOnClick
         sx={{
           ".MuiDataGrid-root, .MuiDataGrid-cell": {
             whiteSpace: "normal !important",
             wordWrap: "break-all !important",
+            overflow: "visible !important",
           },
           ".MuiTablePagination-selectLabel, .MuiTablePagination-displayedRows":
             {
               m: 1,
             },
           "border": "none",
+          ".MuiDataGrid-virtualScroller": {
+            overflow: "visible !important",
+          },
+          ".MuiDataGrid-main": {
+            overflow: "visible !important",
+            zIndex: "1 !important",
+          },
         }}
         components={{
           Toolbar: GridToolbar,
@@ -176,21 +178,3 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
     </Paper>
   );
 };
-
-const StyledA = styled.a`
-  && button svg {
-    color: ${Color.primaryButton};
-  }
-  color: ${Color.primaryButton};
-`;
-
-const ActionsWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const StyledBookmarkBorderIcon = styled(BookmarkBorderIcon)`
-  && {
-    color: ${BackgroundColor.darker};
-  }
-`;

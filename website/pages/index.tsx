@@ -15,12 +15,10 @@ import FactoryIcon from "@mui/icons-material/Factory";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Divider from "@mui/material/Divider";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import StarIcon from "@mui/icons-material/Star";
-import SearchIcon from "@mui/icons-material/Search";
-import { BackgroundColor, Color } from "src/styles/color";
+import { BackgroundColor } from "src/styles/color";
 import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
 import { Footer } from "src/components/Footer/Footer";
+import { RatingsCell } from "src/components/JobsDataGrid/components/RatingCell";
 
 const HomePage = () => {
   const renderDummySearchBar = () => (
@@ -99,23 +97,11 @@ const HomePage = () => {
               alt=""
             />
           </LocationWrapper>
-          <StatsWrapper>
-            <Pillar>
-              <InnerPillar1>
-                <RatingIcon />
-              </InnerPillar1>
-            </Pillar>
-            <Pillar>
-              <InnerPillar2>
-                <MoneyIcon />
-              </InnerPillar2>
-            </Pillar>
-            <Pillar>
-              <InnerPillar3>
-                <ScoreIcon />
-              </InnerPillar3>
-            </Pillar>
-          </StatsWrapper>
+          <RatingsCell
+            ratingPercentage={70}
+            moneyPercentage={90}
+            scorePercenatge={30}
+          />
         </CompanyCard>
       </RelativeWrapper>
     </DummySearchPaper>
@@ -262,70 +248,4 @@ const LocationWrapper = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
-`;
-
-const StatsWrapper = styled.div`
-  display: flex;
-  gap: 4px;
-  align-items: center;
-`;
-
-const Pillar = styled.div`
-  height: 64px;
-  width: 16px;
-  border-radius: 16px;
-  background-color: #cfd2d9;
-  display: flex;
-  flex-direction: column-reverse;
-`;
-
-const InnerPillar1 = styled.div`
-  height: 45px;
-  width: 16px;
-  border-radius: 16px;
-  background-color: ${Color.rating};
-  flex-direction: column-reverse;
-  display: flex;
-  align-items: center;
-`;
-
-const InnerPillar2 = styled.div`
-  height: 54px;
-  width: 16px;
-  border-radius: 16px;
-  background-color: ${Color.salary};
-  flex-direction: column-reverse;
-  display: flex;
-  align-items: center;
-`;
-
-const InnerPillar3 = styled.div`
-  height: 30px;
-  width: 16px;
-  border-radius: 16px;
-  background-color: ${Color.compatibility};
-  flex-direction: column-reverse;
-  display: flex;
-  align-items: center;
-`;
-
-const MoneyIcon = styled(AttachMoneyIcon)`
-  && {
-    fill: white;
-    width: 16px;
-  }
-`;
-
-const RatingIcon = styled(StarIcon)`
-  && {
-    fill: white;
-    width: 16px;
-  }
-`;
-
-const ScoreIcon = styled(SearchIcon)`
-  && {
-    fill: white;
-    width: 16px;
-  }
 `;

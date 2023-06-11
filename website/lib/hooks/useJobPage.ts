@@ -4,6 +4,7 @@ import { useExtensionData } from "../extension/hooks/useExtensionData";
 import { extractTechFromText } from "../genTechStack/genTechStack";
 import { Requests } from "../requests/Requests";
 import { ExtensionRequests, ITag } from "src/lib/requests/ExtensionRequests";
+import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
 
 type JobInfo = {
   title: string;
@@ -17,8 +18,8 @@ type CompanyCard = {
 };
 export const useJobePage = (jobID?: string) => {
   const { extensionData: jobs } = useExtensionData();
-  const [selectedTags, setSelectedTags] = useState<ITag[]>([])
-    const [tagsToSelect, setTagsToSelect] = useState<ITag[]>([])
+  const [selectedTags, setSelectedTags] = useState<ITag[]>([]);
+  const [tagsToSelect, setTagsToSelect] = useState<ITag[]>([]);
   const [gotInitTags, setGotInitTags] = useState<boolean>(false);
   const [tabSelected, setTabSelected] = useState(0);
   const [companyURL, setCompanyURL] = useState<string | undefined>(undefined);
@@ -66,8 +67,8 @@ export const useJobePage = (jobID?: string) => {
       return;
     }
     Requests.getCompanyInfo(companyInfo.companyName)
-      .then((res: any) => {
-        setImageURL(res.logo);
+      .then((res: ICompanyClearbitData) => {
+        setImageURL(res.logo ?? "/logo.png");
         setCompanyURL(res.domain);
         setInit(true);
       })
@@ -80,22 +81,24 @@ export const useJobePage = (jobID?: string) => {
   }, [companyInfo, jobInfo]);
 
   useEffect(() => {
-    const fire = async() => {
-        if(!jobID || gotInitTags){
-          return;
-        }
-        const tagsSelected =  await ExtensionRequests.getSelecedTags(jobID as unknown as number);
-        const allTags = await ExtensionRequests.getAllTags()
-        const filteredTags = allTags.filter(
-            (otherTag) =>
-              !tagsSelected.some(
-                (selectedTag) => selectedTag.label === otherTag.label
-              )
-          );
-        setTagsToSelect(filteredTags);
-        setSelectedTags(tagsSelected);
-        setGotInitTags(true)
-    }
+    const fire = async () => {
+      if (!jobID || gotInitTags) {
+        return;
+      }
+      const tagsSelected = await ExtensionRequests.getSelecedTags(
+        jobID as unknown as number
+      );
+      const allTags = await ExtensionRequests.getAllTags();
+      const filteredTags = allTags.filter(
+        otherTag =>
+          !tagsSelected.some(
+            selectedTag => selectedTag.label === otherTag.label
+          )
+      );
+      setTagsToSelect(filteredTags);
+      setSelectedTags(tagsSelected);
+      setGotInitTags(true);
+    };
     fire();
   }, [jobID]);
 
@@ -111,7 +114,8 @@ export const useJobePage = (jobID?: string) => {
     jobInfo.length === 0 ||
     companyInfo.positionTitle === "" ||
     job === null ||
-    companyURL === undefined || !gotInitTags
+    companyURL === undefined ||
+    !gotInitTags;
 
   return {
     imageURL,
@@ -125,6 +129,6 @@ export const useJobePage = (jobID?: string) => {
     companyURL,
     onClearbitData,
     selectedTags,
-    tagsToSelect
+    tagsToSelect,
   };
 };

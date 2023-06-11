@@ -25,14 +25,22 @@ export const LocationText = (props: IlocationText) => {
   return (
     <LocationWrapper orientation={orient}>
       {icon ? <IconWrapper /> : null}
-      <Typography align={isHorizontal ? "left" : "center"} variant={!isHorizontal ? "caption" : "subtitle2"} color="gray">
+      <Typography
+        align={isHorizontal ? "left" : "center"}
+        variant={!isHorizontal ? "caption" : "subtitle2"}
+        color="gray"
+      >
         {`${city ?? ""}${
           !countryFlag ? `${country ? `, ${country}` : ""}` : ""
         }`}
       </Typography>
       <Spacer width={isHorizontal ? 4 : 0} height={!isHorizontal ? 4 : 0} />
       {countryFlag ? (
-        <Tooltip title={<Typography>{country}</Typography>} arrow>
+        <Tooltip
+          title={<Typography>{country}</Typography>}
+          arrow
+          placement={!isHorizontal ? "top" : undefined}
+        >
           <Flex>{getCountryFlag(country ?? "")}</Flex>
         </Tooltip>
       ) : null}

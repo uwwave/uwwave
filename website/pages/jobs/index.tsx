@@ -15,7 +15,11 @@ import { JobsPageRowData } from "src/lib/jobsList/jobsList";
 import { useExtensionData } from "src/lib/extension/hooks/useExtensionData";
 import { WarningIcon } from "src/components/icons/WarningIcon";
 import { CheckIcon } from "src/components/icons/CheckIcon";
-import { IJobKeywordObject, Requests } from "src/lib/requests/Requests";
+import {
+  IGetCompanyLogosResponse,
+  IJobKeywordObject,
+  Requests,
+} from "src/lib/requests/Requests";
 import {
   SearchBarJobsList,
   ISearchChip,
@@ -24,7 +28,6 @@ import lunr from "lunr";
 import { getSearchTypeField, SearchTypes } from "src/lib/search/Search";
 import { JobsDataGrid } from "src/components/JobsDataGrid/JobsDataGrid";
 import { Footer } from "src/components/Footer/Footer";
-import { ExtensionRequests } from "src/lib/requests/ExtensionRequests";
 
 export interface JobsPageProps {
   jobs: JobsPageRowData[];
@@ -73,13 +76,14 @@ export default function JobsListPage() {
   const [jobKeywords, setJobKeywords] = useState<{ [key: string]: string[] }>(
     {}
   );
+  const [logos, setLogos] = useState<IGetCompanyLogosResponse | undefined>();
   const {
     coopJobsListPageRows: jobs,
     extensionData,
     isDataReady,
   } = useExtensionData();
   const dateScraped = extensionData[LocalStorageMetadataKeys.SCRAPE_AT];
-  const loading = !isDataReady;
+  const loading = !isDataReady || logos === undefined;
 
   const [jobsList, setJobsList] = useState<any>({});
   const [displayJobs, setDisplayJobs] = useState<JobsPageRowData[]>(jobs);
@@ -166,6 +170,14 @@ export default function JobsListPage() {
     setDisplayJobs(newJobs);
   }, [jobsList, searchIndex, searchChips]);
 
+  useEffect(() => {
+    const fire = async () => {
+      const out = await Requests.getCompanyLogos();
+      setLogos(out);
+    };
+    fire();
+  }, []);
+
   return (
     <>
       <NavigationBar />
@@ -196,6 +208,7 @@ export default function JobsListPage() {
             jobs={displayJobs}
             loading={loading}
             jobKeywords={jobKeywords}
+            companyLogos={logos}
           />
         </Container>
         <Spacer height={64} />

@@ -273,6 +273,7 @@ const TagsWrapper = styled.div`
   overflow: hidden;
   z-index: 2;
   background-color: ${BackgroundColor.darker};
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.6);
 `;
 
 const TagsListWrapper = styled.div`

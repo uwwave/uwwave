@@ -1,7 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import connectToDb from "src/database/mongo-db";
 import { doCompanyNamesMatch } from "src/lib/companyDomainSearch/companyDomainSearch";
-import CompanyDomainsDoc from "src/database/models/CompanyDomains";
+import CompanyDomainsDoc, {
+  ICompanyClearbitData,
+} from "src/database/models/CompanyDomains";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const clearbit = require("clearbit")(process.env.CLEARBIT);
 
@@ -32,14 +34,14 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
 
   return new Promise((_, reject) => {
     Company.find({ domain: domainString })
-      .then(async function (company: any) {
+      .then(async function (company: ICompanyClearbitData) {
         if (!doCompanyNamesMatch(companyNameString, company.name)) {
           reject(new Error("Company name does not match name from URL"));
         }
         await connectToDb();
         await CompanyDomainsDoc.findOneAndUpdate(
           { companyName: companyNameString },
-          { domain: company.domain },
+          { ...company },
           { new: true, upsert: true }
         );
         res.send(company);
@@ -67,15 +69,7 @@ const handleGet = (req: NextApiRequest, res: NextApiResponse) => {
           reject();
           return;
         }
-        const domain = companyDomain.domain;
-        const Company = clearbit.Company;
-        Company.find({ domain })
-          .then(async function (company: any) {
-            res.send(company);
-          })
-          .catch(function (error: any) {
-            reject(error);
-          });
+        res.send(companyDomain.toObject());
       })
       .catch(error => {
         reject(error); // Reject the promise if an error occurs

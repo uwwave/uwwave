@@ -10,7 +10,7 @@ export const JobPagePaper = (props: IJobPagePaper) => {
   return (
     <Box
       bgcolor={BackgroundColor.dark}
-      sx={{ borderRadius: "16px", p: 4, mt: 2 }}
+      sx={{ borderRadius: "8px", p: 4, mt: 0.5 }}
       color="white"
     >
       {children}
