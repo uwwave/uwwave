@@ -42,6 +42,7 @@ const CompanyProfilePic = styled.div<ICompanyProfilePic>`
 const JobTitleCellWrapper = styled.div`
   display: flex;
   gap: 8px;
+  align-items: center;
 `;
 
 interface ICompanyProfilePic {
