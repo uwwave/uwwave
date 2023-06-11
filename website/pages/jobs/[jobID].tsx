@@ -22,7 +22,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import PaidIcon from "@mui/icons-material/Paid";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import { calculateDaysFromNow } from "src/lib/dates/dates";
-import { useJobePage } from "src/lib/hooks/useJobPage";
+import { useJobPage } from "src/lib/hooks/useJobPage";
 import Skeleton from "@mui/material/Skeleton";
 import Paper from "@mui/material/Paper";
 import Tooltip from "@mui/material/Tooltip";
@@ -32,6 +32,7 @@ import { UploadDomainModal } from "src/components/Modals/variants/UploadDomainMo
 import { JobPagePaper } from "src/components/Paper/JobPagePaper";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
+import { JobInfoFieldsCoop } from "src/lib/extension/jobKeys";
 const SpecificJobPage = () => {
   const router = useRouter();
   const jobID = router.query.jobID;
@@ -48,7 +49,7 @@ const SpecificJobPage = () => {
     onClearbitData,
     selectedTags,
     tagsToSelect,
-  } = useJobePage(jobID as string | undefined);
+  } = useJobPage(jobID as string | undefined);
   const [submitDomainModal, setSubmitDomainModal] = useState(false);
   useEffect(() => {
     if (!job) {
@@ -158,12 +159,22 @@ const SpecificJobPage = () => {
             value={job.compensationAndBenefitsInformation}
           />
         ) : null}
-        <JobInfoTile
-          icon={<LocationCityIcon />}
-          title="Address"
-          value={"Address line 1"}
-          subValue={"Maybe address line 2, POSTAL CODE"}
-        />
+
+        {job?.jobPostingInformation[JobInfoFieldsCoop.jobAddressLineOne] ? (
+          <JobInfoTile
+            icon={<LocationCityIcon />}
+            title="Address"
+            value={
+              job.jobPostingInformation[JobInfoFieldsCoop.jobAddressLineOne]
+            }
+            subValue={
+              (job?.jobPostingInformation[JobInfoFieldsCoop.jobAddressLineTwo] +
+                ", " ?? "") +
+              (job?.jobPostingInformation[JobInfoFieldsCoop.jobPostalCode] ??
+                "")
+            }
+          />
+        ) : null}
       </JobFastFactsWrapper>
     );
   };
