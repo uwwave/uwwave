@@ -65,7 +65,7 @@ export const JobRatingCard = (props: IJobRatingCard) => {
 const MainWrapper = styled.div`
   padding: 24px;
   background-color: ${BackgroundColor.darker};
-  border-radius: 16px;
+  border-radius: 8px;
   display: flex;
   gap: 16px;
 `;

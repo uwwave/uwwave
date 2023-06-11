@@ -1,9 +1,13 @@
 import axios from "axios";
-import { ICompanyDomain } from "src/database/models/CompanyDomains";
+import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
 
 export interface IJobKeyword {
   jobID: string;
   keywords: string[];
+}
+
+export interface IGetCompanyLogosResponse {
+  companyNameToLogo: { [key: string]: string | undefined };
 }
 
 export interface IJobKeywordObject {
@@ -39,15 +43,21 @@ export class Requests {
   static async addCompanyDomain(
     companyName: string,
     domain: string
-  ): Promise<ICompanyDomain> {
+  ): Promise<ICompanyClearbitData> {
     return axios
       .post(`/api/companyInfo`, { companyName, domain })
       .then(x => x.data);
   }
 
-  static async getCompanyInfo(companyName: string): Promise<any> {
+  static async getCompanyInfo(
+    companyName: string
+  ): Promise<ICompanyClearbitData> {
     return axios
       .get(`/api/companyInfo?companyName=${companyName}`)
       .then(x => x.data);
+  }
+
+  static async getCompanyLogos(): Promise<IGetCompanyLogosResponse> {
+    return axios.get(`/api/companyInfo/logos`).then(x => x.data);
   }
 }

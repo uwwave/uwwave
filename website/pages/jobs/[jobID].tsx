@@ -47,7 +47,7 @@ const SpecificJobPage = () => {
     companyURL,
     onClearbitData,
     selectedTags,
-    tagsToSelect
+    tagsToSelect,
   } = useJobePage(jobID as string | undefined);
   const [submitDomainModal, setSubmitDomainModal] = useState(false);
   useEffect(() => {
@@ -250,6 +250,7 @@ const SpecificJobPage = () => {
           }}
         />
       ) : null}
+      <Spacer height={16} />
       {tabSelected === 0 ? <Description /> : null}
       {tabSelected === 1 ? renderConfigTab() : null}
     </>
