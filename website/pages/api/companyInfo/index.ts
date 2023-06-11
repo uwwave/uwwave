@@ -37,6 +37,7 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
       .then(async function (company: ICompanyClearbitData) {
         if (!doCompanyNamesMatch(companyNameString, company.name)) {
           reject(new Error("Company name does not match name from URL"));
+          return;
         }
         await connectToDb();
         await CompanyDomainsDoc.findOneAndUpdate(
