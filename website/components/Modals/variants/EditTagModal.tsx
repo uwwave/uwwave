@@ -46,14 +46,7 @@ export const EditTagModal = (props: IUploadDomainModal) => {
     colors,
     tagExistsError,
     tag,
-  } = useEditTagModal(
-    isOpen,
-    onClose,
-    initTag,
-    allTags,
-    onPatchTag,
-    onDeleteTag
-  );
+  } = useEditTagModal(isOpen, initTag, allTags, onPatchTag, onDeleteTag);
 
   const renderDeleteModeButtons = () => {
     if (!deleteMode) {

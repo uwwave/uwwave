@@ -1,27 +1,25 @@
 import { ITag } from "src/lib/requests/ExtensionRequests";
 import { ExtensionRequests } from "src/lib/requests/ExtensionRequests";
 import { useState } from "react";
-import uniqolor from "uniqolor";
 
 export const useEditTagModal = (
   isOpen: boolean,
-  onClose: () => void,
   initTag: ITag,
   allTags: ITag[],
   onPatchTag: (newTag: ITag) => void,
   onDeleteTag: () => void
 ) => {
   const [colors] = useState<string[]>([
-    uniqolor.random().color,
-    uniqolor.random().color,
-    uniqolor.random().color,
-    uniqolor.random().color,
-    uniqolor.random().color,
-    uniqolor.random().color,
-    uniqolor.random().color,
-    uniqolor.random().color,
-    uniqolor.random().color,
-    uniqolor.random().color,
+    "#c0392b",
+    "#d35400",
+    "#EAB543",
+    "#16a085",
+    "#27ae60",
+    "#3498db",
+    "#9b59b6",
+    "#1e3799",
+    "#3B3B98",
+    "#f368e0",
   ]);
   const [deleteMode, setDeleteMode] = useState<boolean>(false);
   const [tag, setTag] = useState<ITag>(initTag);
