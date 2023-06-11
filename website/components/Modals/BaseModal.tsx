@@ -9,6 +9,7 @@ import LoadingAnimation from "@mui/material/CircularProgress";
 import React from "react";
 import Typography from "@mui/material/Typography";
 import styled from "styled-components";
+import { Spacer } from "src/components/Spacer/Spacer";
 
 export interface ModalProps {
   open: boolean;
@@ -21,6 +22,7 @@ export interface ModalProps {
   children?: string | React.ReactNode;
   isLoading?: boolean;
   disableConfirm?: boolean;
+  maxWidth?: string;
 }
 
 export const BaseModal = (props: ModalProps): JSX.Element => {
@@ -35,6 +37,7 @@ export const BaseModal = (props: ModalProps): JSX.Element => {
     children,
     isLoading,
     disableConfirm,
+    maxWidth,
   } = props;
   const handleClose = () => {
     onCloseModal && onCloseModal();
@@ -52,20 +55,27 @@ export const BaseModal = (props: ModalProps): JSX.Element => {
     <DialogWrapper
       open={open}
       onClose={handleClose}
-      maxWidth={"md"}
+      maxWidth={maxWidth ?? "md"}
       fullWidth
     >
-      <DialogTitle align={"center"}>
-        <b>{title}</b>
-        {hasCloseX && (
-          <CloseButtonWrapper aria-label="close" onClick={handleClose}>
-            <CloseIcon />
-          </CloseButtonWrapper>
-        )}
-      </DialogTitle>
+      {title || hasCloseX ? (
+        <DialogTitle align={"center"}>
+          <b>{title}</b>
+          {hasCloseX && (
+            <CloseButtonWrapper aria-label="close" onClick={handleClose}>
+              <CloseIcon />
+            </CloseButtonWrapper>
+          )}
+        </DialogTitle>
+      ) : null}
       <DialogContent style={{ overflow: "visible" }}>{children}</DialogContent>
       <DialogActionsWrapper>
-        {isLoading && <LoadingAnimation />}
+        {isLoading && (
+          <>
+            <LoadingAnimation />
+            <Spacer height={16} />
+          </>
+        )}
         {onClickOk && !isLoading && (
           <PrimaryButton
             onClick={handleOk}
@@ -101,10 +111,7 @@ const DialogWrapper = styled(otherProps => <Dialog {...otherProps} />)`
   & > .MuiDialog-container > .MuiPaper-root {
     min-width: ${props => props.width};
     padding: 16px;
-  }
-
-  & {
-    overflow: visible;
+    overflow-y: unset;
   }
 `;
 
