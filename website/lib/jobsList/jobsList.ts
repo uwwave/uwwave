@@ -24,6 +24,7 @@ export interface JobsPageRowData {
   requiredSkills: string;
   compensationAndBenefitsInformation: string;
   location: string;
+  jobPostingInformation: any;
 }
 
 export function buildCoopJobsListFromExtensionData(
@@ -51,6 +52,7 @@ export function buildCoopJobsListFromExtensionData(
         jobResponsibilities: "",
         requiredSkills: "",
         compensationAndBenefitsInformation: "",
+        jobPostingInformation: null,
       };
 
       const jobPostingInformation =
@@ -73,6 +75,7 @@ export function buildCoopJobsListFromExtensionData(
           jobPostingInformation[
             JobInfoFieldsCoop.compensationAndBenefitsInformation
           ] ?? "";
+        jobList[job.jobId].jobPostingInformation = jobPostingInformation;
       }
     }
   });
@@ -104,6 +107,7 @@ export function buildFulltimeJobsListFromExtensionData(
         requiredSkills: "",
         compensationAndBenefitsInformation: "",
         location: "",
+        jobPostingInformation: null,
       };
 
       const jobInfo = job.pageData[PostingSections.jobPostingInformation];
@@ -123,6 +127,7 @@ export function buildFulltimeJobsListFromExtensionData(
           jobInfo[JobInfoFieldsFulltime.requiredSkills];
         jobList[job.jobId].compensationAndBenefitsInformation =
           jobInfo[JobInfoFieldsFulltime.compensationAndBenefits];
+        jobList[job.jobId].jobPostingInformation = jobInfo;
       }
     }
   });
@@ -156,6 +161,7 @@ export function buildCoopJobWithJobID(
     requiredSkills: "",
     compensationAndBenefitsInformation: "",
     location: "",
+    jobPostingInformation: null,
   };
   const jobPostingInformation =
     jobInfo.pageData[PostingSections.jobPostingInformation];
@@ -172,6 +178,7 @@ export function buildCoopJobWithJobID(
       jobPostingInformation[
         JobInfoFieldsCoop.compensationAndBenefitsInformation
       ] ?? "";
+    job.jobPostingInformation = jobPostingInformation;
   }
   return job;
 }

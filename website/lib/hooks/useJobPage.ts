@@ -16,7 +16,7 @@ type CompanyCard = {
   country: string;
   positionTitle: string;
 };
-export const useJobePage = (jobID?: string) => {
+export const useJobPage = (jobID?: string) => {
   const { extensionData: jobs } = useExtensionData();
   const [selectedTags, setSelectedTags] = useState<ITag[]>([]);
   const [tagsToSelect, setTagsToSelect] = useState<ITag[]>([]);
