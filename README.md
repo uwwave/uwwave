@@ -1,6 +1,6 @@
 ## UW Wave
 
-The ultimate companion app to WaterlooWorks.
+The ultimate companion app for WaterlooWorks.
 
 ### Monorepo
 
