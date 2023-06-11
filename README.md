@@ -1,10 +1,10 @@
 ## UW Wave
 
-The ultimate companion app to WaterlooWorks.
+The ultimate companion app for WaterlooWorks.
 
 ### Monorepo
 
-Next.js (backend + frontend) website is in [uwwave_website](uwwave_website)
+Next.js (backend + frontend) website is in [website](website)
 
 
 ### Developers
