@@ -25,6 +25,9 @@ export interface JobsPageRowData {
   compensationAndBenefitsInformation: string;
   location: string;
   jobPostingInformation: any;
+  ratingsScore: number;
+  salaryScore: number;
+  compatibilityScore: number;
 }
 
 export function buildCoopJobsListFromExtensionData(
@@ -53,6 +56,9 @@ export function buildCoopJobsListFromExtensionData(
         requiredSkills: "",
         compensationAndBenefitsInformation: "",
         jobPostingInformation: null,
+        ratingsScore: Math.random() * 100,
+        salaryScore: Math.random() * 100,
+        compatibilityScore: Math.random() * 100,
       };
 
       const jobPostingInformation =
@@ -108,6 +114,9 @@ export function buildFulltimeJobsListFromExtensionData(
         compensationAndBenefitsInformation: "",
         location: "",
         jobPostingInformation: null,
+        ratingsScore: Math.random() * 100,
+        salaryScore: Math.random() * 100,
+        compatibilityScore: Math.random() * 100,
       };
 
       const jobInfo = job.pageData[PostingSections.jobPostingInformation];
@@ -162,6 +171,9 @@ export function buildCoopJobWithJobID(
     compensationAndBenefitsInformation: "",
     location: "",
     jobPostingInformation: null,
+    ratingsScore: Math.random() * 100,
+    salaryScore: Math.random() * 100,
+    compatibilityScore: Math.random() * 100,
   };
   const jobPostingInformation =
     jobInfo.pageData[PostingSections.jobPostingInformation];

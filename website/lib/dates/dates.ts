@@ -9,9 +9,11 @@ export const calculateDaysFromNow = (date: Date): string => {
   if (daysDifference === 0) {
     return "TODAY";
   } else if (daysDifference < 0) {
-    return "OVERDUE";
+    return "LATE";
+  } else if (daysDifference === 1) {
+    return "TMRW";
   } else {
-    return daysDifference.toString();
+    return `${daysDifference.toString()} days`;
   }
 };
 

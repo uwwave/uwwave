@@ -306,9 +306,11 @@ const StyledLoadingAnimation = styled(LoadingAnimation)`
   }
 `;
 const StyledMenuItem = styled(MenuItem)`
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-right: 0;
+  &&& {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-right: 0;
+  }
   &&& svg {
     display: none;
   }

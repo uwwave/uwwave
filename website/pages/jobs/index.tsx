@@ -15,7 +15,7 @@ import { useJobsList } from "src/lib/hooks/useJobsList";
 
 export default function JobsListPage() {
   useEffect(() => {
-    document.title = "Wave - Jobs List";
+    document.title = "Jobs List";
   }, []);
 
   const {
