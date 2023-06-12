@@ -4,7 +4,7 @@ import NotesIcon from "@mui/icons-material/Notes";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import StarBorderPurple500Icon from "@mui/icons-material/StarBorderPurple500";
 // import FactoryIcon from '@mui/icons-material/Factory'
-import SearchIcon from "@mui/icons-material/ContactSupport";
+import SearchIcon from "@mui/icons-material/Search";
 
 // TODO: Replace Industry with Keywords(?)
 export enum SearchTypes {
@@ -55,21 +55,46 @@ export const getSearchTypeField = (type: SearchTypes) => {
   }
 };
 
-export const getSearchTypeIcon = (type: SearchTypes) => {
+// TODO: Color NOT CHANGING
+export const getSearchTypeIcon = (type: SearchTypes, isActive: boolean) => {
   switch (type) {
     case SearchTypes.JobTitle:
-      return <AccountCircleIcon />;
+      return (
+        <AccountCircleIcon
+          style={{ color: "black", ...(isActive && { color: "white" }) }}
+        />
+      );
     case SearchTypes.CompanyName:
-      return <BusinessIcon />;
+      return (
+        <BusinessIcon
+          style={{ color: "black", ...(isActive && { color: "white" }) }}
+        />
+      );
     case SearchTypes.JobSummary:
-      return <NotesIcon />;
+      return (
+        <NotesIcon
+          style={{ color: "black", ...(isActive && { color: "white" }) }}
+        />
+      );
     case SearchTypes.JobResponsibilities:
-      return <HandshakeIcon />;
+      return (
+        <HandshakeIcon
+          style={{ color: "black", ...(isActive && { color: "white" }) }}
+        />
+      );
     case SearchTypes.RequiredSkills:
-      return <StarBorderPurple500Icon />;
+      return (
+        <StarBorderPurple500Icon
+          style={{ color: "black", ...(isActive && { color: "white" }) }}
+        />
+      );
     // case SearchTypes.Industry:
     //  return <FactoryIcon />
     default:
-      return <SearchIcon />;
+      return (
+        <SearchIcon
+          style={{ color: "black", ...(isActive && { color: "white" }) }}
+        />
+      );
   }
 };

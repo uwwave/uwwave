@@ -3,6 +3,7 @@ import { Button } from "components/MUI/Button";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
+import { Color } from "styles/color";
 
 interface ISearchBar<T> {
   width?: string; // css string
@@ -35,7 +36,7 @@ export const SearchBar = <T,>(props: ISearchBar<T>) => {
             }}
             value={value}
           />
-          <StyledButton variant="outline-primary">
+          <StyledButton>
             <SearchIcon />
           </StyledButton>
         </SearchInputWrapper>
@@ -74,7 +75,7 @@ const StyledButton = styled(Button)`
     position: relative;
     right: 4px;
     border-radius: 0 4px 0 0;
-    background-color: #061e39;
+    background-color: ${Color.primaryButton};
   }
 `;
 

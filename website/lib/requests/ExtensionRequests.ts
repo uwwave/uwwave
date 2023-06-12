@@ -37,7 +37,7 @@ export class ExtensionRequests {
   }
 
   //gets the selected tags of a certain jobid
-  static async getSelecedTags(jobID: number): Promise<ITag[]> {
+  static async getSelectedTags(jobID: number): Promise<ITag[]> {
     console.log(jobID);
     await delay(500);
     return [...dummyTags.slice(0, 1)];

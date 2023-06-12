@@ -19,6 +19,7 @@ import MUIButton from "@mui/material/Button";
 export interface ISearchChip {
   searchType: SearchTypes;
   searchVal: string;
+  isActive: boolean;
 }
 
 interface ISearchBarJobsListInner {
@@ -26,14 +27,17 @@ interface ISearchBarJobsListInner {
   onSearch: (val: string, type: SearchTypes) => string;
   onDeleteChip: (index: number) => void;
   onClearChips: () => void;
+  onClickChip: (index: number) => void;
 }
 
 interface ISearchBarJobsList {
   onSearchUpdated: (chips: ISearchChip[]) => void;
+  setNumActiveChips: (activeChips: number) => void;
+  numActiveChips: number;
 }
 
 const SearchBarJobsListInner = (props: ISearchBarJobsListInner) => {
-  const { chips, onSearch, onDeleteChip, onClearChips } = props;
+  const { chips, onSearch, onDeleteChip, onClearChips, onClickChip } = props;
   const [searchType, setSearchType] = useState<SearchTypes>(SearchTypes.All);
   const [searchValue, setSearchValue] = useState<string>("");
 
@@ -53,10 +57,15 @@ const SearchBarJobsListInner = (props: ISearchBarJobsListInner) => {
     }
     return (
       <ChipsWrapperWrapper>
+        <StyledClearButton onClick={onClearChips}>Clear</StyledClearButton>
         <ChipsWrapper>
           {chips.map(({ searchType, searchVal }, i) => (
-            <Chip
-              icon={getSearchTypeIcon(searchType)}
+            <StyledChip
+              isActive={chips[i].isActive}
+              onClick={() => {
+                onClickChip(i);
+              }}
+              icon={getSearchTypeIcon(searchType, chips[i].isActive)}
               label={`${getSearchTypeName(searchType)}: ${searchVal}`}
               onDelete={() => {
                 onDeleteChip(i);
@@ -65,7 +74,6 @@ const SearchBarJobsListInner = (props: ISearchBarJobsListInner) => {
             />
           ))}
         </ChipsWrapper>
-        <MUIButton onClick={onClearChips}>Clear</MUIButton>
       </ChipsWrapperWrapper>
     );
   };
@@ -108,7 +116,7 @@ const SearchBarJobsListInner = (props: ISearchBarJobsListInner) => {
               setSearchValue(event.target.value);
             }}
           />
-          <StyledButton variant="outline-primary">
+          <StyledButton>
             <SearchIcon />
           </StyledButton>
         </SearchInputWrapper>
@@ -127,6 +135,7 @@ export const SearchBarJobsList = (props: ISearchBarJobsList) => {
 
   const onClearChips = () => {
     setChips([]);
+    props.setNumActiveChips(0);
   };
 
   const onSearch = (val: string, type: SearchTypes) => {
@@ -139,7 +148,12 @@ export const SearchBarJobsList = (props: ISearchBarJobsList) => {
     const newChip: ISearchChip = {
       searchVal: val,
       searchType: type,
+      isActive: props.numActiveChips > 0 ? true : false,
     };
+
+    if (props.numActiveChips > 0) {
+      props.setNumActiveChips(props.numActiveChips + 1);
+    }
 
     let found = false;
     // Update existing chip if exists
@@ -166,6 +180,16 @@ export const SearchBarJobsList = (props: ISearchBarJobsList) => {
     setChips(tempChips);
   };
 
+  const onClickChip = (index: number) => {
+    const chip = chips[index];
+    chip.isActive = !chip.isActive;
+    if (chip.isActive) {
+      props.setNumActiveChips(props.numActiveChips + 1);
+    } else {
+      props.setNumActiveChips(props.numActiveChips - 1);
+    }
+  };
+
   return (
     <Paper>
       <SearchBarJobsListInner
@@ -173,6 +197,7 @@ export const SearchBarJobsList = (props: ISearchBarJobsList) => {
         onSearch={onSearch}
         onDeleteChip={onDeleteChip}
         onClearChips={onClearChips}
+        onClickChip={onClickChip}
       />
     </Paper>
   );
@@ -199,14 +224,20 @@ const StyledButton = styled(Button)`
   }
 `;
 
+const StyledClearButton = styled(MUIButton)`
+  && {
+    color: black;
+  }
+`;
+
 const StyledSelect = styled(Select)`
   && {
     position: relative;
     left: 4px;
     z-index: 1;
-    border-radius: 4px 0px 0px 4px;
+    border-radius: 4px 0px 0px 0px;
     margin-left: -4px;
-    background-color: ${Color.primary};
+    background-color: ${Color.primaryButton};
     color: white;
     font-weight: bold;
   }
@@ -224,4 +255,17 @@ const ChipsWrapper = styled.div`
 const ChipsWrapperWrapper = styled.div`
   padding: 16px;
   width: 100%;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+`;
+
+// This is used to prevent passing the prop into dom of the custom component and causing error
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const StyledChip = styled(({ isActive, ...rest }) => <Chip {...rest} />)`
+  && {
+    color: ${props => (props.isActive ? "white" : "black")};
+    background-color: ${props =>
+      props.isActive ? Color.primaryButton : "white"};
+  }
 `;
