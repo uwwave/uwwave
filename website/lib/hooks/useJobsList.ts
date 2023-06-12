@@ -69,7 +69,7 @@ export const useJobsList = () => {
       return;
     }
     // get keywords for jobs
-    Requests.getJobKeywords(jobs.map(item => item.id as any as string))
+    Requests.getJobKeywords(jobs.map(item => item.id.toString()))
       .then((res: IJobKeywordObject) => {
         setJobKeywords(res.jobs);
       })

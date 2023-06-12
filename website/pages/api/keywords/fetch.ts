@@ -24,7 +24,7 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     const jobIDs = req.body.jobIDs as string[];
     if (!jobIDs || jobIDs.length === 0) {
       const jobKeywords = await JobKeywordsDocuments.find();
-      const out = jobKeywords.map(x => x.toObject()) as any;
+      const out = jobKeywords.map(x => x.toObject());
       const outObject: { [key: string]: string[] } = {};
       for (const job of out) {
         outObject[job.jobID] = [...job.keywords];
