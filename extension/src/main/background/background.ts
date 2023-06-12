@@ -1,5 +1,7 @@
 import { addSyncStorageListener } from '../common/storage'
 import { updateBadge } from '../common/icon'
+import { addRuntimeOnInstalledListener } from '../common/runtime'
+import { createTabWithUrl } from '../common/tabs'
 
 let heartbeatTimeout = setTimeout(updateBadge, 65000)
 
@@ -11,3 +13,11 @@ addSyncStorageListener(async () => {
 })
 
 updateBadge().then()
+
+addRuntimeOnInstalledListener(async function (details) {
+    const externalUrl = 'https://uwwave.ca/setup'
+
+    if (details.reason === 'install') {
+        await createTabWithUrl(externalUrl)
+    }
+})

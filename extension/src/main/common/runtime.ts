@@ -1,6 +1,7 @@
 import { Runtime, runtime } from 'webextension-polyfill'
 import * as browser from 'webextension-polyfill'
 import MessageSender = Runtime.MessageSender
+import OnInstalledDetailsType = Runtime.OnInstalledDetailsType
 
 export enum ExtensionResource {
     HelperContainer = 'resources/html/ww_helper.html',
@@ -30,4 +31,10 @@ export function addRuntimeListener(
     ) => void,
 ) {
     browser.runtime.onMessage.addListener(listener)
+}
+
+export function addRuntimeOnInstalledListener(
+    listener: (details: OnInstalledDetailsType) => void,
+) {
+    browser.runtime.onInstalled.addListener(listener)
 }
