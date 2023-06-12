@@ -1,29 +1,29 @@
-type StorageKeys = string | string[] | Record<string, any> | null
+type StorageKeys = string | string[] | Record<string, any> | null;
 
 export enum RequestName {
-    getLocal = 'getLocal',
+  getLocal = "getLocal",
 }
 
 export enum MessageType {
-    extensionLoaded = 'CK_EXT_LOADED',
-    fromPage = 'CK_FROM_PAGE',
-    fromExtension = 'CK_FROM_EXT',
+  extensionLoaded = "CK_EXT_LOADED",
+  fromPage = "CK_FROM_PAGE",
+  fromExtension = "CK_FROM_EXT",
 }
 
 export interface DataRequestParams {
-    getKey?: StorageKeys
+  getKey?: StorageKeys;
 }
 
 export interface RequestPayload {
-    id: string
-    reqName: RequestName
-    params?: DataRequestParams
+  id: string;
+  reqName: RequestName;
+  params?: DataRequestParams;
 }
 
-export type ResultPayload = Record<string, any>
+export type ResultPayload = Record<string, any>;
 
 export interface MessagePayload {
-    type: string
-    request?: RequestPayload
-    result?: ResultPayload
+  type: string;
+  request?: RequestPayload;
+  result?: ResultPayload;
 }
