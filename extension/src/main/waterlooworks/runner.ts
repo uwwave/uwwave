@@ -1,7 +1,10 @@
 import $ from 'jquery'
 import { ExtensionResource, getResourceUrl } from '../common/runtime'
-import { getLocalStorage } from '../common/storage'
-import { LocalStorageMetadataKeys } from '../shared/userProfile'
+import { getLocalStorage, getSyncStorage } from '../common/storage'
+import {
+    LocalStorageMetadataKeys,
+    UserSyncStorageKeys,
+} from '../shared/userProfile'
 import { getJobCount } from '../popup/dataReader'
 
 async function main() {
@@ -9,7 +12,14 @@ async function main() {
     const lastSuccessfulScrapeAt = (
         await getLocalStorage(LocalStorageMetadataKeys.SCRAPE_AT)
     )[LocalStorageMetadataKeys.SCRAPE_AT]
-    if (!lastSuccessfulScrapeAt && jobCount <= 0) {
+    const lastScrapeAt = (
+        await getSyncStorage(UserSyncStorageKeys.LAST_SCRAPE_INITIATED_AT)
+    )[UserSyncStorageKeys.LAST_SCRAPE_INITIATED_AT]
+    if (
+        !lastSuccessfulScrapeAt &&
+        lastScrapeAt === undefined &&
+        jobCount <= 0
+    ) {
         $.get(
             getResourceUrl(ExtensionResource.HelperContainer),
             function (data) {

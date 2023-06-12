@@ -338,6 +338,8 @@ class Scraper {
             UserSyncStorageKeys.LAST_SCRAPE_STATUS,
             ScrapeStatus.COMPLETED,
         )
+
+        window.open('https://uwwave.ca/jobs', '_blank')
     }
 
     private getUtcNowIsoString(): string {

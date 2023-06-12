@@ -4,20 +4,26 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { Spacer } from "src/components/Spacer/Spacer";
 import { SetupStepper } from "src/components/Stepper/SetupStepper";
-import { useState } from "react";
 import Paper from "@mui/material/Paper";
 import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
-import { BackgroundColor } from "src/styles/color";
+import { BackgroundColor, Color } from "src/styles/color";
 import { Footer } from "src/components/Footer/Footer";
+import { useExtensionData } from "src/lib/extension/hooks/useExtensionData";
+import { LocalStorageMetadataKeys } from "src/lib/extension/shared/userProfile";
 
 const Step2 = () => {
   return (
     <MainPaper variant="outlined">
       <Typography align="center" variant="h6">
-        <b>Download The Extension to get started</b>
+        <b>Download our browser extension to get started</b>
       </Typography>
       <Spacer height={32} />
-      <PrimaryButton>Download Extension</PrimaryButton>
+      <a
+        target="_blank"
+        href="https://chrome.google.com/webstore/detail/uw-wave/bjpmedhmknbhefgbakephgbifiiceajm"
+      >
+        <PrimaryButton>Download Chrome</PrimaryButton>
+      </a>
       <Spacer height={32} />
       <Typography align="center">
         By leveraging our browser extension, Wave scrapes job postings directly
@@ -37,13 +43,18 @@ const Step3 = () => {
       </Typography>
       <Spacer height={32} />
       <Typography align="center">
-        <b>Login to Waterloo Works</b> and our extension will automatically
-        begin the scraping process. <br /> You’ll head back here once you’re
-        done.
+        <b>Login to WaterlooWorks</b> to begin the scraping process.
+        <br />
+        You’ll head back here once you’re done.
       </Typography>
 
       <Spacer height={32} />
-      <PrimaryButton>Head to Waterloo Works</PrimaryButton>
+      <a
+        target="_blank"
+        href="https://waterlooworks.uwaterloo.ca/waterloo.htm?action=login"
+      >
+        <PrimaryButton>Head to WaterlooWorks</PrimaryButton>
+      </a>
     </MainPaper>
   );
 };
@@ -52,20 +63,27 @@ const Step4 = () => {
   return (
     <MainPaper variant="outlined">
       <Typography align="center" variant="h6">
-        <b>You’re all Set!</b>
+        <b>You’re all set!</b>
       </Typography>
       <Spacer height={32} />
-      <PrimaryButton>Start Browsing Jobs</PrimaryButton>
+      <PrimaryButton href="/jobs">Start Browsing Jobs</PrimaryButton>
     </MainPaper>
   );
 };
 
 const Setup = () => {
-  const [step] = useState(3);
+  const { extensionData, isDataReady } = useExtensionData();
+  let step = 1;
+  if (isDataReady) {
+    step = 2;
+  }
+  if (extensionData && extensionData[LocalStorageMetadataKeys.SCRAPE_AT]) {
+    step = 3;
+  }
   const steps = [
     "Discover Wave",
-    "Download The Extension",
-    "Scrape Waterloo Works",
+    "Download Browser Extension",
+    "Scrape WaterlooWorks",
   ];
   return (
     <>
