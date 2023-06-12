@@ -11,7 +11,7 @@ export enum Color {
   taggedShadow = "#01142B",
   ambitious = "#EC3A3A",
   possible = "#EC9D05",
-  safe = "#5BA937"
+  safe = "#5BA937",
 }
 
 export enum BackgroundColor {

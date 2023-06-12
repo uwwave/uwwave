@@ -23,11 +23,7 @@ const TaggedJobsPage = () => {
       <WaterWrapper>
         <Spacer height={32} />
         <Container>
-          <JobsDataGrid
-            jobs={jobs}
-            loading={loading}
-            jobKeywords={{}}
-          />
+          <JobsDataGrid jobs={jobs} loading={loading} jobKeywords={{}} />
         </Container>
         <Spacer height={64} />
       </WaterWrapper>
