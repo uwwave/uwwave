@@ -33,14 +33,12 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
   await connectToDb();
   try {
     await JobKeywordsDocuments.deleteMany({});
-    for (const job of newKeywords) {
-      // Document doesn't exist, create a new one
-      const newDoc = new JobKeywordsDocuments({
-        jobID: job.jobID,
-        keywords: job.keywords,
-      });
-      await newDoc.save();
-    }
+    const documents = newKeywords.map(job => ({
+      jobID: job.jobID,
+      keywords: job.keywords,
+    }));
+
+    await JobKeywordsDocuments.insertMany(documents);
     const jobKeywords = await JobKeywordsDocuments.find();
     const jobKeywordsObjects = jobKeywords.map(x => x.toObject());
     const out: { [key: string]: string[] } = {};
