@@ -22,7 +22,7 @@ const Step2 = () => {
         target="_blank"
         href="https://chrome.google.com/webstore/detail/uw-wave/bjpmedhmknbhefgbakephgbifiiceajm"
       >
-        <PrimaryButton>Download Chrome</PrimaryButton>
+        <PrimaryButton>Download For Chrome</PrimaryButton>
       </a>
       <Spacer height={32} />
       <Typography align="center">
