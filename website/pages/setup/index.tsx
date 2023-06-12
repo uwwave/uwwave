@@ -6,7 +6,7 @@ import { Spacer } from "src/components/Spacer/Spacer";
 import { SetupStepper } from "src/components/Stepper/SetupStepper";
 import Paper from "@mui/material/Paper";
 import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
-import { BackgroundColor, Color } from "src/styles/color";
+import { BackgroundColor } from "src/styles/color";
 import { Footer } from "src/components/Footer/Footer";
 import { useExtensionData } from "src/lib/extension/hooks/useExtensionData";
 import { LocalStorageMetadataKeys } from "src/lib/extension/shared/userProfile";
