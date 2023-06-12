@@ -17,6 +17,11 @@ import { JobTitleCell } from "src/components/JobsDataGrid/components/JobTitleCel
 import { ActionsCell } from "src/components/JobsDataGrid/components/ActionsCell";
 import { IGetCompanyLogosResponse } from "src/lib/requests/Requests";
 import { RatingsCell } from "src/components/JobsDataGrid/components/RatingCell";
+import styled from "styled-components";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import StarIcon from "@mui/icons-material/Star";
+import SearchIcon from "@mui/icons-material/Search";
+import { DeadlineCell } from "./components/DeadlineCell";
 
 interface IJobsDataGrid {
   jobKeywords: { [key: string]: string[] };
@@ -36,6 +41,21 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
       {headerData.colDef.headerName}
     </strong>
   );
+
+  const scoreHeaderComponent = (
+    headerData: GridColumnHeaderParams<any, JobsPageRowData>
+  ) => {
+    switch (headerData.field) {
+      case "ratingsScore":
+        return <RatingIcon />;
+      case "salaryScore":
+        return <MoneyIcon />;
+      case "compatibilityScore":
+        return <ScoreIcon />;
+      default:
+        return null;
+    }
+  };
 
   const columns: GridColDef<JobsPageRowData>[] = [
     {
@@ -57,15 +77,16 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
       headerName: "Job Title",
       renderHeader: headerComponent,
       renderCell: () => <></>,
-      flex: 1,
+      flex: 7,
     },
     {
       field: "keywords",
       headerName: "Keywords",
       sortable: false,
+      flex: 5,
       renderHeader: headerComponent,
       renderCell: rowData => (
-        <div style={{ margin: "2px" }}>
+        <PillsWrapper>
           {jobKeywords[rowData.row.id] &&
             jobKeywords[rowData.row.id].map(keyword => {
               return (
@@ -79,22 +100,42 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
                 />
               );
             })}
-        </div>
+        </PillsWrapper>
       ),
     },
     {
-      field: "score",
-      headerName: "Score",
+      field: "ratingsScore",
+      headerName: "R",
       align: "center",
       headerAlign: "center",
-      renderHeader: headerComponent,
-      renderCell: () => (
+      flex: 1,
+      renderHeader: scoreHeaderComponent,
+      renderCell: rowData => (
         <RatingsCell
-          ratingPercentage={95}
-          moneyPercentage={70}
-          scorePercenatge={50}
+          ratingPercentage={rowData.row.ratingsScore}
+          moneyPercentage={rowData.row.salaryScore}
+          scorePercenatge={rowData.row.compatibilityScore}
         />
       ),
+      colSpan: 3,
+    },
+    {
+      field: "salaryScore",
+      headerName: "S",
+      align: "center",
+      headerAlign: "center",
+      flex: 1,
+      renderHeader: scoreHeaderComponent,
+      renderCell: () => <></>,
+    },
+    {
+      field: "compatibilityScore",
+      headerName: "C",
+      align: "center",
+      headerAlign: "center",
+      flex: 1,
+      renderHeader: scoreHeaderComponent,
+      renderCell: () => <></>,
     },
     {
       field: "location",
@@ -112,20 +153,24 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
     },
     {
       field: "openings",
-      headerName: "Openings",
+      headerName: "Spots",
       align: "center",
       headerAlign: "center",
       renderHeader: headerComponent,
+      flex: 1,
     },
     {
       field: "appDeadline",
       headerName: "Deadline",
       align: "center",
       headerAlign: "center",
+      flex: 1.3,
       renderHeader: headerComponent,
       sortComparator: (date1: string, date2: string) =>
         Date.parse(date1) - Date.parse(date2),
-      renderCell: rowData => <>{rowData.row.appDeadline.split(",")[0]}</>,
+      renderCell: rowData => (
+        <DeadlineCell dateString={rowData.row.appDeadline} />
+      ),
     },
 
     {
@@ -142,45 +187,128 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
   ];
 
   return (
-    <Paper elevation={0}>
-      <DataGrid
-        disableColumnFilter
-        disableColumnSelector
-        disableDensitySelector
-        rows={jobs}
-        columns={columns}
-        pageSize={pageSize}
-        loading={loading}
-        disableColumnMenu
-        onPageSizeChange={newPageSize => setPageSize(newPageSize)}
-        rowsPerPageOptions={[10, 25, 100]}
-        pagination
-        autoHeight
-        rowHeight={96}
-        disableSelectionOnClick
-        sx={{
-          ".MuiDataGrid-root, .MuiDataGrid-cell": {
-            whiteSpace: "normal !important",
-            wordWrap: "break-all !important",
-            overflow: "visible !important",
-          },
-          ".MuiTablePagination-selectLabel, .MuiTablePagination-displayedRows":
-            {
-              m: 1,
+    <Main>
+      <InnerPaper>
+        <StyledGrid
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
+          rows={jobs}
+          columns={columns}
+          pageSize={pageSize}
+          loading={loading}
+          disableColumnMenu
+          onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
+          rowsPerPageOptions={[10, 25, 100]}
+          pagination
+          autoHeight
+          rowHeight={96}
+          disableSelectionOnClick
+          sx={{
+            ".MuiDataGrid-root, .MuiDataGrid-cell": {
+              whiteSpace: "normal !important",
+              wordWrap: "break-all !important",
+              overflow: "visible !important",
             },
-          "border": "none",
-          ".MuiDataGrid-virtualScroller": {
-            overflow: "visible !important",
-          },
-          ".MuiDataGrid-main": {
-            overflow: "visible !important",
-            zIndex: "1 !important",
-          },
-        }}
-        components={{
-          Toolbar: GridToolbar,
-        }}
-      />
-    </Paper>
+            ".MuiTablePagination-selectLabel, .MuiTablePagination-displayedRows":
+              {
+                m: 1,
+              },
+            "border": "none",
+            ".MuiDataGrid-virtualScroller": {
+              overflow: "visible !important",
+            },
+            ".MuiDataGrid-main": {
+              overflow: "visible !important",
+              zIndex: "1 !important",
+            },
+            ".MuiDataGrid-columnHeader": {
+              minWidth: "0px !important",
+            },
+          }}
+          components={{
+            Toolbar: GridToolbar,
+          }}
+        />
+      </InnerPaper>
+    </Main>
   );
 };
+
+const PillsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+const Main = styled(Paper).attrs({
+  elevation: 0,
+})`
+  overflow: hidden;
+`;
+const InnerPaper = styled.div`
+  width: calc(100% + 76px);
+`;
+
+const StyledGrid = styled(props => <DataGrid {...props} />)`
+  .MuiDataGrid-columnHeader:nth-child(4),
+  .MuiDataGrid-columnHeader:nth-child(5),
+  .MuiDataGrid-columnHeader:nth-child(6) {
+    width: 30px !important;
+    max-width: 30px !important;
+    min-width: 30px !important;
+    overflow: visible;
+    padding: 0 !important;
+  }
+
+  .MuiDataGrid-columnHeader:nth-child(4) .MuiDataGrid-columnSeparator,
+  .MuiDataGrid-columnHeader:nth-child(5) .MuiDataGrid-columnSeparator {
+    display: none;
+  }
+  .MuiDataGrid-columnHeader:nth-child(4) .MuiDataGrid-columnSeparator,
+  .MuiDataGrid-columnHeader:nth-child(5) .MuiDataGrid-columnSeparator,
+  .MuiDataGrid-columnHeader:nth-child(10) .MuiDataGrid-columnSeparator {
+    display: none;
+  }
+
+  .MuiDataGrid-columnHeader:nth-child(6)
+    .MuiDataGrid-columnHeaderDraggableContainer {
+    z-index: 1;
+  }
+
+  .MuiDataGrid-columnHeader:nth-child(6) .MuiDataGrid-columnSeparator {
+    z-index: 0;
+  }
+
+  .MuiDataGrid-cell--withRenderer:nth-child(3) {
+    max-width: 90px !important;
+    min-width: 90px !important;
+    width: 90px !important;
+  }
+
+  .MuiDataGrid-footerContainer {
+    padding-right: 76px;
+  }
+
+  .MuiDataGrid-cell:nth-child(2) {
+    overflow: hidden !important;
+    align-items: start !important;
+    padding-top: 8px;
+  }
+`;
+
+const MoneyIcon = styled(AttachMoneyIcon)`
+  && {
+    fill: ${BackgroundColor.dark};
+  }
+`;
+
+const RatingIcon = styled(StarIcon)`
+  && {
+    fill: ${BackgroundColor.dark};
+  }
+`;
+
+const ScoreIcon = styled(SearchIcon)`
+  && {
+    fill: ${BackgroundColor.dark};
+  }
+`;

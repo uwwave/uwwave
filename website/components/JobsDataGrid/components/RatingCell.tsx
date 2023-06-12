@@ -53,8 +53,8 @@ interface IPillar {
 }
 
 const InnerPillar1 = styled.div<IPillar>`
-  height: ${props => props.val}%;
-  min-height: 32%;
+  height: ${props => (props.val * 70) / 100 + 30}%;
+  min-height: 30%;
   width: 16px;
   border-radius: 16px;
   background-color: ${Color.rating};
@@ -65,8 +65,8 @@ const InnerPillar1 = styled.div<IPillar>`
 `;
 
 const InnerPillar2 = styled.div<IPillar>`
-  height: ${props => props.val}%;
-  min-height: 32%;
+  height: ${props => (props.val * 70) / 100 + 30}%;
+  min-height: 30%;
   width: 16px;
   border-radius: 16px;
   background-color: ${Color.salary};
@@ -77,8 +77,8 @@ const InnerPillar2 = styled.div<IPillar>`
 `;
 
 const InnerPillar3 = styled.div<IPillar>`
-  height: ${props => props.val}%;
-  min-height: 32%;
+  height: ${props => (props.val * 70) / 100 + 30}%;
+  min-height: 30%;
   width: 16px;
   border-radius: 16px;
   background-color: ${Color.compatibility};
@@ -92,6 +92,8 @@ const MoneyIcon = styled(AttachMoneyIcon)`
   && {
     fill: white;
     width: 16px;
+    position: relative;
+    bottom: -2px;
   }
 `;
 
@@ -99,6 +101,8 @@ const RatingIcon = styled(StarIcon)`
   && {
     fill: white;
     width: 16px;
+    position: relative;
+    bottom: -2px;
   }
 `;
 
@@ -106,5 +110,7 @@ const ScoreIcon = styled(SearchIcon)`
   && {
     fill: white;
     width: 16px;
+    position: relative;
+    bottom: -2px;
   }
 `;

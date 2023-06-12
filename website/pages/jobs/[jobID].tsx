@@ -147,7 +147,7 @@ const SpecificJobPage = () => {
         {job?.openings ? (
           <JobInfoTile
             icon={<PeopleIcon />}
-            title="Openings"
+            title="Spots"
             value={job.openings.toString()}
           />
         ) : null}
@@ -301,13 +301,17 @@ const SpecificJobPage = () => {
 
   const renderSurvey = () => {
     return (
-      <iframe
-        src="https://docs.google.com/forms/d/e/1FAIpQLSfMG_APCBcKSz01-Rg4EVMPfXSzw8Wf8jAhLlrrBA-uPPgx9w/viewform?embedded=true"
-        width="100%"
-        height="1700px"
-      >
-        Loading…
-      </iframe>
+      <SurveyWrapper>
+        <Typography>
+          <b>
+            Thanks for testing our first MVP! Please fill out our feedback
+            survey next:
+          </b>
+        </Typography>
+        <a href="https://forms.gle/cLkdDogx1fJ3QuTe7" target="_blank">
+          <PrimaryButton>Open Survey</PrimaryButton>
+        </a>
+      </SurveyWrapper>
     );
   };
 
@@ -346,6 +350,13 @@ const SpecificJobPage = () => {
 
 export default SpecificJobPage;
 
+const SurveyWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  gap: 16px;
+`;
 const WaterWrapper = styled.div`
   display: flex;
   align-items: center;

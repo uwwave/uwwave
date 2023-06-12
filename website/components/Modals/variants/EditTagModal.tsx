@@ -195,11 +195,15 @@ const StyledButtonBase = styled(ButtonBase)`
   border-radius: 8px;
 `;
 const StyledPrimaryButton = styled(PrimaryButton)`
-  z-index: 0;
+  && {
+    z-index: 0;
+  }
 `;
 const ColorPickerWrapper = styled.div`
-  position: relative;
-  z-index: 300;
+  && {
+    position: relative;
+    z-index: 300;
+  }
 `;
 const Center = styled.div`
   display: flex;

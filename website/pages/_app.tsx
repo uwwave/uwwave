@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import React from "react";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
+import Head from "next/head";
 
 const theme = createTheme({
   typography: {
@@ -26,10 +27,15 @@ function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
   const Provider = ThemeProvider as any;
 
   return (
-    <Provider theme={theme}>
-      <CssBaseline />
-      <AnyComponent {...pageProps} />
-    </Provider>
+    <>
+      <Head>
+        <title>Wave</title>
+      </Head>
+      <Provider theme={theme}>
+        <CssBaseline />
+        <AnyComponent {...pageProps} />
+      </Provider>
+    </>
   );
 }
 export default MyApp;
