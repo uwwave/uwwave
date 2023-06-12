@@ -299,6 +299,18 @@ const SpecificJobPage = () => {
     );
   };
 
+  const renderSurvey = () => {
+    return (
+      <iframe
+        src="https://docs.google.com/forms/d/e/1FAIpQLSfMG_APCBcKSz01-Rg4EVMPfXSzw8Wf8jAhLlrrBA-uPPgx9w/viewform?embedded=true"
+        width="100%"
+        height="1700px"
+      >
+        Loading…
+      </iframe>
+    );
+  };
+
   return (
     <Main>
       {!isLoading ? (
@@ -326,6 +338,7 @@ const SpecificJobPage = () => {
         <Container>{renderJobBody()}</Container>
         <Spacer height={128} />
       </WaterWrapper>
+      {renderSurvey()}
       <Footer />
     </Main>
   );

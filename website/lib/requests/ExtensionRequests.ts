@@ -40,7 +40,7 @@ export class ExtensionRequests {
   static async getSelectedTags(jobID: number): Promise<ITag[]> {
     console.log(jobID);
     await delay(500);
-    return [...dummyTags.slice(0, 1)];
+    return [];
   }
 
   //Creates a new tag and adds that tag to the jobID
