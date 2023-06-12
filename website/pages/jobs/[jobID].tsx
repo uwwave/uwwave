@@ -356,6 +356,7 @@ const SurveyWrapper = styled.div`
   justify-content: center;
   padding: 16px;
   gap: 16px;
+  background-color: white;
 `;
 const WaterWrapper = styled.div`
   display: flex;
