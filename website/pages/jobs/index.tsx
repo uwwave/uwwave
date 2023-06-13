@@ -1,17 +1,16 @@
 import React, { useEffect } from "react";
-import Typography from "@mui/material/Typography";
 import { Spacer } from "src/components/Spacer/Spacer";
 import styled from "styled-components";
 import Container from "@mui/material/Container";
 import { NavigationBar } from "src/components/NavigationBar/NavigationBar";
 import { BackgroundColor } from "src/styles/color";
-import { WarningIcon } from "src/components/icons/WarningIcon";
-import { CheckIcon } from "src/components/icons/CheckIcon";
 import { SearchBarJobsList } from "components/SearchBar/SearchBarJobsList";
 import { JobsDataGrid } from "src/components/JobsDataGrid/JobsDataGrid";
 import { Footer } from "src/components/Footer/Footer";
 // import { ExtensionRequests } from "src/lib/requests/ExtensionRequests";
 import { useJobsList } from "src/lib/hooks/useJobsList";
+import { JobsListPageHeader } from "src/components/Headers/JobsListPageHeader";
+import Skeleton from "@mui/material/Skeleton";
 
 export default function JobsListPage() {
   useEffect(() => {
@@ -29,38 +28,42 @@ export default function JobsListPage() {
     setChips,
     setNumActiveChips,
     numActiveChips,
+    earliestDeadline,
+    differentCountries,
   } = useJobsList();
 
   return (
     <>
       <NavigationBar />
       <Container>
-        <MainWrapper>
-          <Spacer height={64} />
-          <Typography fontWeight="bold" sx={{ fontSize: "24px" }}>
-            Jobs List
-          </Typography>
-          <Spacer height={16} />
-          {!isLoading ? <Typography>{numJobs} Listings</Typography> : null}
-
-          <Spacer height={16} />
-          {!!dataAgeMessage && (
-            <StatusWrapper>
-              <Typography>{dataAgeMessage} </Typography>
-              {isStale ? <WarningIcon width={24} /> : <CheckIcon width={24} />}
-            </StatusWrapper>
-          )}
-          <Spacer height={32} />
-        </MainWrapper>
+        <Spacer height={64} />
+        <JobsListPageHeader
+          lastScrapedMessage={dataAgeMessage}
+          isStale={isStale}
+          numJobs={numJobs}
+          earliestDeadline={earliestDeadline}
+          differentCountries={differentCountries}
+          isLoading={isLoading}
+        />
+        <Spacer height={32} />
       </Container>
       <WaterWrapper>
-        <Spacer height={32} />
+        <Spacer height={64} />
         <Container>
-          <SearchBarJobsList
-            onSearchUpdated={setChips}
-            setNumActiveChips={setNumActiveChips}
-            numActiveChips={numActiveChips}
-          />
+          {isLoading ? (
+            <Skeleton
+              variant="rounded"
+              sx={{ bgcolor: BackgroundColor.darker }}
+              width={"100%"}
+              height={88}
+            />
+          ) : (
+            <SearchBarJobsList
+              onSearchUpdated={setChips}
+              setNumActiveChips={setNumActiveChips}
+              numActiveChips={numActiveChips}
+            />
+          )}
           <Spacer height={16} />
           <JobsDataGrid
             jobs={displayJobs}
@@ -76,12 +79,6 @@ export default function JobsListPage() {
   );
 }
 
-const MainWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`;
-
 const WaterWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -89,11 +86,4 @@ const WaterWrapper = styled.div`
   width: 100%;
   background-color: ${BackgroundColor.dark};
   min-height: 100vh;
-`;
-
-const StatusWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  justify-content: center;
 `;
