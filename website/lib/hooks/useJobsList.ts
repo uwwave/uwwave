@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useMemo } from "react";
 import { JobsPageRowData } from "src/lib/jobsList/jobsList";
 import { useExtensionData } from "src/lib/extension/hooks/useExtensionData";
 import { ISearchChip } from "src/components/SearchBar/SearchBarJobsList";
@@ -23,10 +23,6 @@ export const useJobsList = () => {
     extensionData,
     isDataReady,
   } = useExtensionData();
-
-  // Time states
-  const [dataAgeMessage, setDataAgeMessage] = useState("");
-  const [isStale, setIsStale] = useState(false);
 
   // Search and job states
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -55,17 +51,6 @@ export const useJobsList = () => {
     };
     fire();
   }, []);
-
-  // Determine staleness
-  useEffect(() => {
-    // Get last scraped time
-    setIsStale(
-      moment().utc().subtract(DAYS_TO_STALE_DATA, "day").isAfter(dateScraped)
-    );
-    setDataAgeMessage(
-      dateScraped ? `Last scraped: ${getTimeDiffString(dateScraped)}` : ""
-    );
-  }, [dateScraped]);
 
   // Build Keywords
   useEffect(() => {
@@ -143,9 +128,55 @@ export const useJobsList = () => {
     setDisplayJobs(newJobs);
   }, [jobsList, searchIndex, searchChips, numActiveChips]);
 
-  const isLoading = !isDataReady || isJobTagsLoading;
+  const dataAgeMessage = useMemo(() => {
+    return getTimeDiffString(dateScraped);
+  }, [dateScraped]);
 
+  const isStale = useMemo(() => {
+    return moment()
+      .utc()
+      .subtract(DAYS_TO_STALE_DATA, "day")
+      .isAfter(dateScraped);
+  }, [dateScraped]);
+
+  const earliestDeadline = useMemo(() => {
+    const jobIDs = Object.keys(jobsList);
+    if (jobIDs.length === 0) {
+      return "";
+    }
+    let out = jobsList[jobIDs[0]].appDeadline;
+    jobIDs.forEach(jobID => {
+      const deadline = jobsList[jobID].appDeadline;
+      if (new Date(out).getTime() > new Date(deadline).getTime()) {
+        out = deadline;
+      }
+    });
+    return out;
+  }, [jobsList]);
+
+  const differentCountries: { [country: string]: number } = useMemo(() => {
+    const out: { [country: string]: number } = {};
+    const jobIDs = Object.keys(jobsList);
+    jobIDs.forEach(jobID => {
+      const country = jobsList[jobID].country;
+      if (!country) {
+        return;
+      }
+      if (out[country]) {
+        out[country]++;
+      } else {
+        out[country] = 1;
+      }
+    });
+    return out;
+  }, [jobsList]);
+  const isLoading =
+    !isDataReady ||
+    isJobTagsLoading ||
+    Object.keys(differentCountries).length === 0;
   return {
+    differentCountries,
+    earliestDeadline,
     displayJobs,
     isLoading,
     dataAgeMessage,

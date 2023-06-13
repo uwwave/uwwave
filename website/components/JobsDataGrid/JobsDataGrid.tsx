@@ -4,6 +4,7 @@ import {
   GridColDef,
   GridColumnHeaderParams,
   GridToolbar,
+  GridOverlay,
 } from "@mui/x-data-grid";
 import { JobsPageRowData } from "src/lib/jobsList/jobsList";
 import { BackgroundColor } from "src/styles/color";
@@ -22,6 +23,7 @@ import StarIcon from "@mui/icons-material/Star";
 import SearchIcon from "@mui/icons-material/Search";
 import { DeadlineCell } from "./components/DeadlineCell";
 import { useJobsDataGrid } from "src/lib/hooks/UseJobsDataGrid";
+import { LogoLoader } from "src/components/Loader/LogoLoader";
 
 interface IJobsDataGrid {
   jobKeywords: { [key: string]: string[] };
@@ -32,8 +34,6 @@ interface IJobsDataGrid {
 export const JobsDataGrid = (props: IJobsDataGrid) => {
   const { jobKeywords, jobs, loading, companyLogos } = props;
   const { pageSize, setPageSize } = useJobsDataGrid();
-
-  const isLoading = loading;
 
   const headerComponent = (
     headerData: GridColumnHeaderParams<any, JobsPageRowData>
@@ -162,7 +162,7 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
     },
     {
       field: "appDeadline",
-      headerName: "Deadline",
+      headerName: "Due",
       align: "center",
       headerAlign: "center",
       flex: 1.3,
@@ -195,7 +195,7 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
           rows={jobs}
           columns={columns}
           pageSize={pageSize}
-          loading={isLoading}
+          loading={loading}
           disableColumnMenu
           onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
           rowsPerPageOptions={[10, 25, 100]}
@@ -227,12 +227,32 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
           }}
           components={{
             Toolbar: GridToolbar,
+            LoadingOverlay: CustomLoadingOverlay,
           }}
         />
       </InnerPaper>
     </Main>
   );
 };
+
+const CustomLoadingOverlay = () => (
+  <GridOverlay>
+    <div
+      style={{
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <LogoLoader /> {/* Replace CircularProgress with LogoLoader */}
+    </div>
+  </GridOverlay>
+);
 
 const PillsWrapper = styled.div`
   display: flex;
@@ -249,7 +269,9 @@ const InnerPaper = styled.div`
   width: calc(100% + 76px);
 `;
 
-const StyledGrid = styled(props => <DataGrid {...props} />)`
+const StyledGrid = styled(props => (
+  <DataGrid {...props} loadingOverlay={<CustomLoadingOverlay />} />
+))`
   .MuiDataGrid-columnHeader:nth-child(4),
   .MuiDataGrid-columnHeader:nth-child(5),
   .MuiDataGrid-columnHeader:nth-child(6) {
