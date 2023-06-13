@@ -2,7 +2,6 @@ import Typography from "@mui/material/Typography";
 import { BaseModal } from "../BaseModal";
 import { Spacer } from "src/components/Spacer/Spacer";
 import styled from "styled-components";
-import { ITag } from "src/lib/requests/ExtensionRequests";
 import Chip from "@mui/material/Chip";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ColorPicker from "src/components/ColorPicker/ColorPicker";
@@ -17,24 +16,7 @@ import { convertToCamelCase } from "src/lib/strings/convertStrings";
 import { IconColorWrapper } from "src/components/icons/ColorWrapper";
 import { useEditTagModal } from "src/lib/hooks/useEditTagModal";
 
-interface IUploadDomainModal {
-  isOpen: boolean;
-  onClose: () => void;
-  tag: ITag;
-  allTags: ITag[];
-  onPatchTag: (newTag: ITag) => void;
-  onDeleteTag: () => void;
-}
-
-export const EditTagModal = (props: IUploadDomainModal) => {
-  const {
-    isOpen,
-    onClose,
-    tag: initTag,
-    allTags,
-    onPatchTag,
-    onDeleteTag,
-  } = props;
+export const EditTagModal = () => {
   const {
     deleteMode,
     setDeleteMode,
@@ -46,7 +28,14 @@ export const EditTagModal = (props: IUploadDomainModal) => {
     colors,
     tagExistsError,
     tag,
-  } = useEditTagModal(isOpen, initTag, allTags, onPatchTag, onDeleteTag);
+    initTag,
+    isOpen,
+    onClose,
+  } = useEditTagModal();
+
+  if (!tag) {
+    return;
+  }
 
   const renderDeleteModeButtons = () => {
     if (!deleteMode) {
@@ -116,7 +105,7 @@ export const EditTagModal = (props: IUploadDomainModal) => {
 
   const renderTitle = () => (
     <Typography align="center" variant="h5">
-      <b>{`Edit "${initTag.label}" Tag`}</b>
+      <b>{`Edit "${initTag}" Tag`}</b>
     </Typography>
   );
 
@@ -153,7 +142,7 @@ export const EditTagModal = (props: IUploadDomainModal) => {
       <TextField
         variant="outlined"
         size="small"
-        defaultValue={tag.label}
+        value={tag.label}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setTag({
             color: tag.color,
@@ -164,10 +153,9 @@ export const EditTagModal = (props: IUploadDomainModal) => {
     </Edit>
   );
   const renderError = () => (
-    <Typography
-      color={tagExistsError ? "red" : "white"}
-      align="center"
-    >{`Tag "${tag.label}" already exists`}</Typography>
+    <Typography color={tagExistsError ? "red" : "white"} align="center">
+      {!tag.label ? "Type in a value" : `Tag "${tag.label}" already exists`}
+    </Typography>
   );
   return (
     <BaseModal

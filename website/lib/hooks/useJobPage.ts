@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { buildCoopJobWithJobID } from "../jobsList/jobsList";
 import { useExtensionData } from "../extension/hooks/useExtensionData";
 import { extractTechFromText } from "../genTechStack/genTechStack";
 import { Requests } from "../requests/Requests";
-import { ExtensionRequests, ITag } from "src/lib/requests/ExtensionRequests";
 import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
+import { JobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
 
 type JobInfo = {
   title: string;
@@ -18,16 +18,11 @@ type CompanyCard = {
 };
 export const useJobPage = (jobID?: string) => {
   const { extensionData: jobs } = useExtensionData();
-  const [selectedTags, setSelectedTags] = useState<ITag[]>([]);
-  const [tagsToSelect, setTagsToSelect] = useState<ITag[]>([]);
-  const [gotInitTags, setGotInitTags] = useState<boolean>(false);
   const [tabSelected, setTabSelected] = useState(0);
   const [companyURL, setCompanyURL] = useState<string | undefined>(undefined);
   const [imageURL, setImageURL] = useState<string>("");
   const [init, setInit] = useState(false);
-
   const job = buildCoopJobWithJobID(jobs, jobID as unknown as number);
-
   const jobInfo: JobInfo[] = [
     {
       title: "Job Summary",
@@ -54,6 +49,11 @@ export const useJobPage = (jobID?: string) => {
         ) ?? "",
     },
   ];
+  const jobTagsContext = useContext(JobTagsContext);
+  if (!jobTagsContext) {
+    throw new Error("JobTagsProvider not wrapped");
+  }
+  const { isLoading: isTagsLoading } = jobTagsContext;
 
   const companyInfo: CompanyCard = {
     companyName: job?.companyName ?? "",
@@ -80,28 +80,6 @@ export const useJobPage = (jobID?: string) => {
       });
   }, [companyInfo, jobInfo]);
 
-  useEffect(() => {
-    const fire = async () => {
-      if (!jobID || gotInitTags) {
-        return;
-      }
-      const tagsSelected = await ExtensionRequests.getSelectedTags(
-        jobID as unknown as number
-      );
-      const allTags = await ExtensionRequests.getAllTags();
-      const filteredTags = allTags.filter(
-        otherTag =>
-          !tagsSelected.some(
-            selectedTag => selectedTag.label === otherTag.label
-          )
-      );
-      setTagsToSelect(filteredTags);
-      setSelectedTags(tagsSelected);
-      setGotInitTags(true);
-    };
-    fire();
-  }, [jobID]);
-
   const onClearbitData = (data: any) => {
     setImageURL(data.logo);
     setCompanyURL(data.domain);
@@ -115,7 +93,7 @@ export const useJobPage = (jobID?: string) => {
     companyInfo.positionTitle === "" ||
     job === null ||
     companyURL === undefined ||
-    !gotInitTags;
+    isTagsLoading;
 
   return {
     imageURL,
@@ -128,7 +106,5 @@ export const useJobPage = (jobID?: string) => {
     techIcons,
     companyURL,
     onClearbitData,
-    selectedTags,
-    tagsToSelect,
   };
 };

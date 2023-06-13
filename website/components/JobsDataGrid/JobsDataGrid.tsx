@@ -8,7 +8,6 @@ import {
 import { JobsPageRowData } from "src/lib/jobsList/jobsList";
 import { BackgroundColor } from "src/styles/color";
 import Paper from "@mui/material/Paper";
-import { useState } from "react";
 import {
   LocationText,
   Orientation,
@@ -22,6 +21,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import StarIcon from "@mui/icons-material/Star";
 import SearchIcon from "@mui/icons-material/Search";
 import { DeadlineCell } from "./components/DeadlineCell";
+import { useJobsDataGrid } from "src/lib/hooks/UseJobsDataGrid";
 
 interface IJobsDataGrid {
   jobKeywords: { [key: string]: string[] };
@@ -31,8 +31,9 @@ interface IJobsDataGrid {
 }
 export const JobsDataGrid = (props: IJobsDataGrid) => {
   const { jobKeywords, jobs, loading, companyLogos } = props;
+  const { pageSize, setPageSize } = useJobsDataGrid();
 
-  const [pageSize, setPageSize] = useState(10);
+  const isLoading = loading;
 
   const headerComponent = (
     headerData: GridColumnHeaderParams<any, JobsPageRowData>
@@ -180,9 +181,7 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
       headerAlign: "center",
       renderHeader: headerComponent,
       sortable: false,
-      renderCell: rowData => (
-        <ActionsCell jobID={rowData.id.toString()} selectedTags={[]} />
-      ),
+      renderCell: rowData => <ActionsCell jobID={rowData.id.toString()} />,
     },
   ];
 
@@ -196,7 +195,7 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
           rows={jobs}
           columns={columns}
           pageSize={pageSize}
-          loading={loading}
+          loading={isLoading}
           disableColumnMenu
           onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
           rowsPerPageOptions={[10, 25, 100]}
@@ -242,7 +241,9 @@ const PillsWrapper = styled.div`
 const Main = styled(Paper).attrs({
   elevation: 0,
 })`
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
+  position: relative;
 `;
 const InnerPaper = styled.div`
   width: calc(100% + 76px);

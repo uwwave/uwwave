@@ -21,24 +21,15 @@ import { EditTagModal } from "src/components/Modals/variants/EditTagModal";
 import { IconColorWrapper } from "src/components/icons/ColorWrapper";
 
 interface ITagsMenu {
-  selectedTags?: ITag[];
-  tagsToSelect?: ITag[];
   onOutsideClick: () => void;
-  onSetSelectedTags: (tags: ITag[]) => void;
-  onSetTagsToSelect: (tags: ITag[]) => void;
+  jobID: string;
 }
 export const JobTagsMenu = (props: ITagsMenu) => {
-  const {
-    selectedTags: tagsSelected,
-    tagsToSelect: selectableTags,
-    onOutsideClick,
-    onSetSelectedTags,
-    onSetTagsToSelect,
-  } = props;
+  const { onOutsideClick, jobID } = props;
   const {
     loading,
-    selectedTags,
-    tagsToSelect,
+    displaySelectedTags,
+    displayTagsToSelect,
     selectTag,
     removeTag,
     inputVal,
@@ -46,18 +37,9 @@ export const JobTagsMenu = (props: ITagsMenu) => {
     canCreateNew,
     onSubmit,
     error,
-    editTag,
     setEditTag,
     isEditModalOpen,
-    onPatchTag,
-    onDeleteTag,
-  } = useTagsMenu(
-    123,
-    onSetSelectedTags,
-    onSetTagsToSelect,
-    tagsSelected,
-    selectableTags
-  );
+  } = useTagsMenu(jobID);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit();
@@ -93,7 +75,7 @@ export const JobTagsMenu = (props: ITagsMenu) => {
   const renderSelectedChips = () => (
     <>
       <ChipsWrapper>
-        {selectedTags.map(tag => (
+        {displaySelectedTags.map(tag => (
           <StyledChip
             key={tag.label}
             bgcolor={tag.color}
@@ -108,14 +90,14 @@ export const JobTagsMenu = (props: ITagsMenu) => {
           />
         ))}
       </ChipsWrapper>
-      {selectedTags.length > 0 ? <Spacer height={8} /> : null}
+      {displaySelectedTags.length > 0 ? <Spacer height={8} /> : null}
     </>
   );
 
   const renderMenu = () => (
     <TagsListWrapper>
       <StyledMenuList>
-        {tagsToSelect.map(tag => (
+        {displayTagsToSelect.map(tag => (
           <StyledMenuItem key={tag.label}>
             <StyledListItemText
               bgcolor={tag.color}
@@ -136,7 +118,7 @@ export const JobTagsMenu = (props: ITagsMenu) => {
             </ListItemIcon>
             <ListItemIcon
               onClick={() => {
-                setEditTag(tag);
+                setEditTag(tag.label);
               }}
             >
               <MoreIconWrapper>
@@ -179,18 +161,7 @@ export const JobTagsMenu = (props: ITagsMenu) => {
 
   return (
     <>
-      {editTag ? (
-        <EditTagModal
-          tag={editTag}
-          isOpen={isEditModalOpen}
-          onClose={() => {
-            setEditTag(undefined);
-          }}
-          allTags={[...selectedTags, ...tagsToSelect]}
-          onPatchTag={onPatchTag}
-          onDeleteTag={onDeleteTag}
-        />
-      ) : null}
+      <EditTagModal />
       <TagsWrapper ref={ref}>
         <TagsHeader>
           {renderSelectedChips()}
@@ -204,7 +175,7 @@ export const JobTagsMenu = (props: ITagsMenu) => {
 
 interface IInnerChipContent {
   tag: ITag;
-  onSetEditTag: (tag: ITag) => void;
+  onSetEditTag: (label: string) => void;
 }
 const renderInnerChipContent = (props: IInnerChipContent) => {
   const { tag, onSetEditTag } = props;
@@ -214,7 +185,7 @@ const renderInnerChipContent = (props: IInnerChipContent) => {
       <InnerChipContentWrapper>
         <IconButton
           onClick={() => {
-            onSetEditTag(tag);
+            onSetEditTag(tag.label);
           }}
         >
           <EditIcon />

@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import React from "react";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import Head from "next/head";
+import { JobTagsProvider } from "src/lib/context/jobTags/JobTagsProvider";
 
 const theme = createTheme({
   typography: {
@@ -33,7 +34,9 @@ function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
       </Head>
       <Provider theme={theme}>
         <CssBaseline />
-        <AnyComponent {...pageProps} />
+        <JobTagsProvider>
+          <AnyComponent {...pageProps} />
+        </JobTagsProvider>
       </Provider>
     </>
   );

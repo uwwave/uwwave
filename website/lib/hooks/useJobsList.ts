@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { JobsPageRowData } from "../jobsList/jobsList";
-import { useExtensionData } from "../extension/hooks/useExtensionData";
+import { useEffect, useState, useContext } from "react";
+import { JobsPageRowData } from "src/lib/jobsList/jobsList";
+import { useExtensionData } from "src/lib/extension/hooks/useExtensionData";
 import { ISearchChip } from "src/components/SearchBar/SearchBarJobsList";
 import {
   DAYS_TO_STALE_DATA,
@@ -15,6 +15,7 @@ import {
   Requests,
 } from "src/lib/requests/Requests";
 import { getSearchTypeField, SearchTypes } from "src/lib/search/Search";
+import { JobTagsContext } from "../context/jobTags/JobTagsContext";
 
 export const useJobsList = () => {
   const {
@@ -39,10 +40,13 @@ export const useJobsList = () => {
     {}
   );
   const [numActiveChips, setNumActiveChips] = useState<number>(0);
-
   const [logos, setLogos] = useState<IGetCompanyLogosResponse | undefined>();
-
   const dateScraped = extensionData[LocalStorageMetadataKeys.SCRAPE_AT];
+  const jobTagsContext = useContext(JobTagsContext);
+  if (!jobTagsContext) {
+    throw new Error("JobTagsProvider not wrapped");
+  }
+  const { isLoading: isJobTagsLoading } = jobTagsContext;
 
   useEffect(() => {
     const fire = async () => {
@@ -139,7 +143,7 @@ export const useJobsList = () => {
     setDisplayJobs(newJobs);
   }, [jobsList, searchIndex, searchChips, numActiveChips]);
 
-  const isLoading = !isDataReady;
+  const isLoading = !isDataReady || isJobTagsLoading;
 
   return {
     displayJobs,

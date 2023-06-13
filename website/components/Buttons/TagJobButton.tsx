@@ -5,15 +5,13 @@ import React from "react";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { JobTagsMenu } from "../JobTags/Menu/JobTagsMenu";
-import { ITag } from "src/lib/requests/ExtensionRequests";
 import { useTagJobButton } from "src/lib/hooks/useTagJobButton";
 
 interface ITagJobButton {
-  selectedTags: ITag[];
-  tagsToSelect: ITag[];
+  jobID: string;
 }
 export const TagJobButton = (props: ITagJobButton) => {
-  const { selectedTags, tagsToSelect } = props;
+  const { jobID } = props;
   const {
     hovering,
     setHovering,
@@ -23,19 +21,7 @@ export const TagJobButton = (props: ITagJobButton) => {
     buttonText,
     hoveringText,
     iconColor,
-    setSelectedTags,
-    selectedTags: userSelectedTags,
-    setUserTagsToSelect,
-    userTagsToSelect,
-  } = useTagJobButton(selectedTags, tagsToSelect);
-
-  const onSetSelectedTags = (tags: ITag[]) => {
-    setSelectedTags(tags);
-  };
-
-  const onSetTagsToSelect = (tags: ITag[]) => {
-    setUserTagsToSelect(tags);
-  };
+  } = useTagJobButton(jobID);
 
   return (
     <MainWrapper>
@@ -61,13 +47,10 @@ export const TagJobButton = (props: ITagJobButton) => {
       {menuOpen ? (
         <TagsMenuWrapper>
           <JobTagsMenu
-            selectedTags={userSelectedTags}
-            tagsToSelect={userTagsToSelect}
+            jobID={jobID}
             onOutsideClick={() => {
               setMenuOpen(false);
             }}
-            onSetSelectedTags={onSetSelectedTags}
-            onSetTagsToSelect={onSetTagsToSelect}
           />
         </TagsMenuWrapper>
       ) : null}
