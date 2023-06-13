@@ -11,13 +11,14 @@ export enum Orientation {
 }
 interface IlocationText {
   city?: string;
+  province?: string;
   country?: string;
   icon?: boolean;
   orientation?: Orientation;
 }
 
 export const LocationText = (props: IlocationText) => {
-  const { city, country, icon, orientation } = props;
+  const { city, province, country, icon, orientation } = props;
 
   const countryFlag = getCountryFlag(country ?? "");
   const orient = orientation ?? Orientation.horizontal;
@@ -30,7 +31,7 @@ export const LocationText = (props: IlocationText) => {
         variant={!isHorizontal ? "caption" : "subtitle2"}
         color="gray"
       >
-        {`${city ?? ""}${
+        {`${city ?? ""}, ${province ?? ""}${
           !countryFlag ? `${country ? `, ${country}` : ""}` : ""
         }`}
       </Typography>

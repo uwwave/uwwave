@@ -14,6 +14,7 @@ export interface JobsPageRowData {
   companyName: string;
   division: string;
   city: string;
+  province: string;
   country: string;
   industryTag: string;
   keywords: string[];
@@ -47,6 +48,7 @@ export function buildCoopJobsListFromExtensionData(
         division: job.postingListData.division,
         openings: job.postingListData.openings,
         city: "",
+        province: "",
         country: "",
         location: "",
         industryTag: "",
@@ -66,6 +68,8 @@ export function buildCoopJobsListFromExtensionData(
       if (jobPostingInformation !== undefined) {
         jobList[job.jobId].city =
           jobPostingInformation[JobInfoFieldsCoop.jobCity];
+        jobList[job.jobId].province =
+          jobPostingInformation[JobInfoFieldsCoop.jobProvince];
         jobList[job.jobId].country =
           jobPostingInformation[JobInfoFieldsCoop.jobCountry];
         jobList[job.jobId].location = `${jobList[job.jobId].country}, ${
@@ -105,6 +109,7 @@ export function buildFulltimeJobsListFromExtensionData(
         division: job.postingListData.division,
         openings: NaN,
         city: job.postingListData.city,
+        province: "",
         country: "",
         industryTag: "",
         keywords: [],
@@ -162,6 +167,7 @@ export function buildCoopJobWithJobID(
     division: jobInfo.postingListData.division,
     openings: jobInfo.postingListData.openings,
     city: jobInfo.postingListData.city,
+    province: jobInfo.postingListData.province,
     country: "",
     industryTag: "",
     keywords: [],
@@ -179,6 +185,7 @@ export function buildCoopJobWithJobID(
     jobInfo.pageData[PostingSections.jobPostingInformation];
   if (jobPostingInformation !== undefined) {
     job.city = jobPostingInformation[JobInfoFieldsCoop.jobCity];
+    job.province = jobPostingInformation[JobInfoFieldsCoop.jobProvince];
     job.country = jobPostingInformation[JobInfoFieldsCoop.jobCountry];
     job.location = `${job.country}, ${job.city}`;
     job.jobSummary = jobPostingInformation[JobInfoFieldsCoop.jobSummary];

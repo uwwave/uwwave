@@ -13,6 +13,7 @@ type JobInfo = {
 type CompanyCard = {
   companyName: string;
   city: string;
+  province: string;
   country: string;
   positionTitle: string;
 };
@@ -28,7 +29,7 @@ export const useJobPage = (jobID?: string) => {
       title: "Job Summary",
       text:
         job?.jobSummary.replace(
-          /<\s*(?:table|tr)[^>]*>|<\/\s*(?:table|tr)\s*>/g,
+          /<\s*(?:table)[^>]*>|<\/\s*(?:table)\s*>/g,
           ""
         ) ?? "",
     },
@@ -36,7 +37,7 @@ export const useJobPage = (jobID?: string) => {
       title: "Job Responsibilities",
       text:
         job?.jobResponsibilities.replace(
-          /<\s*(?:table|tr)[^>]*>|<\/\s*(?:table|tr)\s*>/g,
+          /<\s*(?:table)[^>]*>|<\/\s*(?:table)\s*>/g,
           ""
         ) ?? "",
     },
@@ -44,7 +45,7 @@ export const useJobPage = (jobID?: string) => {
       title: "Required Skills",
       text:
         job?.requiredSkills.replace(
-          /<\s*(?:table|tr)[^>]*>|<\/\s*(?:table|tr)\s*>/g,
+          /<\s*(?:table)[^>]*>|<\/\s*(?:table)\s*>/g,
           ""
         ) ?? "",
     },
@@ -58,6 +59,7 @@ export const useJobPage = (jobID?: string) => {
   const companyInfo: CompanyCard = {
     companyName: job?.companyName ?? "",
     city: job?.city ?? "",
+    province: job?.province ?? "",
     country: job?.country ?? "",
     positionTitle: job?.jobName ?? "",
   };
