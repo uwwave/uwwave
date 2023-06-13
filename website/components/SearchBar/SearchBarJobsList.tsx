@@ -14,6 +14,9 @@ import {
   getSearchTypeIcon,
 } from "src/lib/search/Search";
 import MUIButton from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+import { Spacer } from "../Spacer/Spacer";
 
 // Interfaces
 export interface ISearchChip {
@@ -35,6 +38,16 @@ interface ISearchBarJobsList {
   setNumActiveChips: (activeChips: number) => void;
   numActiveChips: number;
 }
+
+const SearchHelpButton = () => {
+  return (
+    <HelpButtonWrapper>
+      <IconButton sx={{ padding: "0px", color: "white" }}>
+        <HelpOutlineOutlinedIcon />
+      </IconButton>
+    </HelpButtonWrapper>
+  );
+};
 
 const SearchBarJobsListInner = (props: ISearchBarJobsListInner) => {
   const { chips, onSearch, onDeleteChip, onClearChips, onClickChip } = props;
@@ -191,15 +204,19 @@ export const SearchBarJobsList = (props: ISearchBarJobsList) => {
   };
 
   return (
-    <Paper>
-      <SearchBarJobsListInner
-        chips={chips}
-        onSearch={onSearch}
-        onDeleteChip={onDeleteChip}
-        onClearChips={onClearChips}
-        onClickChip={onClickChip}
-      />
-    </Paper>
+    <SearchWrapper>
+      <SearchHelpButton />
+      <Spacer height={10} />
+      <StyledPaper>
+        <SearchBarJobsListInner
+          chips={chips}
+          onSearch={onSearch}
+          onDeleteChip={onDeleteChip}
+          onClearChips={onClearChips}
+          onClickChip={onClickChip}
+        />
+      </StyledPaper>
+    </SearchWrapper>
   );
 };
 
@@ -267,5 +284,24 @@ const StyledChip = styled(({ isActive, ...rest }) => <Chip {...rest} />)`
     color: ${props => (props.isActive ? "white" : "black")};
     background-color: ${props =>
       props.isActive ? Color.primaryButton : "white"};
+  }
+`;
+
+const HelpButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  opacity: 1;
+`;
+
+const SearchWrapper = styled.div`
+  width: 100%;
+  min-width: 300px;
+  position: relative;
+`;
+
+const StyledPaper = styled(Paper)`
+  && {
+    padding: 20px;
+    border-radius: 20px;
   }
 `;
