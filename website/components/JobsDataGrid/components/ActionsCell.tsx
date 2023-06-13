@@ -1,4 +1,3 @@
-import { ITag } from "src/lib/requests/ExtensionRequests";
 import { BackgroundColor } from "src/styles/color";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import styled from "styled-components";
@@ -8,14 +7,13 @@ import Tooltip from "@mui/material/Tooltip";
 
 interface IActionsCell {
   jobID: string;
-  selectedTags: ITag[];
 }
 
 export const ActionsCell = (props: IActionsCell) => {
-  const { jobID, selectedTags } = props;
+  const { jobID } = props;
   return (
     <ActionsWrapper>
-      <TagJobIconButton selectedTags={selectedTags} />
+      <TagJobIconButton jobID={jobID} />
       <Tooltip title="Open in Waterloo Works" arrow placement="top">
         <StyledA
           href={`https://waterlooworks.uwaterloo.ca/myAccount/co-op/coop-postings.htm?ck_jobid=${jobID}`}

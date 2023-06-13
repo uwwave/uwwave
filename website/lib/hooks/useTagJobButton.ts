@@ -1,24 +1,26 @@
-import { useState } from "react";
-import { ITag } from "src/lib/requests/ExtensionRequests";
+import { useState, useContext } from "react";
+import { JobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
 
-export const useTagJobButton = (
-  initSelectedTags: ITag[],
-  tagsToSelect?: ITag[]
-) => {
+export const useTagJobButton = (jobID: string) => {
   const [hovering, setHovering] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [selectedTags, setSelectedTags] = useState(initSelectedTags);
-  const [userTagsToSelect, setUserTagsToSelect] = useState(tagsToSelect);
+  const jobTagsContext = useContext(JobTagsContext);
+  if (!jobTagsContext) {
+    throw new Error("JobTagsProvider not wrapped");
+  }
+  const { jobToTags, allTags } = jobTagsContext;
+  const selectedTags = jobToTags[jobID] ?? [];
   const hasTagsSelected = selectedTags.length > 0;
   const selected = hasTagsSelected;
+  const firstTagLabel = selectedTags[0];
   const hasTagsButtonText = hasTagsSelected
     ? selectedTags.length > 1
-      ? `${selectedTags[0].label} +${selectedTags.length - 1}`
-      : selectedTags[0].label
+      ? `${firstTagLabel} +${selectedTags.length - 1}`
+      : firstTagLabel
     : "";
   const buttonText = hasTagsSelected ? hasTagsButtonText : "Tag";
   const hoveringText = hasTagsSelected ? "Edit Tags" : "Add Tags";
-  const iconColor = hasTagsSelected ? selectedTags[0].color : "white";
+  const iconColor = hasTagsSelected ? allTags[firstTagLabel]?.color : "white";
 
   return {
     hovering,
@@ -30,8 +32,5 @@ export const useTagJobButton = (
     hoveringText,
     iconColor,
     selectedTags,
-    setSelectedTags,
-    userTagsToSelect,
-    setUserTagsToSelect,
   };
 };

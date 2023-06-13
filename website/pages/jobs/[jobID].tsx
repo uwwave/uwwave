@@ -35,7 +35,7 @@ import IconButton from "@mui/material/IconButton";
 import { JobInfoFieldsCoop } from "src/lib/extension/jobKeys";
 const SpecificJobPage = () => {
   const router = useRouter();
-  const jobID = router.query.jobID;
+  const jobID = router.query.jobID as string | undefined;
   const {
     imageURL,
     companyInfo,
@@ -47,9 +47,7 @@ const SpecificJobPage = () => {
     techIcons,
     companyURL,
     onClearbitData,
-    selectedTags,
-    tagsToSelect,
-  } = useJobPage(jobID as string | undefined);
+  } = useJobPage(jobID);
   const [submitDomainModal, setSubmitDomainModal] = useState(false);
   useEffect(() => {
     if (!job) {
@@ -59,7 +57,7 @@ const SpecificJobPage = () => {
   }, [job]);
 
   const renderCompanyHeader = () => {
-    if (isLoading) {
+    if (isLoading || !jobID) {
       return (
         <CompanyHeaderWrapper>
           <div>
@@ -98,10 +96,7 @@ const SpecificJobPage = () => {
               <PrimaryButton>Apply</PrimaryButton>
             </a>
             <Spacer width={8} />
-            <TagJobButton
-              selectedTags={selectedTags}
-              tagsToSelect={tagsToSelect}
-            />
+            <TagJobButton jobID={jobID} />
           </ButtonsWrapper>
         </div>
         <JobRatingCard

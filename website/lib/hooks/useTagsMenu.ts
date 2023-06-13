@@ -1,80 +1,51 @@
-import { useState, useEffect } from "react";
-import { ExtensionRequests, ITag } from "src/lib/requests/ExtensionRequests";
+import { useState, useContext } from "react";
+import { ITag } from "src/lib/requests/ExtensionRequests";
 import { convertToCamelCase } from "../strings/convertStrings";
 import uniqolor from "uniqolor";
+import { JobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
 
-export const useTagsMenu = (
-  jobID: number,
-  onSetSelectedTags: (tags: ITag[]) => void,
-  onTagsToSelect: (tags: ITag[]) => void,
-  userSelectedTabs?: ITag[],
-  userTags?: ITag[]
-) => {
-  const [selectedTags, setSelectedTags] = useState<ITag[]>(
-    userSelectedTabs ?? []
-  );
-  const [tagsToSelect, setTagsToSelect] = useState<ITag[]>(userTags ?? []);
+export const useTagsMenu = (jobID: string) => {
   const [inputVal, setInputStateVal] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(
-    userSelectedTabs !== undefined && userTags !== undefined ? false : true
-  );
   const [error, setError] = useState<string>("");
-  const [editTag, setEditTagState] = useState<ITag | undefined>();
 
-  useEffect(() => {
-    onSetSelectedTags(selectedTags);
-  }, [selectedTags]);
-  useEffect(() => {
-    onTagsToSelect(tagsToSelect);
-  }, [tagsToSelect]);
-  useEffect(() => {
-    const fire = async () => {
-      if (userSelectedTabs !== undefined && userTags !== undefined) {
-        return;
-      }
-      const tagsSelected =
-        userSelectedTabs ?? (await ExtensionRequests.getSelectedTags(jobID));
-      const allTags = userTags ?? (await ExtensionRequests.getAllTags());
-      const filteredTags = allTags.filter(
-        otherTag =>
-          !tagsSelected.some(
-            selectedTag => selectedTag.label === otherTag.label
-          )
-      );
-      setTagsToSelect(filteredTags);
-      setSelectedTags(tagsSelected);
-      setLoading(false);
-    };
-    fire();
-  }, []);
+  const jobTagsContext = useContext(JobTagsContext);
+  if (!jobTagsContext) {
+    throw new Error("JobTagsProvider not wrapped");
+  }
+  const {
+    isLoading,
+    allTags,
+    jobToTags,
+    onSelectTag,
+    onRemoveTag,
+    onCreateNewTagAndAddToJob,
+    setEditTag,
+    onPatchTag,
+    onDeleteTag,
+    editTag,
+  } = jobTagsContext;
+  const selectedTags = jobToTags[jobID] ?? [];
+  const tagsToSelect = Object.keys(allTags).filter(
+    otherTag => !selectedTags.some(selectedTag => selectedTag === otherTag)
+  );
 
   const selectTag = (label: string) => {
-    const tagIndex = tagsToSelect.findIndex(x => x.label === label);
-    if (tagIndex < 0) {
+    const tag = tagsToSelect.find(x => x === label);
+    if (!tag) {
       return;
     }
-    const color = tagsToSelect[tagIndex].color;
-    const oldLabel = tagsToSelect[tagIndex].label;
-    setSelectedTags([...selectedTags, { color, label: oldLabel }]);
-    const newTagsToSelect = [...tagsToSelect];
-    newTagsToSelect.splice(tagIndex, 1);
-    setTagsToSelect(newTagsToSelect);
+    onSelectTag(jobID, tag);
   };
 
   const removeTag = (label: string) => {
-    const tagIndex = selectedTags.findIndex(x => x.label === label);
-    if (tagIndex < 0) {
-      return;
-    }
-    const color = selectedTags[tagIndex].color;
-    const oldLabel = selectedTags[tagIndex].label;
-    setTagsToSelect([...tagsToSelect, { color, label: oldLabel }]);
-    const newSelectedTags = [...selectedTags];
-    newSelectedTags.splice(tagIndex, 1);
-    setSelectedTags(newSelectedTags);
+    onRemoveTag(jobID, label);
   };
 
   const onSubmit = () => {
+    if (!inputVal) {
+      setError(`Type in a value`);
+      return;
+    }
     if (!canCreateNew) {
       setError(`Tag "${convertToCamelCase(inputVal)}" already exists`);
       return;
@@ -85,8 +56,7 @@ export const useTagsMenu = (
       color: newColor.color,
       label: convertToCamelCase(inputVal),
     };
-    ExtensionRequests.createNewTagAndAddToJob(jobID, newTag);
-    setSelectedTags([...selectedTags, newTag]);
+    onCreateNewTagAndAddToJob(jobID, newTag);
     setInputStateVal("");
   };
 
@@ -96,75 +66,34 @@ export const useTagsMenu = (
   };
 
   const filteredTagsToSelect = tagsToSelect.filter(x => {
-    return x.label.toLowerCase().includes(inputVal.toLowerCase());
+    return x.toLowerCase().includes(inputVal.toLowerCase());
   });
 
   const tagOptions = inputVal ? filteredTagsToSelect : tagsToSelect;
   const canCreateNew =
     inputVal &&
-    !tagsToSelect.some(x => x.label === convertToCamelCase(inputVal)) &&
-    !selectedTags.some(x => x.label === convertToCamelCase(inputVal));
-
-  const setEditTag = (tag?: ITag) => {
-    setEditTagState(tag);
-  };
+    !tagsToSelect.some(x => x === convertToCamelCase(inputVal)) &&
+    !selectedTags.some(x => x === convertToCamelCase(inputVal));
 
   const isEditModalOpen = !!editTag;
-
-  const onPatchTag = (newTag: ITag) => {
-    if (!editTag) {
-      return;
-    }
-    const selectedTagsIndex = selectedTags.findIndex(
-      x => x.label === editTag.label
-    );
-    const tagsToSelectIndex = tagsToSelect.findIndex(
-      x => x.label === editTag.label
-    );
-    if (selectedTagsIndex < 0 && tagsToSelectIndex < 0) {
-      return;
-    }
-    if (selectedTagsIndex >= 0) {
-      const newTags = [...selectedTags];
-      newTags[selectedTagsIndex] = newTag;
-      setSelectedTags(newTags);
-    } else {
-      const newTags = [...tagsToSelect];
-      newTags[tagsToSelectIndex] = newTag;
-      setTagsToSelect(newTags);
-    }
-    setEditTag(undefined);
-  };
-
-  const onDeleteTag = () => {
-    if (!editTag) {
-      return;
-    }
-    const selectedTagsIndex = selectedTags.findIndex(
-      x => x.label === editTag.label
-    );
-    const tagsToSelectIndex = tagsToSelect.findIndex(
-      x => x.label === editTag.label
-    );
-    if (selectedTagsIndex < 0 && tagsToSelectIndex < 0) {
-      return;
-    }
-    if (selectedTagsIndex >= 0) {
-      const newTags = [...selectedTags];
-      newTags.splice(selectedTagsIndex, 1);
-      setSelectedTags(newTags);
-    } else {
-      const newTags = [...tagsToSelect];
-      newTags.splice(tagsToSelectIndex, 1);
-      setTagsToSelect(newTags);
-    }
-    setEditTag(undefined);
-  };
+  const displaySelectedTags: ITag[] = selectedTags.map(label => {
+    return {
+      ...allTags[label],
+      label,
+    };
+  });
+  const displayTagsToSelect: ITag[] = tagOptions.map(label => {
+    return {
+      ...allTags[label],
+      label,
+    };
+  });
 
   return {
-    loading,
+    displaySelectedTags,
+    loading: isLoading,
     selectedTags,
-    tagsToSelect: tagOptions,
+    displayTagsToSelect,
     selectTag,
     removeTag,
     inputVal,

@@ -41,13 +41,14 @@ export default function JobsListPage() {
             Jobs List
           </Typography>
           <Spacer height={16} />
-          <Typography>{numJobs} Listings</Typography>
+          {!isLoading ? <Typography>{numJobs} Listings</Typography> : null}
+
           <Spacer height={16} />
           {!!dataAgeMessage && (
-            <Typography>
-              {dataAgeMessage}
-              {isStale ? <WarningIcon width={16} /> : <CheckIcon width={16} />}
-            </Typography>
+            <StatusWrapper>
+              <Typography>{dataAgeMessage} </Typography>
+              {isStale ? <WarningIcon width={24} /> : <CheckIcon width={24} />}
+            </StatusWrapper>
           )}
           <Spacer height={32} />
         </MainWrapper>
@@ -88,4 +89,11 @@ const WaterWrapper = styled.div`
   width: 100%;
   background-color: ${BackgroundColor.dark};
   min-height: 100vh;
+`;
+
+const StatusWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
 `;

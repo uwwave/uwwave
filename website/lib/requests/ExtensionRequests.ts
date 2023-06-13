@@ -9,43 +9,63 @@ function delay(ms: number): Promise<void> {
   });
 }
 
-const dummyTags: ITag[] = [
-  {
-    label: "Ambitious",
+const dummyTags: AllTagsObject = {
+  Ambitious: {
     color: Color.ambitious,
   },
-  {
-    label: "Possible",
+  Possible: {
     color: Color.possible,
   },
-  {
-    label: "Safe",
+  Safe: {
     color: Color.safe,
   },
-];
+};
 
 //TODO: End of code to remove
 //Tag labels are unique, so we can use as an ID
-export interface ITag {
+interface ITagProps {
   color: string;
+}
+
+export interface ITag extends ITagProps {
   label: string;
 }
+
+export interface AllTagsObject {
+  [label: string]: ITagProps;
+}
+
+export interface IJobToTags {
+  [jobID: string]: string[];
+}
 export class ExtensionRequests {
-  static async getAllTags(): Promise<ITag[]> {
+  static async getAllTags(): Promise<AllTagsObject> {
     await delay(500);
     return dummyTags;
   }
 
-  //gets the selected tags of a certain jobid
-  static async getSelectedTags(jobID: number): Promise<ITag[]> {
-    console.log(jobID);
+  static async getAllJobsToTags(): Promise<IJobToTags> {
     await delay(500);
-    return [];
+    return { "311699": ["Ambitious"] };
+  }
+
+  //Adds a tag to a jobID
+  static async onSelectTag(jobID: string, tag: string): Promise<undefined> {
+    await delay(500);
+    console.log(jobID, tag);
+    return;
+  }
+
+  //Removes a tag from a jobID (tag still exists)
+  static async onRemoveTag(jobID: string, label: string): Promise<undefined> {
+    await delay(500);
+    console.log(jobID, label);
+    return;
   }
 
   //Creates a new tag and adds that tag to the jobID
   static async createNewTagAndAddToJob(
-    jobID: number,
+    jobID: string,
     tag: ITag
   ): Promise<undefined> {
     console.log(jobID, tag);
@@ -53,8 +73,8 @@ export class ExtensionRequests {
     return;
   }
 
-  static async patchTag(name: string, color: string): Promise<undefined> {
-    console.log(name, color);
+  static async patchTag(oldTagID: string, newTag: ITag): Promise<undefined> {
+    console.log(oldTagID, newTag);
     await delay(500);
     return;
   }

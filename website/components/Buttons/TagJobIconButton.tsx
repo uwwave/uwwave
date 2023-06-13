@@ -4,32 +4,21 @@ import React from "react";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkOutlineIcon from "@mui/icons-material/BookmarkBorder";
 import { JobTagsMenu } from "../JobTags/Menu/JobTagsMenu";
-import { ITag } from "src/lib/requests/ExtensionRequests";
 import { useTagJobButton } from "src/lib/hooks/useTagJobButton";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 
-interface ITagJobButton {
-  selectedTags: ITag[];
+interface ITagJobIconButton {
+  jobID: string;
 }
-export const TagJobIconButton = (props: ITagJobButton) => {
-  const { selectedTags } = props;
+export const TagJobIconButton = (props: ITagJobIconButton) => {
+  const { jobID } = props;
   const {
     menuOpen,
     setMenuOpen,
-    setSelectedTags,
     selectedTags: userSelectedTags,
-    setUserTagsToSelect,
-    userTagsToSelect,
-  } = useTagJobButton(selectedTags);
-
-  const onSetSelectedTags = (tags: ITag[]) => {
-    setSelectedTags(tags);
-  };
-
-  const onSetTagsToSelect = (tags: ITag[]) => {
-    setUserTagsToSelect(tags);
-  };
+    iconColor,
+  } = useTagJobButton(jobID);
 
   return (
     <MainWrapper>
@@ -49,7 +38,7 @@ export const TagJobIconButton = (props: ITagJobButton) => {
           }}
         >
           <InnerIcon>
-            <StyledBookmarkIcon bgcolor={userSelectedTags[0].color} />
+            <StyledBookmarkIcon bgcolor={iconColor} />
             <StyledButtonLabel>{userSelectedTags.length}</StyledButtonLabel>
           </InnerIcon>
         </IconButton>
@@ -58,14 +47,10 @@ export const TagJobIconButton = (props: ITagJobButton) => {
       {menuOpen ? (
         <TagsMenuWrapper>
           <JobTagsMenu
-            selectedTags={userSelectedTags}
-            tagsToSelect={userTagsToSelect}
             onOutsideClick={() => {
-              setUserTagsToSelect(undefined);
               setMenuOpen(false);
             }}
-            onSetSelectedTags={onSetSelectedTags}
-            onSetTagsToSelect={onSetTagsToSelect}
+            jobID={jobID}
           />
         </TagsMenuWrapper>
       ) : null}
