@@ -15,6 +15,7 @@ export const ExtensionDataProvider = ({ children }: IJobsTagsProvider) => {
     coopJobsListPageRows,
     fulltimeJobsListPageRows,
     extensionData,
+    fetchExtensionData,
   } = useExtensionData();
 
   const value: ExtensionDataContextType = {
@@ -22,6 +23,7 @@ export const ExtensionDataProvider = ({ children }: IJobsTagsProvider) => {
     coopJobsListPageRows,
     fulltimeJobsListPageRows,
     extensionData,
+    fetchExtensionData,
   };
 
   return (

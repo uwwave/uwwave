@@ -6,6 +6,7 @@ export interface ExtensionDataContextType {
   coopJobsListPageRows: JobsPageRowData[];
   fulltimeJobsListPageRows: JobsPageRowData[];
   extensionData: { [key: string]: string };
+  fetchExtensionData: () => void;
 }
 
 export const ExtensionDataContext = createContext<

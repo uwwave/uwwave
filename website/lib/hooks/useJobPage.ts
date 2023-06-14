@@ -19,7 +19,8 @@ type CompanyCard = {
 };
 
 export const useJobPage = (jobID?: string) => {
-  const { extensionData: jobs } = useExtensionsDataContext();
+  const { extensionData: jobs, fetchExtensionData } =
+    useExtensionsDataContext();
   const [tabSelected, setTabSelected] = useState(0);
   const [companyURL, setCompanyURL] = useState<string | undefined>(undefined);
   const [imageURL, setImageURL] = useState<string>("");
@@ -61,7 +62,9 @@ export const useJobPage = (jobID?: string) => {
     country: job?.country ?? "",
     positionTitle: job?.jobName ?? "",
   };
-
+  useEffect(() => {
+    fetchExtensionData();
+  }, []);
   useEffect(() => {
     if (jobInfo.length === 0 || !companyInfo.companyName || init) {
       return;
