@@ -14,6 +14,11 @@ import {
   getSearchTypeIcon,
 } from "src/lib/search/Search";
 import MUIButton from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+import { Spacer } from "../Spacer/Spacer";
+import { set } from "lodash";
+import { SearchHelpModal } from "../Modals/variants/SearchHelpModal";
 
 // Interfaces
 export interface ISearchChip {
@@ -35,6 +40,25 @@ interface ISearchBarJobsList {
   setNumActiveChips: (activeChips: number) => void;
   numActiveChips: number;
 }
+
+interface ISearchHelpButton {
+  onClick: () => void;
+}
+
+const SearchHelpButton = (props: ISearchHelpButton) => {
+  const IconButtonStyles = {
+    padding: "0px",
+    color: "white",
+  };
+
+  return (
+    <HelpButtonWrapper>
+      <IconButton onClick={props.onClick} sx={IconButtonStyles}>
+        <HelpOutlineOutlinedIcon />
+      </IconButton>
+    </HelpButtonWrapper>
+  );
+};
 
 const SearchBarJobsListInner = (props: ISearchBarJobsListInner) => {
   const { chips, onSearch, onDeleteChip, onClearChips, onClickChip } = props;
@@ -128,6 +152,7 @@ const SearchBarJobsListInner = (props: ISearchBarJobsListInner) => {
 
 export const SearchBarJobsList = (props: ISearchBarJobsList) => {
   const [chips, setChips] = useState<ISearchChip[]>([]);
+  const [isHelpOpen, setIsHelpOpen] = useState<boolean>(false);
 
   useEffect(() => {
     props.onSearchUpdated(chips);
@@ -190,16 +215,28 @@ export const SearchBarJobsList = (props: ISearchBarJobsList) => {
     }
   };
 
+  const onSearchHelpClick = () => {
+    setIsHelpOpen(true);
+  };
+
   return (
-    <Paper>
-      <SearchBarJobsListInner
-        chips={chips}
-        onSearch={onSearch}
-        onDeleteChip={onDeleteChip}
-        onClearChips={onClearChips}
-        onClickChip={onClickChip}
+    <SearchWrapper>
+      <SearchHelpModal
+        isOpen={isHelpOpen}
+        onClose={() => setIsHelpOpen(false)}
       />
-    </Paper>
+      <SearchHelpButton onClick={onSearchHelpClick} />
+      <Spacer height={10} />
+      <StyledPaper>
+        <SearchBarJobsListInner
+          chips={chips}
+          onSearch={onSearch}
+          onDeleteChip={onDeleteChip}
+          onClearChips={onClearChips}
+          onClickChip={onClickChip}
+        />
+      </StyledPaper>
+    </SearchWrapper>
   );
 };
 
@@ -253,7 +290,7 @@ const ChipsWrapper = styled.div`
   flex-wrap: wrap;
 `;
 const ChipsWrapperWrapper = styled.div`
-  padding: 16px;
+  padding: 16px 0px 0px 0px;
   width: 100%;
   display: flex;
   gap: 8px;
@@ -267,5 +304,24 @@ const StyledChip = styled(({ isActive, ...rest }) => <Chip {...rest} />)`
     color: ${props => (props.isActive ? "white" : "black")};
     background-color: ${props =>
       props.isActive ? Color.primaryButton : "white"};
+  }
+`;
+
+const HelpButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  opacity: 1;
+`;
+
+const SearchWrapper = styled.div`
+  width: 100%;
+  min-width: 300px;
+  position: relative;
+`;
+
+const StyledPaper = styled(Paper)`
+  && {
+    padding: 20px;
+    border-radius: 20px;
   }
 `;
