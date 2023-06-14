@@ -8,8 +8,8 @@ import Paper from "@mui/material/Paper";
 import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
 import { BackgroundColor } from "src/styles/color";
 import { Footer } from "src/components/Footer/Footer";
-import { useExtensionData } from "src/lib/extension/hooks/useExtensionData";
 import { LocalStorageMetadataKeys } from "src/lib/extension/shared/userProfile";
+import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
 
 const Step2 = () => {
   return (
@@ -72,7 +72,7 @@ const Step4 = () => {
 };
 
 const Setup = () => {
-  const { extensionData, isDataReady } = useExtensionData();
+  const { extensionData, isDataReady } = useExtensionsDataContext();
   let step = 1;
   if (isDataReady) {
     step = 2;

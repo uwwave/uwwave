@@ -33,6 +33,8 @@ import { JobPagePaper } from "src/components/Paper/JobPagePaper";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import { JobInfoFieldsCoop } from "src/lib/extension/jobKeys";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+
 const SpecificJobPage = () => {
   const router = useRouter();
   const jobID = router.query.jobID as string | undefined;
@@ -75,6 +77,9 @@ const SpecificJobPage = () => {
     }
     return (
       <CompanyHeaderWrapper>
+        <HelpButton>
+          <HelpOutlineIcon />
+        </HelpButton>
         <div>
           <CompanyCard
             imageURL={imageURL}
@@ -381,6 +386,18 @@ const CompanyHeaderWrapper = styled(Paper).attrs({
   display: flex;
   justify-content: space-between;
   padding: 32px;
+  position: relative;
+`;
+
+const HelpButton = styled(IconButton)`
+  position: absolute;
+  right: -48px;
+  top: 32px;
+  opacity: 0.6;
+
+  &&:hover {
+    opacity: 1;
+  }
 `;
 
 const JobFastFactsWrapper = styled(Paper).attrs({

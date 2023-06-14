@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import {
   AllTagsObject,
   IJobToTags,
@@ -22,3 +22,11 @@ export interface JobTagsContextType {
 export const JobTagsContext = createContext<JobTagsContextType | undefined>(
   undefined
 );
+
+export const useJobTagsContext = () => {
+  const jobTagsContext = useContext(JobTagsContext);
+  if (!jobTagsContext) {
+    throw new Error("JobTagsProvider not wrapped");
+  }
+  return jobTagsContext;
+};

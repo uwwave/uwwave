@@ -1,6 +1,5 @@
-import { useEffect, useState, useContext, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { JobsPageRowData } from "src/lib/jobsList/jobsList";
-import { useExtensionData } from "src/lib/extension/hooks/useExtensionData";
 import { ISearchChip } from "src/components/SearchBar/SearchBarJobsList";
 import {
   DAYS_TO_STALE_DATA,
@@ -9,21 +8,17 @@ import {
 import lunr from "lunr";
 import moment from "moment/moment";
 import { getTimeDiffString } from "src/lib/dates/dates";
-import {
-  IGetCompanyLogosResponse,
-  IJobKeywordObject,
-  Requests,
-} from "src/lib/requests/Requests";
+import { IJobKeywordObject, Requests } from "src/lib/requests/Requests";
 import { getSearchTypeField, SearchTypes } from "src/lib/search/Search";
-import { JobTagsContext } from "../context/jobTags/JobTagsContext";
+import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
+import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
 
 export const useJobsList = () => {
   const {
     coopJobsListPageRows: jobs,
     extensionData,
     isDataReady,
-  } = useExtensionData();
-
+  } = useExtensionsDataContext();
   // Search and job states
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const [searchIndex, setSearchIndex] = useState(lunr(() => {}));
@@ -36,21 +31,8 @@ export const useJobsList = () => {
     {}
   );
   const [numActiveChips, setNumActiveChips] = useState<number>(0);
-  const [logos, setLogos] = useState<IGetCompanyLogosResponse | undefined>();
   const dateScraped = extensionData[LocalStorageMetadataKeys.SCRAPE_AT];
-  const jobTagsContext = useContext(JobTagsContext);
-  if (!jobTagsContext) {
-    throw new Error("JobTagsProvider not wrapped");
-  }
-  const { isLoading: isJobTagsLoading } = jobTagsContext;
-
-  useEffect(() => {
-    const fire = async () => {
-      const out = await Requests.getCompanyLogos();
-      setLogos(out);
-    };
-    fire();
-  }, []);
+  const { isLoading: isJobTagsLoading } = useJobTagsContext();
 
   // Build Keywords
   useEffect(() => {
@@ -183,7 +165,6 @@ export const useJobsList = () => {
     isStale,
     jobKeywords,
     numJobs: jobs.length,
-    logos,
     setChips: setSearchChips,
     setNumActiveChips,
     numActiveChips,

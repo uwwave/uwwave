@@ -7,7 +7,7 @@ interface ILogoLoader {
 export const LogoLoader = (props: ILogoLoader) => {
   const { width } = props;
   return (
-    <Svg width={width ?? 100} viewBox="0 75 285.14 285.14">
+    <Svg width={width ?? 100} viewBox="0 56 285.14 285.14">
       <rect width="285.14" height="285.14" style={{ fill: "none" }} />
       <path
         d="M5567.26,2484.25h-38.12c-0.47,6.72-5.64,12-12,12s-11.48-5.3-12-12H5467c-0.47,6.72-5.64,12-12,12s-11.48-5.3-12-12l-38.11.5s-0.15,17.32-.15,28.81v7.26c0,9.66,7.22,17.49,16.12,17.49h130.21c8.9,0,16.12-7.83,16.12-17.49,0-.08,0-0.16,0-0.24S5567.26,2504.94,5567.26,2484.25Z"
@@ -97,11 +97,11 @@ const Svg = styled.svg`
     0%,
     40%,
     100% {
-      opacity: 0.4;
+      opacity: 0.08;
     }
 
     70% {
-      opacity: 0.33;
+      opacity: 0.06;
     }
   }
   @keyframes waving1 {

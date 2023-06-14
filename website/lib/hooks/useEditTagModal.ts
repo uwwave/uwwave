@@ -1,7 +1,7 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { ITag } from "src/lib/requests/ExtensionRequests";
 import { useState } from "react";
-import { JobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
+import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
 
 export const useEditTagModal = () => {
   const [colors] = useState<string[]>([
@@ -16,12 +16,8 @@ export const useEditTagModal = () => {
     "#3B3B98",
     "#f368e0",
   ]);
-  const jobTagsContext = useContext(JobTagsContext);
-  if (!jobTagsContext) {
-    throw new Error("JobTagsProvider not wrapped");
-  }
   const { editTag, allTags, onDeleteTag, onPatchTag, closeEditModal } =
-    jobTagsContext;
+    useJobTagsContext();
   const [deleteMode, setDeleteMode] = useState<boolean>(false);
   const [tag, setTag] = useState<ITag | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);

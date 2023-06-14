@@ -3,6 +3,7 @@ import React from "react";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import Head from "next/head";
 import { JobTagsProvider } from "src/lib/context/jobTags/JobTagsProvider";
+import { ExtensionDataProvider } from "src/lib/context/ExtensionData/ExtensionDataProvider";
 
 const theme = createTheme({
   typography: {
@@ -35,7 +36,9 @@ function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
       <Provider theme={theme}>
         <CssBaseline />
         <JobTagsProvider>
-          <AnyComponent {...pageProps} />
+          <ExtensionDataProvider>
+            <AnyComponent {...pageProps} />
+          </ExtensionDataProvider>
         </JobTagsProvider>
       </Provider>
     </>

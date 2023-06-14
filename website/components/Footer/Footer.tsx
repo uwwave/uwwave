@@ -4,7 +4,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { WaveLogo } from "src/components/icons/logo/Footer";
-import Link from "@mui/material/Link";
+import Link from "next/link";
 import MUITypography from "@mui/material/Typography";
 import { Spacer } from "../Spacer/Spacer";
 import { useRouter } from "next/router";
@@ -36,29 +36,19 @@ export const Footer = (props: IFooter) => {
       >
         {/* Weird font bug, need to wrap link with typography: https://mui.com/material-ui/api/link */}
         <MUITypography>
-          <StyledLink
-            href="/setup"
-            color={Color.textPrimary}
-            variant="inherit"
-            underline="none"
-          >
+          <StyledLink href="/setup" color={Color.textPrimary}>
             Setup
           </StyledLink>
         </MUITypography>
         <Spacer height={16} />
         <MUITypography>
-          <StyledLink
-            href="/jobs"
-            color={Color.textPrimary}
-            variant="inherit"
-            underline="none"
-          >
+          <StyledLink href="/jobs" color={Color.textPrimary}>
             Jobs List
           </StyledLink>
         </MUITypography>
         <Spacer height={16} />
         <MUITypography>
-          <StyledLink href="/about" color={Color.textPrimary} underline="none">
+          <StyledLink href="/about" color={Color.textPrimary}>
             About
           </StyledLink>
         </MUITypography>
@@ -86,7 +76,8 @@ export const Footer = (props: IFooter) => {
 
 const StyledLink = styled(Link)`
   && {
-    font-size: 1rem;
+    text-decoration: none;
+    color: white;
   }
 `;
 

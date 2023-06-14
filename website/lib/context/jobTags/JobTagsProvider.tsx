@@ -14,7 +14,6 @@ interface IJobsTagsProvider {
   children: React.ReactNode;
 }
 
-//TODO: add extention requet calls
 export const JobTagsProvider = ({ children }: IJobsTagsProvider) => {
   const [allTags, setAllTags] = useState<AllTagsObject>({});
   const [jobToTags, setJobsToTags] = useState<IJobToTags>({});

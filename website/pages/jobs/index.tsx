@@ -7,12 +7,17 @@ import { BackgroundColor } from "src/styles/color";
 import { SearchBarJobsList } from "components/SearchBar/SearchBarJobsList";
 import { JobsDataGrid } from "src/components/JobsDataGrid/JobsDataGrid";
 import { Footer } from "src/components/Footer/Footer";
-// import { ExtensionRequests } from "src/lib/requests/ExtensionRequests";
 import { useJobsList } from "src/lib/hooks/useJobsList";
 import { JobsListPageHeader } from "src/components/Headers/JobsListPageHeader";
 import Skeleton from "@mui/material/Skeleton";
+import { GetServerSideProps, NextPage } from "next";
+import { IGetCompanyLogosResponse } from "src/lib/requests/Requests";
+import { getCompanyLogos } from "src/lib/server/companies/logos";
 
-export default function JobsListPage() {
+interface PageProps {
+  logos: IGetCompanyLogosResponse;
+}
+const JobsListPage: NextPage<PageProps> = ({ logos }) => {
   useEffect(() => {
     document.title = "Jobs List";
   }, []);
@@ -24,7 +29,6 @@ export default function JobsListPage() {
     isStale,
     jobKeywords,
     numJobs,
-    logos,
     setChips,
     setNumActiveChips,
     numActiveChips,
@@ -77,7 +81,18 @@ export default function JobsListPage() {
       <Footer dark />
     </>
   );
-}
+};
+
+export default JobsListPage;
+
+export const getServerSideProps: GetServerSideProps<PageProps> = async () => {
+  const out = await getCompanyLogos();
+  return {
+    props: {
+      logos: out,
+    },
+  };
+};
 
 const WaterWrapper = styled.div`
   display: flex;

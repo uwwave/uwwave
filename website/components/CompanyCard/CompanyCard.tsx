@@ -8,6 +8,7 @@ import { Color } from "src/styles/color";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import { LocationText } from "../LocationText/LocationText";
+import { LogoLoader } from "../Loader/LogoLoader";
 
 interface CompanyCardProps {
   imageURL: string;
@@ -92,7 +93,9 @@ export const CompanyCard = ({
 export const LoadingCompanyCard = () => {
   return (
     <MainWrapper elevation={0}>
-      <Skeleton variant="rounded" width={160} height={160} />
+      <LoadingProfileWrapper>
+        <LogoLoader />
+      </LoadingProfileWrapper>
       <Spacer width={16} />
       <NameWrapper>
         <Skeleton variant="text" sx={{ fontSize: "3rem" }} width={300} />
@@ -104,6 +107,15 @@ export const LoadingCompanyCard = () => {
   );
 };
 
+const LoadingProfileWrapper = styled.div`
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: #f2f2f2;
+`;
 const MainWrapper = styled(Paper)<MainWrapperProps>`
   & {
     display: flex;

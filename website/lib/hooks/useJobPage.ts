@@ -1,10 +1,10 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { buildCoopJobWithJobID } from "../jobsList/jobsList";
-import { useExtensionData } from "../extension/hooks/useExtensionData";
 import { extractTechFromText } from "../genTechStack/genTechStack";
-import { Requests } from "../requests/Requests";
+import { Requests } from "src/lib/requests/Requests";
 import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
-import { JobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
+import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
+import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
 
 type JobInfo = {
   title: string;
@@ -17,8 +17,9 @@ type CompanyCard = {
   country: string;
   positionTitle: string;
 };
+
 export const useJobPage = (jobID?: string) => {
-  const { extensionData: jobs } = useExtensionData();
+  const { extensionData: jobs } = useExtensionsDataContext();
   const [tabSelected, setTabSelected] = useState(0);
   const [companyURL, setCompanyURL] = useState<string | undefined>(undefined);
   const [imageURL, setImageURL] = useState<string>("");
@@ -50,11 +51,7 @@ export const useJobPage = (jobID?: string) => {
         ) ?? "",
     },
   ];
-  const jobTagsContext = useContext(JobTagsContext);
-  if (!jobTagsContext) {
-    throw new Error("JobTagsProvider not wrapped");
-  }
-  const { isLoading: isTagsLoading } = jobTagsContext;
+  const { isLoading: isTagsLoading } = useJobTagsContext();
 
   const companyInfo: CompanyCard = {
     companyName: job?.companyName ?? "",
@@ -70,12 +67,12 @@ export const useJobPage = (jobID?: string) => {
     }
     Requests.getCompanyInfo(companyInfo.companyName)
       .then((res: ICompanyClearbitData) => {
-        setImageURL(res.logo ?? "/logo.png");
+        setImageURL(res.logo ?? "/logo-empty.png");
         setCompanyURL(res.domain);
         setInit(true);
       })
       .catch((err: any) => {
-        setImageURL("/logo.png");
+        setImageURL("/logo-empty.png");
         setCompanyURL("");
         setInit(true);
         console.log(err);

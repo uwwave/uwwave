@@ -244,13 +244,13 @@ const CustomLoadingOverlay = () => (
         top: 0,
         bottom: 0,
         left: 0,
-        right: 0,
+        right: 30,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
-      <LogoLoader /> {/* Replace CircularProgress with LogoLoader */}
+      <LogoLoader />
     </div>
   </GridOverlay>
 );
