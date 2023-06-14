@@ -4,6 +4,15 @@ body {
     margin: 0;
     border: 1px solid grey;
     font-family: 'Lato', sans-serif;
+    font-size: 75%;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 18px;
 }
 
 .grey-bg {
@@ -74,6 +83,7 @@ body {
     text-align: center;
     height: calc(100% - 48px);
     overflow-y: scroll;
+    overflow-x: hidden;
     margin: 24px;
 }
 
