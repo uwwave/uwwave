@@ -76,7 +76,8 @@ const FlexWrapper = styled.div`
 interface ILink {
   underline: boolean;
 }
-const StyledLink = styled(Link)<ILink>`
+const Elemen = Link as any;
+const StyledLink = styled(Elemen)<ILink>`
   && {
     text-decoration: ${props => (props.underline ? "underline" : "none")};
     color: ${props => props.color ?? BackgroundColor.darker};
