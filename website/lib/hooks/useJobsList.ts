@@ -18,7 +18,11 @@ export const useJobsList = () => {
     coopJobsListPageRows: jobs,
     extensionData,
     isDataReady,
+    fetchExtensionData,
   } = useExtensionsDataContext();
+  useEffect(() => {
+    fetchExtensionData();
+  }, []);
   // Search and job states
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const [searchIndex, setSearchIndex] = useState(lunr(() => {}));

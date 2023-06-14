@@ -33,6 +33,7 @@ export const useEditTagModal = () => {
     } catch (e) {
       console.log(e);
     }
+    setDeleteMode(false);
     setIsLoading(false);
   };
   const handleDeleteTag = async () => {
@@ -42,6 +43,7 @@ export const useEditTagModal = () => {
     } catch (e) {
       console.log(e);
     }
+    setDeleteMode(false);
     setIsLoading(false);
   };
 
@@ -55,9 +57,13 @@ export const useEditTagModal = () => {
 
   const isOpen = !!editTag;
 
+  const onClose = () => {
+    closeEditModal();
+    setDeleteMode(false);
+  };
   return {
     initTag: editTag,
-    onClose: closeEditModal,
+    onClose,
     deleteMode,
     setDeleteMode,
     setTag,

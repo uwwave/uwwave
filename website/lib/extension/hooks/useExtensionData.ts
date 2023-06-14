@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import {
   buildCoopJobsListFromExtensionData,
   buildFulltimeJobsListFromExtensionData,
@@ -21,8 +21,11 @@ export const useExtensionData = () => {
     [extensionData]
   );
 
-  useEffect(() => {
-    const listener = sendMessageOnLoadAndSetupListenerHook(
+  const fetchExtensionData = () => {
+    if (isDataReady) {
+      return;
+    }
+    sendMessageOnLoadAndSetupListenerHook(
       {
         id: ListenerId.allExtensionLocalStorage,
         reqName: RequestName.getLocal,
@@ -40,18 +43,13 @@ export const useExtensionData = () => {
         }
       }
     );
-
-    return () => {
-      // Clean up the listener if necessary
-      // For example, if sendMessageOnLoadAndSetupListenerHook returns a function to remove the listener
-      listener();
-    };
-  }, []);
+  };
 
   return {
     isDataReady,
     coopJobsListPageRows,
     fulltimeJobsListPageRows,
     extensionData,
+    fetchExtensionData,
   };
 };

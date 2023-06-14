@@ -9,6 +9,7 @@ import { LocalStorageMetadataKeys } from "src/lib/extension/shared/userProfile";
 import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
 import Link from "next/link";
 import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
+import { useEffect } from "react";
 
 const Step2 = () => {
   return (
@@ -73,7 +74,11 @@ const Step4 = () => {
 };
 
 const Setup = () => {
-  const { extensionData, isDataReady } = useExtensionsDataContext();
+  const { extensionData, isDataReady, fetchExtensionData } =
+    useExtensionsDataContext();
+  useEffect(() => {
+    fetchExtensionData();
+  }, []);
   let step = 1;
   if (isDataReady) {
     step = 2;
