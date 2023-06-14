@@ -4,14 +4,11 @@ import {
   CompanyCard,
   LoadingCompanyCard,
 } from "components/CompanyCard/CompanyCard";
-import Container from "@mui/material/Container";
 import { Tabs } from "src/components/Tabs/Tabs";
 import styled from "styled-components";
 import ReactHtmlParser from "react-html-parser";
-import { NavigationBar } from "src/components/NavigationBar/NavigationBar";
 import { SpecificJobPageSection } from "src/components/SpecificJobPageSection/SpecificJobPageSection";
 import { useRouter } from "next/router";
-import { Footer } from "src/components/Footer/Footer";
 import { BackgroundColor } from "src/styles/color";
 import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
 import { JobRatingCard } from "src/components/JobRatingCard/JobRatingCard";
@@ -33,6 +30,14 @@ import { JobPagePaper } from "src/components/Paper/JobPagePaper";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import { JobInfoFieldsCoop } from "src/lib/extension/jobKeys";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import { JobScoreInfoModal } from "src/components/Modals/variants/JobScoreInfoModal";
+import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
+
+const DUMMY_RATING = "4.2";
+const DUMMY_SALARY = "50-60";
+const DUMMY_COMPAT_SCORE = "20%";
+
 const SpecificJobPage = () => {
   const router = useRouter();
   const jobID = router.query.jobID as string | undefined;
@@ -47,6 +52,8 @@ const SpecificJobPage = () => {
     techIcons,
     companyURL,
     onClearbitData,
+    infoModal,
+    setInfoModal,
   } = useJobPage(jobID);
   const [submitDomainModal, setSubmitDomainModal] = useState(false);
   useEffect(() => {
@@ -74,41 +81,59 @@ const SpecificJobPage = () => {
       );
     }
     return (
-      <CompanyHeaderWrapper>
-        <div>
-          <CompanyCard
-            imageURL={imageURL}
-            companyName={companyInfo.companyName}
-            city={companyInfo.city}
-            province={companyInfo.province}
-            country={companyInfo.country}
-            positionTitle={companyInfo.positionTitle}
-            companyURL={companyURL}
-            onOpenSubmitDomain={() => {
-              setSubmitDomainModal(true);
-            }}
-          />
-          <Spacer height={24} />
-          <ButtonsWrapper>
-            <a
-              href={`https://waterlooworks.uwaterloo.ca/myAccount/co-op/coop-postings.htm?ck_jobid=${jobID}`}
-              target="_blank"
-            >
-              <PrimaryButton>Apply</PrimaryButton>
-            </a>
-            <Spacer width={8} />
-            <TagJobButton jobID={jobID} />
-          </ButtonsWrapper>
-        </div>
-        <JobRatingCard
-          rating="4.2"
-          salary="50-60"
-          score="10%"
-          ratingVal={job ? Math.random() * 100 : 0}
-          salaryVal={job ? Math.random() * 100 : 0}
-          scoreVal={job ? Math.random() * 100 : 0}
+      <>
+        <JobScoreInfoModal
+          isOpen={infoModal}
+          onClose={() => {
+            setInfoModal(false);
+          }}
+          rating={DUMMY_RATING}
+          salary={DUMMY_SALARY}
+          score={DUMMY_COMPAT_SCORE}
         />
-      </CompanyHeaderWrapper>
+        <CompanyHeaderWrapper>
+          <HelpButton
+            onClick={() => {
+              setInfoModal(true);
+            }}
+          >
+            <HelpOutlineIcon />
+          </HelpButton>
+          <div>
+            <CompanyCard
+              imageURL={imageURL}
+              companyName={companyInfo.companyName}
+              city={companyInfo.city}
+              province={companyInfo.province}
+              country={companyInfo.country}
+              positionTitle={companyInfo.positionTitle}
+              companyURL={companyURL}
+              onOpenSubmitDomain={() => {
+                setSubmitDomainModal(true);
+              }}
+            />
+            <Spacer height={24} />
+            <ButtonsWrapper>
+              <a
+                href={`https://waterlooworks.uwaterloo.ca/myAccount/co-op/coop-postings.htm?ck_jobid=${jobID}`}
+                target="_blank"
+              >
+                <PrimaryButton>Apply</PrimaryButton>
+              </a>
+              <Spacer width={8} />
+              <TagJobButton jobID={jobID} />
+            </ButtonsWrapper>
+          </div>
+          <JobRatingCard
+            rating={DUMMY_RATING}
+            salary={DUMMY_SALARY}
+            score={DUMMY_COMPAT_SCORE}
+            ratingVal={job ? Math.random() * 100 : 0}
+            salaryVal={job ? Math.random() * 100 : 0}
+            scoreVal={job ? Math.random() * 100 : 0}
+          />
+        </CompanyHeaderWrapper>
+      </>
     );
   };
 
@@ -124,7 +149,7 @@ const SpecificJobPage = () => {
       );
     }
     return (
-      <JobFastFactsWrapper bottomPadding={hideTechStack}>
+      <JobFastFactsWrapper>
         {job?.appDeadline ? (
           <JobInfoTile
             icon={<TodayIcon />}
@@ -252,7 +277,6 @@ const SpecificJobPage = () => {
   };
   const renderJobBody = () => (
     <>
-      <Spacer height={16} />
       {!isLoading ? (
         <Tabs
           tabs={[{ label: "Details" }, { label: "Settings" }]}
@@ -278,7 +302,7 @@ const SpecificJobPage = () => {
     return (
       <>
         <Spacer height={2} />
-        <TechWrapper bottomPadding>
+        <TechWrapper>
           <Typography color="gray">Tech Stack</Typography>
           {techIcons.map(icon => {
             if (icon.icon === undefined) {
@@ -317,7 +341,7 @@ const SpecificJobPage = () => {
   };
 
   return (
-    <Main>
+    <>
       {!isLoading ? (
         <UploadDomainModal
           companyName={companyInfo.companyName}
@@ -330,22 +354,21 @@ const SpecificJobPage = () => {
         />
       ) : null}
 
-      <NavigationBar backgroundColor="white" />
-      <Container>
-        <Spacer height={40} />
-        {renderCompanyHeader()}
-        <Spacer height={2} />
-        {renderCompanyFastFacts()}
-        {renderTech()}
-      </Container>
-      <Shadow />
-      <WaterWrapper>
-        <Container>{renderJobBody()}</Container>
-        <Spacer height={128} />
-      </WaterWrapper>
-      {renderSurvey()}
-      <Footer />
-    </Main>
+      <PageWrapper
+        headerPadding={0}
+        hideBackground
+        Header={
+          <>
+            {renderCompanyHeader()}
+            <Spacer height={2} />
+            {renderCompanyFastFacts()}
+            {renderTech()}
+          </>
+        }
+        Body={renderJobBody()}
+        BeforeFooter={renderSurvey()}
+      />
+    </>
   );
 };
 
@@ -359,16 +382,6 @@ const SurveyWrapper = styled.div`
   gap: 16px;
   background-color: white;
 `;
-const WaterWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  background-color: ${BackgroundColor.darker};
-  min-height: 100vh;
-  z-index: 1;
-  position: relative;
-`;
 
 const ButtonsWrapper = styled.div`
   display: flex;
@@ -381,16 +394,27 @@ const CompanyHeaderWrapper = styled(Paper).attrs({
   display: flex;
   justify-content: space-between;
   padding: 32px;
+  position: relative;
+`;
+
+const HelpButton = styled(IconButton)`
+  position: absolute;
+  right: -48px;
+  top: 32px;
+  opacity: 0.6;
+
+  &&:hover {
+    opacity: 1;
+  }
 `;
 
 const JobFastFactsWrapper = styled(Paper).attrs({
   elevation: 0,
-})<IBottomPadding>`
+})`
   display: flex;
   flex-wrap: wrap;
   gap: 8px 64px;
   padding: 32px;
-  ${props => (props.bottomPadding ? "padding-bottom: 64px;" : "")}
 `;
 
 const JobFastFactsWrapperLoading = styled(Paper).attrs({
@@ -402,35 +426,16 @@ const JobFastFactsWrapperLoading = styled(Paper).attrs({
   padding-bottom: 64px;
 `;
 
-interface IBottomPadding {
-  bottomPadding: boolean;
-}
 const TechWrapper = styled(Paper).attrs({
   elevation: 0,
-})<IBottomPadding>`
+})`
   display: flex;
   padding: 16px;
-  ${props => (props.bottomPadding ? "padding-bottom: 56px;" : "")}
+  padding-bottom: 32px;
   gap: 8px;
   align-items: center;
   padding-left: 32px;
   filter: grayscale(0.5);
-`;
-
-const Main = styled.div`
-  background-color: ${BackgroundColor.offWhite};
-`;
-
-const Shadow = styled.div`
-  margin-top: -32px;
-  z-index: 1;
-  position: relative;
-  height: 16px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 21.88%,
-    rgba(139, 139, 139, 0.88) 100%
-  );
 `;
 
 const TooltipWrapper = styled(Tooltip)`

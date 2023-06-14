@@ -1,17 +1,12 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { ITag } from "src/lib/requests/ExtensionRequests";
 import { convertToCamelCase } from "../strings/convertStrings";
 import uniqolor from "uniqolor";
-import { JobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
+import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
 
 export const useTagsMenu = (jobID: string) => {
   const [inputVal, setInputStateVal] = useState<string>("");
   const [error, setError] = useState<string>("");
-
-  const jobTagsContext = useContext(JobTagsContext);
-  if (!jobTagsContext) {
-    throw new Error("JobTagsProvider not wrapped");
-  }
   const {
     isLoading,
     allTags,
@@ -23,7 +18,8 @@ export const useTagsMenu = (jobID: string) => {
     onPatchTag,
     onDeleteTag,
     editTag,
-  } = jobTagsContext;
+    tagToJobsCount,
+  } = useJobTagsContext();
   const selectedTags = jobToTags[jobID] ?? [];
   const tagsToSelect = Object.keys(allTags).filter(
     otherTag => !selectedTags.some(selectedTag => selectedTag === otherTag)
@@ -106,5 +102,6 @@ export const useTagsMenu = (jobID: string) => {
     isEditModalOpen,
     onPatchTag,
     onDeleteTag,
+    tagToJobsCount,
   };
 };

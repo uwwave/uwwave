@@ -1,9 +1,9 @@
 import { AppBar } from "@mui/material";
 import MUITypography from "@mui/material/Typography";
 import styled from "styled-components";
-import { Color } from "styles/color";
+import { BackgroundColor, Color } from "styles/color";
 import { WaveLogo } from "src/components/icons/logo/Navbar";
-import Link from "@mui/material/Link";
+import Link from "next/link";
 import Container from "@mui/material/Container";
 import React from "react";
 import { Spacer } from "../Spacer/Spacer";
@@ -49,10 +49,9 @@ export const NavigationBar = (props: INavigationBar) => {
               <TextWrapper key={pageItem.pageUrl}>
                 <MUITypography>
                   <StyledLink
-                    variant="subtitle1"
                     href={pageItem.pageUrl}
                     color={color}
-                    underline={path === pageItem.pageUrl ? "always" : "hover"}
+                    underline={path === pageItem.pageUrl}
                   >
                     {pageItem.pageName}
                   </StyledLink>
@@ -73,11 +72,19 @@ const FlexWrapper = styled.div`
   padding-top: 16px;
   padding-bottom: 16px;
 `;
-const StyledLink = styled(Link)`
+
+interface ILink {
+  underline: boolean;
+}
+const Elemen = Link as any;
+const StyledLink = styled(Elemen)<ILink>`
   && {
-    &:active {
-      text-decoration: underline;
-    }
+    text-decoration: ${props => (props.underline ? "underline" : "none")};
+    color: ${props => props.color ?? BackgroundColor.darker};
+  }
+
+  &&:hover {
+    text-decoration: underline;
   }
 `;
 

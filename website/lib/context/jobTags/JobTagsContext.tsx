@@ -1,8 +1,9 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import {
   AllTagsObject,
   IJobToTags,
   ITag,
+  ITagCount,
 } from "src/lib/requests/ExtensionRequests";
 
 export interface JobTagsContextType {
@@ -17,8 +18,17 @@ export interface JobTagsContextType {
   onPatchTag: (newTag: ITag) => void;
   onDeleteTag: () => void;
   closeEditModal: () => void;
+  tagToJobsCount: ITagCount;
 }
 
 export const JobTagsContext = createContext<JobTagsContextType | undefined>(
   undefined
 );
+
+export const useJobTagsContext = () => {
+  const jobTagsContext = useContext(JobTagsContext);
+  if (!jobTagsContext) {
+    throw new Error("JobTagsProvider not wrapped");
+  }
+  return jobTagsContext;
+};

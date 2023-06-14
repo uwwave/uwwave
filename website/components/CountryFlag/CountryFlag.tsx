@@ -7,6 +7,7 @@ import { UKIcon } from "../icons/flags/UnitedKingdowm";
 import { GermanyIcon } from "../icons/flags/Germany";
 import { SingaporeIcon } from "../icons/flags/Singapore";
 import { NorwayIcon } from "../icons/flags/Norway";
+import { DefaultFlagIcon } from "../icons/flags/DefaultFlag";
 
 export const getCountryFlag = (country: string) => {
   switch (country) {
@@ -29,6 +30,6 @@ export const getCountryFlag = (country: string) => {
     case "Norway":
       return <NorwayIcon />;
     default:
-      return null;
+      return <DefaultFlagIcon />;
   }
 };

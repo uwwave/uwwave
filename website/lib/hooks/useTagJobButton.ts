@@ -1,14 +1,10 @@
-import { useState, useContext } from "react";
-import { JobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
+import { useState } from "react";
+import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
 
 export const useTagJobButton = (jobID: string) => {
   const [hovering, setHovering] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const jobTagsContext = useContext(JobTagsContext);
-  if (!jobTagsContext) {
-    throw new Error("JobTagsProvider not wrapped");
-  }
-  const { jobToTags, allTags } = jobTagsContext;
+  const { jobToTags, allTags } = useJobTagsContext();
   const selectedTags = jobToTags[jobID] ?? [];
   const hasTagsSelected = selectedTags.length > 0;
   const selected = hasTagsSelected;

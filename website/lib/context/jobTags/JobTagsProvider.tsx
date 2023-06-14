@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   JobTagsContextType,
   JobTagsContext,
@@ -8,13 +8,13 @@ import {
   ExtensionRequests,
   IJobToTags,
   ITag,
+  ITagCount,
 } from "src/lib/requests/ExtensionRequests";
 
 interface IJobsTagsProvider {
   children: React.ReactNode;
 }
 
-//TODO: add extention requet calls
 export const JobTagsProvider = ({ children }: IJobsTagsProvider) => {
   const [allTags, setAllTags] = useState<AllTagsObject>({});
   const [jobToTags, setJobsToTags] = useState<IJobToTags>({});
@@ -119,7 +119,22 @@ export const JobTagsProvider = ({ children }: IJobsTagsProvider) => {
     setEditTagState(undefined);
   };
 
+  const tagToJobsCount: ITagCount = useMemo(() => {
+    const out: ITagCount = {};
+    Object.values(jobToTags).forEach(tags => {
+      tags.forEach(tag => {
+        if (out[tag] === undefined) {
+          out[tag] = 1;
+          return;
+        }
+        out[tag]++;
+      });
+    });
+    return out;
+  }, [jobToTags]);
+
   const value: JobTagsContextType = {
+    tagToJobsCount,
     closeEditModal,
     onDeleteTag,
     allTags,

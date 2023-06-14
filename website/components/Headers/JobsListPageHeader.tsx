@@ -8,6 +8,8 @@ import EventIcon from "@mui/icons-material/Event";
 import Tooltip from "@mui/material/Tooltip";
 import PublicIcon from "@mui/icons-material/Public";
 import Skeleton from "@mui/material/Skeleton";
+import { getCountryFlag } from "../CountryFlag/CountryFlag";
+import { Spacer } from "../Spacer/Spacer";
 
 interface IJobsListPageHeader {
   lastScrapedMessage: string;
@@ -32,10 +34,10 @@ export const JobsListPageHeader = (props: IJobsListPageHeader) => {
         <Title variant="h3">
           <b>Jobs List</b>
         </Title>
-        <Skeleton variant="rounded" width={"12%"} height={64} />
-        <Skeleton variant="rounded" width={"12%"} height={64} />
-        <Skeleton variant="rounded" width={"12%"} height={64} />
-        <Skeleton variant="rounded" width={"12%"} height={64} />
+        <Skeleton variant="rounded" width={160} height={64} />
+        <Skeleton variant="rounded" width={160} height={64} />
+        <Skeleton variant="rounded" width={160} height={64} />
+        <Skeleton variant="rounded" width={160} height={64} />
       </MainWrapper>
     );
   }
@@ -63,7 +65,7 @@ export const JobsListPageHeader = (props: IJobsListPageHeader) => {
       <JobInfoTile
         icon={
           <div>
-            {isStale ? <WarningIcon width={24} /> : <CheckIcon width={24} />}
+            {isStale ? <WarningIcon width={20} /> : <CheckIcon width={20} />}
           </div>
         }
         title="Last Scrape"
@@ -83,12 +85,19 @@ export const JobsListPageHeader = (props: IJobsListPageHeader) => {
       <TooltipWrapper
         title={
           <>
-            {countryCountStrings.map(x => (
-              <Typography>{x}</Typography>
+            {keys.map(x => (
+              <>
+                <CountryWrapper>
+                  {getCountryFlag(x ?? "")}
+                  <Typography>{`${x} (${differentCountries[x]})`}</Typography>
+                </CountryWrapper>
+                <Spacer height={8} />
+              </>
             ))}
           </>
         }
         arrow
+        placement="bottom-end"
       >
         <div>
           <JobInfoTile
@@ -102,6 +111,12 @@ export const JobsListPageHeader = (props: IJobsListPageHeader) => {
     </MainWrapper>
   );
 };
+
+const CountryWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
 const TooltipWrapper = styled(Tooltip)`
   cursor: pointer;
 `;
@@ -115,5 +130,5 @@ interface ILoading {
 }
 const MainWrapper = styled.div<ILoading>`
   display: flex;
-  gap: ${props => (props.isLoading ? 4 : 32)}px;
+  gap: ${props => (props.isLoading ? 16 : 48)}px;
 `;

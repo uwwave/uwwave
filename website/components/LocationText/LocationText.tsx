@@ -30,6 +30,7 @@ export const LocationText = (props: IlocationText) => {
         align={isHorizontal ? "left" : "center"}
         variant={!isHorizontal ? "caption" : "subtitle2"}
         color="gray"
+        lineHeight={"0.8rem"}
       >
         {`${city ?? ""}, ${province ?? ""}${
           !countryFlag ? `${country ? `, ${country}` : ""}` : ""

@@ -13,7 +13,7 @@ import { useTagsMenu } from "src/lib/hooks/useTagsMenu";
 import LoadingAnimation from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import { ITag } from "src/lib/requests/ExtensionRequests";
+import { ITag, ITagCount } from "src/lib/requests/ExtensionRequests";
 import React, { useEffect, useRef } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -39,6 +39,7 @@ export const JobTagsMenu = (props: ITagsMenu) => {
     error,
     setEditTag,
     isEditModalOpen,
+    tagToJobsCount,
   } = useTagsMenu(jobID);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -82,6 +83,7 @@ export const JobTagsMenu = (props: ITagsMenu) => {
             label={renderInnerChipContent({
               tag: tag,
               onSetEditTag: setEditTag,
+              tagToJobsCount,
             })}
             deleteIcon={<ClearIcon />}
             onDelete={() => {
@@ -105,7 +107,11 @@ export const JobTagsMenu = (props: ITagsMenu) => {
                 selectTag(tag.label);
               }}
             >
-              {tag.label}
+              {`${tag.label}${
+                tagToJobsCount[tag.label]
+                  ? ` (${tagToJobsCount[tag.label]})`
+                  : ""
+              }`}
             </StyledListItemText>
             <ListItemIcon
               onClick={() => {
@@ -176,10 +182,11 @@ export const JobTagsMenu = (props: ITagsMenu) => {
 interface IInnerChipContent {
   tag: ITag;
   onSetEditTag: (label: string) => void;
+  tagToJobsCount: ITagCount;
 }
 const renderInnerChipContent = (props: IInnerChipContent) => {
-  const { tag, onSetEditTag } = props;
-
+  const { tag, onSetEditTag, tagToJobsCount } = props;
+  const count = tagToJobsCount[tag.label];
   return (
     <>
       <InnerChipContentWrapper>
@@ -190,7 +197,9 @@ const renderInnerChipContent = (props: IInnerChipContent) => {
         >
           <EditIcon />
         </IconButton>
-        <Typography color="white">{tag.label}</Typography>
+        <Typography color="white">{`${tag.label}${
+          count ? ` (${count})` : ""
+        }`}</Typography>
       </InnerChipContentWrapper>
     </>
   );

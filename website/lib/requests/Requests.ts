@@ -56,8 +56,4 @@ export class Requests {
       .get(`/api/companyInfo?companyName=${companyName}`)
       .then(x => x.data);
   }
-
-  static async getCompanyLogos(): Promise<IGetCompanyLogosResponse> {
-    return axios.get(`/api/companyInfo/logos`).then(x => x.data);
-  }
 }

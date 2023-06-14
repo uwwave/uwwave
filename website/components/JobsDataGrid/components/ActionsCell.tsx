@@ -7,13 +7,14 @@ import Tooltip from "@mui/material/Tooltip";
 
 interface IActionsCell {
   jobID: string;
+  pageSize: number;
 }
 
 export const ActionsCell = (props: IActionsCell) => {
-  const { jobID } = props;
+  const { jobID, pageSize } = props;
   return (
     <ActionsWrapper>
-      <TagJobIconButton jobID={jobID} />
+      <TagJobIconButton jobID={jobID} pageSize={pageSize} />
       <Tooltip title="Open in Waterloo Works" arrow placement="top">
         <StyledA
           href={`https://waterlooworks.uwaterloo.ca/myAccount/co-op/coop-postings.htm?ck_jobid=${jobID}`}
