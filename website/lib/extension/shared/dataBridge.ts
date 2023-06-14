@@ -2,6 +2,8 @@ type StorageKeys = string | string[] | Record<string, any> | null;
 
 export enum RequestName {
   getLocal = "getLocal",
+  getSync = "getSync",
+  setSync = "setSync",
 }
 
 export enum MessageType {
@@ -12,6 +14,7 @@ export enum MessageType {
 
 export interface DataRequestParams {
   getKey?: StorageKeys;
+  setObject?: Record<string, any>;
 }
 
 export interface RequestPayload {

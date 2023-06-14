@@ -1,4 +1,8 @@
-import { getLocalStorage } from '../common/storage'
+import {
+    getLocalStorage,
+    getSyncStorage,
+    setSyncStorage,
+} from '../common/storage'
 import {
     MessagePayload,
     MessageType,
@@ -11,11 +15,31 @@ const REQ_NAME_TO_RESPONSE_FUNC: {
     [req_id: string]: (request: RequestPayload) => void
 } = {
     [RequestName.getLocal]: getLocal,
+    [RequestName.getSync]: getSync,
+    [RequestName.setSync]: setSync,
 }
 
 async function getLocal(request: RequestPayload) {
     const key = request.params?.getKey || null
     sendMessageToClient(await getLocalStorage(key), request)
+}
+
+async function getSync(request: RequestPayload) {
+    const key = request.params?.getKey || null
+    sendMessageToClient(await getSyncStorage(key), request)
+}
+
+async function setSync(request: RequestPayload) {
+    const setObject = request.params?.setObject
+
+    const responsePayload = { success: false }
+
+    if (setObject) {
+        await setSyncStorage(setObject)
+        responsePayload.success = true
+    }
+
+    sendMessageToClient(responsePayload, request)
 }
 
 function sendMessageToClient(result: ResultPayload, request: RequestPayload) {
@@ -62,3 +86,5 @@ window.addEventListener(
 )
 
 window.postMessage({ type: MessageType.extensionLoaded }, '*')
+
+console.log('[Extension] Loaded.')

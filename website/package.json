@@ -19,6 +19,7 @@
     "@mui/material": "^5.10.14",
     "@mui/x-data-grid": "^5.17.13",
     "@types/body-parser": "^1.19.2",
+    "@types/uuid": "^9.0.2",
     "axios": "^1.4.0",
     "clearbit": "^1.3.5",
     "lunr": "^2.3.9",
@@ -35,7 +36,8 @@
     "react-dom": "^18.2.0",
     "react-html-parser": "^2.0.2",
     "styled-components": "^5.3.1",
-    "uniqolor": "^1.1.0"
+    "uniqolor": "^1.1.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
