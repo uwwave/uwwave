@@ -398,10 +398,12 @@ const CompanyHeaderWrapper = styled(Paper).attrs({
 `;
 
 const HelpButton = styled(IconButton)`
-  position: absolute;
-  right: -48px;
-  top: 32px;
-  opacity: 0.6;
+  && {
+    position: absolute;
+    right: -48px;
+    top: 32px;
+    opacity: 0.6;
+  }
 
   &&:hover {
     opacity: 1;
