@@ -13,7 +13,7 @@ interface ITagJobIconButton {
   pageSize: number;
 }
 export const TagJobIconButton = (props: ITagJobIconButton) => {
-  const { jobID, pageSize } = props;
+  const { jobID } = props;
   const {
     menuOpen,
     setMenuOpen,

@@ -74,7 +74,8 @@ export const Footer = (props: IFooter) => {
   );
 };
 
-const StyledLink = styled(Link)`
+const Elemen = Link as any;
+const StyledLink = styled(Elemen)`
   && {
     text-decoration: none;
     color: white;
