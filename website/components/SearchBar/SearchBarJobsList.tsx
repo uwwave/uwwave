@@ -17,6 +17,8 @@ import MUIButton from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import { Spacer } from "../Spacer/Spacer";
+import { set } from "lodash";
+import { SearchHelpModal } from "../Modals/variants/SearchHelpModal";
 
 // Interfaces
 export interface ISearchChip {
@@ -39,10 +41,19 @@ interface ISearchBarJobsList {
   numActiveChips: number;
 }
 
-const SearchHelpButton = () => {
+interface ISearchHelpButton {
+  onClick: () => void;
+}
+
+const SearchHelpButton = (props: ISearchHelpButton) => {
+  const IconButtonStyles = {
+    padding: "0px",
+    color: "white",
+  };
+
   return (
     <HelpButtonWrapper>
-      <IconButton sx={{ padding: "0px", color: "white" }}>
+      <IconButton onClick={props.onClick} sx={IconButtonStyles}>
         <HelpOutlineOutlinedIcon />
       </IconButton>
     </HelpButtonWrapper>
@@ -141,6 +152,7 @@ const SearchBarJobsListInner = (props: ISearchBarJobsListInner) => {
 
 export const SearchBarJobsList = (props: ISearchBarJobsList) => {
   const [chips, setChips] = useState<ISearchChip[]>([]);
+  const [isHelpOpen, setIsHelpOpen] = useState<boolean>(false);
 
   useEffect(() => {
     props.onSearchUpdated(chips);
@@ -203,9 +215,17 @@ export const SearchBarJobsList = (props: ISearchBarJobsList) => {
     }
   };
 
+  const onSearchHelpClick = () => {
+    setIsHelpOpen(true);
+  };
+
   return (
     <SearchWrapper>
-      <SearchHelpButton />
+      <SearchHelpModal
+        isOpen={isHelpOpen}
+        onClose={() => setIsHelpOpen(false)}
+      />
+      <SearchHelpButton onClick={onSearchHelpClick} />
       <Spacer height={10} />
       <StyledPaper>
         <SearchBarJobsListInner
