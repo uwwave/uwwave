@@ -1,6 +1,7 @@
 {
   "name": "uwwave",
   "version": "1.0.0",
+  "license": "MIT",
   "devDependencies": {
     "husky": "^8.0.3"
   }
