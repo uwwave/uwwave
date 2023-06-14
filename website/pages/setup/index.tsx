@@ -130,8 +130,8 @@ const MainPaper = styled(Paper)`
     color: white;
   }
 `;
-
-const StyledLink = styled(Link)`
+const Elemen = Link as any;
+const StyledLink = styled(Elemen)`
   && {
     color: white;
     text-decoration: none;
