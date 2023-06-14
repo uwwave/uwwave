@@ -1,6 +1,7 @@
 import { Color } from "src/styles/color";
 import styled from "styled-components";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 
 interface IJobTitleCell {
   company: string;
@@ -13,13 +14,13 @@ export const JobTitleCell = (props: IJobTitleCell) => {
   const { company, jobName, jobID, imageURL } = props;
   return (
     <JobTitleCellWrapper>
-      <StyledA href={`/jobs/${jobID}`} target="_blank">
+      <StyledLink href={`/jobs/${jobID}`}>
         <CompanyProfilePic imageURL={imageURL} />
-      </StyledA>
+      </StyledLink>
       <CompanyDetailsWrapper>
-        <StyledA href={`/jobs/${jobID}`} target="_blank">
+        <StyledLink href={`/jobs/${jobID}`}>
           <Typography>{jobName}</Typography>
-        </StyledA>
+        </StyledLink>
         <Typography variant="caption">{company}</Typography>
       </CompanyDetailsWrapper>
     </JobTitleCellWrapper>
@@ -54,6 +55,6 @@ const CompanyDetailsWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
-const StyledA = styled.a`
+const StyledLink = styled(Link as any)`
   color: ${Color.primaryButtonShadow};
 `;

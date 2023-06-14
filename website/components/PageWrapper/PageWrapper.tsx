@@ -30,7 +30,7 @@ export const PageWrapper = ({
         <StyledPaper
           elevation={0}
           padding={headerPadding ?? 32}
-          hideBackground={hideBackground ?? false}
+          hidebg={(hideBackground ?? false).toString()}
         >
           {Header}
           <Spacer height={16} />
@@ -54,14 +54,14 @@ const Main = styled.div`
 
 interface IMain {
   padding: number;
-  hideBackground: boolean;
+  hidebg: string;
 }
 
 const StyledPaper = styled(Paper)<IMain>`
   && {
     padding: ${props => props.padding}px;
     background-color: ${props =>
-      props.hideBackground ? "rgba(0, 0, 0, 0)" : "white"};
+      props.hidebg === "true" ? "rgba(0, 0, 0, 0)" : "white"};
   }
 `;
 

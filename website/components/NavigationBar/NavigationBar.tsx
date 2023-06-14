@@ -51,7 +51,7 @@ export const NavigationBar = (props: INavigationBar) => {
                   <StyledLink
                     href={pageItem.pageUrl}
                     color={color}
-                    underline={path === pageItem.pageUrl}
+                    underline={(path === pageItem.pageUrl).toString()}
                   >
                     {pageItem.pageName}
                   </StyledLink>
@@ -74,12 +74,13 @@ const FlexWrapper = styled.div`
 `;
 
 interface ILink {
-  underline: boolean;
+  underline: string;
 }
 const Elemen = Link as any;
 const StyledLink = styled(Elemen)<ILink>`
   && {
-    text-decoration: ${props => (props.underline ? "underline" : "none")};
+    text-decoration: ${props =>
+      props.underline === "true" ? "underline" : "none"};
     color: ${props => props.color ?? BackgroundColor.darker};
   }
 
