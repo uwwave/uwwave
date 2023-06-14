@@ -53,6 +53,52 @@ export const sendMessageOnLoadAndSetupListenerHook = (
   };
 };
 
+export function sendRequestToExtensionOrTimeout(
+  request: RequestPayload,
+  timeoutMs = 3000
+): Promise<ResultPayload | undefined> {
+  return new Promise<ResultPayload | undefined>((resolve, reject) => {
+    // In case the extension is still loading
+    const receiveExtensionLoadedMessage = buildExtensionApiListener(
+      MessageType.extensionLoaded,
+      null,
+      null,
+      () => {
+        console.info(
+          `[Client] Extension loaded, sending request with ID ${request.id}`
+        );
+        sendMessageToExtension(request);
+      }
+    );
+
+    const responseListener = buildExtensionApiListener(
+      MessageType.fromExtension,
+      request.id,
+      request.reqName,
+      result => {
+        window.removeEventListener("message", responseListener);
+        window.removeEventListener("message", receiveExtensionLoadedMessage);
+        if (result && result.success === false) {
+          reject();
+        } else {
+          resolve(result);
+        }
+      }
+    );
+
+    window.addEventListener("message", responseListener, false);
+    window.addEventListener("message", receiveExtensionLoadedMessage, false);
+
+    sendMessageToExtension(request);
+
+    setTimeout(() => {
+      window.removeEventListener("message", responseListener);
+      window.removeEventListener("message", receiveExtensionLoadedMessage);
+      reject();
+    }, timeoutMs);
+  });
+}
+
 export function sendMessageToExtension(request?: RequestPayload) {
   console.info(
     `[Client] Sending message to extension, reqName: ${request?.reqName}, id: ${
