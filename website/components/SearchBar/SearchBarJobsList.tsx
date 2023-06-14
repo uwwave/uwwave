@@ -270,7 +270,7 @@ const ChipsWrapper = styled.div`
   flex-wrap: wrap;
 `;
 const ChipsWrapperWrapper = styled.div`
-  padding: 16px;
+  padding: 16px 0px 0px 0px;
   width: 100%;
   display: flex;
   gap: 8px;
