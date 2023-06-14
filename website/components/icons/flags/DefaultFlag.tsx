@@ -5,7 +5,7 @@ export const DefaultFlagIcon = () => (
       transform="translate(-2.45 3.52)"
       fill="white"
       stroke="#bababa"
-      stroke-width="10"
+      strokeWidth="10"
     />
     <g>
       <path

@@ -22,6 +22,8 @@ export const sendMessageOnLoadAndSetupListenerHook = (
     );
   }
 
+  // Race 1: If the website loads first, we must listen for when the extension loads because
+  // the initial message sent will miss
   const receiveExtensionLoadedMessage = buildExtensionApiListener(
     MessageType.extensionLoaded,
     null,
@@ -32,6 +34,8 @@ export const sendMessageOnLoadAndSetupListenerHook = (
     }
   );
 
+  // Race 2: If the extension loads first, we must send the message here to load because we will miss
+  // the extension loaded message
   sendMessageToExtension(request);
 
   if (receiveExtensionMessage) {
@@ -51,7 +55,9 @@ export const sendMessageOnLoadAndSetupListenerHook = (
 
 export function sendMessageToExtension(request?: RequestPayload) {
   console.info(
-    `[Client] Sending message to extension, reqName: ${request?.reqName}, id: ${request?.id}, params: ${request?.params}`
+    `[Client] Sending message to extension, reqName: ${request?.reqName}, id: ${
+      request?.id
+    }, params: ${JSON.stringify(request?.params)}`
   );
   const messagePayload: MessagePayload = { type: MessageType.fromPage };
   if (request) {

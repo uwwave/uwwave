@@ -156,7 +156,7 @@ export function buildCoopJobWithJobID(
     return null;
   }
   const jobInfo = extensionData[`coopJob_${jobId}`];
-  if (Object.keys(extensionData).length === 0) {
+  if (Object.keys(extensionData).length === 0 || jobInfo === undefined) {
     return null;
   }
   const job: JobsPageRowData = {

@@ -64,7 +64,7 @@ export const JobsListPageHeader = (props: IJobsListPageHeader) => {
       </Title>
       <JobInfoTile
         icon={
-          <div>
+          <div style={{ height: "24px" }}>
             {isStale ? <WarningIcon width={20} /> : <CheckIcon width={20} />}
           </div>
         }
@@ -86,13 +86,13 @@ export const JobsListPageHeader = (props: IJobsListPageHeader) => {
         title={
           <>
             {keys.map(x => (
-              <>
+              <div key={x}>
                 <CountryWrapper>
                   {getCountryFlag(x ?? "")}
                   <Typography>{`${x} (${differentCountries[x]})`}</Typography>
                 </CountryWrapper>
                 <Spacer height={8} />
-              </>
+              </div>
             ))}
           </>
         }
