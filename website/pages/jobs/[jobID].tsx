@@ -80,6 +80,7 @@ const SpecificJobPage = () => {
             imageURL={imageURL}
             companyName={companyInfo.companyName}
             city={companyInfo.city}
+            province={companyInfo.province}
             country={companyInfo.country}
             positionTitle={companyInfo.positionTitle}
             companyURL={companyURL}
@@ -151,7 +152,9 @@ const SpecificJobPage = () => {
           <JobInfoTile
             icon={<PaidIcon />}
             title="Salary/Perks"
-            value={job.compensationAndBenefitsInformation}
+            value={job.compensationAndBenefitsInformation
+              .replace(/<[^>]*>?/gm, "")
+              .replace(/&nbsp;/g, "")}
           />
         ) : null}
 
@@ -163,8 +166,11 @@ const SpecificJobPage = () => {
               job.jobPostingInformation[JobInfoFieldsCoop.jobAddressLineOne]
             }
             subValue={
-              (job?.jobPostingInformation[JobInfoFieldsCoop.jobAddressLineTwo] +
-                ", " ?? "") +
+              (job.jobPostingInformation[JobInfoFieldsCoop.jobAddressLineTwo]
+                ? job.jobPostingInformation[
+                    JobInfoFieldsCoop.jobAddressLineTwo
+                  ] + ", "
+                : "") +
               (job?.jobPostingInformation[JobInfoFieldsCoop.jobPostalCode] ??
                 "")
             }

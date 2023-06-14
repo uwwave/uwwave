@@ -147,6 +147,7 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
       renderCell: rowData => (
         <LocationText
           city={rowData.row.city}
+          province={rowData.row.province}
           country={rowData.row.country}
           orientation={Orientation.vertical}
         />

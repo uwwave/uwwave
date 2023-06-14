@@ -13,6 +13,7 @@ interface CompanyCardProps {
   imageURL: string;
   companyName: string;
   city?: string;
+  province?: string;
   country?: string;
   state?: string;
   positionTitle?: string;
@@ -59,6 +60,7 @@ export const CompanyCard = ({
   imageURL,
   companyName,
   city,
+  province,
   country,
   positionTitle,
   isOutlined,
@@ -81,7 +83,7 @@ export const CompanyCard = ({
           onOpenSubmitDomain={onOpenSubmitDomain}
         />
         <Spacer height={24} />
-        <LocationText icon city={city} country={country} />
+        <LocationText icon city={city} province={province} country={country} />
       </NameWrapper>
     </MainWrapper>
   );
