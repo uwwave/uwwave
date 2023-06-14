@@ -18,6 +18,7 @@ export const useTagsMenu = (jobID: string) => {
     onPatchTag,
     onDeleteTag,
     editTag,
+    tagToJobsCount,
   } = useJobTagsContext();
   const selectedTags = jobToTags[jobID] ?? [];
   const tagsToSelect = Object.keys(allTags).filter(
@@ -101,5 +102,6 @@ export const useTagsMenu = (jobID: string) => {
     isEditModalOpen,
     onPatchTag,
     onDeleteTag,
+    tagToJobsCount,
   };
 };

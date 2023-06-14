@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import { Spacer } from "../Spacer/Spacer";
 import Skeleton from "@mui/material/Skeleton";
 import LaunchIcon from "@mui/icons-material/Launch";
-import { Color } from "src/styles/color";
+import { BackgroundColor, Color } from "src/styles/color";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import { LocationText } from "../LocationText/LocationText";
@@ -40,10 +40,10 @@ const OptionalExternalLink = (props: IOptionalExternalLink) => {
   if (!link) {
     return (
       <LinkWrapper onClick={onOpenSubmitDomain}>
-        <Typography>{text}</Typography>
-        <IconButton>
+        <PulseText>{text}</PulseText>
+        <StyledIconButton>
           <EditIcon />
-        </IconButton>
+        </StyledIconButton>
       </LinkWrapper>
     );
   }
@@ -157,5 +157,39 @@ const LinkWrapper = styled.div`
     align-items: center;
     color: ${Color.primaryButton};
     text-decoration-color: ${Color.primaryButton};
+  }
+`;
+
+const StyledIconButton = styled(IconButton)`
+  && {
+    animation: pulse 1s infinite ease-in-out;
+  }
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.3);
+    }
+  }
+`;
+
+const PulseText = styled(Typography)`
+  && {
+    animation: pulse2 1s infinite ease-in-out;
+    text-decoration: underline;
+  }
+  @keyframes pulse2 {
+    0%,
+    100% {
+      color: ${BackgroundColor.darker};
+      text-decoration-color: white;
+    }
+
+    50% {
+      text-decoration-color: ${Color.primary};
+    }
   }
 `;

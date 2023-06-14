@@ -17,5 +17,5 @@ export enum Color {
 export enum BackgroundColor {
   dark = "#092648",
   darker = "#01142B",
-  offWhite = "#E8E8E8",
+  offWhite = "#f2f2f2",
 }

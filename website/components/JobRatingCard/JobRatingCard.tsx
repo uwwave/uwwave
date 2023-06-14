@@ -1,11 +1,12 @@
 import { BackgroundColor, Color } from "src/styles/color";
 import styled from "styled-components";
 import { Spacer } from "src/components/Spacer/Spacer";
-import ExtensionIcon from "@mui/icons-material/Extension";
-import Typography from "@mui/material/Typography";
-import StarHalfIcon from "@mui/icons-material/StarHalf";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { useEffect, useState } from "react";
+import {
+  CompatibilityTile,
+  RatingTile,
+  SalaryTile,
+} from "src/components/JobRatingCard/ValueTiles";
 
 interface IJobRatingCard {
   rating: string;
@@ -43,20 +44,11 @@ export const JobRatingCard = (props: IJobRatingCard) => {
         <InnerPillar3 val={scoreValState} />
       </Pillar>
       <div>
-        <Value color={Color.rating}>
-          <StarHalfIconWrapper />
-          <ValueString>{rating}</ValueString>
-        </Value>
+        <RatingTile val={rating} />
         <Spacer height={8} />
-        <Value color={Color.salary}>
-          <MoneyIconWrapper />
-          <ValueString>{salary}</ValueString>
-        </Value>
+        <SalaryTile val={salary} />
         <Spacer height={8} />
-        <Value color={Color.compatibility}>
-          <ExtensionIconWrapper />
-          <ValueString>{score}</ValueString>
-        </Value>
+        <CompatibilityTile val={score} />
       </div>
     </MainWrapper>
   );
@@ -119,48 +111,4 @@ const InnerPillar3 = styled.div<IInnerPillar>`
   align-items: center;
   transition: height 0.8s ease;
   transition-delay: 0.3s;
-`;
-
-interface IValue {
-  color: string;
-}
-const Value = styled.div<IValue>`
-  width: 128px;
-  height: calc(34% - 7px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: ${props => props.color};
-  border-radius: 4px;
-  padding: 8px;
-`;
-
-const ExtensionIconWrapper = styled(ExtensionIcon)`
-  && {
-    fill: white;
-    font-size: 40px;
-  }
-`;
-
-const StarHalfIconWrapper = styled(StarHalfIcon)`
-  && {
-    fill: white;
-    font-size: 40px;
-  }
-`;
-
-const MoneyIconWrapper = styled(AttachMoneyIcon)`
-  && {
-    fill: white;
-    font-size: 40px;
-  }
-`;
-
-const ValueString = styled(Typography).attrs({
-  variant: "h6",
-})`
-  && {
-    color: white;
-    font-weight: bold;
-  }
 `;

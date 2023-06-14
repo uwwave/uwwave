@@ -3,6 +3,7 @@ import {
   AllTagsObject,
   IJobToTags,
   ITag,
+  ITagCount,
 } from "src/lib/requests/ExtensionRequests";
 
 export interface JobTagsContextType {
@@ -17,6 +18,7 @@ export interface JobTagsContextType {
   onPatchTag: (newTag: ITag) => void;
   onDeleteTag: () => void;
   closeEditModal: () => void;
+  tagToJobsCount: ITagCount;
 }
 
 export const JobTagsContext = createContext<JobTagsContextType | undefined>(

@@ -182,7 +182,9 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
       headerAlign: "center",
       renderHeader: headerComponent,
       sortable: false,
-      renderCell: rowData => <ActionsCell jobID={rowData.id.toString()} />,
+      renderCell: rowData => (
+        <ActionsCell jobID={rowData.id.toString()} pageSize={pageSize} />
+      ),
     },
   ];
 
@@ -270,9 +272,18 @@ const InnerPaper = styled.div`
   width: calc(100% + 76px);
 `;
 
+const generateTagMenuFix = (nthChild: number) => {
+  return `.MuiDataGrid-row:nth-of-type(${nthChild}) > div:nth-child(7) > div:nth-child(1) > .tag-job-icon-button > .tags-menu-wrapper {
+    transform: translateY(calc(-100% - 40px));
+  }`;
+};
+
+interface IGrid {
+  pageSize: number;
+}
 const StyledGrid = styled(props => (
   <DataGrid {...props} loadingOverlay={<CustomLoadingOverlay />} />
-))`
+))<IGrid>`
   .MuiDataGrid-columnHeader:nth-child(4),
   .MuiDataGrid-columnHeader:nth-child(5),
   .MuiDataGrid-columnHeader:nth-child(6) {
@@ -317,6 +328,11 @@ const StyledGrid = styled(props => (
     align-items: start !important;
     padding-top: 8px;
   }
+
+  /*Last few tag menus should open from the bottom so it doesn't overflow*/
+  ${props => generateTagMenuFix(props.pageSize)}
+  ${props => generateTagMenuFix(props.pageSize - 1)}
+  ${props => generateTagMenuFix(props.pageSize - 2)}
 `;
 
 const MoneyIcon = styled(AttachMoneyIcon)`

@@ -1,15 +1,14 @@
-import { NavigationBar } from "src/components/NavigationBar/NavigationBar";
 import styled from "styled-components";
-import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { Spacer } from "src/components/Spacer/Spacer";
 import { SetupStepper } from "src/components/Stepper/SetupStepper";
 import Paper from "@mui/material/Paper";
 import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
 import { BackgroundColor } from "src/styles/color";
-import { Footer } from "src/components/Footer/Footer";
 import { LocalStorageMetadataKeys } from "src/lib/extension/shared/userProfile";
 import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
+import Link from "next/link";
+import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
 
 const Step2 = () => {
   return (
@@ -66,7 +65,9 @@ const Step4 = () => {
         <b>You’re all set!</b>
       </Typography>
       <Spacer height={32} />
-      <PrimaryButton href="/jobs">Start Browsing Jobs</PrimaryButton>
+      <PrimaryButton>
+        <StyledLink href="/jobs">Start Browsing Jobs</StyledLink>
+      </PrimaryButton>
     </MainPaper>
   );
 };
@@ -85,34 +86,26 @@ const Setup = () => {
     "Download Browser Extension",
     "Scrape WaterlooWorks",
   ];
-  return (
-    <>
-      <NavigationBar />
-      <Container>
-        <MainWrapper>
-          <Spacer height={64} />
-          <Typography variant="h6">
-            <b>Setup: </b>
-            {`${step} / 3`}
-          </Typography>
-          <Spacer height={32} />
-          <SetupStepper activeStep={step} steps={steps} />
-          <Spacer height={32} />
-        </MainWrapper>
-      </Container>
-      <WaterWrapper>
-        <Container>
-          <MainWrapper>
-            <Spacer height={64} />
-            {step === 1 ? <Step2 /> : null}
-            {step === 2 ? <Step3 /> : null}
-            {step === 3 ? <Step4 /> : null}
-          </MainWrapper>
-        </Container>
-      </WaterWrapper>
-      <Footer />
-    </>
+  const renderHeader = () => (
+    <MainWrapper>
+      <Typography variant="h6">
+        <b>Setup: </b>
+        {`${step} / 3`}
+      </Typography>
+      <Spacer height={32} />
+      <SetupStepper activeStep={step} steps={steps} />
+    </MainWrapper>
   );
+
+  const renderBody = () => (
+    <MainWrapper>
+      {step === 1 ? <Step2 /> : null}
+      {step === 2 ? <Step3 /> : null}
+      {step === 3 ? <Step4 /> : null}
+    </MainWrapper>
+  );
+
+  return <PageWrapper Header={renderHeader()} Body={renderBody()} />;
 };
 
 export default Setup;
@@ -121,15 +114,6 @@ const MainWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-`;
-
-const WaterWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  background: ${BackgroundColor.darker};
-  min-height: 80vh;
 `;
 
 const MainPaper = styled(Paper)`
@@ -144,5 +128,12 @@ const MainPaper = styled(Paper)`
 
   && .MuiTypography-root {
     color: white;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  && {
+    color: white;
+    text-decoration: none;
   }
 `;

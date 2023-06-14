@@ -24,6 +24,7 @@ export const useJobPage = (jobID?: string) => {
   const [companyURL, setCompanyURL] = useState<string | undefined>(undefined);
   const [imageURL, setImageURL] = useState<string>("");
   const [init, setInit] = useState(false);
+  const [infoModal, setInfoModal] = useState(false);
   const job = buildCoopJobWithJobID(jobs, jobID as unknown as number);
   const jobInfo: JobInfo[] = [
     {
@@ -105,5 +106,7 @@ export const useJobPage = (jobID?: string) => {
     techIcons,
     companyURL,
     onClearbitData,
+    infoModal,
+    setInfoModal,
   };
 };

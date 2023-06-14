@@ -38,6 +38,11 @@ export interface AllTagsObject {
 export interface IJobToTags {
   [jobID: string]: string[];
 }
+
+export interface ITagCount {
+  [tag: string]: number;
+}
+
 export class ExtensionRequests {
   static async getAllTags(): Promise<AllTagsObject> {
     await delay(500);

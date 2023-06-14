@@ -46,7 +46,7 @@ export const UploadDomainModal = (props: IUploadDomainModal) => {
       disableConfirm={disableConfirm}
     >
       <Typography align="center" variant="h5">
-        <b>Submit Company Domain:</b>
+        <b>Submit Company Domain for:</b>
       </Typography>
       <Typography align="center">{companyName}</Typography>
       <Spacer height={32} />

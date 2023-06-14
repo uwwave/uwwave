@@ -10,9 +10,10 @@ import Typography from "@mui/material/Typography";
 
 interface ITagJobIconButton {
   jobID: string;
+  pageSize: number;
 }
 export const TagJobIconButton = (props: ITagJobIconButton) => {
-  const { jobID } = props;
+  const { jobID, pageSize } = props;
   const {
     menuOpen,
     setMenuOpen,
@@ -21,7 +22,7 @@ export const TagJobIconButton = (props: ITagJobIconButton) => {
   } = useTagJobButton(jobID);
 
   return (
-    <MainWrapper>
+    <MainWrapper className="tag-job-icon-button">
       {userSelectedTags.length === 0 ? (
         <IconButton
           onClick={() => {
@@ -45,7 +46,7 @@ export const TagJobIconButton = (props: ITagJobIconButton) => {
       ) : null}
 
       {menuOpen ? (
-        <TagsMenuWrapper>
+        <TagsMenuWrapper className="tags-menu-wrapper">
           <JobTagsMenu
             onOutsideClick={() => {
               setMenuOpen(false);
@@ -73,6 +74,7 @@ const TagsMenuWrapper = styled.div`
 
 const MainWrapper = styled.div`
   position: relative;
+}
 `;
 interface IBookmarkIcon {
   bgcolor: string;
