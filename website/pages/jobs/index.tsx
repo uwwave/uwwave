@@ -6,15 +6,9 @@ import { JobsDataGrid } from "src/components/JobsDataGrid/JobsDataGrid";
 import { useJobsList } from "src/lib/hooks/useJobsList";
 import { JobsListPageHeader } from "src/components/Headers/variants/JobsListPageHeader";
 import Skeleton from "@mui/material/Skeleton";
-import { GetServerSideProps, NextPage } from "next";
-import { IGetCompanyLogosResponse } from "src/lib/requests/Requests";
-import { getCompanyLogos } from "src/lib/server/companies/logos";
 import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
 
-interface PageProps {
-  logos: IGetCompanyLogosResponse;
-}
-const JobsListPage: NextPage<PageProps> = ({ logos }) => {
+const JobsListPage = () => {
   useEffect(() => {
     document.title = "Jobs List";
   }, []);
@@ -29,6 +23,7 @@ const JobsListPage: NextPage<PageProps> = ({ logos }) => {
     numActiveChips,
     earliestDeadline,
     differentCountries,
+    logos,
   } = useJobsList();
   const renderBody = () => (
     <>
@@ -73,12 +68,3 @@ const JobsListPage: NextPage<PageProps> = ({ logos }) => {
 };
 
 export default JobsListPage;
-
-export const getServerSideProps: GetServerSideProps<PageProps> = async () => {
-  const out = await getCompanyLogos();
-  return {
-    props: {
-      logos: out,
-    },
-  };
-};

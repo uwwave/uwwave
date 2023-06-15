@@ -5,7 +5,7 @@ import {
 import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
 import { useEffect, useMemo, useState } from "react";
 import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
-import { Requests } from "src/lib/requests/Requests";
+import { IGetCompanyLogosResponse, Requests } from "src/lib/requests/Requests";
 import { getEarliestDeadline } from "src/lib/dates/dates";
 
 export const useTaggedJobsPage = () => {
@@ -32,6 +32,15 @@ export const useTaggedJobsPage = () => {
     jobToTags,
     totalTaggedJobs,
   } = useJobTagsContext();
+  const [logos, setLogos] = useState<IGetCompanyLogosResponse>();
+  useEffect(() => {
+    const fire = async () => {
+      const out = await Requests.getCompanyLogos();
+      setLogos(out);
+    };
+
+    fire();
+  }, []);
   const isLoading = isJobTagsLoading || !isDataReady;
   const displayJobs: JobsPageRowData[] = useMemo(() => {
     if (
@@ -110,5 +119,6 @@ export const useTaggedJobsPage = () => {
     jobKeywords,
     earliestDeadline,
     differentCountries,
+    logos,
   };
 };
