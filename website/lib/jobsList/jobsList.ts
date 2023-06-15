@@ -25,6 +25,7 @@ export interface JobsPageRowData {
   requiredSkills: string;
   compensationAndBenefitsInformation: string;
   location: string;
+  duration: string;
   jobPostingInformation: any;
   ratingsScore: number;
   salaryScore: number;
@@ -51,6 +52,7 @@ export function buildCoopJobsListFromExtensionData(
         province: "",
         country: "",
         location: "",
+        duration: "",
         industryTag: "",
         keywords: [],
         jobSummary: "",
@@ -118,6 +120,7 @@ export function buildFulltimeJobsListFromExtensionData(
         requiredSkills: "",
         compensationAndBenefitsInformation: "",
         location: "",
+        duration: "",
         jobPostingInformation: null,
         ratingsScore: Math.random() * 100,
         salaryScore: Math.random() * 100,
@@ -176,6 +179,7 @@ export function buildCoopJobWithJobID(
     requiredSkills: "",
     compensationAndBenefitsInformation: "",
     location: "",
+    duration: "",
     jobPostingInformation: null,
     ratingsScore: Math.random() * 100,
     salaryScore: Math.random() * 100,
@@ -188,6 +192,9 @@ export function buildCoopJobWithJobID(
     job.province = jobPostingInformation[JobInfoFieldsCoop.jobProvince];
     job.country = jobPostingInformation[JobInfoFieldsCoop.jobCountry];
     job.location = `${job.country}, ${job.city}`;
+    job.duration = jobPostingInformation[JobInfoFieldsCoop.workTermDuration]
+      .replace(" work term", "")
+      .replace(" consecutive", "");
     job.jobSummary = jobPostingInformation[JobInfoFieldsCoop.jobSummary];
     job.jobResponsibilities =
       jobPostingInformation[JobInfoFieldsCoop.jobResponsibilities];
