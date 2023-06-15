@@ -5,7 +5,11 @@ import {
 } from "src/lib/jobsList/jobsList";
 import { ISearchChip } from "src/components/SearchBar/SearchBarJobsList";
 import lunr from "lunr";
-import { IJobKeywordObject, Requests } from "src/lib/requests/Requests";
+import {
+  IGetCompanyLogosResponse,
+  IJobKeywordObject,
+  Requests,
+} from "src/lib/requests/Requests";
 import { getSearchTypeField, SearchTypes } from "src/lib/search/Search";
 import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
 import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
@@ -33,7 +37,16 @@ export const useJobsList = () => {
   );
   const [numActiveChips, setNumActiveChips] = useState<number>(0);
   const { isLoading: isJobTagsLoading } = useJobTagsContext();
+  const [logos, setLogos] = useState<IGetCompanyLogosResponse>();
 
+  useEffect(() => {
+    const fire = async () => {
+      const out = await Requests.getCompanyLogos();
+      setLogos(out);
+    };
+
+    fire();
+  }, []);
   // Build Keywords
   useEffect(() => {
     if (jobs.length === 0) {
@@ -132,5 +145,6 @@ export const useJobsList = () => {
     setChips: setSearchChips,
     setNumActiveChips,
     numActiveChips,
+    logos,
   };
 };

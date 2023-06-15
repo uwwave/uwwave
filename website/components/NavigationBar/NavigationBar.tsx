@@ -57,6 +57,7 @@ export const NavigationBar = (props: INavigationBar) => {
                     href={pageItem.pageUrl}
                     color={color}
                     underline={(path === pageItem.pageUrl).toString()}
+                    shallow
                   >
                     {pageItem.pageName}
                   </StyledLink>

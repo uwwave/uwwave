@@ -14,18 +14,12 @@ import {
 } from "src/components/Buttons/PrimaryButton";
 import { TagChip } from "src/components/Tags/Chips/TagChip";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { GetServerSideProps, NextPage } from "next";
-import { IGetCompanyLogosResponse } from "src/lib/requests/Requests";
-import { getCompanyLogos } from "src/lib/server/companies/logos";
 import { JobsListPageHeader } from "src/components/Headers/variants/JobsListPageHeader";
 import Paper from "@mui/material/Paper";
 import { BackgroundColor } from "src/styles/color";
 import Skeleton from "@mui/material/Skeleton";
-interface PageProps {
-  logos: IGetCompanyLogosResponse;
-}
 
-const TaggedJobsPage: NextPage<PageProps> = ({ logos }) => {
+const TaggedJobsPage = () => {
   const {
     isLoading,
     differentCountries,
@@ -41,6 +35,7 @@ const TaggedJobsPage: NextPage<PageProps> = ({ logos }) => {
     jobKeywords,
     totalTaggedJobs,
     earliestDeadline,
+    logos,
   } = useTaggedJobsPage();
   const renderHeader = () => {
     return (
@@ -199,15 +194,6 @@ const TaggedJobsPage: NextPage<PageProps> = ({ logos }) => {
       lighterBackground
     />
   );
-};
-
-export const getServerSideProps: GetServerSideProps<PageProps> = async () => {
-  const out = await getCompanyLogos();
-  return {
-    props: {
-      logos: out,
-    },
-  };
 };
 
 const Center = styled.div`
