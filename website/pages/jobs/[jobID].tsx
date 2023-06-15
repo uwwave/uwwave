@@ -158,11 +158,11 @@ const SpecificJobPage = () => {
             subValue={job.appDeadline}
           />
         ) : null}
-        {job?.appDeadline ? (
+        {job?.duration ? (
           <JobInfoTile
             icon={<ScheduleIcon />}
             title="Duration"
-            value={"4 months"}
+            value={job.duration}
           />
         ) : null}
         {job?.openings ? (
