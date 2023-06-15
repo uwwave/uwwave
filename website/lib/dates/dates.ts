@@ -1,4 +1,5 @@
 import moment from "moment";
+import { JobsPageRowData } from "../jobsList/jobsList";
 
 export const calculateDaysFromNow = (date: Date): string => {
   const targetDate = moment(date);
@@ -46,4 +47,18 @@ export const getTimeDiffString = (timeOld: string) => {
     timeDiffString = `${moment().utc().diff(timeOld, "day")} days ago `;
   }
   return timeDiffString;
+};
+
+export const getEarliestDeadline = (jobs: JobsPageRowData[]) => {
+  if (jobs.length === 0) {
+    return "";
+  }
+  let out = jobs[0].appDeadline;
+  jobs.forEach(job => {
+    const deadline = job.appDeadline;
+    if (new Date(out).getTime() > new Date(deadline).getTime()) {
+      out = deadline;
+    }
+  });
+  return out;
 };

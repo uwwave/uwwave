@@ -1,4 +1,4 @@
-import { AppBar } from "@mui/material";
+import { AppBar, Typography } from "@mui/material";
 import MUITypography from "@mui/material/Typography";
 import styled from "styled-components";
 import { BackgroundColor, Color } from "styles/color";
@@ -8,6 +8,10 @@ import Container from "@mui/material/Container";
 import React from "react";
 import { Spacer } from "../Spacer/Spacer";
 import { useRouter } from "next/router";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import { IconButtonCounter } from "../Buttons/IconButtonCounter";
+import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
 
 interface INavigationBar {
   textColor?: string;
@@ -32,6 +36,7 @@ const pages: PageItem[] = [
 
 export const NavigationBar = (props: INavigationBar) => {
   const { textColor, backgroundColor = "transparent" } = props;
+  const { totalTaggedJobs } = useJobTagsContext();
   const router = useRouter();
   const path = router.pathname;
   const color = textColor ?? Color.textSecondary;
@@ -59,6 +64,17 @@ export const NavigationBar = (props: INavigationBar) => {
                 {i < pages.length - 1 ? <Spacer width={24} /> : null}
               </TextWrapper>
             ))}
+            <StyledLink href="/jobs/tagged">
+              <TagListWrapper>
+                <IconButtonCounter
+                  Icon={
+                    totalTaggedJobs ? <BookmarkIcon /> : <BookmarkBorderIcon />
+                  }
+                  val={totalTaggedJobs}
+                />
+                <TaggedJobsText>Tagged Jobs</TaggedJobsText>
+              </TagListWrapper>
+            </StyledLink>
           </FlexWrapper>
         </Container>
       </AppBar>
@@ -97,4 +113,19 @@ const LogoWrapper = styled.div`
 
 const TextWrapper = styled.div`
   display: flex;
+`;
+
+const TagListWrapper = styled.div`
+  display: flex;
+  align-items: baseline;
+  margin-left: 16px;
+  && svg {
+    color: ${BackgroundColor.dark};
+  }
+`;
+
+const TaggedJobsText = styled(Typography)`
+  && {
+    margin-left: -12px;
+  }
 `;

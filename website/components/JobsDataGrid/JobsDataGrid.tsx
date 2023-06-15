@@ -284,6 +284,9 @@ interface IGrid {
 const StyledGrid = styled(props => (
   <DataGrid {...props} loadingOverlay={<CustomLoadingOverlay />} />
 ))<IGrid>`
+  && {
+    min-height: 1000px;
+  }
   .MuiDataGrid-columnHeader:nth-child(4),
   .MuiDataGrid-columnHeader:nth-child(5),
   .MuiDataGrid-columnHeader:nth-child(6) {

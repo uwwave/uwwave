@@ -48,6 +48,12 @@ export const Footer = (props: IFooter) => {
         </MUITypography>
         <Spacer height={16} />
         <MUITypography>
+          <StyledLink href="/jobs/tagged" color={Color.textPrimary}>
+            Tagged Jobs
+          </StyledLink>
+        </MUITypography>
+        <Spacer height={16} />
+        <MUITypography>
           <StyledLink href="/about" color={Color.textPrimary}>
             About
           </StyledLink>

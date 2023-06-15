@@ -32,8 +32,7 @@ const CompanyProfilePic = styled.div<ICompanyProfilePic>`
   background-color: white;
   border-radius: 8px;
   border: 1px solid #bbb;
-  opacity: ${props => (props.imageURL ? 1 : 0.2)};
-  background-image: url(${props => props.imageURL ?? "logo.png"});
+  background-image: url(${props => props.imageURL ?? "/logo-empty.png"});
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;

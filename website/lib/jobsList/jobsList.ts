@@ -201,3 +201,19 @@ export function buildCoopJobWithJobID(
   }
   return job;
 }
+
+export const getDifferentCountries = (jobs: JobsPageRowData[]) => {
+  const out: { [country: string]: number } = {};
+  jobs.forEach(job => {
+    const country = job.country;
+    if (!country) {
+      return;
+    }
+    if (out[country]) {
+      out[country]++;
+    } else {
+      out[country] = 1;
+    }
+  });
+  return out;
+};

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Fab from "@mui/material/Fab";
 import { Color } from "src/styles/color";
+import Link from "next/link";
 
 export const PrimaryButton = styled(Fab).attrs({
   variant: "extended",
@@ -15,5 +16,30 @@ export const PrimaryButton = styled(Fab).attrs({
     padding-right: 24px;
     box-shadow: 3px 4px
       ${props => (!props.disabled ? Color.primaryButtonShadow : "#666")};
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+interface IPrimaryButtonWithClientLink {
+  href: string;
+  children: React.ReactNode;
+}
+export const PrimaryButtonWithClientLink = ({
+  href,
+  children,
+}: IPrimaryButtonWithClientLink) => (
+  <PrimaryButton>
+    <StyledLink href={href}>{children}</StyledLink>
+  </PrimaryButton>
+);
+
+const Elemen = Link as any;
+const StyledLink = styled(Elemen)`
+  && {
+    color: white;
+    text-decoration: none;
   }
 `;
