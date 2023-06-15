@@ -7,32 +7,37 @@ interface IJobInfoTile {
   title: string;
   value: string;
   subValue?: string;
+  alignLeft?: boolean;
 }
 export const JobInfoTile = (props: IJobInfoTile) => {
-  const { icon, title, value, subValue } = props;
+  const { icon, title, value, subValue, alignLeft } = props;
   const useTooltip = value.length > 20;
   const valueString = useTooltip ? `${value.substring(0, 18)}...` : value;
   return (
     <div>
-      <TitleWrapper>
+      <TitleWrapper alighLeft={alignLeft}>
         {icon}
-        <Typography color="gray" variant="subtitle2" align="right">
+        <Typography
+          color="gray"
+          variant="subtitle2"
+          align={alignLeft ? "left" : "right"}
+        >
           {title}
         </Typography>
       </TitleWrapper>
       {useTooltip ? (
         <TooltipWrapper title={<Typography>{value}</Typography>} arrow>
-          <Typography variant="h5" align="right">
+          <Typography variant="h5" align={alignLeft ? "left" : "right"}>
             <b>{valueString}</b>
           </Typography>
         </TooltipWrapper>
       ) : (
-        <Typography variant="h5" align="right">
+        <Typography variant="h5" align={alignLeft ? "left" : "right"}>
           <b>{valueString}</b>
         </Typography>
       )}
       {subValue ? (
-        <Typography variant="subtitle2" align="right">
+        <Typography variant="subtitle2" align={alignLeft ? "left" : "right"}>
           {subValue}
         </Typography>
       ) : null}
@@ -40,10 +45,13 @@ export const JobInfoTile = (props: IJobInfoTile) => {
   );
 };
 
-const TitleWrapper = styled.div`
+interface ITitleWrapper {
+  alighLeft?: boolean;
+}
+const TitleWrapper = styled.div<ITitleWrapper>`
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: ${props => (props.alighLeft ? "start" : "end")};
   gap: 4px;
   margin-left: -4px;
 

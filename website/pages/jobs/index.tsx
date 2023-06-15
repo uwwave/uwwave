@@ -15,7 +15,7 @@ const JobsListPage = () => {
 
   const {
     displayJobs,
-    isLoading,
+    isLoading: isLoadingState,
     jobKeywords,
     numJobs,
     setChips,
@@ -25,6 +25,7 @@ const JobsListPage = () => {
     differentCountries,
     logos,
   } = useJobsList();
+  const isLoading = isLoadingState || !logos;
   const renderBody = () => (
     <>
       {isLoading ? (

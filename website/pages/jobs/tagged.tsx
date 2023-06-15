@@ -21,7 +21,7 @@ import Skeleton from "@mui/material/Skeleton";
 
 const TaggedJobsPage = () => {
   const {
-    isLoading,
+    isLoading: isLoadingState,
     differentCountries,
     currentTabIndex,
     setCurrentTabIndex,
@@ -36,7 +36,9 @@ const TaggedJobsPage = () => {
     totalTaggedJobs,
     earliestDeadline,
     logos,
+    tagToJobsCount,
   } = useTaggedJobsPage();
+  const isLoading = isLoadingState || !logos;
   const renderHeader = () => {
     return (
       <JobsListPageHeader
@@ -50,8 +52,9 @@ const TaggedJobsPage = () => {
   };
 
   const tabs: ITab[] = tagsInUse.map(tag => {
+    const count = tagToJobsCount[tag];
     return {
-      label: tag,
+      label: `${tag}${count ? ` (${count})` : ""}`,
       color: allTags[tag].color,
       selectedIcon: <BookmarkIcon />,
       editIcon: <EditIcon />,
