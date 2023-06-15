@@ -16,10 +16,7 @@ export const PrimaryButton = styled(Fab).attrs({
     padding-right: 24px;
     box-shadow: 3px 4px
       ${props => (!props.disabled ? Color.primaryButtonShadow : "#666")};
-    display: flex;
     gap: 8px;
-    justify-content: center;
-    align-items: center;
   }
 `;
 
