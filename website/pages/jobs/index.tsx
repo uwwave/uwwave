@@ -4,7 +4,7 @@ import { BackgroundColor } from "src/styles/color";
 import { SearchBarJobsList } from "components/SearchBar/SearchBarJobsList";
 import { JobsDataGrid } from "src/components/JobsDataGrid/JobsDataGrid";
 import { useJobsList } from "src/lib/hooks/useJobsList";
-import { JobsListPageHeader } from "src/components/Headers/JobsListPageHeader";
+import { JobsListPageHeader } from "src/components/Headers/variants/JobsListPageHeader";
 import Skeleton from "@mui/material/Skeleton";
 import { GetServerSideProps, NextPage } from "next";
 import { IGetCompanyLogosResponse } from "src/lib/requests/Requests";
@@ -22,8 +22,6 @@ const JobsListPage: NextPage<PageProps> = ({ logos }) => {
   const {
     displayJobs,
     isLoading,
-    dataAgeMessage,
-    isStale,
     jobKeywords,
     numJobs,
     setChips,
@@ -61,8 +59,7 @@ const JobsListPage: NextPage<PageProps> = ({ logos }) => {
     <PageWrapper
       Header={
         <JobsListPageHeader
-          lastScrapedMessage={dataAgeMessage}
-          isStale={isStale}
+          title="Jobs List"
           numJobs={numJobs}
           earliestDeadline={earliestDeadline}
           differentCountries={differentCountries}

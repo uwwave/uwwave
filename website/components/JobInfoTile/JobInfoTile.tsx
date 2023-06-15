@@ -16,23 +16,25 @@ export const JobInfoTile = (props: IJobInfoTile) => {
     <div>
       <TitleWrapper>
         {icon}
-        <Typography color="gray" variant="subtitle2">
+        <Typography color="gray" variant="subtitle2" align="right">
           {title}
         </Typography>
       </TitleWrapper>
       {useTooltip ? (
         <TooltipWrapper title={<Typography>{value}</Typography>} arrow>
-          <Typography variant="h5">
+          <Typography variant="h5" align="right">
             <b>{valueString}</b>
           </Typography>
         </TooltipWrapper>
       ) : (
-        <Typography variant="h5">
+        <Typography variant="h5" align="right">
           <b>{valueString}</b>
         </Typography>
       )}
       {subValue ? (
-        <Typography variant="subtitle2">{subValue}</Typography>
+        <Typography variant="subtitle2" align="right">
+          {subValue}
+        </Typography>
       ) : null}
     </div>
   );
@@ -41,6 +43,7 @@ export const JobInfoTile = (props: IJobInfoTile) => {
 const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: end;
   gap: 4px;
   margin-left: -4px;
 

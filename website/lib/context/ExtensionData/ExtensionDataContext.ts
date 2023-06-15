@@ -7,6 +7,8 @@ export interface ExtensionDataContextType {
   fulltimeJobsListPageRows: JobsPageRowData[];
   extensionData: { [key: string]: string };
   fetchExtensionData: () => void;
+  dataAgeMessage: string;
+  isStale: boolean;
 }
 
 export const ExtensionDataContext = createContext<

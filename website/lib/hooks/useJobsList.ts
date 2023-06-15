@@ -1,22 +1,19 @@
 import { useEffect, useState, useMemo } from "react";
-import { JobsPageRowData } from "src/lib/jobsList/jobsList";
-import { ISearchChip } from "src/components/SearchBar/SearchBarJobsList";
 import {
-  DAYS_TO_STALE_DATA,
-  LocalStorageMetadataKeys,
-} from "src/lib/extension/shared/userProfile";
+  JobsPageRowData,
+  getDifferentCountries,
+} from "src/lib/jobsList/jobsList";
+import { ISearchChip } from "src/components/SearchBar/SearchBarJobsList";
 import lunr from "lunr";
-import moment from "moment/moment";
-import { getTimeDiffString } from "src/lib/dates/dates";
 import { IJobKeywordObject, Requests } from "src/lib/requests/Requests";
 import { getSearchTypeField, SearchTypes } from "src/lib/search/Search";
 import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
 import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
+import { getEarliestDeadline } from "src/lib/dates/dates";
 
 export const useJobsList = () => {
   const {
     coopJobsListPageRows: jobs,
-    extensionData,
     isDataReady,
     fetchExtensionData,
   } = useExtensionsDataContext();
@@ -35,7 +32,6 @@ export const useJobsList = () => {
     {}
   );
   const [numActiveChips, setNumActiveChips] = useState<number>(0);
-  const dateScraped = extensionData[LocalStorageMetadataKeys.SCRAPE_AT];
   const { isLoading: isJobTagsLoading } = useJobTagsContext();
 
   // Build Keywords
@@ -114,48 +110,14 @@ export const useJobsList = () => {
     setDisplayJobs(newJobs);
   }, [jobsList, searchIndex, searchChips, numActiveChips]);
 
-  const dataAgeMessage = useMemo(() => {
-    return getTimeDiffString(dateScraped);
-  }, [dateScraped]);
-
-  const isStale = useMemo(() => {
-    return moment()
-      .utc()
-      .subtract(DAYS_TO_STALE_DATA, "day")
-      .isAfter(dateScraped);
-  }, [dateScraped]);
-
   const earliestDeadline = useMemo(() => {
-    const jobIDs = Object.keys(jobsList);
-    if (jobIDs.length === 0) {
-      return "";
-    }
-    let out = jobsList[jobIDs[0]].appDeadline;
-    jobIDs.forEach(jobID => {
-      const deadline = jobsList[jobID].appDeadline;
-      if (new Date(out).getTime() > new Date(deadline).getTime()) {
-        out = deadline;
-      }
-    });
-    return out;
-  }, [jobsList]);
+    return getEarliestDeadline(jobs);
+  }, [jobs]);
 
   const differentCountries: { [country: string]: number } = useMemo(() => {
-    const out: { [country: string]: number } = {};
-    const jobIDs = Object.keys(jobsList);
-    jobIDs.forEach(jobID => {
-      const country = jobsList[jobID].country;
-      if (!country) {
-        return;
-      }
-      if (out[country]) {
-        out[country]++;
-      } else {
-        out[country] = 1;
-      }
-    });
-    return out;
-  }, [jobsList]);
+    return getDifferentCountries(jobs);
+  }, [jobs]);
+
   const isLoading =
     !isDataReady ||
     isJobTagsLoading ||
@@ -165,8 +127,6 @@ export const useJobsList = () => {
     earliestDeadline,
     displayJobs,
     isLoading,
-    dataAgeMessage,
-    isStale,
     jobKeywords,
     numJobs: jobs.length,
     setChips: setSearchChips,

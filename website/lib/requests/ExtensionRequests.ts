@@ -47,6 +47,10 @@ export interface IJobToTags {
   [jobID: string]: string[];
 }
 
+export interface ITagToJobs {
+  [tag: string]: string[];
+}
+
 export interface ITagCount {
   [tag: string]: number;
 }
@@ -250,6 +254,14 @@ export class ExtensionRequests {
 
   static async deleteTag(name: string): Promise<undefined> {
     await this.patchTag(name);
+    return;
+  }
+
+  //TODO: optimize logic
+  static async bulkDeleteTags(tags: string[]): Promise<undefined> {
+    for (const tag of tags) {
+      await this.patchTag(tag);
+    }
     return;
   }
 }

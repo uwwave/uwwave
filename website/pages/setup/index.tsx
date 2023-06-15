@@ -3,11 +3,13 @@ import Typography from "@mui/material/Typography";
 import { Spacer } from "src/components/Spacer/Spacer";
 import { SetupStepper } from "src/components/Stepper/SetupStepper";
 import Paper from "@mui/material/Paper";
-import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
+import {
+  PrimaryButton,
+  PrimaryButtonWithClientLink,
+} from "src/components/Buttons/PrimaryButton";
 import { BackgroundColor } from "src/styles/color";
 import { LocalStorageMetadataKeys } from "src/lib/extension/shared/userProfile";
 import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
-import Link from "next/link";
 import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
 import { useEffect } from "react";
 
@@ -66,9 +68,9 @@ const Step4 = () => {
         <b>You’re all set!</b>
       </Typography>
       <Spacer height={32} />
-      <PrimaryButton>
-        <StyledLink href="/jobs">Start Browsing Jobs</StyledLink>
-      </PrimaryButton>
+      <PrimaryButtonWithClientLink href={"/jobs"}>
+        Start Browsing Jobs
+      </PrimaryButtonWithClientLink>
     </MainPaper>
   );
 };
@@ -133,12 +135,5 @@ const MainPaper = styled(Paper)`
 
   && .MuiTypography-root {
     color: white;
-  }
-`;
-const Elemen = Link as any;
-const StyledLink = styled(Elemen)`
-  && {
-    color: white;
-    text-decoration: none;
   }
 `;

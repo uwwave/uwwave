@@ -1,4 +1,3 @@
-import ClearIcon from "@mui/icons-material/Clear";
 import TextField from "@mui/material/TextField";
 import { Spacer } from "src/components/Spacer/Spacer";
 import MenuList from "@mui/material/MenuList";
@@ -6,19 +5,16 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import CheckIcon from "@mui/icons-material/Check";
-import Chip from "@mui/material/Chip";
 import { BackgroundColor } from "src/styles/color";
 import styled from "styled-components";
 import { useTagsMenu } from "src/lib/hooks/useTagsMenu";
 import LoadingAnimation from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import { ITag, ITagCount } from "src/lib/requests/ExtensionRequests";
 import React, { useEffect, useRef } from "react";
-import EditIcon from "@mui/icons-material/Edit";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { EditTagModal } from "src/components/Modals/variants/EditTagModal";
 import { IconColorWrapper } from "src/components/icons/ColorWrapper";
+import { TagChip } from "src/components/Tags/Chips/TagChip";
 
 interface ITagsMenu {
   onOutsideClick: () => void;
@@ -77,15 +73,8 @@ export const JobTagsMenu = (props: ITagsMenu) => {
     <>
       <ChipsWrapper>
         {displaySelectedTags.map(tag => (
-          <StyledChip
-            key={tag.label}
-            bgcolor={tag.color}
-            label={renderInnerChipContent({
-              tag: tag,
-              onSetEditTag: setEditTag,
-              tagToJobsCount,
-            })}
-            deleteIcon={<ClearIcon />}
+          <TagChip
+            tag={tag}
             onDelete={() => {
               removeTag(tag.label);
             }}
@@ -179,63 +168,10 @@ export const JobTagsMenu = (props: ITagsMenu) => {
   );
 };
 
-interface IInnerChipContent {
-  tag: ITag;
-  onSetEditTag: (label: string) => void;
-  tagToJobsCount: ITagCount;
-}
-const renderInnerChipContent = (props: IInnerChipContent) => {
-  const { tag, onSetEditTag, tagToJobsCount } = props;
-  const count = tagToJobsCount[tag.label];
-  return (
-    <>
-      <InnerChipContentWrapper>
-        <IconButton
-          onClick={() => {
-            onSetEditTag(tag.label);
-          }}
-        >
-          <EditIcon />
-        </IconButton>
-        <Typography color="white">{`${tag.label}${
-          count ? ` (${count})` : ""
-        }`}</Typography>
-      </InnerChipContentWrapper>
-    </>
-  );
-};
-
-const InnerChipContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 interface IChip {
   bgcolor: string;
 }
 
-const StyledChip = styled(Chip)<IChip>`
-  && {
-    background-color: ${props => props.bgcolor};
-    color: white;
-  }
-
-  && svg {
-    fill: white;
-  }
-
-  & div {
-    transform: translateY(-21px);
-  }
-
-  &:hover div {
-    transform: translateY(12px);
-  }
-  cursor: pointer;
-  overflow: hidden;
-  transition: 1s transform ease;
-`;
 const TagsHeader = styled.div`
   width: 100%;
   background-color: ${BackgroundColor.darker};

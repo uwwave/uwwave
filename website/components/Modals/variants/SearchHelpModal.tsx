@@ -2,8 +2,6 @@ import Typography from "@mui/material/Typography";
 import { BaseModal } from "../BaseModal";
 import { Spacer } from "src/components/Spacer/Spacer";
 import styled from "styled-components";
-import SearchHelpGif from "src/public/search-help.gif";
-import Image from "next/image";
 
 interface IUploadDomainModal {
   isOpen: boolean;

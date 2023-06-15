@@ -1,160 +1,140 @@
 import React from "react";
-import { NavigationBar } from "src/components/NavigationBar/NavigationBar";
 import styled from "styled-components";
-import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { Spacer } from "src/components/Spacer/Spacer";
 import Paper from "@mui/material/Paper";
 import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
 import { BackgroundColor, Color } from "src/styles/color";
-import { Footer } from "src/components/Footer/Footer";
-
+import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
+import EmailIcon from "@mui/icons-material/Email";
 const AboutPage = () => {
-  return (
+  const renderHeader = () => (
     <>
-      <NavigationBar />
-      <Container>
-        <MainWrapper>
-          <Spacer height={64} />
-          <Typography variant="h6">
-            UW Wave is a Capstone Project lead by a team of SE24s
-          </Typography>
-          <Spacer height={64} />
-          <Typography variant="h4">
-            <b>Meet The Team</b>
-          </Typography>
-          <Spacer height={32} />
-        </MainWrapper>
-      </Container>
-      <WaterWrapper>
-        <Container>
-          <MainWrapper>
-            <Spacer height={64} />
-            <PicturesRow>
-              <ProfileWrapper>
-                <RelativeWrapper>
-                  <ProfileImageBackground color={Color.rating} />
-                  <ProfileImageWrapper imageURL="bryan.png" />
-                </RelativeWrapper>
-                <Spacer height={4} />
-                <Name>
-                  <b>Bryan</b>
-                </Name>
-                <Spacer height={4} />
-                <Name>Design & Full Stack</Name>
-              </ProfileWrapper>
-              <ProfileWrapper>
-                <RelativeWrapper>
-                  <ProfileImageBackground color={Color.salary} />
-                  <ProfileImageWrapper imageURL="michelle.png" />
-                </RelativeWrapper>
-                <Spacer height={4} />
-                <Name>
-                  <b>Michelle</b>
-                </Name>
-                <Spacer height={4} />
-                <Name>Machine Learning</Name>
-              </ProfileWrapper>
-              <ProfileWrapper>
-                <RelativeWrapper>
-                  <ProfileImageBackground color={Color.compatibility} />
-                  <ProfileImageWrapper imageURL="william.png" />
-                </RelativeWrapper>
-                <Spacer height={4} />
-                <Name>
-                  <b>William</b>
-                </Name>
-                <Spacer height={4} />
-                <Name>Extension</Name>
-              </ProfileWrapper>
-            </PicturesRow>
-            <Spacer height={32} />
-            <PicturesRow>
-              <ProfileWrapper>
-                <RelativeWrapper>
-                  <ProfileImageBackground color={Color.rating} />
-                  <ProfileImageWrapper imageURL="linda.png" />
-                </RelativeWrapper>
-                <Spacer height={4} />
-                <Name>
-                  <b>Linda</b>
-                </Name>
-                <Spacer height={4} />
-                <Name>Frontend</Name>
-              </ProfileWrapper>
-
-              <ProfileWrapper>
-                <RelativeWrapper>
-                  <ProfileImageBackground color={Color.salary} />
-                  <ProfileImageWrapper imageURL="andrew.png" />
-                </RelativeWrapper>
-                <Spacer height={4} />
-                <Name>
-                  <b>Andrew</b>
-                </Name>
-                <Spacer height={4} />
-                <Name>Frontend</Name>
-              </ProfileWrapper>
-            </PicturesRow>
-            <Spacer height={32} />
-            <ContactPaper>
-              <Typography variant="h5" align="center">
-                <b>Contact</b>
-              </Typography>
-              <Spacer height={16} />
-              <Typography align="center">
-                Have feedback, questions, or concerns about Wave? Don’t hesitate
-                to reach out!
-              </Typography>
-              <Spacer height={32} />
-              <PrimaryButton href="mailto:uwaterloowave@gmail.com">
-                Email
-              </PrimaryButton>
-            </ContactPaper>
-            <Spacer height={32} />
-            <Name variant="h6">
-              <b>Contributors</b>
-            </Name>
-            <Spacer height={32} />
-            <PicturesRow>
-              <ProfileWrapper>
-                <RelativeWrapper>
-                  <ProfileImageBackground color={Color.rating} />
-                  <ProfileImageWrapper imageURL="yiwei.png" />
-                </RelativeWrapper>
-                <Spacer height={4} />
-                <Name>
-                  <b>Yi Wei</b>
-                </Name>
-                <Spacer height={4} />
-                <Name>Backend</Name>
-              </ProfileWrapper>
-            </PicturesRow>
-            <Spacer height={64} />
-          </MainWrapper>
-        </Container>
-      </WaterWrapper>
-      <Footer />
+      <Typography variant="h5" align="center">
+        UW Wave is a Capstone Project created by SE2024s
+      </Typography>
+      <Spacer height={64} />
+      <Typography variant="h4" align="center">
+        <b>Meet The Team</b>
+      </Typography>
     </>
+  );
+
+  const renderBody = () => (
+    <>
+      <PicturesRow>
+        <ProfileWrapper>
+          <RelativeWrapper>
+            <ProfileImageBackground color={Color.rating} />
+            <ProfileImageWrapper imageURL="bryan.png" />
+          </RelativeWrapper>
+          <Spacer height={4} />
+          <Name>
+            <b>Bryan</b>
+          </Name>
+          <Spacer height={4} />
+          <Name>Design & Full Stack</Name>
+        </ProfileWrapper>
+        <ProfileWrapper>
+          <RelativeWrapper>
+            <ProfileImageBackground color={Color.salary} />
+            <ProfileImageWrapper imageURL="michelle.png" />
+          </RelativeWrapper>
+          <Spacer height={4} />
+          <Name>
+            <b>Michelle</b>
+          </Name>
+          <Spacer height={4} />
+          <Name>Machine Learning</Name>
+        </ProfileWrapper>
+        <ProfileWrapper>
+          <RelativeWrapper>
+            <ProfileImageBackground color={Color.compatibility} />
+            <ProfileImageWrapper imageURL="william.png" />
+          </RelativeWrapper>
+          <Spacer height={4} />
+          <Name>
+            <b>William</b>
+          </Name>
+          <Spacer height={4} />
+          <Name>Extension</Name>
+        </ProfileWrapper>
+      </PicturesRow>
+      <Spacer height={32} />
+      <PicturesRow>
+        <ProfileWrapper>
+          <RelativeWrapper>
+            <ProfileImageBackground color={Color.rating} />
+            <ProfileImageWrapper imageURL="linda.png" />
+          </RelativeWrapper>
+          <Spacer height={4} />
+          <Name>
+            <b>Linda</b>
+          </Name>
+          <Spacer height={4} />
+          <Name>Frontend</Name>
+        </ProfileWrapper>
+
+        <ProfileWrapper>
+          <RelativeWrapper>
+            <ProfileImageBackground color={Color.salary} />
+            <ProfileImageWrapper imageURL="andrew.png" />
+          </RelativeWrapper>
+          <Spacer height={4} />
+          <Name>
+            <b>Andrew</b>
+          </Name>
+          <Spacer height={4} />
+          <Name>Frontend</Name>
+        </ProfileWrapper>
+      </PicturesRow>
+      <Spacer height={32} />
+      <ContactPaper>
+        <Typography variant="h5" align="center">
+          <b>Contact</b>
+        </Typography>
+        <Spacer height={16} />
+        <Typography align="center">
+          Have feedback, questions, or concerns about Wave? Don’t hesitate to
+          reach out!
+        </Typography>
+        <Spacer height={32} />
+        <PrimaryButton href="mailto:uwaterloowave@gmail.com">
+          <EmailIcon />
+          Email
+        </PrimaryButton>
+      </ContactPaper>
+      <Spacer height={32} />
+      <Name variant="h6" align="center">
+        <b>Contributors</b>
+      </Name>
+      <Spacer height={32} />
+      <PicturesRow>
+        <ProfileWrapper>
+          <RelativeWrapper>
+            <ProfileImageBackground color={Color.rating} />
+            <ProfileImageWrapper imageURL="yiwei.png" />
+          </RelativeWrapper>
+          <Spacer height={4} />
+          <Name>
+            <b>Yi Wei</b>
+          </Name>
+          <Spacer height={4} />
+          <Name>Backend</Name>
+        </ProfileWrapper>
+      </PicturesRow>
+    </>
+  );
+  return (
+    <PageWrapper
+      Header={renderHeader()}
+      Body={renderBody()}
+      lighterBackground
+    />
   );
 };
 
 export default AboutPage;
-
-const MainWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const WaterWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  background: ${BackgroundColor.dark};
-  min-height: 100vh;
-`;
 
 const RelativeWrapper = styled.div`
   position: relative;

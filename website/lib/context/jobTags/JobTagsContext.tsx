@@ -4,6 +4,7 @@ import {
   IJobToTags,
   ITag,
   ITagCount,
+  ITagToJobs,
 } from "src/lib/requests/ExtensionRequests";
 
 export interface JobTagsContextType {
@@ -16,9 +17,16 @@ export interface JobTagsContextType {
   onRemoveTag: (jobID: string, label: string) => void;
   onCreateNewTagAndAddToJob: (jobID: string, tag: ITag) => void;
   onPatchTag: (newTag: ITag) => void;
-  onDeleteTag: () => void;
+  onDeleteTag: (tag?: string, disableRequest?: boolean) => void;
   closeEditModal: () => void;
   tagToJobsCount: ITagCount;
+  tagToJobs: ITagToJobs;
+  tagsInUse: string[];
+  tagsNotInUse: string[];
+  selectedTag?: string;
+  setSelectedTag: (tag: string) => void;
+  deleteAllUnusedTags: () => void;
+  totalTaggedJobs: number;
 }
 
 export const JobTagsContext = createContext<JobTagsContextType | undefined>(
