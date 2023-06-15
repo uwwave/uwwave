@@ -156,6 +156,7 @@ const SpecificJobPage = () => {
             title="Deadline"
             value={calculateDaysFromNow(new Date(job.appDeadline))}
             subValue={job.appDeadline}
+            alignLeft
           />
         ) : null}
         {job?.duration ? (
@@ -163,6 +164,7 @@ const SpecificJobPage = () => {
             icon={<ScheduleIcon />}
             title="Duration"
             value={job.duration}
+            alignLeft
           />
         ) : null}
         {job?.openings ? (
@@ -170,6 +172,7 @@ const SpecificJobPage = () => {
             icon={<PeopleIcon />}
             title="Spots"
             value={job.openings.toString()}
+            alignLeft
           />
         ) : null}
 
@@ -180,6 +183,7 @@ const SpecificJobPage = () => {
             value={job.compensationAndBenefitsInformation
               .replace(/<[^>]*>?/gm, "")
               .replace(/&nbsp;/g, "")}
+            alignLeft
           />
         ) : null}
 
@@ -199,6 +203,7 @@ const SpecificJobPage = () => {
               (job?.jobPostingInformation[JobInfoFieldsCoop.jobPostalCode] ??
                 "")
             }
+            alignLeft
           />
         ) : null}
       </JobFastFactsWrapper>

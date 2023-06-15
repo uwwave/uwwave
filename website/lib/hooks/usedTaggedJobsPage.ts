@@ -31,6 +31,7 @@ export const useTaggedJobsPage = () => {
     deleteAllUnusedTags,
     jobToTags,
     totalTaggedJobs,
+    tagToJobsCount,
   } = useJobTagsContext();
   const [logos, setLogos] = useState<IGetCompanyLogosResponse>();
   useEffect(() => {
@@ -120,5 +121,6 @@ export const useTaggedJobsPage = () => {
     earliestDeadline,
     differentCountries,
     logos,
+    tagToJobsCount,
   };
 };
