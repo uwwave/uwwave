@@ -17,7 +17,6 @@ import MUIButton from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import { Spacer } from "../Spacer/Spacer";
-import { set } from "lodash";
 import { SearchHelpModal } from "../Modals/variants/SearchHelpModal";
 
 // Interfaces
