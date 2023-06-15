@@ -65,7 +65,7 @@ export const NavigationBar = (props: INavigationBar) => {
               </TextWrapper>
             ))}
             <StyledLink href="/jobs/tagged">
-              <TagListWrapper>
+              <TagListWrapper textColor={textColor}>
                 <IconButtonCounter
                   Icon={
                     totalTaggedJobs ? <BookmarkIcon /> : <BookmarkBorderIcon />
@@ -115,12 +115,25 @@ const TextWrapper = styled.div`
   display: flex;
 `;
 
-const TagListWrapper = styled.div`
+interface ITagListWrapper {
+  textColor?: string;
+}
+
+const TagListWrapper = styled.div<ITagListWrapper>`
   display: flex;
   align-items: baseline;
   margin-left: 16px;
   && svg {
-    color: ${BackgroundColor.dark};
+    color: ${props => props.textColor ?? BackgroundColor.darker};
+  }
+
+  && span {
+    color: ${props => (props.textColor ? BackgroundColor.darker : "white")};
+    font-weight: bold;
+  }
+
+  && p {
+    color: ${props => props.textColor ?? BackgroundColor.darker};
   }
 `;
 

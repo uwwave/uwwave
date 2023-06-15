@@ -69,7 +69,7 @@ const TaggedJobsPage: NextPage<PageProps> = ({ logos }) => {
   const renderNoTaggedJobs = () => (
     <>
       <Typography color="white" align="center">
-        You have 0 tagged jobs! You can tag jobs on the "Jobs List" page and
+        You have no tagged jobs! You can tag jobs on the "Jobs List" page and
         they will show up here
       </Typography>
       <Spacer height={32} />
@@ -78,6 +78,7 @@ const TaggedJobsPage: NextPage<PageProps> = ({ logos }) => {
           Open Jobs List
         </PrimaryButtonWithClientLink>
       </Center>
+      <Spacer height={64} />
     </>
   );
 
@@ -166,7 +167,8 @@ const TaggedJobsPage: NextPage<PageProps> = ({ logos }) => {
               companyLogos={logos}
             />
           </>
-        ) : (
+        ) : null}
+        {isLoading ? (
           <>
             <Spacer height={16} />
             <Skeleton
@@ -183,7 +185,7 @@ const TaggedJobsPage: NextPage<PageProps> = ({ logos }) => {
               sx={{ bgcolor: BackgroundColor.darker }}
             />
           </>
-        )}
+        ) : null}
         {!isLoading && tagsInUse.length < 1 ? renderNoTaggedJobs() : null}
         {tagsNotInUse.length ? renderUnusedTags() : null}
       </>

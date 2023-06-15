@@ -40,25 +40,6 @@ interface ISearchBarJobsList {
   numActiveChips: number;
 }
 
-interface ISearchHelpButton {
-  onClick: () => void;
-}
-
-const SearchHelpButton = (props: ISearchHelpButton) => {
-  const IconButtonStyles = {
-    padding: "0px",
-    color: "white",
-  };
-
-  return (
-    <HelpButtonWrapper>
-      <IconButton onClick={props.onClick} sx={IconButtonStyles}>
-        <HelpOutlineOutlinedIcon />
-      </IconButton>
-    </HelpButtonWrapper>
-  );
-};
-
 const SearchBarJobsListInner = (props: ISearchBarJobsListInner) => {
   const { chips, onSearch, onDeleteChip, onClearChips, onClickChip } = props;
   const [searchType, setSearchType] = useState<SearchTypes>(SearchTypes.All);
@@ -224,8 +205,10 @@ export const SearchBarJobsList = (props: ISearchBarJobsList) => {
         isOpen={isHelpOpen}
         onClose={() => setIsHelpOpen(false)}
       />
-      <SearchHelpButton onClick={onSearchHelpClick} />
-      <Spacer height={10} />
+      <StyledIconButton onClick={onSearchHelpClick}>
+        <HelpOutlineOutlinedIcon />
+      </StyledIconButton>
+      <Spacer height={8} />
       <StyledPaper>
         <SearchBarJobsListInner
           chips={chips}
@@ -306,10 +289,15 @@ const StyledChip = styled(({ isActive, ...rest }) => <Chip {...rest} />)`
   }
 `;
 
-const HelpButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  opacity: 1;
+const StyledIconButton = styled(IconButton)`
+  && svg {
+    color: white;
+  }
+
+  && {
+    position: absolute;
+    right: -40px;
+  }
 `;
 
 const SearchWrapper = styled.div`
@@ -320,7 +308,7 @@ const SearchWrapper = styled.div`
 
 const StyledPaper = styled(Paper)`
   && {
-    padding: 20px;
-    border-radius: 20px;
+    padding: 32px;
+    border-radius: 4px;
   }
 `;
