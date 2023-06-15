@@ -22,17 +22,22 @@ export const SearchHelpModal = (props: IUploadDomainModal) => {
       disableConfirm={false}
     >
       <Typography align="center" variant="h5">
-        <b>How to</b>
+        <b>How to use search</b>
       </Typography>
       <Spacer height={32} />
       <Center>
         <HelpGif src="search-help.gif" />
       </Center>
       <Spacer height={32} />
-      <Typography>
-        You can choose from various categories to refine your search. Select the
-        dropdown menu to add/remove search terms. Select/deselect a pill to
-        refine your search even further!
+      <Typography variant="h6">
+        1. Select the dropdown menu to add/remove search terms based on
+        different categories.
+      </Typography>
+      <Typography variant="h6">
+        2. Click on a pill to active/deactive it
+      </Typography>
+      <Typography variant="h6">
+        3. Click on header columns to order based on category values
       </Typography>
     </BaseModal>
   );
