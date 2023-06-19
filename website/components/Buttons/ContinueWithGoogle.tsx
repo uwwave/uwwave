@@ -15,6 +15,10 @@ export const ContinueWithGoogleButton = styled(Button).attrs({
     display: flex;
   }
 
+  &&:hover {
+    background-color: white;
+  }
+
   && p {
     color: black;
     font-family: Roboto, sans-serif;

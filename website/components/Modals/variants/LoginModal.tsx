@@ -35,6 +35,7 @@ export const LoginModal = () => {
     handleSignIn,
     loginError,
     isLoginButtonDisabled,
+    modalTitle,
   } = useLoginModal();
 
   const renderLoginState = () => (
@@ -194,7 +195,7 @@ export const LoginModal = () => {
     <BaseModal
       open={isOpen}
       hasCloseX
-      title="Login"
+      title={modalTitle}
       onCloseModal={close}
       maxWidth="xs"
       dark

@@ -52,7 +52,6 @@ export const useLoginModal = () => {
         setModalState(LoginModalState.EMAIL_SENT);
       })
       .catch(x => {
-        console.log("ERROR", x.response.data);
         setErrorType(x.response.data);
         setModalState(LoginModalState.CREATE_ACCOUNT);
       });
@@ -91,6 +90,15 @@ export const useLoginModal = () => {
         return "";
     }
   }, [errorType]);
+  const modalTitle: string = useMemo(() => {
+    switch (modalState) {
+      case LoginModalState.CREATE_ACCOUNT:
+      case LoginModalState.CREATE_ACCOUNT_LOADING:
+        return "Create Account";
+      default:
+        return "Login";
+    }
+  }, [modalState]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -133,5 +141,6 @@ export const useLoginModal = () => {
     isUsernameError,
     loginError,
     isLoginButtonDisabled,
+    modalTitle,
   };
 };
