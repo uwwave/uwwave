@@ -109,7 +109,7 @@ const HomePage = () => {
   return (
     <>
       <HeroWrapper>
-        <NavigationBar textColor="white" />
+        <NavigationBar />
         <Container>
           <Spacer height={64} />
           <Title>

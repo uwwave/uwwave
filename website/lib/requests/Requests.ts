@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
+import { IUserData } from "src/database/models/UserData";
 
 export interface IJobKeyword {
   jobID: string;
@@ -59,5 +60,15 @@ export class Requests {
 
   static async getCompanyLogos(): Promise<IGetCompanyLogosResponse> {
     return axios.get(`/api/companyInfo/logos`).then(x => x.data);
+  }
+
+  static async createAccount(
+    email: string,
+    username: string,
+    password: string
+  ): Promise<IUserData | undefined> {
+    return axios
+      .post("/api/createAccount", { email, username, password })
+      .then(x => x.data);
   }
 }

@@ -1,22 +1,18 @@
-import { AppBar, Typography } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
+import Typography from "@mui/material/Typography";
 import MUITypography from "@mui/material/Typography";
 import styled from "styled-components";
-import { BackgroundColor, Color } from "styles/color";
+import { BackgroundColor } from "styles/color";
 import { WaveLogo } from "src/components/icons/logo/Navbar";
 import Link from "next/link";
 import Container from "@mui/material/Container";
 import React from "react";
-import { Spacer } from "../Spacer/Spacer";
 import { useRouter } from "next/router";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { IconButtonCounter } from "../Buttons/IconButtonCounter";
 import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
-
-interface INavigationBar {
-  textColor?: string;
-  backgroundColor?: string;
-}
+import { LoginButton } from "src/components/NavigationBar/LoginButton";
 
 type PageItem = {
   pageName: string;
@@ -34,12 +30,15 @@ const pages: PageItem[] = [
   },
 ];
 
-export const NavigationBar = (props: INavigationBar) => {
-  const { textColor, backgroundColor = "transparent" } = props;
+export const NavigationBar = () => {
+  const textColor = "white";
+  const backgroundColor = BackgroundColor.dark;
   const { totalTaggedJobs } = useJobTagsContext();
   const router = useRouter();
+
   const path = router.pathname;
-  const color = textColor ?? Color.textSecondary;
+  const color = textColor ?? "white";
+
   return (
     <>
       <AppBar position="static" elevation={0} sx={{ bgcolor: backgroundColor }}>
@@ -50,7 +49,7 @@ export const NavigationBar = (props: INavigationBar) => {
                 <WaveLogo color={color} />
               </Link>
             </LogoWrapper>
-            {pages.map((pageItem: PageItem, i) => (
+            {pages.map((pageItem: PageItem) => (
               <TextWrapper key={pageItem.pageUrl}>
                 <MUITypography>
                   <StyledLink
@@ -62,7 +61,6 @@ export const NavigationBar = (props: INavigationBar) => {
                     {pageItem.pageName}
                   </StyledLink>
                 </MUITypography>
-                {i < pages.length - 1 ? <Spacer width={24} /> : null}
               </TextWrapper>
             ))}
             <StyledLink href="/jobs/tagged">
@@ -76,6 +74,7 @@ export const NavigationBar = (props: INavigationBar) => {
                 <TaggedJobsText>Tagged Jobs</TaggedJobsText>
               </TagListWrapper>
             </StyledLink>
+            <LoginButton />
           </FlexWrapper>
         </Container>
       </AppBar>
@@ -86,8 +85,9 @@ export const NavigationBar = (props: INavigationBar) => {
 const FlexWrapper = styled.div`
   display: flex;
   align-items: center;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  gap: 24px;
+  padding-top: 4px;
+  padding-bottom: 4px;
 `;
 
 interface ILink {
@@ -123,7 +123,6 @@ interface ITagListWrapper {
 const TagListWrapper = styled.div<ITagListWrapper>`
   display: flex;
   align-items: baseline;
-  margin-left: 16px;
   && svg {
     color: ${props => props.textColor ?? BackgroundColor.darker};
   }
