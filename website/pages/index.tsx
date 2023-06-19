@@ -113,7 +113,7 @@ const HomePage = () => {
         <Container>
           <Spacer height={64} />
           <Title>
-            The Ultimate <br /> Waterloo Works Companion test CI
+            The Ultimate <br /> Waterloo Works Companion
           </Title>
           <Spacer height={16} />
           <SubTitleWrapper>
