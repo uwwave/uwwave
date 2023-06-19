@@ -10,6 +10,7 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import styled from "styled-components";
 import { Spacer } from "src/components/Spacer/Spacer";
+import { BackgroundColor } from "src/styles/color";
 
 export interface ModalProps {
   open: boolean;
@@ -23,6 +24,8 @@ export interface ModalProps {
   isLoading?: boolean;
   disableConfirm?: boolean;
   maxWidth?: string;
+  dark?: boolean;
+  header?: React.ReactNode;
 }
 
 export const BaseModal = (props: ModalProps): JSX.Element => {
@@ -38,6 +41,8 @@ export const BaseModal = (props: ModalProps): JSX.Element => {
     isLoading,
     disableConfirm,
     maxWidth,
+    dark,
+    header,
   } = props;
   const handleClose = () => {
     onCloseModal && onCloseModal();
@@ -57,52 +62,70 @@ export const BaseModal = (props: ModalProps): JSX.Element => {
       onClose={handleClose}
       maxWidth={maxWidth ?? "md"}
       fullWidth
+      dark={dark ?? false}
     >
-      {title || hasCloseX ? (
-        <DialogTitle align={"center"}>
-          <b>{title}</b>
-          {hasCloseX && (
-            <CloseButtonWrapper aria-label="close" onClick={handleClose}>
-              <CloseIcon />
-            </CloseButtonWrapper>
+      {header}
+      <MainContentWrapper>
+        {title || hasCloseX ? (
+          <DialogTitle align={"center"} color={dark ? "white" : undefined}>
+            <b>{title}</b>
+            {hasCloseX && (
+              <CloseButtonWrapper
+                aria-label="close"
+                onClick={handleClose}
+                dark={dark ?? false}
+              >
+                <CloseIcon />
+              </CloseButtonWrapper>
+            )}
+          </DialogTitle>
+        ) : null}
+        <DialogContent style={{ overflow: "visible" }}>
+          {children}
+        </DialogContent>
+        <DialogActionsWrapper>
+          {isLoading && (
+            <>
+              <LoadingAnimation />
+              <Spacer height={16} />
+            </>
           )}
-        </DialogTitle>
-      ) : null}
-      <DialogContent style={{ overflow: "visible" }}>{children}</DialogContent>
-      <DialogActionsWrapper>
-        {isLoading && (
-          <>
-            <LoadingAnimation />
-            <Spacer height={16} />
-          </>
-        )}
-        {onClickOk && !isLoading && (
-          <PrimaryButton
-            onClick={handleOk}
-            disabled={isLoading || disableConfirm}
-          >
-            {confirmText ?? "Confirm"}
-          </PrimaryButton>
-        )}
-        {onClickCancel && (
-          <TypographyWrapper onClick={handleCancel} color="primary" margin={0}>
-            Cancel
-          </TypographyWrapper>
-        )}
-      </DialogActionsWrapper>
+          {onClickOk && !isLoading && (
+            <PrimaryButton
+              onClick={handleOk}
+              disabled={isLoading || disableConfirm}
+            >
+              {confirmText ?? "Confirm"}
+            </PrimaryButton>
+          )}
+          {onClickCancel && (
+            <TypographyWrapper
+              onClick={handleCancel}
+              color="primary"
+              margin={0}
+            >
+              Cancel
+            </TypographyWrapper>
+          )}
+        </DialogActionsWrapper>
+      </MainContentWrapper>
     </DialogWrapper>
   );
 };
 
-const CloseButtonWrapper = styled(IconButton)`
+interface IDark {
+  dark: boolean;
+}
+const CloseButtonWrapper = styled(IconButton)<IDark>`
   && {
     position: absolute;
     top: 0;
     right: 0;
+    ${props => (props.dark ? "color: white" : "")};
   }
 `;
 
-const DialogWrapper = styled(otherProps => <Dialog {...otherProps} />)`
+const DialogWrapper = styled(otherProps => <Dialog {...otherProps} />)<IDark>`
   && > .MuiDialog {
     &-container {
       align-items: start;
@@ -110,9 +133,18 @@ const DialogWrapper = styled(otherProps => <Dialog {...otherProps} />)`
   }
   & > .MuiDialog-container > .MuiPaper-root {
     min-width: ${props => props.width};
-    padding: 16px;
+    padding: 0;
     overflow-y: unset;
+    background-color: ${props => (props.dark ? BackgroundColor.dark : "white")};
   }
+
+  && > .MuiBackdrop-root {
+    background-color: rgba(0, 0, 0, ${props => (props.dark ? 0.9 : 0.5)});
+  }
+`;
+
+const MainContentWrapper = styled.div`
+  padding: 16px;
 `;
 
 const DialogActionsWrapper = styled(DialogActions)`

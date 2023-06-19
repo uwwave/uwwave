@@ -24,7 +24,7 @@ export const PageWrapper = ({
 }: IPageWrapper) => {
   return (
     <Main>
-      <NavigationBar backgroundColor="white" />
+      <NavigationBar />
       <Container>
         <Spacer height={64} />
         <StyledPaper
