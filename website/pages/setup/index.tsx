@@ -11,7 +11,6 @@ import { BackgroundColor } from "src/styles/color";
 import { LocalStorageMetadataKeys } from "src/lib/extension/shared/userProfile";
 import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
 import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
-import { useEffect } from "react";
 
 const Step2 = () => {
   return (
