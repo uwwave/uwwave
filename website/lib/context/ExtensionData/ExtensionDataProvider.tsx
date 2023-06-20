@@ -22,6 +22,7 @@ export const ExtensionDataProvider = ({ children }: IJobsTagsProvider) => {
     fulltimeJobsListPageRows,
     extensionData,
     fetchExtensionData,
+    isLoading,
   } = useExtensionData();
   const dateScraped = extensionData[LocalStorageMetadataKeys.SCRAPE_AT];
   const dataAgeMessage = useMemo(() => {
@@ -43,6 +44,7 @@ export const ExtensionDataProvider = ({ children }: IJobsTagsProvider) => {
     fulltimeJobsListPageRows,
     extensionData,
     fetchExtensionData,
+    isLoading,
   };
 
   return (

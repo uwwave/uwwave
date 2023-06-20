@@ -18,6 +18,7 @@ export const PrimaryButton = styled(Fab).attrs({
       ${props => (!props.disabled ? Color.primaryButtonShadow : "#666")};
     gap: 8px;
     text-transform: none;
+    z-index: 2;
   }
 `;
 

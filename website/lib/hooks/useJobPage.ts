@@ -71,8 +71,8 @@ export const useJobPage = (jobID?: string) => {
     }
     Requests.getCompanyInfo(companyInfo.companyName)
       .then((res: ICompanyClearbitData) => {
-        setImageURL(res.logo ?? "/logo-empty.png");
-        setCompanyURL(res.domain);
+        setImageURL(res.logo ? res.logo : "/logo-empty.png");
+        setCompanyURL(res.domain ?? "");
         setInit(true);
       })
       .catch((err: any) => {

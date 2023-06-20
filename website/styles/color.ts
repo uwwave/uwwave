@@ -13,6 +13,7 @@ export enum Color {
   possible = "#EC9D05",
   safe = "#5BA937",
   green = "#4CD137",
+  yellow = "#EC9D05",
 }
 
 export enum BackgroundColor {

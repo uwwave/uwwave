@@ -47,6 +47,15 @@ export const useJobsList = () => {
 
     fire();
   }, []);
+
+  const uniqueCompanyNames: string[] = useMemo(() => {
+    const set = new Set<string>();
+
+    jobs.forEach(job => {
+      set.add(job.companyName);
+    });
+    return Array.from(set);
+  }, [jobs]);
   // Build Keywords
   useEffect(() => {
     if (jobs.length === 0) {
@@ -59,6 +68,12 @@ export const useJobsList = () => {
       })
       .catch((err: any) => err);
   }, [jobs]);
+
+  useEffect(() => {
+    if (uniqueCompanyNames.length > 0) {
+      Requests.postNewCompanies(uniqueCompanyNames);
+    }
+  }, [uniqueCompanyNames]);
 
   // Build map of job id to job
   useEffect(() => {

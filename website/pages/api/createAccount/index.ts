@@ -30,7 +30,6 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!isValidUsername(username)) {
     throw CreateAccountErrorType.BAD_USERNAME;
   }
-
   await connectToDb();
   const existingUser = await UserDataDocument.findOne({
     username: { $regex: new RegExp(`^${username}$`, "i") },
