@@ -9,11 +9,8 @@ import { IGetCompanyLogosResponse, Requests } from "src/lib/requests/Requests";
 import { getEarliestDeadline } from "src/lib/dates/dates";
 
 export const useTaggedJobsPage = () => {
-  const {
-    coopJobsListPageRows: jobs,
-    isDataReady,
-    fetchExtensionData,
-  } = useExtensionsDataContext();
+  const { coopJobsListPageRows: jobs, isDataReady } =
+    useExtensionsDataContext();
   const [init, setInit] = useState(false);
   const [jobKeywords, setJobKeywords] = useState<{ [key: string]: string[] }>(
     {}
@@ -63,10 +60,6 @@ export const useTaggedJobsPage = () => {
     });
     return out;
   }, [jobs, jobToTags]);
-
-  useEffect(() => {
-    fetchExtensionData();
-  }, []);
 
   useEffect(() => {
     if (!selectedTag && tagsInUse.length) {

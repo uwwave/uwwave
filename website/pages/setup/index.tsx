@@ -76,11 +76,7 @@ const Step4 = () => {
 };
 
 const Setup = () => {
-  const { extensionData, isDataReady, fetchExtensionData } =
-    useExtensionsDataContext();
-  useEffect(() => {
-    fetchExtensionData();
-  }, []);
+  const { extensionData, isDataReady } = useExtensionsDataContext();
   let step = 1;
   if (isDataReady) {
     step = 2;

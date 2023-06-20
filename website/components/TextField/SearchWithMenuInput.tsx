@@ -1,7 +1,7 @@
 import { RoundedTextField } from "./RoundedTextField";
 import Paper from "@mui/material/Paper";
 import styled from "styled-components";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Spacer } from "src/components/Spacer/Spacer";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -25,6 +25,8 @@ interface ISearchWithMenu {
   selectedIcon: React.ReactNode;
   placeholder?: string;
   zIndex?: number;
+  onIn?: () => void;
+  onOut?: () => void;
 }
 export const SearchWithMenuInput = ({
   menuItems,
@@ -34,9 +36,13 @@ export const SearchWithMenuInput = ({
   selectedIcon,
   placeholder,
   zIndex,
+  onIn,
+  onOut,
 }: ISearchWithMenu) => {
   const [selectedValue, setSelectedValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
+  const [isInteracting, setIsInteracting] = useState(true);
+  const [init, setInit] = useState(false);
   useEffect(() => {
     onChangeValue(selectedValue);
   }, [selectedValue]);
@@ -55,12 +61,12 @@ export const SearchWithMenuInput = ({
         </Center>
       );
     }
-    if (menuItems.length === 0 || selectedValue) {
+    if (menuItems.length === 0 || selectedValue || !isInteracting || !init) {
       return null;
     }
 
     return (
-      <StyledMenuList>
+      <StyledMenuList show={true}>
         {menuItems.map((item, i) => (
           <MenuItem
             key={i}
@@ -75,10 +81,41 @@ export const SearchWithMenuInput = ({
       </StyledMenuList>
     );
   };
+  const containerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setIsInteracting(false);
+        onOut?.();
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
   return (
-    <MainWrapper>
+    <MainWrapper
+      ref={containerRef}
+      onClick={() => {
+        setIsInteracting(true);
+        onIn?.();
+      }}
+    >
       <form onSubmit={handleSubmit}>
         <StyledRoundedTextField
+          autoComplete="off"
+          onFocus={() => {
+            if (searchValue || selectedValue || init) {
+              return;
+            }
+            setInit(true);
+            onChangeSearchValue("");
+          }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -140,18 +177,28 @@ const PaperWrapper = styled(Paper)<IPaperWrapper>`
     z-index: ${props => props.zIndex};
     width: 100%;
     overflow: hidden;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    box-shadow: 4px 4px 32px rgba(0, 0, 0, 0.3);
   }
 `;
-const StyledMenuList = styled(MenuList)`
+
+interface IMenuList {
+  show: boolean;
+}
+const StyledMenuList = styled(MenuList)<IMenuList>`
   && {
     padding: 0;
+    height: ${props => (props.show ? "auto" : 0)};
   }
 `;
 
 const StyledRoundedTextField = styled(RoundedTextField)`
   && div input {
     padding-left: 0;
+  }
+
+  &&,
+  && div {
+    height: 48px;
   }
 `;
 

@@ -6,7 +6,6 @@ export interface ExtensionDataContextType {
   coopJobsListPageRows: JobsPageRowData[];
   fulltimeJobsListPageRows: JobsPageRowData[];
   extensionData: { [key: string]: string };
-  fetchExtensionData: () => void;
   dataAgeMessage: string;
   isStale: boolean;
   isLoading: boolean;

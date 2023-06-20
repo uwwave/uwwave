@@ -10,7 +10,7 @@ export const WaveLogo = (props: ILogo) => {
     <svg
       width="149"
       height="47"
-      viewBox="0 0 149 47"
+      viewBox="0 10 149 10"
       fill={fill}
       xmlns="http://www.w3.org/2000/svg"
     >

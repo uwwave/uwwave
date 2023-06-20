@@ -8,8 +8,8 @@ import { ListenerId } from "src/lib/extension/listenerId";
 import { RequestName } from "src/lib/extension/shared/dataBridge";
 
 export const useExtensionData = () => {
-  const [isDataReady, setIsDataReady] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDataReady, setIsDataReady] = useState(false);
   const [extensionData, setExtensionData] = useState<{ [key: string]: string }>(
     {}
   );
@@ -24,8 +24,13 @@ export const useExtensionData = () => {
 
   const fetchExtensionData = () => {
     if (isDataReady) {
+      setIsLoading(false);
       return;
     }
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+    setIsLoading(true);
     sendMessageOnLoadAndSetupListenerHook(
       {
         id: ListenerId.allExtensionLocalStorage,
@@ -42,17 +47,18 @@ export const useExtensionData = () => {
             "Expected extension callback to return a result, but no result was returned"
           );
         }
+        clearTimeout(timeout);
         setIsLoading(false);
       }
     );
   };
 
   return {
+    isLoading,
     isDataReady,
     coopJobsListPageRows,
     fulltimeJobsListPageRows,
     extensionData,
     fetchExtensionData,
-    isLoading,
   };
 };
