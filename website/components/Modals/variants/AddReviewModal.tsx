@@ -1,30 +1,23 @@
 import { BaseModal } from "src/components/Modals/BaseModal";
 import React from "react";
-import { SearchWithMenuInput } from "src/components/TextField/SearchWithMenuInput";
-import BusinessIcon from "@mui/icons-material/Business";
 import styled from "styled-components";
 import { Color } from "src/styles/color";
-import { useAddReviewModal } from "src/lib/hooks/useAddReviewModal";
-import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import { Spacer } from "src/components/Spacer/Spacer";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import VideoCameraFrontIcon from "@mui/icons-material/VideoCameraFront";
+import { CompanySearchInput } from "src/components/TextField/variants/CompanySearchInput";
+import { JobRoleSearchInput } from "src/components/TextField/variants/JobRoleSearnInput";
 
 interface IAddReviewModal {
   isOpen: boolean;
   close: () => void;
 }
 export const AddReviewModal = ({ isOpen, close }: IAddReviewModal) => {
-  const {
-    handleSearch,
-    companyInfo,
-    isLoading,
-    rolesInfo,
-    isRolesLoading,
-    handleSearchRole,
-  } = useAddReviewModal();
+  // const {
+  //   error
+  // } = useAddReviewModal();
   return (
     <BaseModal
       open={isOpen}
@@ -33,34 +26,34 @@ export const AddReviewModal = ({ isOpen, close }: IAddReviewModal) => {
       maxWidth="xs"
       dark
     >
-      <SearchWithMenuInput
-        menuItems={companyInfo.map(x => ({
-          value: x.companyName,
-          icon: x.logo ? <CompanyLogo logo={x.logo} /> : <StyledBusinessIcon />,
-        }))}
-        selectedIcon={<StyledBusinessIcon />}
-        onChangeValue={(val: string) => {
-          console.log(val);
-        }}
-        onChangeSearchValue={handleSearch}
-        isLoading={isLoading}
-        placeholder="Company"
-        zIndex={101}
-      />
+      {
+        // This is so that the input doesn't flash when we close the modal
+        // We still want this to reset the displayed search input on close
+        isOpen ? (
+          <CompanySearchInput
+            onValue={data => {
+              console.log(data);
+            }}
+          />
+        ) : (
+          <CompanySearchInput />
+        )
+      }
+
       <Spacer height={4} />
-      <SearchWithMenuInput
-        menuItems={rolesInfo.map(x => ({
-          value: x.role,
-          icon: <RoleIcon />,
-        }))}
-        selectedIcon={<RoleIcon />}
-        onChangeValue={(val: string) => {
-          console.log(val);
-        }}
-        onChangeSearchValue={handleSearchRole}
-        isLoading={isRolesLoading}
-        placeholder="Role"
-      />
+      {
+        // This is so that the input doesn't flash when we close the modal
+        // We still want this to reset the displayed search input on close
+        isOpen ? (
+          <JobRoleSearchInput
+            onValue={data => {
+              console.log(data);
+            }}
+          />
+        ) : (
+          <JobRoleSearchInput />
+        )
+      }
       <Spacer height={8} />
       <Typography color="white" align="center" variant="subtitle1">
         Select a Review Type
@@ -87,31 +80,6 @@ export const AddReviewModal = ({ isOpen, close }: IAddReviewModal) => {
     </BaseModal>
   );
 };
-
-const StyledBusinessIcon = styled(BusinessIcon)`
-  && {
-    color: ${Color.rating};
-    font-size: 32px;
-  }
-`;
-
-const RoleIcon = styled(WorkOutlineIcon)`
-  && {
-    font-size: 32px;
-  }
-`;
-
-interface ICompanyLogo {
-  logo: string;
-}
-const CompanyLogo = styled.div<ICompanyLogo>`
-  width: 32px;
-  height: 32px;
-  background-image: url(${props => props.logo});
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 4px;
-`;
 
 const ReviewTypesWrapper = styled.div`
   display: flex;

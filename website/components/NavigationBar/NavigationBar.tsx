@@ -3,10 +3,10 @@ import Typography from "@mui/material/Typography";
 import MUITypography from "@mui/material/Typography";
 import styled from "styled-components";
 import { BackgroundColor } from "styles/color";
-import { WaveLogo } from "src/components/icons/logo/Navbar";
+import { WaveLogo } from "src/components/icons/logo/Footer";
 import Link from "next/link";
 import Container from "@mui/material/Container";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
@@ -18,20 +18,24 @@ import { useExtensionsDataContext } from "src/lib/context/ExtensionData/Extensio
 import { LogoLoader } from "../Loader/LogoLoader";
 import { AddReviewButton } from "./AddReviewButton";
 import { useUserContext } from "src/lib/context/User/UserContext";
+import { CompanySearchInput } from "../TextField/variants/CompanySearchInput";
+import ButtonBase from "@mui/material/ButtonBase";
+import { Spacer } from "../Spacer/Spacer";
 
 export const NavigationBar = () => {
   const textColor = "white";
   const backgroundColor = BackgroundColor.dark;
   const { totalTaggedJobs } = useJobTagsContext();
-  const { extensionData, isLoading: extensionDataLoading } =
+  const { extensionData, isLoading: isExtensionLoading } =
     useExtensionsDataContext();
   const { isLoading: userLoading } = useUserContext();
   const areJobs = !!Object.keys(extensionData).length;
   const router = useRouter();
+  const [showLogo, setShowLogo] = useState(true);
 
   const path = router.pathname;
   const color = textColor ?? "white";
-  const isLoading = extensionDataLoading || userLoading;
+  const isLoading = userLoading || isExtensionLoading;
 
   const renderJobsLinks = () => (
     <>
@@ -47,6 +51,7 @@ export const NavigationBar = () => {
           </StyledLink>
         </MUITypography>
       </TextWrapper>
+      <Spacer width={24} />
       <StyledLink href="/jobs/tagged">
         <TagListWrapper textColor={textColor}>
           <IconButtonCounter
@@ -56,22 +61,26 @@ export const NavigationBar = () => {
           <TaggedJobsText>Tagged Jobs</TaggedJobsText>
         </TagListWrapper>
       </StyledLink>
+      <Spacer width={24} />
     </>
   );
 
   const renderSetupLinks = () => (
-    <TextWrapper>
-      <MUITypography>
-        <StyledLink
-          href={"/setup"}
-          color={color}
-          underline={(path === "/setup").toString()}
-          shallow
-        >
-          Setup
-        </StyledLink>
-      </MUITypography>
-    </TextWrapper>
+    <>
+      <TextWrapper>
+        <MUITypography>
+          <StyledLink
+            href={"/setup"}
+            color={color}
+            underline={(path === "/setup").toString()}
+            shallow
+          >
+            Setup
+          </StyledLink>
+        </MUITypography>
+      </TextWrapper>
+      <Spacer width={24} />
+    </>
   );
 
   const renderConditionalTabs = () => {
@@ -89,13 +98,29 @@ export const NavigationBar = () => {
 
     return (
       <FlexWrapper>
-        <LogoWrapper>
-          <Link href="/">
-            <WaveLogo color={color} />
-          </Link>
+        <LogoWrapper width={showLogo ? 170 : 0}>
+          <ButtonBase>
+            <Link href="/">
+              <WaveLogo color={color} />
+            </Link>
+          </ButtonBase>
+          <Spacer width={24} />
         </LogoWrapper>
+
+        <SearchWrapper>
+          <CompanySearchInput
+            onIn={() => {
+              setShowLogo(false);
+            }}
+            onOut={() => {
+              setShowLogo(true);
+            }}
+          />
+        </SearchWrapper>
+        <Spacer width={24} />
         {renderConditionalTabs()}
         <AddReviewButton />
+        <Spacer width={24} />
         <LoginButton />
       </FlexWrapper>
     );
@@ -103,7 +128,7 @@ export const NavigationBar = () => {
 
   return (
     <>
-      <NotificationBanner />
+      {isLoading ? null : <NotificationBanner />}
       <AppBar position="static" elevation={0} sx={{ bgcolor: backgroundColor }}>
         <Container>{renderTabs()}</Container>
       </AppBar>
@@ -121,9 +146,13 @@ const Center = styled.div`
 const FlexWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+`;
+
+const SearchWrapper = styled.div`
+  flex: 1;
+  padding-top: 8px;
 `;
 
 interface ILink {
@@ -142,10 +171,18 @@ const StyledLink = styled(Elemen)<ILink>`
   }
 `;
 
-const LogoWrapper = styled.div`
+interface ILogoWrapper {
+  width: number;
+}
+const LogoWrapper = styled.div<ILogoWrapper>`
+  && a {
+    display: flex;
+    align-items: center;
+  }
   display: flex;
-  align-items: start;
-  flex-grow: 1;
+  overflow: hidden;
+  width: ${props => props.width}px;
+  transition: 0.3s ease width;
 `;
 
 const TextWrapper = styled.div`

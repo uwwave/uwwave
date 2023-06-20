@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import {
   UserStateContextType,
   UserStateContext,
@@ -11,19 +11,12 @@ import { useExtensionsDataContext } from "../ExtensionData/ExtensionDataContext"
 import { useUserContext } from "../User/UserContext";
 
 export const UserStateProvider = ({ children }: IProvider) => {
-  const { extensionData, isDataReady, fetchExtensionData, isStale, isLoading } =
-    useExtensionsDataContext();
+  const { extensionData, isDataReady, isStale } = useExtensionsDataContext();
   const { user } = useUserContext();
-  useEffect(() => {
-    fetchExtensionData();
-  }, []);
   const router = useRouter();
 
   const bannerState: NavBannerState = useMemo(() => {
     let out = NavBannerState.EMPTY;
-    if (isLoading) {
-      return out;
-    }
     if (router.pathname !== "/setup") {
       out = NavBannerState.SETUP_EXTENSION;
       if (isDataReady) {
@@ -46,7 +39,7 @@ export const UserStateProvider = ({ children }: IProvider) => {
       out = NavBannerState.EMPTY;
     }
     return out;
-  }, [isDataReady, extensionData, user, isLoading, isStale, router.pathname]);
+  }, [isDataReady, extensionData, user, isStale, router.pathname]);
   const value: UserStateContextType = {
     bannerState,
   };

@@ -1,5 +1,4 @@
-import { useEffect, useMemo } from "react";
-import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
+import { useMemo } from "react";
 import { Color } from "src/styles/color";
 import { useLoginModalContext } from "src/lib/context/LoginModal/LoginModalContext";
 import { useRouter } from "next/router";
@@ -14,11 +13,7 @@ export enum NavBannerState {
 }
 
 export const useNotificationBanner = () => {
-  const { fetchExtensionData } = useExtensionsDataContext();
   const { open } = useLoginModalContext();
-  useEffect(() => {
-    fetchExtensionData();
-  }, []);
   const router = useRouter();
   const { bannerState } = useUserStateContext();
 

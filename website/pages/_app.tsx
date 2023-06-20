@@ -9,6 +9,13 @@ import { UserProvider } from "src/lib/context/User/UserProvider";
 import { LoginModalProvider } from "src/lib/context/LoginModal/LoginModalProvider";
 import { LoginModal } from "src/components/Modals/variants/LoginModal";
 import { SessionProvider } from "next-auth/react";
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    min-height: 100vh;
+  }
+`;
 
 const theme = createTheme({
   typography: {
@@ -35,6 +42,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
   return (
     <>
+      <GlobalStyle />
       <Head>
         <title>Wave</title>
       </Head>

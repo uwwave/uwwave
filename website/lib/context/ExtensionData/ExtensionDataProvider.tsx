@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import {
   ExtensionDataContextType,
   ExtensionDataContext,
@@ -24,6 +24,9 @@ export const ExtensionDataProvider = ({ children }: IJobsTagsProvider) => {
     fetchExtensionData,
     isLoading,
   } = useExtensionData();
+  useEffect(() => {
+    fetchExtensionData();
+  }, []);
   const dateScraped = extensionData[LocalStorageMetadataKeys.SCRAPE_AT];
   const dataAgeMessage = useMemo(() => {
     return getTimeDiffString(dateScraped);
@@ -43,7 +46,6 @@ export const ExtensionDataProvider = ({ children }: IJobsTagsProvider) => {
     coopJobsListPageRows,
     fulltimeJobsListPageRows,
     extensionData,
-    fetchExtensionData,
     isLoading,
   };
 

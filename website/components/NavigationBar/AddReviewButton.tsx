@@ -28,6 +28,9 @@ const StyledButton = styled(PrimaryButton).attrs({
   && {
     background-color: ${Color.rating}!important;
     box-shadow: 3px 4px ${Color.compatibility};
+    padding-left: 8px;
+    padding-right: 16px;
+    min-width: 0;
   }
 
   &&:hover {

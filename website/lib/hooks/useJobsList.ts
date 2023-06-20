@@ -16,14 +16,8 @@ import { useExtensionsDataContext } from "src/lib/context/ExtensionData/Extensio
 import { getEarliestDeadline } from "src/lib/dates/dates";
 
 export const useJobsList = () => {
-  const {
-    coopJobsListPageRows: jobs,
-    isDataReady,
-    fetchExtensionData,
-  } = useExtensionsDataContext();
-  useEffect(() => {
-    fetchExtensionData();
-  }, []);
+  const { coopJobsListPageRows: jobs, isDataReady } =
+    useExtensionsDataContext();
   // Search and job states
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const [searchIndex, setSearchIndex] = useState(lunr(() => {}));
