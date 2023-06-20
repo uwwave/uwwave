@@ -109,15 +109,20 @@ export const useLoginModal = () => {
       password,
       redirect: false,
     });
-    if (result?.error) {
+    if (!result?.ok) {
+      console.log(result);
       // Handle sign-in error
-      console.error("Error signing in:", result.error);
-      setLoginError("Oops! Please check your credentials");
+      if (result?.error !== "user/unverified") {
+        setLoginError("Oops! We couldn't sign you in");
+        setModalState(LoginModalState.LOGIN);
+      } else {
+        setModalState(LoginModalState.EMAIL_SENT);
+      }
     } else {
       setLoginError(undefined);
+      setModalState(LoginModalState.LOGIN);
       close();
     }
-    setModalState(LoginModalState.LOGIN);
   };
 
   return {

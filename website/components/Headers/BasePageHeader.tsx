@@ -1,6 +1,7 @@
 import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material/Typography";
 import styled from "styled-components";
+import { Spacer } from "../Spacer/Spacer";
 
 interface IBasePageHeader {
   title: string;
@@ -15,25 +16,35 @@ export const BasePageHeader = ({
 }: IBasePageHeader) => {
   if (isLoading) {
     return (
-      <MainWrapper isLoading>
-        <Title variant="h3">
-          <b>{title}</b>
-        </Title>
-        {infoTiles.map((_, i) => (
-          <Skeleton key={i} variant="rounded" width={160} height={64} />
-        ))}
-      </MainWrapper>
+      <>
+        <MainWrapper isLoading>
+          <Title variant="h3">
+            <b>{title}</b>
+          </Title>
+        </MainWrapper>
+        <Spacer height={40} />
+        <MainWrapper isLoading>
+          {infoTiles.map((_, i) => (
+            <Skeleton key={i} variant="rounded" width={160} height={64} />
+          ))}
+        </MainWrapper>
+      </>
     );
   }
   return (
-    <MainWrapper isLoading={false}>
-      <Title variant="h3">
-        <b>{title}</b>
-      </Title>
-      {infoTiles.map((tile, i) => (
-        <div key={i}>{tile}</div>
-      ))}
-    </MainWrapper>
+    <>
+      <MainWrapper isLoading={false}>
+        <Title variant="h3">
+          <b>{title}</b>
+        </Title>
+      </MainWrapper>
+      <Spacer height={40} />
+      <MainWrapper isLoading={false}>
+        {infoTiles.map((tile, i) => (
+          <div key={i}>{tile}</div>
+        ))}
+      </MainWrapper>
+    </>
   );
 };
 

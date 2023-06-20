@@ -59,17 +59,20 @@ export const JobsListPageHeader = (props: IJobsListPageHeader) => {
                 }
                 title="Last Scrape"
                 value={dataAgeMessage}
+                alignLeft
               />,
               <JobInfoTile
                 icon={<WorkIcon />}
                 title="Total Listings"
                 value={`${numJobs.toString()}`}
+                alignLeft
               />,
               <JobInfoTile
                 icon={<EventIcon />}
                 title="Earliest Deadline"
                 subValue={earliestDeadline}
                 value={calculateDaysFromNow(new Date(earliestDeadline))}
+                alignLeft
               />,
               <TooltipWrapper
                 title={
@@ -96,6 +99,7 @@ export const JobsListPageHeader = (props: IJobsListPageHeader) => {
                     subValue={`${countryCountStrings.slice(0, 2).join(", ")} ${
                       countryCountStrings.length > 2 ? "..." : ""
                     }`}
+                    alignLeft
                   />
                 </div>
               </TooltipWrapper>,

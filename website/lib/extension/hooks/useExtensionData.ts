@@ -9,6 +9,7 @@ import { RequestName } from "src/lib/extension/shared/dataBridge";
 
 export const useExtensionData = () => {
   const [isDataReady, setIsDataReady] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [extensionData, setExtensionData] = useState<{ [key: string]: string }>(
     {}
   );
@@ -41,6 +42,7 @@ export const useExtensionData = () => {
             "Expected extension callback to return a result, but no result was returned"
           );
         }
+        setIsLoading(false);
       }
     );
   };
@@ -51,5 +53,6 @@ export const useExtensionData = () => {
     fulltimeJobsListPageRows,
     extensionData,
     fetchExtensionData,
+    isLoading,
   };
 };

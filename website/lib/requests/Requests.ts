@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
+import { IJobRole } from "src/database/models/JobRole";
 import { IUserData } from "src/database/models/UserData";
 
 export interface IJobKeyword {
@@ -70,5 +71,27 @@ export class Requests {
     return axios
       .post("/api/createAccount", { email, username, password })
       .then(x => x.data);
+  }
+
+  static async postNewCompanies(companyNames: string[]): Promise<undefined> {
+    return axios
+      .post("/api/companyInfo/companies", { companies: companyNames })
+      .then(x => x.data);
+  }
+
+  static async queryCompanies(
+    company: string
+  ): Promise<ICompanyClearbitData[]> {
+    return axios
+      .get(`/api/companyInfo/query?company=${company}`)
+      .then(x => x.data);
+  }
+
+  static async queryJobRoles(query: string): Promise<IJobRole[]> {
+    return axios.get(`/api/jobRole/query?query=${query}`).then(x => x.data);
+  }
+
+  static async addJobRoles(roles: string[]): Promise<undefined> {
+    return axios.post("/api/jobRole", { roles }).then(x => x.data);
   }
 }

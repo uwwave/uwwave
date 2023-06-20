@@ -3,7 +3,10 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import { auth } from "src/lib/server/firebase/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import connectToDb from "src/database/mongo-db";
 import mongoose from "mongoose";
 import UserDataDocument from "src/database/models/UserData";
@@ -25,26 +28,24 @@ export const nextAuthOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       authorize: async credentials => {
-        try {
-          if (!credentials) {
-            return Promise.reject();
-          }
-          const { email, password } = credentials;
-          const userCredential = await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-          const user = {
-            id: userCredential.user.uid,
-            email: userCredential.user.email,
-            emailVerified: userCredential.user.emailVerified,
-          };
-          return Promise.resolve(user);
-        } catch (error) {
-          // Return null if authentication fails
-          return Promise.resolve(null);
+        if (!credentials) {
+          return Promise.reject();
         }
+        const { email, password } = credentials;
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        if (!userCredential.user.emailVerified) {
+          await sendEmailVerification(userCredential.user);
+          throw new Error("user/unverified");
+        }
+        const user = {
+          id: userCredential.user.uid,
+        };
+        return Promise.resolve(user);
       },
     }),
     GoogleProvider({
@@ -108,12 +109,10 @@ export const nextAuthOptions: AuthOptions = {
         // Check if the user signed in with Google
         const isGoogleSignIn = account?.provider === "google";
         // Check if the user's email is verified
-        const emailVerified = isGoogleSignIn || anyUser.emailVerified;
         const userData = isGoogleSignIn
           ? await UserDataDocument.findOne({ uid: account.providerAccountId })
           : await UserDataDocument.findOne({ uid: user.id });
         token.user = {
-          emailVerified,
           id: userData?.id,
           username: userData?.username,
         };

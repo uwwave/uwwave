@@ -7,7 +7,6 @@ interface IProvider {
 }
 
 interface ISession {
-  emailVerified: boolean;
   id: string;
   username: string;
 }
@@ -18,7 +17,6 @@ export const UserProvider = ({ children }: IProvider) => {
   const loading = status === "loading";
   const user = session?.user as ISession | undefined;
   const value: UserContextType = {
-    isEmailVerified: user?.emailVerified ?? false,
     isLoading: loading,
     isLoggedIn: status === "authenticated",
     user: user,

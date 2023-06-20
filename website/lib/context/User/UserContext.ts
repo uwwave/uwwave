@@ -2,7 +2,6 @@ import { createContext, useContext } from "react";
 import { IUserData } from "src/database/models/UserData";
 
 export interface UserContextType {
-  isEmailVerified: boolean;
   isLoading: boolean;
   isLoggedIn: boolean;
   user?: IUserData;

@@ -105,7 +105,7 @@ const Svg = styled.svg<ISVG>`
   ${props =>
     props.darkMode
       ? `&& {
-    fill: white;
+    fill: white!important;
   }`
       : ""}
 

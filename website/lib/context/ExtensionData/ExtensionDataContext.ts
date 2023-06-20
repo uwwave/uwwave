@@ -9,6 +9,7 @@ export interface ExtensionDataContextType {
   fetchExtensionData: () => void;
   dataAgeMessage: string;
   isStale: boolean;
+  isLoading: boolean;
 }
 
 export const ExtensionDataContext = createContext<

@@ -3,6 +3,7 @@ import React from "react";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import Head from "next/head";
 import { JobTagsProvider } from "src/lib/context/jobTags/JobTagsProvider";
+import { UserStateProvider } from "src/lib/context/UserState/UserStateProvider";
 import { ExtensionDataProvider } from "src/lib/context/ExtensionData/ExtensionDataProvider";
 import { UserProvider } from "src/lib/context/User/UserProvider";
 import { LoginModalProvider } from "src/lib/context/LoginModal/LoginModalProvider";
@@ -45,7 +46,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
               <LoginModal />
               <JobTagsProvider>
                 <ExtensionDataProvider>
-                  <AnyComponent {...pageProps} />
+                  <UserStateProvider>
+                    <AnyComponent {...pageProps} />
+                  </UserStateProvider>
                 </ExtensionDataProvider>
               </JobTagsProvider>
             </LoginModalProvider>
