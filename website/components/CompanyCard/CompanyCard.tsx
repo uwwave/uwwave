@@ -9,6 +9,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import { LocationText } from "../LocationText/LocationText";
 import { LogoLoader } from "../Loader/LogoLoader";
+import { useRouter } from "next/router";
 
 interface CompanyCardProps {
   imageURL: string;
@@ -23,6 +24,7 @@ interface CompanyCardProps {
   subtitle?: string;
   isOutlined?: boolean;
   companyURL?: string;
+  companyPageURL?: string;
   onOpenSubmitDomain: () => void;
 }
 interface MainWrapperProps {
@@ -32,18 +34,41 @@ interface MainWrapperProps {
 interface IOptionalExternalLink {
   text: string;
   link?: string;
+  companyPageURL?: string;
   onOpenSubmitDomain: () => void;
 }
 const OptionalExternalLink = (props: IOptionalExternalLink) => {
-  const { text, link, onOpenSubmitDomain } = props;
-
+  const { text, link, onOpenSubmitDomain, companyPageURL } = props;
+  const router = useRouter();
   if (!link) {
     return (
-      <LinkWrapper onClick={onOpenSubmitDomain}>
+      <LinkWrapper
+        onClick={() => {
+          companyPageURL ? router.push(companyPageURL) : onOpenSubmitDomain();
+        }}
+      >
         <PulseText>{text}</PulseText>
-        <StyledIconButton>
+        <StyledIconButton
+          onClick={() => {
+            companyPageURL ? onOpenSubmitDomain() : null;
+          }}
+        >
           <EditIcon />
         </StyledIconButton>
+      </LinkWrapper>
+    );
+  }
+  if (companyPageURL) {
+    return (
+      <LinkWrapper>
+        <a
+          onClick={() => {
+            router.push(companyPageURL);
+          }}
+        >
+          <Typography>{text}</Typography>
+          <LaunchIcon />
+        </a>
       </LinkWrapper>
     );
   }
@@ -67,6 +92,7 @@ export const CompanyCard = ({
   isOutlined,
   companyURL,
   onOpenSubmitDomain,
+  companyPageURL,
 }: CompanyCardProps) => {
   return (
     <MainWrapper variant={isOutlined ? "outlined" : "elevation"} elevation={0}>
@@ -82,6 +108,7 @@ export const CompanyCard = ({
           text={companyName}
           link={companyURL}
           onOpenSubmitDomain={onOpenSubmitDomain}
+          companyPageURL={companyPageURL}
         />
         <Spacer height={24} />
         <LocationText icon city={city} province={province} country={country} />

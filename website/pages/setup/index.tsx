@@ -107,7 +107,9 @@ const Setup = () => {
     </MainWrapper>
   );
 
-  return <PageWrapper Header={renderHeader()} Body={renderBody()} />;
+  return (
+    <PageWrapper HeaderComponents={[renderHeader()]} Body={renderBody()} />
+  );
 };
 
 export default Setup;

@@ -53,27 +53,20 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
   });
 };
 
-const handleGet = (req: NextApiRequest, res: NextApiResponse) => {
-  return new Promise((_, reject) => {
-    const companyName = req.query.companyName;
-    if (!companyName) {
-      reject();
-      return;
-    }
-    connectToDb()
-      .then(async () => {
-        // Additional code here...
-        const companyDomain = await CompanyDomainsDoc.findOne({
-          companyName: companyName,
-        });
-        if (!companyDomain) {
-          reject();
-          return;
-        }
-        res.send(companyDomain.toObject());
+const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { companyName, id } = req.query;
+  if (!companyName && !id) {
+    throw "No company Name or id Provided";
+  }
+  console.log(companyName);
+  await connectToDb();
+  const companyDomain = companyName
+    ? await CompanyDomainsDoc.findOne({
+        companyName: companyName,
       })
-      .catch(error => {
-        reject(error); // Reject the promise if an error occurs
-      });
-  });
+    : await CompanyDomainsDoc.findById(id);
+  if (!companyDomain) {
+    throw "Can't find company";
+  }
+  res.send(companyDomain.toObject());
 };

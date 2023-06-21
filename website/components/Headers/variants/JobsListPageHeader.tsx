@@ -14,15 +14,13 @@ import { useExtensionsDataContext } from "src/lib/context/ExtensionData/Extensio
 import { calculateDaysFromNow } from "src/lib/dates/dates";
 
 interface IJobsListPageHeader {
-  title: string;
   numJobs: number;
   earliestDeadline: string;
   differentCountries: { [country: string]: number };
   isLoading: boolean;
 }
 export const JobsListPageHeader = (props: IJobsListPageHeader) => {
-  const { title, numJobs, earliestDeadline, differentCountries, isLoading } =
-    props;
+  const { numJobs, earliestDeadline, differentCountries, isLoading } = props;
   const { isStale, dataAgeMessage } = useExtensionsDataContext();
   const keys = Object.keys(differentCountries).sort((a: string, b: string) => {
     const x = differentCountries[a];
@@ -42,7 +40,6 @@ export const JobsListPageHeader = (props: IJobsListPageHeader) => {
   });
   return (
     <BasePageHeader
-      title={title}
       isLoading={isLoading}
       infoTiles={
         numJobs || isLoading
@@ -59,20 +56,20 @@ export const JobsListPageHeader = (props: IJobsListPageHeader) => {
                 }
                 title="Last Scrape"
                 value={dataAgeMessage}
-                alignLeft
+                alignCenter
               />,
               <JobInfoTile
                 icon={<WorkIcon />}
                 title="Total Listings"
                 value={`${numJobs.toString()}`}
-                alignLeft
+                alignCenter
               />,
               <JobInfoTile
                 icon={<EventIcon />}
                 title="Earliest Deadline"
                 subValue={earliestDeadline}
                 value={calculateDaysFromNow(new Date(earliestDeadline))}
-                alignLeft
+                alignCenter
               />,
               <TooltipWrapper
                 title={
@@ -99,7 +96,7 @@ export const JobsListPageHeader = (props: IJobsListPageHeader) => {
                     subValue={`${countryCountStrings.slice(0, 2).join(", ")} ${
                       countryCountStrings.length > 2 ? "..." : ""
                     }`}
-                    alignLeft
+                    alignCenter
                   />
                 </div>
               </TooltipWrapper>,

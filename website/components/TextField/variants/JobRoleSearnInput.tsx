@@ -6,9 +6,10 @@ import { IJobRole } from "src/database/models/JobRole";
 import { useJobsRolesSearch } from "src/lib/hooks/useJobRolesSearch";
 
 interface ICompanySearchInput {
-  onValue?: (data: IJobRole) => void;
+  onValue?: (data?: IJobRole) => void;
+  error?: boolean;
 }
-export const JobRoleSearchInput = ({ onValue }: ICompanySearchInput) => {
+export const JobRoleSearchInput = ({ onValue, error }: ICompanySearchInput) => {
   const { rolesInfo, handleSearch, isLoading } = useJobsRolesSearch();
   return (
     <SearchWithMenuInput
@@ -19,14 +20,12 @@ export const JobRoleSearchInput = ({ onValue }: ICompanySearchInput) => {
       selectedIcon={<RoleIcon />}
       onChangeValue={val => {
         const data = rolesInfo.find(x => x.role === val);
-        if (!data) {
-          return;
-        }
         onValue && onValue(data);
       }}
       onChangeSearchValue={handleSearch}
       isLoading={isLoading}
       placeholder="Role"
+      error={error}
     />
   );
 };

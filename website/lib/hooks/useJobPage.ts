@@ -22,6 +22,7 @@ export const useJobPage = (jobID?: string) => {
   const { extensionData: jobs } = useExtensionsDataContext();
   const [tabSelected, setTabSelected] = useState(0);
   const [companyURL, setCompanyURL] = useState<string | undefined>(undefined);
+  const [company, setCompany] = useState<ICompanyClearbitData>();
   const [imageURL, setImageURL] = useState<string>("");
   const [init, setInit] = useState(false);
   const [infoModal, setInfoModal] = useState(false);
@@ -70,6 +71,7 @@ export const useJobPage = (jobID?: string) => {
         setImageURL(res.logo ? res.logo : "/logo-empty.png");
         setCompanyURL(res.domain ?? "");
         setInit(true);
+        setCompany(res);
       })
       .catch((err: any) => {
         setImageURL("/logo-empty.png");
@@ -107,5 +109,6 @@ export const useJobPage = (jobID?: string) => {
     onClearbitData,
     infoModal,
     setInfoModal,
+    company,
   };
 };

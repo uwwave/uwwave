@@ -1,28 +1,15 @@
 import Skeleton from "@mui/material/Skeleton";
-import Typography from "@mui/material/Typography";
 import styled from "styled-components";
-import { Spacer } from "../Spacer/Spacer";
 
 interface IBasePageHeader {
-  title: string;
   infoTiles: React.ReactNode[];
   isLoading: boolean;
 }
 
-export const BasePageHeader = ({
-  title,
-  infoTiles,
-  isLoading,
-}: IBasePageHeader) => {
+export const BasePageHeader = ({ infoTiles, isLoading }: IBasePageHeader) => {
   if (isLoading) {
     return (
       <>
-        <MainWrapper isLoading>
-          <Title variant="h3">
-            <b>{title}</b>
-          </Title>
-        </MainWrapper>
-        <Spacer height={40} />
         <MainWrapper isLoading>
           {infoTiles.map((_, i) => (
             <Skeleton key={i} variant="rounded" width={160} height={64} />
@@ -34,12 +21,6 @@ export const BasePageHeader = ({
   return (
     <>
       <MainWrapper isLoading={false}>
-        <Title variant="h3">
-          <b>{title}</b>
-        </Title>
-      </MainWrapper>
-      <Spacer height={40} />
-      <MainWrapper isLoading={false}>
         {infoTiles.map((tile, i) => (
           <div key={i}>{tile}</div>
         ))}
@@ -48,15 +29,11 @@ export const BasePageHeader = ({
   );
 };
 
-const Title = styled(Typography)`
-  && {
-    flex: 1;
-  }
-`;
 interface ILoading {
   isLoading: boolean;
 }
 const MainWrapper = styled.div<ILoading>`
   display: flex;
   gap: ${props => (props.isLoading ? 16 : 48)}px;
+  justify-content: center;
 `;

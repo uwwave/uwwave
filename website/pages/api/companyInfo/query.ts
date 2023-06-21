@@ -26,5 +26,5 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
   })
     .limit(7)
     .exec();
-  res.send(results);
+  res.send(results.map(x => x.toObject()));
 };

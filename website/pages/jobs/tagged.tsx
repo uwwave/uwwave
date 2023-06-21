@@ -42,7 +42,6 @@ const TaggedJobsPage = () => {
   const renderHeader = () => {
     return (
       <JobsListPageHeader
-        title="Tagged Jobs"
         numJobs={totalTaggedJobs}
         earliestDeadline={earliestDeadline}
         differentCountries={differentCountries}
@@ -192,7 +191,12 @@ const TaggedJobsPage = () => {
 
   return (
     <PageWrapper
-      Header={renderHeader()}
+      HeaderComponents={[
+        <Typography variant="h3" align="center">
+          <b>Tagged Jobs</b>
+        </Typography>,
+        renderHeader(),
+      ]}
       Body={renderBody()}
       lighterBackground
     />
