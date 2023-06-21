@@ -1,7 +1,5 @@
-import MUITypography from "@mui/material/Typography";
 import styled from "styled-components";
 import React, { useState } from "react";
-import ButtonBase from "@mui/material/ButtonBase";
 import { useLoginModalContext } from "src/lib/context/LoginModal/LoginModalContext";
 import { useUserContext } from "src/lib/context/User/UserContext";
 import { Spacer } from "src/components/Spacer/Spacer";
@@ -11,6 +9,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import { signOut } from "next-auth/react";
+import { TertiaryButton } from "../Buttons/TertiaryButton";
 
 export const LoginButton = () => {
   const { isLoading, isLoggedIn, user } = useUserContext();
@@ -100,18 +99,8 @@ export const LoginButton = () => {
     );
   }
 
-  return (
-    <ButtonBase onClick={open}>
-      <TextWrapper>
-        <MUITypography>Login</MUITypography>
-      </TextWrapper>
-    </ButtonBase>
-  );
+  return <TertiaryButton text="Login" onClick={open} white bold />;
 };
-
-const TextWrapper = styled.div`
-  display: flex;
-`;
 
 const StyledAccountCircleIcon = styled(AccountCircleIcon)`
   && {

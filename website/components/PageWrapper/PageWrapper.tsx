@@ -7,7 +7,7 @@ import { Footer } from "src/components/Footer/Footer";
 import Paper from "@mui/material/Paper";
 
 interface IPageWrapper {
-  Header: React.ReactNode;
+  HeaderComponents: React.ReactNode[];
   Body: React.ReactNode;
   BeforeFooter?: React.ReactNode;
   headerPadding?: number;
@@ -15,11 +15,9 @@ interface IPageWrapper {
   lighterBackground?: boolean;
 }
 export const PageWrapper = ({
-  headerPadding,
-  Header,
+  HeaderComponents,
   Body,
   BeforeFooter,
-  hideBackground,
   lighterBackground,
 }: IPageWrapper) => {
   return (
@@ -27,16 +25,18 @@ export const PageWrapper = ({
       <NavigationBar />
       <Container>
         <Spacer height={64} />
-        <StyledPaper
-          elevation={0}
-          padding={headerPadding ?? 32}
-          hidebg={(hideBackground ?? false).toString()}
-        >
-          {Header}
-          <Spacer height={16} />
-        </StyledPaper>
+        {HeaderComponents.map((x, i) => {
+          if (x === null) {
+            return;
+          }
+          return (
+            <div key={i}>
+              <StyledPaper elevation={0}>{x}</StyledPaper>
+              {i < HeaderComponents.length - 1 ? <Spacer height={4} /> : null}
+            </div>
+          );
+        })}
       </Container>
-      <Shadow />
       <WaterWrapper lighter={lighterBackground ?? false}>
         <Spacer height={32} />
         <Container>{Body}</Container>
@@ -52,29 +52,10 @@ const Main = styled.div`
   background-color: ${BackgroundColor.offWhite};
 `;
 
-interface IMain {
-  padding: number;
-  hidebg: string;
-}
-
-const StyledPaper = styled(Paper)<IMain>`
+const StyledPaper = styled(Paper)`
   && {
-    padding: ${props => props.padding}px;
-    background-color: ${props =>
-      props.hidebg === "true" ? "rgba(0, 0, 0, 0)" : "white"};
+    padding: 32px;
   }
-`;
-
-const Shadow = styled.div`
-  margin-top: -24px;
-  z-index: 1;
-  position: relative;
-  height: 8px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 21.88%,
-    rgba(139, 139, 139, 0.88) 100%
-  );
 `;
 
 interface IWaterWrapper {

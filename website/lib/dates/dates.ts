@@ -12,7 +12,7 @@ export const calculateDaysFromNow = (date: Date): string => {
   } else if (daysDifference < 0) {
     return "LATE";
   } else if (daysDifference === 1) {
-    return "TMRW";
+    return "Tomorrow";
   } else {
     return `${daysDifference.toString()} days`;
   }

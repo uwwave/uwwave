@@ -27,6 +27,7 @@ interface ISearchWithMenu {
   zIndex?: number;
   onIn?: () => void;
   onOut?: () => void;
+  error?: boolean;
 }
 export const SearchWithMenuInput = ({
   menuItems,
@@ -38,6 +39,7 @@ export const SearchWithMenuInput = ({
   zIndex,
   onIn,
   onOut,
+  error,
 }: ISearchWithMenu) => {
   const [selectedValue, setSelectedValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -52,6 +54,7 @@ export const SearchWithMenuInput = ({
       return;
     }
     setSelectedValue(menuItems[0].value);
+    setSearchValue(menuItems[0].value);
   };
   const renderMenuList = () => {
     if (isLoading) {
@@ -72,6 +75,7 @@ export const SearchWithMenuInput = ({
             key={i}
             onClick={() => {
               setSelectedValue(item.value);
+              setSearchValue(item.value);
             }}
           >
             {item.icon ? <ListItemIcon>{item.icon}</ListItemIcon> : null}
@@ -108,6 +112,7 @@ export const SearchWithMenuInput = ({
     >
       <form onSubmit={handleSubmit}>
         <StyledRoundedTextField
+          error={error}
           autoComplete="off"
           onFocus={() => {
             if (searchValue || selectedValue || init) {
@@ -143,11 +148,15 @@ export const SearchWithMenuInput = ({
           placeholder={placeholder}
           value={selectedValue ? selectedValue : searchValue}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            if (selectedValue) {
-              return;
-            }
+            setSelectedValue("");
+            onChangeValue("");
             setSearchValue(e.target.value);
             onChangeSearchValue(e.target.value);
+          }}
+          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Backspace" || e.key === "Delete") {
+              setSelectedValue("");
+            }
           }}
           onSubmit={() => {
             console.log("fire");

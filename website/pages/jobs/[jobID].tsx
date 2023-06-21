@@ -26,13 +26,13 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { TagJobButton } from "src/components/Buttons/TagJobButton";
 import { UploadDomainModal } from "src/components/Modals/variants/UploadDomainModal";
-import { JobPagePaper } from "src/components/Paper/JobPagePaper";
-import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import { JobInfoFieldsCoop } from "src/lib/extension/jobKeys";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { JobScoreInfoModal } from "src/components/Modals/variants/JobScoreInfoModal";
 import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
+import { ConfigTab } from "src/components/TabSections/ConfigTab";
+import { CompanyTab } from "src/components/TabSections/CompanyTab";
 
 const DUMMY_RATING = "4.2";
 const DUMMY_SALARY = "50-60";
@@ -54,6 +54,7 @@ const SpecificJobPage = () => {
     onClearbitData,
     infoModal,
     setInfoModal,
+    company,
   } = useJobPage(jobID);
   const [submitDomainModal, setSubmitDomainModal] = useState(false);
   useEffect(() => {
@@ -111,6 +112,7 @@ const SpecificJobPage = () => {
               onOpenSubmitDomain={() => {
                 setSubmitDomainModal(true);
               }}
+              companyPageURL={company ? `/companies/${company.id}` : undefined}
             />
             <Spacer height={24} />
             <ButtonsWrapper>
@@ -136,7 +138,6 @@ const SpecificJobPage = () => {
       </>
     );
   };
-
   const renderCompanyFastFacts = () => {
     if (isLoading) {
       return (
@@ -156,7 +157,6 @@ const SpecificJobPage = () => {
             title="Deadline"
             value={calculateDaysFromNow(new Date(job.appDeadline))}
             subValue={job.appDeadline}
-            alignLeft
           />
         ) : null}
         {job?.duration ? (
@@ -164,7 +164,6 @@ const SpecificJobPage = () => {
             icon={<ScheduleIcon />}
             title="Duration"
             value={job.duration}
-            alignLeft
           />
         ) : null}
         {job?.openings ? (
@@ -172,7 +171,6 @@ const SpecificJobPage = () => {
             icon={<PeopleIcon />}
             title="Spots"
             value={job.openings.toString()}
-            alignLeft
           />
         ) : null}
 
@@ -183,7 +181,6 @@ const SpecificJobPage = () => {
             value={job.compensationAndBenefitsInformation
               .replace(/<[^>]*>?/gm, "")
               .replace(/&nbsp;/g, "")}
-            alignLeft
           />
         ) : null}
 
@@ -203,7 +200,6 @@ const SpecificJobPage = () => {
               (job?.jobPostingInformation[JobInfoFieldsCoop.jobPostalCode] ??
                 "")
             }
-            alignLeft
           />
         ) : null}
       </JobFastFactsWrapper>
@@ -255,36 +251,15 @@ const SpecificJobPage = () => {
     );
   };
 
-  const renderConfigTab = () => {
-    return (
-      <JobPagePaper>
-        <Typography variant="h5" color="white">
-          Settings
-        </Typography>
-        <Spacer height={32} />
-        <DomainSettingsWrapper>
-          <Typography color="white">
-            <b>Domain:</b>
-          </Typography>
-          <Spacer width={8} />
-          <Typography color="white">{companyURL}</Typography>
-          <IconButton
-            color="inherit"
-            onClick={() => {
-              setSubmitDomainModal(true);
-            }}
-          >
-            <EditIcon color="inherit" />
-          </IconButton>
-        </DomainSettingsWrapper>
-      </JobPagePaper>
-    );
-  };
   const renderJobBody = () => (
     <>
       {!isLoading ? (
         <Tabs
-          tabs={[{ label: "Details" }, { label: "Settings" }]}
+          tabs={[
+            { label: "Details" },
+            { label: "Company Info" },
+            { label: "Settings" },
+          ]}
           currentTab={tabSelected}
           onSelectTab={(i: number) => {
             setTabSelected(i);
@@ -293,7 +268,15 @@ const SpecificJobPage = () => {
       ) : null}
       <Spacer height={16} />
       {tabSelected === 0 ? <Description /> : null}
-      {tabSelected === 1 ? renderConfigTab() : null}
+      {tabSelected === 1 && company ? <CompanyTab company={company} /> : null}
+      {tabSelected === 2 ? (
+        <ConfigTab
+          onClick={() => {
+            setSubmitDomainModal(true);
+          }}
+          companyURL={companyURL}
+        />
+      ) : null}
     </>
   );
 
@@ -344,7 +327,9 @@ const SpecificJobPage = () => {
       </SurveyWrapper>
     );
   };
-
+  const Tech = renderTech();
+  const FastFacts = renderCompanyFastFacts();
+  const nonHeaderComponents = Tech ? [FastFacts, Tech] : [FastFacts];
   return (
     <>
       {!isLoading ? (
@@ -362,14 +347,7 @@ const SpecificJobPage = () => {
       <PageWrapper
         headerPadding={0}
         hideBackground
-        Header={
-          <>
-            {renderCompanyHeader()}
-            <Spacer height={2} />
-            {renderCompanyFastFacts()}
-            {renderTech()}
-          </>
-        }
+        HeaderComponents={[renderCompanyHeader(), ...nonHeaderComponents]}
         Body={renderJobBody()}
         BeforeFooter={renderSurvey()}
       />
@@ -393,20 +371,17 @@ const ButtonsWrapper = styled.div`
   align-items: center;
 `;
 
-const CompanyHeaderWrapper = styled(Paper).attrs({
-  elevation: 0,
-})`
+const CompanyHeaderWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  padding: 32px;
   position: relative;
+  justify-content: space-between;
 `;
 
 const HelpButton = styled(IconButton)`
   && {
     position: absolute;
-    right: -48px;
-    top: 32px;
+    right: -72px;
+    top: -8px;
     opacity: 0.6;
   }
 
@@ -421,7 +396,6 @@ const JobFastFactsWrapper = styled(Paper).attrs({
   display: flex;
   flex-wrap: wrap;
   gap: 8px 64px;
-  padding: 32px;
 `;
 
 const JobFastFactsWrapperLoading = styled(Paper).attrs({
@@ -429,27 +403,17 @@ const JobFastFactsWrapperLoading = styled(Paper).attrs({
 })`
   display: flex;
   gap: 8px;
-  padding: 32px;
-  padding-bottom: 64px;
 `;
 
 const TechWrapper = styled(Paper).attrs({
   elevation: 0,
 })`
   display: flex;
-  padding: 16px;
-  padding-bottom: 32px;
   gap: 8px;
   align-items: center;
-  padding-left: 32px;
   filter: grayscale(0.5);
 `;
 
 const TooltipWrapper = styled(Tooltip)`
   cursor: pointer;
-`;
-
-const DomainSettingsWrapper = styled.div`
-  display: flex;
-  align-items: center;
 `;

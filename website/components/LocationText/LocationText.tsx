@@ -32,14 +32,14 @@ export const LocationText = (props: IlocationText) => {
         color="gray"
         lineHeight={"0.8rem"}
       >
-        {`${city ?? ""}, ${province ?? ""}${
+        {`${city ?? ""} ${province ? `, ${province}` : ""}${
           !countryFlag ? `${country ? `, ${country}` : ""}` : ""
         }`}
       </Typography>
       <Spacer width={isHorizontal ? 4 : 0} height={!isHorizontal ? 4 : 0} />
       {countryFlag ? (
         <Tooltip
-          title={<Typography>{country}</Typography>}
+          title={country ? <Typography>{country}</Typography> : null}
           arrow
           placement={!isHorizontal ? "top" : undefined}
         >

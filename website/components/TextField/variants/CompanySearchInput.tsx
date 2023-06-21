@@ -7,18 +7,22 @@ import { useCompanySearch } from "src/lib/hooks/useCompanySearch";
 import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
 
 interface ICompanySearchInput {
-  onValue?: (data: ICompanyClearbitData) => void;
+  onValue?: (data?: ICompanyClearbitData) => void;
   onIn?: () => void;
   onOut?: () => void;
+  clearOnValue?: boolean;
+  error?: boolean;
 }
 export const CompanySearchInput = ({
   onValue,
   onIn,
   onOut,
+  error,
 }: ICompanySearchInput) => {
   const { companyInfo, handleSearch, isLoading } = useCompanySearch();
   return (
     <SearchWithMenuInput
+      error={error}
       menuItems={companyInfo.map(x => ({
         value: x.companyName,
         icon: x.logo ? <CompanyLogo logo={x.logo} /> : <StyledBusinessIcon />,
@@ -26,9 +30,6 @@ export const CompanySearchInput = ({
       selectedIcon={<StyledBusinessIcon />}
       onChangeValue={val => {
         const data = companyInfo.find(x => x.companyName === val);
-        if (!data) {
-          return;
-        }
         onValue && onValue(data);
       }}
       onChangeSearchValue={handleSearch}
@@ -41,7 +42,7 @@ export const CompanySearchInput = ({
   );
 };
 
-const StyledBusinessIcon = styled(BusinessIcon)`
+export const StyledBusinessIcon = styled(BusinessIcon)`
   && {
     color: ${Color.rating};
     font-size: 32px;
@@ -52,7 +53,7 @@ interface ICompanyLogo {
   logo: string;
 }
 
-const CompanyLogo = styled.div<ICompanyLogo>`
+export const CompanyLogo = styled.div<ICompanyLogo>`
   width: 32px;
   height: 32px !important;
   background-image: url(${props => props.logo});

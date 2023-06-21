@@ -8,6 +8,7 @@ interface ITertiaryButton {
   white?: boolean;
   bold?: boolean;
   underline?: boolean;
+  startIcon?: React.ReactNode;
 }
 export const TertiaryButton = ({
   text,
@@ -15,9 +16,11 @@ export const TertiaryButton = ({
   white,
   bold,
   underline,
+  startIcon,
 }: ITertiaryButton) => {
   return (
     <Main onClick={onClick}>
+      {startIcon}
       <StyledTypography
         fillColor={white ? "white" : undefined}
         bold={bold}

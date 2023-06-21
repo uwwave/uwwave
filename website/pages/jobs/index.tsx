@@ -7,6 +7,7 @@ import { useJobsList } from "src/lib/hooks/useJobsList";
 import { JobsListPageHeader } from "src/components/Headers/variants/JobsListPageHeader";
 import Skeleton from "@mui/material/Skeleton";
 import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
+import { Typography } from "@mui/material";
 
 const JobsListPage = () => {
   useEffect(() => {
@@ -53,15 +54,17 @@ const JobsListPage = () => {
   );
   return (
     <PageWrapper
-      Header={
+      HeaderComponents={[
+        <Typography variant="h3" align="center">
+          <b>Jobs List</b>
+        </Typography>,
         <JobsListPageHeader
-          title="Jobs List"
           numJobs={numJobs}
           earliestDeadline={earliestDeadline}
           differentCountries={differentCountries}
           isLoading={isLoading}
-        />
-      }
+        />,
+      ]}
       Body={renderBody()}
       lighterBackground
     />

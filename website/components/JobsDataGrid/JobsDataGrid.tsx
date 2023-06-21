@@ -30,9 +30,10 @@ interface IJobsDataGrid {
   jobs: JobsPageRowData[];
   loading?: boolean;
   companyLogos?: IGetCompanyLogosResponse;
+  minHeight?: number;
 }
 export const JobsDataGrid = (props: IJobsDataGrid) => {
-  const { jobKeywords, jobs, loading, companyLogos } = props;
+  const { jobKeywords, jobs, loading, companyLogos, minHeight } = props;
   const { pageSize, setPageSize } = useJobsDataGrid();
 
   const headerComponent = (
@@ -232,6 +233,7 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
             Toolbar: GridToolbar,
             LoadingOverlay: CustomLoadingOverlay,
           }}
+          minHeight={minHeight ?? 1000}
         />
       </InnerPaper>
     </Main>
@@ -280,12 +282,13 @@ const generateTagMenuFix = (nthChild: number) => {
 
 interface IGrid {
   pageSize: number;
+  minHeight: number;
 }
 const StyledGrid = styled(props => (
   <DataGrid {...props} loadingOverlay={<CustomLoadingOverlay />} />
 ))<IGrid>`
   && {
-    min-height: 1000px;
+    min-height: ${props => props.minHeight}px;
   }
   .MuiDataGrid-columnHeader:nth-child(4),
   .MuiDataGrid-columnHeader:nth-child(5),

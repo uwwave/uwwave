@@ -15,7 +15,6 @@ import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
 import { LoginButton } from "src/components/NavigationBar/LoginButton";
 import { NotificationBanner } from "src/components/NavigationBar/NotificationBanner/NotificationBanner";
 import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
-import { LogoLoader } from "../Loader/LogoLoader";
 import { AddReviewButton } from "./AddReviewButton";
 import { useUserContext } from "src/lib/context/User/UserContext";
 import { CompanySearchInput } from "../TextField/variants/CompanySearchInput";
@@ -88,14 +87,6 @@ export const NavigationBar = () => {
   };
 
   const renderTabs = () => {
-    if (isLoading) {
-      return (
-        <Center>
-          <LogoLoader width={40} darkMode />
-        </Center>
-      );
-    }
-
     return (
       <FlexWrapper>
         <LogoWrapper width={showLogo ? 170 : 0}>
@@ -115,17 +106,26 @@ export const NavigationBar = () => {
             onOut={() => {
               setShowLogo(true);
             }}
+            onValue={data => {
+              if (!data) {
+                return;
+              }
+              router.push(`/companies/${data.id}`);
+            }}
           />
         </SearchWrapper>
-        <Spacer width={24} />
-        {renderConditionalTabs()}
-        <AddReviewButton />
-        <Spacer width={24} />
-        <LoginButton />
+        {isLoading ? null : (
+          <>
+            <Spacer width={24} />
+            {renderConditionalTabs()}
+            <AddReviewButton />
+            <Spacer width={24} />
+            <LoginButton />
+          </>
+        )}
       </FlexWrapper>
     );
   };
-
   return (
     <>
       {isLoading ? null : <NotificationBanner />}
@@ -136,13 +136,6 @@ export const NavigationBar = () => {
   );
 };
 
-const Center = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 4px;
-  padding-bottom: 4px;
-`;
 const FlexWrapper = styled.div`
   display: flex;
   align-items: center;

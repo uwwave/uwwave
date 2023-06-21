@@ -55,8 +55,14 @@ export class Requests {
     companyName: string
   ): Promise<ICompanyClearbitData> {
     return axios
-      .get(`/api/companyInfo?companyName=${companyName}`)
+      .get(`/api/companyInfo?companyName=${encodeURIComponent(companyName)}`)
       .then(x => x.data);
+  }
+
+  static async getCompanyInfoByID(
+    companyID: string
+  ): Promise<ICompanyClearbitData> {
+    return axios.get(`/api/companyInfo?id=${companyID}`).then(x => x.data);
   }
 
   static async getCompanyLogos(): Promise<IGetCompanyLogosResponse> {

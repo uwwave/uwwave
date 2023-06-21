@@ -127,7 +127,7 @@ const AboutPage = () => {
   );
   return (
     <PageWrapper
-      Header={renderHeader()}
+      HeaderComponents={[renderHeader()]}
       Body={renderBody()}
       lighterBackground
     />
