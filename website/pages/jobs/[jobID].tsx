@@ -33,6 +33,7 @@ import { JobScoreInfoModal } from "src/components/Modals/variants/JobScoreInfoMo
 import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
 import { ConfigTab } from "src/components/TabSections/ConfigTab";
 import { CompanyTab } from "src/components/TabSections/CompanyTab";
+import { ShowMoreButton } from "src/components/Buttons/ShowMoreButton";
 
 const DUMMY_RATING = "4.2";
 const DUMMY_SALARY = "50-60";
@@ -184,7 +185,8 @@ const SpecificJobPage = () => {
           />
         ) : null}
 
-        {job?.jobPostingInformation[JobInfoFieldsCoop.jobAddressLineOne] ? (
+        {job?.jobPostingInformation &&
+        job?.jobPostingInformation[JobInfoFieldsCoop.jobAddressLineOne] ? (
           <JobInfoTile
             icon={<LocationCityIcon />}
             title="Address"
@@ -247,6 +249,9 @@ const SpecificJobPage = () => {
             )
           );
         })}
+        {job?.jobPostingInformation && (
+          <ShowMoreButton extraJobInfo={job?.jobPostingInformation} />
+        )}
       </>
     );
   };
