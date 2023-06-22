@@ -32,8 +32,18 @@ export const LocationText = (props: IlocationText) => {
         color="gray"
         lineHeight={"0.8rem"}
       >
-        {`${city ?? ""} ${province ? `, ${province}` : ""}${
-          !countryFlag ? `${country ? `, ${country}` : ""}` : ""
+        {`${city ?? ""} ${
+          city && province && province !== country && province !== city
+            ? ", "
+            : ""
+        } ${
+          province && province !== country && province !== city
+            ? `${province}`
+            : ""
+        }${
+          !countryFlag
+            ? `${country && country != province ? `, ${country}` : ""}`
+            : ""
         }`}
       </Typography>
       <Spacer width={isHorizontal ? 4 : 0} height={!isHorizontal ? 4 : 0} />
