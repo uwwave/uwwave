@@ -37,6 +37,7 @@ import { ReviewsDataGrid } from "src/components/DataGrid/ReviewsDataGrid";
 import { DataGridHeader } from "src/components/DataGrid/DataGridHeader";
 import { ReviewsEmptyState } from "src/components/Empty/JobReviewsEmptyState";
 import { Page } from "src/lib/types/page";
+import { ShowMoreButton } from "src/components/Buttons/ShowMoreButton";
 
 const DUMMY_RATING = "4.2";
 const DUMMY_SALARY = "50-60";
@@ -196,7 +197,8 @@ const SpecificJobPage = () => {
           />
         ) : null}
 
-        {job?.jobPostingInformation[JobInfoFieldsCoop.jobAddressLineOne] ? (
+        {job?.jobPostingInformation &&
+        job?.jobPostingInformation[JobInfoFieldsCoop.jobAddressLineOne] ? (
           <JobInfoTile
             icon={<LocationCityIcon />}
             title="Address"
@@ -259,6 +261,9 @@ const SpecificJobPage = () => {
             )
           );
         })}
+        {job?.jobPostingInformation && (
+          <ShowMoreButton extraJobInfo={job?.jobPostingInformation} />
+        )}
       </>
     );
   };
