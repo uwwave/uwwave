@@ -23,6 +23,6 @@ schema.set("toObject", {
   },
 });
 
-export default (mongoose.models.JobRole as IJobRole &
+export default (mongoose.models.JobRoles as IJobRole &
   Document &
-  JobRoleModel) || mongoose.model<IJobRole & Document>("JobRole", schema);
+  JobRoleModel) || mongoose.model<IJobRole & Document>("JobRoles", schema);

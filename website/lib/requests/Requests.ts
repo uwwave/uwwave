@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
+import { IJobReview } from "src/database/models/JobReview";
 import { IJobRole } from "src/database/models/JobRole";
 import { IUserData } from "src/database/models/UserData";
 
@@ -15,6 +16,11 @@ export interface IGetCompanyLogosResponse {
 export interface IJobKeywordObject {
   jobs: { [key: string]: string[] };
 }
+
+type IPostJobReviewRequest = Omit<
+  Omit<Omit<Omit<Omit<IJobReview, "id">, "user">, "date">, "upvoters">,
+  "downvoters"
+>;
 
 export class Requests {
   static async getJobKeywords(
@@ -79,6 +85,10 @@ export class Requests {
       .then(x => x.data);
   }
 
+  static async getUser(id: string): Promise<IUserData> {
+    return axios.get(`/api/user?id=${id}`).then(x => x.data);
+  }
+
   static async postNewCompanies(companyNames: string[]): Promise<undefined> {
     return axios
       .post("/api/companyInfo/companies", { companies: companyNames })
@@ -99,5 +109,41 @@ export class Requests {
 
   static async addJobRoles(roles: string[]): Promise<undefined> {
     return axios.post("/api/jobRole", { roles }).then(x => x.data);
+  }
+  static async postJobReview(
+    jobReview: IPostJobReviewRequest
+  ): Promise<undefined> {
+    return axios.post("/api/review/job", { ...jobReview }).then(x => x.data);
+  }
+  static async patchJobReview(
+    reviewID: string,
+    jobReview: IPostJobReviewRequest
+  ): Promise<undefined> {
+    return axios
+      .patch("/api/review/job", { ...jobReview, id: reviewID })
+      .then(x => x.data);
+  }
+
+  static async deleteJobReview(reviewID: string): Promise<undefined> {
+    return axios.delete(`/api/review/job?id=${reviewID}`).then(x => x.data);
+  }
+
+  static async getJobReviews(companyID: string): Promise<IJobReview[]> {
+    return axios
+      .get(`/api/review/job?companyID=${companyID}`)
+      .then(x => x.data);
+  }
+
+  static async getUserJobReviews(userID: string): Promise<IJobReview[]> {
+    return axios.get(`/api/review/job?userID=${userID}`).then(x => x.data);
+  }
+
+  static async updateReviewVotes(
+    upvotedReviews: string[],
+    downvotedReviews: string[]
+  ): Promise<undefined> {
+    return axios
+      .post(`/api/review/job/vote`, { upvotedReviews, downvotedReviews })
+      .then(x => x.data);
   }
 }

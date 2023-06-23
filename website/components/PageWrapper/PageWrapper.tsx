@@ -50,6 +50,7 @@ export const PageWrapper = ({
 
 const Main = styled.div`
   background-color: ${BackgroundColor.offWhite};
+  overflow: hidden;
 `;
 
 const StyledPaper = styled(Paper)`

@@ -5,6 +5,7 @@ import { Requests } from "src/lib/requests/Requests";
 import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
 import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
 import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
+import { useCompanyReviewsDataGrid } from "src/lib/hooks/useCompanyReviewsDataGrid";
 
 type JobInfo = {
   title: string;
@@ -27,6 +28,16 @@ export const useJobPage = (jobID?: string) => {
   const [init, setInit] = useState(false);
   const [infoModal, setInfoModal] = useState(false);
   const job = buildCoopJobWithJobID(jobs, jobID as unknown as number);
+  const {
+    user,
+    jobReviewRows,
+    jobReviewsLoading,
+    voteState,
+    onUpvote,
+    onDownvote,
+    fetchReviews,
+    myReviewsRows,
+  } = useCompanyReviewsDataGrid(company?.id ?? "");
   const jobInfo: JobInfo[] = [
     {
       title: "Job Summary",
@@ -110,5 +121,13 @@ export const useJobPage = (jobID?: string) => {
     infoModal,
     setInfoModal,
     company,
+    user,
+    jobReviewRows,
+    jobReviewsLoading,
+    voteState,
+    onUpvote,
+    onDownvote,
+    fetchReviews,
+    myReviewsRows,
   };
 };

@@ -96,7 +96,7 @@ export const useLoginModal = () => {
       case LoginModalState.CREATE_ACCOUNT_LOADING:
         return "Create Account";
       default:
-        return "Login";
+        return "Sign in & Start Sharing";
     }
   }, [modalState]);
 

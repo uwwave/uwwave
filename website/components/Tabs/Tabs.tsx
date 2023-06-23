@@ -83,5 +83,6 @@ const StyledTab = styled(Tab)<IStyledTab>`
     border-radius: 8px;
     padding-top: 8px;
     min-height: 56px;
+    text-transform: none;
   }
 `;

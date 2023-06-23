@@ -13,10 +13,10 @@ import {
   LocationText,
   Orientation,
 } from "src/components/LocationText/LocationText";
-import { JobTitleCell } from "src/components/JobsDataGrid/components/JobTitleCell";
-import { ActionsCell } from "src/components/JobsDataGrid/components/ActionsCell";
+import { JobTitleCell } from "src/components/DataGrid/components/JobTitleCell";
+import { ActionsCell } from "src/components/DataGrid/components/ActionsCell";
 import { IGetCompanyLogosResponse } from "src/lib/requests/Requests";
-import { RatingsCell } from "src/components/JobsDataGrid/components/RatingCell";
+import { RatingsCell } from "src/components/DataGrid/components/RatingCell";
 import styled from "styled-components";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import StarIcon from "@mui/icons-material/Star";
@@ -66,9 +66,9 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
       renderHeader: headerComponent,
       renderCell: rowData => (
         <JobTitleCell
-          company={rowData.row.companyName}
-          jobID={rowData.id.toString()}
-          jobName={rowData.row.jobName}
+          subtitle={rowData.row.companyName}
+          url={`/jobs/${rowData.id.toString()}`}
+          title={rowData.row.jobName}
           imageURL={companyLogos?.companyNameToLogo[rowData.row.companyName]}
         />
       ),

@@ -4,7 +4,7 @@ import { ITab, Tabs } from "src/components/Tabs/Tabs";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import EditIcon from "@mui/icons-material/Edit";
 import { EditTagModal } from "src/components/Modals/variants/EditTagModal";
-import { JobsDataGrid } from "src/components/JobsDataGrid/JobsDataGrid";
+import { JobsDataGrid } from "src/components/DataGrid/JobsDataGrid";
 import { Spacer } from "src/components/Spacer/Spacer";
 import styled from "styled-components";
 import Typography from "@mui/material/Typography";

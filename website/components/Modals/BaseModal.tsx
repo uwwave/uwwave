@@ -139,7 +139,7 @@ const DialogWrapper = styled(otherProps => <Dialog {...otherProps} />)<IDark>`
   }
 
   && > .MuiBackdrop-root {
-    background-color: rgba(0, 0, 0, ${props => (props.dark ? 0.9 : 0.5)});
+    background-color: rgba(0, 0, 0, ${props => (props.dark ? 0.6 : 0.5)});
   }
 `;
 

@@ -9,7 +9,7 @@ import styled from "styled-components";
 import ReactHtmlParser from "react-html-parser";
 import { SpecificJobPageSection } from "src/components/SpecificJobPageSection/SpecificJobPageSection";
 import { useRouter } from "next/router";
-import { BackgroundColor } from "src/styles/color";
+import { BackgroundColor, Color } from "src/styles/color";
 import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
 import { JobRatingCard } from "src/components/JobRatingCard/JobRatingCard";
 import TodayIcon from "@mui/icons-material/Today";
@@ -33,6 +33,10 @@ import { JobScoreInfoModal } from "src/components/Modals/variants/JobScoreInfoMo
 import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
 import { ConfigTab } from "src/components/TabSections/ConfigTab";
 import { CompanyTab } from "src/components/TabSections/CompanyTab";
+import { ReviewsDataGrid } from "src/components/DataGrid/ReviewsDataGrid";
+import { DataGridHeader } from "src/components/DataGrid/DataGridHeader";
+import { ReviewsEmptyState } from "src/components/Empty/JobReviewsEmptyState";
+import { Page } from "src/lib/types/page";
 import { ShowMoreButton } from "src/components/Buttons/ShowMoreButton";
 
 const DUMMY_RATING = "4.2";
@@ -56,6 +60,14 @@ const SpecificJobPage = () => {
     infoModal,
     setInfoModal,
     company,
+    user,
+    jobReviewRows,
+    jobReviewsLoading,
+    voteState,
+    onUpvote,
+    onDownvote,
+    fetchReviews,
+    myReviewsRows,
   } = useJobPage(jobID);
   const [submitDomainModal, setSubmitDomainModal] = useState(false);
   useEffect(() => {
@@ -255,35 +267,135 @@ const SpecificJobPage = () => {
       </>
     );
   };
-
-  const renderJobBody = () => (
-    <>
-      {!isLoading ? (
-        <Tabs
-          tabs={[
-            { label: "Details" },
-            { label: "Company Info" },
-            { label: "Settings" },
-          ]}
-          currentTab={tabSelected}
-          onSelectTab={(i: number) => {
-            setTabSelected(i);
-          }}
-        />
-      ) : null}
-      <Spacer height={16} />
-      {tabSelected === 0 ? <Description /> : null}
-      {tabSelected === 1 && company ? <CompanyTab company={company} /> : null}
-      {tabSelected === 2 ? (
-        <ConfigTab
-          onClick={() => {
-            setSubmitDomainModal(true);
-          }}
-          companyURL={companyURL}
-        />
-      ) : null}
-    </>
+  const renderReviews = () => (
+    <ReviewsDataGrid
+      user={user}
+      jobReviewRows={jobReviewRows}
+      jobReviewsLoading={jobReviewsLoading}
+      voteState={voteState}
+      onUpvote={onUpvote}
+      onDownvote={onDownvote}
+      onEditReview={fetchReviews}
+    />
   );
+
+  const renderInterviews = () => null;
+
+  const renderMyReviews = () => {
+    const renderReviewsTableBody = () =>
+      myReviewsRows.length ? (
+        <>
+          <Spacer height={4} />
+          <ReviewsDataGrid
+            user={user}
+            jobReviewRows={myReviewsRows}
+            jobReviewsLoading={jobReviewsLoading}
+            voteState={voteState}
+            onUpvote={onUpvote}
+            onDownvote={onDownvote}
+            onEditReview={fetchReviews}
+          />
+          <Spacer height={32} />
+        </>
+      ) : (
+        <ReviewsEmptyState
+          onClose={fetchReviews}
+          origin={Page.JOB_PAGE}
+          title="You have 0 Job Reviews! Submit a review to share your experience:"
+          company={company}
+        />
+      );
+
+    const renderInterviewsTableBody = () => (
+      <ReviewsEmptyState
+        onClose={fetchReviews}
+        origin={Page.COMPANY_PAGE}
+        title="You have 0 Interview Reviews! Submit a review to share your experience:"
+        company={company}
+      />
+    );
+    return (
+      <>
+        <DataGridHeader title="Job Reviews" color={Color.rating} />
+        {renderReviewsTableBody()}
+
+        <DataGridHeader title="Interview Reviews" color={Color.compatibility} />
+        {renderInterviewsTableBody()}
+      </>
+    );
+  };
+
+  const renderSettingsTab = () => (
+    <ConfigTab
+      onClick={() => {
+        setSubmitDomainModal(true);
+      }}
+      companyURL={companyURL}
+    />
+  );
+  const renderCompanyTab = () => {
+    if (!company) {
+      return null;
+    }
+    return <CompanyTab company={company} />;
+  };
+  const renderJobBody = () => {
+    const isLoggedIn = !!user;
+    const detailsTab = { label: "Details" };
+    const companyInfoTab = { label: "Company Info" };
+    const reviewsTab = {
+      label:
+        jobReviewRows.length > 0
+          ? `Reviews (${jobReviewRows.length})`
+          : `Reviews`,
+    };
+    const interviewsTab = { label: "Interviews" };
+    const myReviewsTab = {
+      label:
+        myReviewsRows.length > 0
+          ? `My Reviews (${myReviewsRows.length})`
+          : `My Reviews`,
+    };
+    const settingsTab = { label: "Settings" };
+    const loggedInTabs = [
+      detailsTab,
+      companyInfoTab,
+      reviewsTab,
+      interviewsTab,
+      myReviewsTab,
+      settingsTab,
+    ];
+
+    const loggedOutTabs = [
+      detailsTab,
+      companyInfoTab,
+      reviewsTab,
+      interviewsTab,
+      settingsTab,
+    ];
+
+    const tabs = isLoggedIn ? loggedInTabs : loggedOutTabs;
+    return (
+      <>
+        {!isLoading ? (
+          <Tabs
+            tabs={tabs}
+            currentTab={tabSelected}
+            onSelectTab={(i: number) => {
+              setTabSelected(i);
+            }}
+          />
+        ) : null}
+        <Spacer height={16} />
+        {tabSelected === 0 ? <Description /> : null}
+        {tabSelected === 1 ? renderCompanyTab() : null}
+        {tabSelected === 2 ? renderReviews() : null}
+        {tabSelected === 3 ? renderInterviews() : null}
+        {tabSelected === 4 && isLoggedIn ? renderMyReviews() : null}
+        {tabSelected === (isLoggedIn ? 5 : 4) ? renderSettingsTab() : null}
+      </>
+    );
+  };
 
   const hideTechStack =
     techIcons.filter(x => x.icon !== undefined).length === 0 || isLoading;

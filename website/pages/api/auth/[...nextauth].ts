@@ -97,7 +97,11 @@ export const nextAuthOptions: AuthOptions = {
               }
             }
           }
-          userDoc = await UserDataDocument.create({ username, uid: user.id });
+          userDoc = await UserDataDocument.create({
+            username,
+            uid: user.id,
+            dateJoined: new Date().getTime(),
+          });
         }
       }
       return true;

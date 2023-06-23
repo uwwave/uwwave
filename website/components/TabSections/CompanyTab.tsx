@@ -3,7 +3,7 @@ import { Spacer } from "src/components/Spacer/Spacer";
 import Typography from "@mui/material/Typography";
 import { JobPagePaper } from "src/components/Paper/JobPagePaper";
 import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
-import { CompanyJobsDataGrid } from "src/components/JobsDataGrid/variants/CompanyJobsDataGrid";
+import { CompanyJobsDataGrid } from "src/components/DataGrid/variants/CompanyJobsDataGrid";
 
 interface ICompanyTab {
   company: ICompanyClearbitData;

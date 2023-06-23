@@ -30,14 +30,25 @@ import ChevronLeftIcon from "@mui/icons-material/ArrowBackIos";
 import { Select } from "src/components/Select/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { InterviewResources } from "src/components/InterviewResources/InterviewResources";
-
+import { LogoLoader } from "src/components/Loader/LogoLoader";
+import { IJobReview } from "src/database/models/JobReview";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { Page } from "src/lib/types/page";
 interface IAddReviewModal {
   isOpen: boolean;
   company?: ICompanyClearbitData;
+  review?: IJobReview;
   close: () => void;
+  origin?: Page;
 }
 
-export const AddReviewModal = ({ isOpen, close, company }: IAddReviewModal) => {
+export const AddReviewModal = ({
+  isOpen,
+  close,
+  company,
+  review: reviewProp,
+  origin,
+}: IAddReviewModal) => {
   const {
     companyError,
     roleError,
@@ -67,7 +78,16 @@ export const AddReviewModal = ({ isOpen, close, company }: IAddReviewModal) => {
     interviewStatus,
     setInterviewStatus,
     onSubmitInterviewReview,
-  } = useAddReviewModal(company);
+    isBackToHomeDisabled,
+    submitText,
+    toggleDeleteMode,
+    onDeleteReview,
+  } = useAddReviewModal(
+    close,
+    company ?? reviewProp?.company,
+    reviewProp,
+    origin
+  );
   const renderHome = () => (
     <>
       {
@@ -148,36 +168,77 @@ export const AddReviewModal = ({ isOpen, close, company }: IAddReviewModal) => {
     </>
   );
 
-  const renderJobReview = () => (
+  const renderJobSubmitUpdateButton = () =>
+    state !== AddReviewModalState.REVIEW_JOB_DELETE ? (
+      <Center>
+        <PrimaryButton
+          onClick={onSubmitJobReview}
+          disabled={state === AddReviewModalState.REVIEW_JOB_LOADING}
+        >
+          {state === AddReviewModalState.REVIEW_JOB_LOADING ? (
+            <LogoLoader width={32} darkMode />
+          ) : (
+            submitText
+          )}
+        </PrimaryButton>
+      </Center>
+    ) : null;
+
+  const renderDeleteButton = () =>
+    state === AddReviewModalState.REVIEW_JOB ||
+    state === AddReviewModalState.REVIEW_JOB_ERROR ? (
+      <>
+        <Spacer height={16} />
+        <Center>
+          <TertiaryButton
+            startIcon={<StyledDeleteOutlineIcon />}
+            text={"Delete"}
+            white
+            onClick={toggleDeleteMode}
+          />
+        </Center>
+      </>
+    ) : null;
+
+  const renderBackButton = () =>
+    isBackToHomeDisabled ? null : (
+      <>
+        <Spacer height={32} />
+        <InputRow>
+          <TertiaryButton
+            startIcon={<StyledChevronLeftIcon />}
+            text="back"
+            white
+            onClick={onBackToHome}
+          />
+        </InputRow>
+      </>
+    );
+
+  const renderErrorMessage = () =>
+    jobReviewErrorString ? (
+      <>
+        <Center>
+          <Typography color="red">{jobReviewErrorString}</Typography>
+        </Center>
+        <Spacer height={8} />
+      </>
+    ) : null;
+
+  const renderIsAnonymousInput = () => (
+    <InputRow>
+      <InputLabel>Anonymous</InputLabel>
+      <Checkbox
+        checked={isAnonymous}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setIsAnonymous(e.target.checked);
+        }}
+      />
+    </InputRow>
+  );
+
+  const renderReviewTextField = () => (
     <>
-      <Typography color="white" align="center">
-        {companyAndRole}
-      </Typography>
-      <Spacer height={24} />
-      <InputRow>
-        <InputLabel>Rating</InputLabel>
-        <StarsInput
-          value={stars}
-          onValue={data => {
-            setStars(data);
-          }}
-          color={Color.rating}
-        />
-      </InputRow>
-      <Spacer height={8} />
-      <InputRow>
-        <InputLabel>Hourly Salary (CAD)</InputLabel>
-        <NumberInput
-          error={salaryError}
-          type="number"
-          size="small"
-          value={salary}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setSalary(parseInt(e.target.value));
-          }}
-        />
-      </InputRow>
-      <Spacer height={8} />
       <StyledTextField
         error={reviewError}
         value={review}
@@ -192,36 +253,83 @@ export const AddReviewModal = ({ isOpen, close, company }: IAddReviewModal) => {
       <Typography color={isReviewLengthError ? "red" : "white"} align="right">
         {reviewCharacterCountText}
       </Typography>
-      <InputRow>
-        <InputLabel>Anonymous</InputLabel>
-        <Checkbox
-          checked={isAnonymous}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setIsAnonymous(e.target.checked);
-          }}
-        />
-      </InputRow>
-      {jobReviewErrorString ? (
-        <>
-          <Center>
-            <Typography color="red">{jobReviewErrorString}</Typography>
-          </Center>
-          <Spacer height={8} />
-        </>
-      ) : null}
+    </>
+  );
+
+  const renderSalaryInput = () => (
+    <InputRow>
+      <InputLabel>Hourly Salary (CAD)</InputLabel>
+      <NumberInput
+        error={salaryError}
+        type="number"
+        size="small"
+        value={salary}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setSalary(parseInt(e.target.value));
+        }}
+      />
+    </InputRow>
+  );
+
+  const renderCompanyAndRoleTitle = () => (
+    <Typography color="white" align="center">
+      {companyAndRole}
+    </Typography>
+  );
+
+  const renderJobStarsInput = () => (
+    <InputRow>
+      <InputLabel>Rating</InputLabel>
+      <StarsInput
+        value={stars}
+        onValue={data => {
+          setStars(data);
+        }}
+        color={Color.rating}
+      />
+    </InputRow>
+  );
+
+  const renderConfirmDelete = () => {
+    if (state !== AddReviewModalState.REVIEW_JOB_DELETE) {
+      return null;
+    }
+    return (
+      <>
+        <Typography color="red" align="center">
+          Are you sure you want to delete this reviews? This action can't be
+          undone
+        </Typography>
+        <Spacer height={16} />
+        <Center>
+          <DeleteButton onClick={onDeleteReview}>
+            <StyledDeleteOutlineIcon />
+            Confirm Delete
+          </DeleteButton>
+        </Center>
+        <Spacer height={16} />
+        <Center>
+          <TertiaryButton text={"Cancel"} white onClick={toggleDeleteMode} />
+        </Center>
+      </>
+    );
+  };
+  const renderJobReview = () => (
+    <>
+      {renderCompanyAndRoleTitle()}
+      <Spacer height={24} />
+      {renderJobStarsInput()}
       <Spacer height={8} />
-      <Center>
-        <PrimaryButton onClick={onSubmitJobReview}>Submit</PrimaryButton>
-      </Center>
-      <Spacer height={32} />
-      <InputRow>
-        <TertiaryButton
-          startIcon={<StyledChevronLeftIcon />}
-          text="back"
-          white
-          onClick={onBackToHome}
-        />
-      </InputRow>
+      {renderSalaryInput()}
+      <Spacer height={8} />
+      {renderReviewTextField()}
+      {renderIsAnonymousInput()}
+      {renderErrorMessage()}
+      <Spacer height={8} />
+      {renderJobSubmitUpdateButton()}
+      {renderDeleteButton()}
+      {renderConfirmDelete()}
+      {renderBackButton()}
     </>
   );
 
@@ -296,14 +404,23 @@ export const AddReviewModal = ({ isOpen, close, company }: IAddReviewModal) => {
         <PrimaryButton onClick={onSubmitInterviewReview}>Submit</PrimaryButton>
       </Center>
       <Spacer height={32} />
-      <InputRow>
-        <TertiaryButton
-          startIcon={<StyledChevronLeftIcon />}
-          text="back"
-          white
-          onClick={onBackToHome}
-        />
-      </InputRow>
+      {
+        <>
+          {isBackToHomeDisabled ? null : (
+            <>
+              <Spacer height={32} />
+              <InputRow>
+                <TertiaryButton
+                  startIcon={<StyledChevronLeftIcon />}
+                  text="back"
+                  white
+                  onClick={onBackToHome}
+                />
+              </InputRow>
+            </>
+          )}
+        </>
+      }
     </>
   );
 
@@ -311,6 +428,8 @@ export const AddReviewModal = ({ isOpen, close, company }: IAddReviewModal) => {
     switch (state) {
       case AddReviewModalState.REVIEW_JOB:
       case AddReviewModalState.REVIEW_JOB_ERROR:
+      case AddReviewModalState.REVIEW_JOB_LOADING:
+      case AddReviewModalState.REVIEW_JOB_DELETE:
         return renderJobReview();
       case AddReviewModalState.INTERVIEW:
       case AddReviewModalState.INTERVIEW_ERROR:
@@ -319,6 +438,23 @@ export const AddReviewModal = ({ isOpen, close, company }: IAddReviewModal) => {
         return renderHome();
     }
   };
+
+  const renderVerifiedDisclaimer = () => {
+    if (
+      state !== AddReviewModalState.HOME &&
+      state !== AddReviewModalState.HOME_ERROR
+    ) {
+      return undefined;
+    }
+    return (
+      <BannerWrapper>
+        <Typography color="white" align="center">
+          You're adding an <b>unverified</b> review. You can verify it after on
+          your account page
+        </Typography>
+      </BannerWrapper>
+    );
+  };
   return (
     <BaseModal
       open={isOpen}
@@ -326,12 +462,17 @@ export const AddReviewModal = ({ isOpen, close, company }: IAddReviewModal) => {
       onCloseModal={close}
       maxWidth="xs"
       dark
+      header={renderVerifiedDisclaimer()}
     >
       {renderState()}
     </BaseModal>
   );
 };
 
+const BannerWrapper = styled.div`
+  background-color: ${Color.primaryButton};
+  padding: 8px;
+`;
 const ReviewTypesWrapper = styled.div`
   display: flex;
   gap: 8px;
@@ -413,5 +554,18 @@ const InputLabel = styled(Typography).attrs({
 })`
   && {
     font-weight: bold;
+  }
+`;
+
+const StyledDeleteOutlineIcon = styled(DeleteOutlineIcon)`
+  && {
+    color: white;
+  }
+`;
+
+const DeleteButton = styled(PrimaryButton)`
+  && {
+    background-color: ${Color.ambitious}!important;
+    box-shadow: 3px 4px ${Color.red2};
   }
 `;

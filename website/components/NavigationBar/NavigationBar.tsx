@@ -20,6 +20,7 @@ import { useUserContext } from "src/lib/context/User/UserContext";
 import { CompanySearchInput } from "../TextField/variants/CompanySearchInput";
 import ButtonBase from "@mui/material/ButtonBase";
 import { Spacer } from "../Spacer/Spacer";
+import { Page } from "src/lib/types/page";
 
 export const NavigationBar = () => {
   const textColor = "white";
@@ -35,6 +36,8 @@ export const NavigationBar = () => {
   const path = router.pathname;
   const color = textColor ?? "white";
   const isLoading = userLoading || isExtensionLoading;
+  const page: Page =
+    router.pathname === "/companies/[companyID]" ? Page.COMPANY_PAGE : Page.ANY;
 
   const renderJobsLinks = () => (
     <>
@@ -118,7 +121,7 @@ export const NavigationBar = () => {
           <>
             <Spacer width={24} />
             {renderConditionalTabs()}
-            <AddReviewButton />
+            <AddReviewButton origin={page} />
             <Spacer width={24} />
             <LoginButton />
           </>
