@@ -3,6 +3,8 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 export interface IUserData {
   username: string;
   id: string;
+  dateJoined?: number;
+  profilePicture?: string;
 }
 
 const schema: Schema = new mongoose.Schema({
@@ -10,6 +12,12 @@ const schema: Schema = new mongoose.Schema({
     type: String,
   },
   username: {
+    type: String,
+  },
+  dateJoined: {
+    type: Number,
+  },
+  profilePicture: {
     type: String,
   },
 });
@@ -26,5 +34,6 @@ schema.set("toObject", {
   },
 });
 
-export default (mongoose.models.userdata as IUserData & Document & UserModel) ||
-  mongoose.model<IUserData & Document>("userdata", schema);
+export default (mongoose.models.userdatas as IUserData &
+  Document &
+  UserModel) || mongoose.model<IUserData & Document>("userdatas", schema);

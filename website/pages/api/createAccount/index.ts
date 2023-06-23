@@ -47,6 +47,7 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     const newUserData = new UserDataDocument({
       username,
       uid: userCredential.user.uid,
+      dateJoined: new Date().getTime(),
     });
     await newUserData.save();
     res.status(200).end();

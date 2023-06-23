@@ -3,24 +3,24 @@ import styled from "styled-components";
 import Typography from "@mui/material/Typography";
 
 interface IJobTitleCell {
-  company: string;
-  jobName: string;
-  jobID: string;
+  subtitle: string;
+  title: string;
+  url?: string;
   imageURL?: string;
 }
 
 export const JobTitleCell = (props: IJobTitleCell) => {
-  const { company, jobName, jobID, imageURL } = props;
+  const { subtitle, title, url, imageURL } = props;
   return (
     <JobTitleCellWrapper>
-      <StyledLink href={`/jobs/${jobID}`} target="_blank">
+      <StyledLink href={url} target="_blank">
         <CompanyProfilePic imageURL={imageURL} />
       </StyledLink>
       <CompanyDetailsWrapper>
-        <StyledLink href={`/jobs/${jobID}`} target="_blank">
-          <Typography>{jobName}</Typography>
+        <StyledLink href={url} target="_blank">
+          <Typography>{title}</Typography>
         </StyledLink>
-        <Typography variant="caption">{company}</Typography>
+        <Typography variant="caption">{subtitle}</Typography>
       </CompanyDetailsWrapper>
     </JobTitleCellWrapper>
   );

@@ -3,18 +3,20 @@ import React, { useState } from "react";
 import { useLoginModalContext } from "src/lib/context/LoginModal/LoginModalContext";
 import { useUserContext } from "src/lib/context/User/UserContext";
 import { Spacer } from "src/components/Spacer/Spacer";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import { signOut } from "next-auth/react";
 import { TertiaryButton } from "../Buttons/TertiaryButton";
+import { useRouter } from "next/router";
+import ButtonBase from "@mui/material/ButtonBase";
+import { getProfileImage } from "src/lib/types/profiles";
 
 export const LoginButton = () => {
   const { isLoading, isLoggedIn, user } = useUserContext();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { open } = useLoginModalContext();
+  const router = useRouter();
   const loggedInMenuOpen = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -28,14 +30,14 @@ export const LoginButton = () => {
   if (isLoggedIn) {
     return (
       <div>
-        <IconButton
+        <StyledButtonBase
           aria-controls={loggedInMenuOpen ? "basic-menu" : undefined}
           aria-haspopup="true"
           aria-expanded={loggedInMenuOpen ? "true" : undefined}
           onClick={handleClick}
         >
-          <StyledAccountCircleIcon />
-        </IconButton>
+          <ProfileImage imageURL={getProfileImage(user?.profilePicture)} />
+        </StyledButtonBase>
         <Menu
           anchorEl={anchorEl}
           open={loggedInMenuOpen}
@@ -76,14 +78,20 @@ export const LoginButton = () => {
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
           <WelcomeWrapper>
-            <ListItemText>{`Hey, ${
-              user?.username ?? "FruitCake"
-            }`}</ListItemText>
+            <ListItemText>{`Hey ${user?.username ?? "Timmy"}!`}</ListItemText>
           </WelcomeWrapper>
-          <MenuItem>
+          <MenuItem
+            onClick={() => {
+              router.push("/user?tab=0");
+            }}
+          >
             <ListItemText>My Account</ListItemText>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem
+            onClick={() => {
+              router.push("/user?tab=2");
+            }}
+          >
             <ListItemText>Settings</ListItemText>
           </MenuItem>
           <Spacer height={64} />
@@ -102,16 +110,29 @@ export const LoginButton = () => {
   return <TertiaryButton text="Login" onClick={open} white bold />;
 };
 
-const StyledAccountCircleIcon = styled(AccountCircleIcon)`
-  && {
-    font-size: 32px;
-    color: white;
-  }
-`;
-
 const WelcomeWrapper = styled.div`
   padding: 0 16px;
   && {
     color: grey;
+  }
+`;
+
+interface IProfileImage {
+  imageURL: string;
+}
+const ProfileImage = styled.div<IProfileImage>`
+  border-radius: 100%;
+  border: 2px solid white;
+  width: 48px;
+  height: 48px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url(${props => props.imageURL});
+`;
+
+const StyledButtonBase = styled(ButtonBase)`
+  && {
+    border-radius: 100%;
   }
 `;

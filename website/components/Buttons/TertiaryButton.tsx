@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { ButtonBase, Typography } from "@mui/material";
 import { Color } from "src/styles/color";
 import styled from "styled-components";
 
@@ -19,16 +19,18 @@ export const TertiaryButton = ({
   startIcon,
 }: ITertiaryButton) => {
   return (
-    <Main onClick={onClick}>
-      {startIcon}
-      <StyledTypography
-        fillColor={white ? "white" : undefined}
-        bold={bold}
-        underline={underline}
-      >
-        {text}
-      </StyledTypography>
-    </Main>
+    <ButtonBase>
+      <Main onClick={onClick}>
+        {startIcon}
+        <StyledTypography
+          fillColor={white ? "white" : undefined}
+          bold={bold}
+          underline={underline}
+        >
+          {text}
+        </StyledTypography>
+      </Main>
+    </ButtonBase>
   );
 };
 

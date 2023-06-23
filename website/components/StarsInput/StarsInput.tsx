@@ -6,9 +6,16 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 interface IStarsInput {
   color: string;
   value: number;
-  onValue: (data: number) => void;
+  onValue?: (data: number) => void;
+  starsSize?: number;
 }
-export const StarsInput = ({ color, value, onValue }: IStarsInput) => {
+export const StarsInput = ({
+  color,
+  value,
+  onValue,
+  starsSize,
+}: IStarsInput) => {
+  const canChangeValue = !!onValue;
   const [stars, setStars] = useState(value);
   const starsArr: number[] = useMemo(() => {
     const out: number[] = [];
@@ -26,11 +33,14 @@ export const StarsInput = ({ color, value, onValue }: IStarsInput) => {
         if (x === 1) {
           return (
             <FilledStar
+              starSize={starsSize ?? 40}
               fillColor={color}
               key={i}
               onClick={() => {
-                setStars(i + 1);
-                onValue(i + 1);
+                if (canChangeValue) {
+                  setStars(i + 1);
+                  onValue(i + 1);
+                }
               }}
             />
           );
@@ -38,11 +48,14 @@ export const StarsInput = ({ color, value, onValue }: IStarsInput) => {
 
         return (
           <OutlineStar
+            starSize={starsSize ?? 40}
             fillColor={color}
             key={i}
             onClick={() => {
-              setStars(i + 1);
-              onValue(i + 1);
+              if (canChangeValue) {
+                setStars(i + 1);
+                onValue(i + 1);
+              }
             }}
           />
         );
@@ -58,10 +71,11 @@ const MainWrapper = styled.div`
 
 interface IStar {
   fillColor: string;
+  starSize: number;
 }
 const FilledStar = styled(StarIcon)<IStar>`
   && {
-    font-size: 40px;
+    font-size: ${props => props.starSize}px;
     color: ${props => props.fillColor};
     cursor: pointer;
   }
@@ -69,7 +83,7 @@ const FilledStar = styled(StarIcon)<IStar>`
 
 const OutlineStar = styled(StarBorderIcon)<IStar>`
   && {
-    font-size: 40px;
+    font-size: ${props => props.starSize}px;
     color: ${props => props.fillColor};
     cursor: pointer;
   }

@@ -6,18 +6,31 @@ import { useAddReviewButton } from "src/lib/hooks/useAddReviewButton";
 import { AddReviewModal } from "../Modals/variants/AddReviewModal";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
+import { Page } from "src/lib/types/page";
 
 interface IAddReviewButton {
   company?: ICompanyClearbitData;
+  onClose?: () => void;
+  origin?: Page;
 }
-export const AddReviewButton = ({ company }: IAddReviewButton) => {
-  const { isLoggedIn, open, close, isOpen } = useAddReviewButton();
-  if (!isLoggedIn) {
-    return null;
-  }
+export const AddReviewButton = ({
+  company,
+  onClose,
+  origin,
+}: IAddReviewButton) => {
+  const { open, isOpen, close: closeModal } = useAddReviewButton();
+  const close = () => {
+    closeModal();
+    onClose?.();
+  };
   return (
     <>
-      <AddReviewModal isOpen={isOpen} close={close} company={company} />
+      <AddReviewModal
+        isOpen={isOpen}
+        close={close}
+        company={company}
+        origin={origin}
+      />
       <StyledButton onClick={open}>
         <IconsWrapper>
           <Typography color="white" variant="subtitle1">

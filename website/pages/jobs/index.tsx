@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Spacer } from "src/components/Spacer/Spacer";
 import { BackgroundColor } from "src/styles/color";
 import { SearchBarJobsList } from "components/SearchBar/SearchBarJobsList";
-import { JobsDataGrid } from "src/components/JobsDataGrid/JobsDataGrid";
+import { JobsDataGrid } from "src/components/DataGrid/JobsDataGrid";
 import { useJobsList } from "src/lib/hooks/useJobsList";
 import { JobsListPageHeader } from "src/components/Headers/variants/JobsListPageHeader";
 import Skeleton from "@mui/material/Skeleton";
