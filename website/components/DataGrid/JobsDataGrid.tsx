@@ -68,7 +68,7 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
           subtitle={rowData.row.companyName}
           url={`/jobs/${rowData.id.toString()}`}
           title={rowData.row.jobName}
-          imageURL={companyLogos?.companyToData[rowData.row.companyName].logo}
+          imageURL={companyLogos?.companyToData[rowData.row.companyName]?.logo}
         />
       ),
       colSpan: 2,
