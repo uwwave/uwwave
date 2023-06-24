@@ -26,22 +26,16 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { TagJobButton } from "src/components/Buttons/TagJobButton";
 import { UploadDomainModal } from "src/components/Modals/variants/UploadDomainModal";
-import IconButton from "@mui/material/IconButton";
 import { JobInfoFieldsCoop } from "src/lib/extension/jobKeys";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import { JobScoreInfoModal } from "src/components/Modals/variants/JobScoreInfoModal";
 import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
-import { ConfigTab } from "src/components/TabSections/ConfigTab";
 import { CompanyTab } from "src/components/TabSections/CompanyTab";
 import { ReviewsDataGrid } from "src/components/DataGrid/ReviewsDataGrid";
 import { DataGridHeader } from "src/components/DataGrid/DataGridHeader";
 import { ReviewsEmptyState } from "src/components/Empty/JobReviewsEmptyState";
 import { Page } from "src/lib/types/page";
 import { ShowMoreButton } from "src/components/Buttons/ShowMoreButton";
-
-const DUMMY_RATING = "4.2";
-const DUMMY_SALARY = "50-60";
-const DUMMY_COMPAT_SCORE = "20%";
+import { InterviewsDataGrid } from "src/components/DataGrid/InterviewsDataGrid";
+import { salaryDisplay, starsDisplay } from "src/lib/reviews/summary";
 
 const SpecificJobPage = () => {
   const router = useRouter();
@@ -57,8 +51,6 @@ const SpecificJobPage = () => {
     techIcons,
     companyURL,
     onClearbitData,
-    infoModal,
-    setInfoModal,
     company,
     user,
     jobReviewRows,
@@ -68,6 +60,14 @@ const SpecificJobPage = () => {
     onDownvote,
     fetchReviews,
     myReviewsRows,
+    interviewRows,
+    interviewsAreLoading,
+    interviewVoteState,
+    interviewUpvote,
+    interviewDownnvote,
+    fetchInterviews,
+    reviewsSummary,
+    myInterviewsRows,
   } = useJobPage(jobID);
   const [submitDomainModal, setSubmitDomainModal] = useState(false);
   useEffect(() => {
@@ -95,60 +95,45 @@ const SpecificJobPage = () => {
       );
     }
     return (
-      <>
-        <JobScoreInfoModal
-          isOpen={infoModal}
-          onClose={() => {
-            setInfoModal(false);
-          }}
-          rating={DUMMY_RATING}
-          salary={DUMMY_SALARY}
-          score={DUMMY_COMPAT_SCORE}
-        />
-        <CompanyHeaderWrapper>
-          <HelpButton
-            onClick={() => {
-              setInfoModal(true);
+      <CompanyHeaderWrapper>
+        <div>
+          <CompanyCard
+            imageURL={imageURL}
+            companyName={companyInfo.companyName}
+            city={companyInfo.city}
+            province={companyInfo.province}
+            country={companyInfo.country}
+            positionTitle={companyInfo.positionTitle}
+            companyURL={companyURL}
+            onOpenSubmitDomain={() => {
+              setSubmitDomainModal(true);
             }}
-          >
-            <HelpOutlineIcon />
-          </HelpButton>
-          <div>
-            <CompanyCard
-              imageURL={imageURL}
-              companyName={companyInfo.companyName}
-              city={companyInfo.city}
-              province={companyInfo.province}
-              country={companyInfo.country}
-              positionTitle={companyInfo.positionTitle}
-              companyURL={companyURL}
-              onOpenSubmitDomain={() => {
-                setSubmitDomainModal(true);
-              }}
-              companyPageURL={company ? `/companies/${company.id}` : undefined}
-            />
-            <Spacer height={24} />
-            <ButtonsWrapper>
-              <a
-                href={`https://waterlooworks.uwaterloo.ca/myAccount/co-op/coop-postings.htm?ck_jobid=${jobID}`}
-                target="_blank"
-              >
-                <PrimaryButton>Apply</PrimaryButton>
-              </a>
-              <Spacer width={8} />
-              <TagJobButton jobID={jobID} />
-            </ButtonsWrapper>
-          </div>
-          <JobRatingCard
-            rating={DUMMY_RATING}
-            salary={DUMMY_SALARY}
-            score={DUMMY_COMPAT_SCORE}
-            ratingVal={job ? Math.random() * 100 : 0}
-            salaryVal={job ? Math.random() * 100 : 0}
-            scoreVal={job ? Math.random() * 100 : 0}
+            companyPageURL={company ? `/companies/${company.id}` : undefined}
           />
-        </CompanyHeaderWrapper>
-      </>
+          <Spacer height={24} />
+          <ButtonsWrapper>
+            <a
+              href={`https://waterlooworks.uwaterloo.ca/myAccount/co-op/coop-postings.htm?ck_jobid=${jobID}`}
+              target="_blank"
+            >
+              <PrimaryButton>Apply</PrimaryButton>
+            </a>
+            <Spacer width={8} />
+            <TagJobButton jobID={jobID} />
+          </ButtonsWrapper>
+        </div>
+        <JobRatingCard
+          rating={starsDisplay(reviewsSummary?.ratingAverage)}
+          salary={salaryDisplay(
+            reviewsSummary?.minSalary,
+            reviewsSummary?.maxSalary
+          )}
+          interview={starsDisplay(reviewsSummary?.interviewAverage)}
+          ratingVal={reviewsSummary?.ratingAverage ?? null}
+          salaryVal={reviewsSummary?.ratingAverage ?? null}
+          interviewVal={reviewsSummary?.interviewAverage ?? null}
+        />
+      </CompanyHeaderWrapper>
     );
   };
   const renderCompanyFastFacts = () => {
@@ -276,10 +261,24 @@ const SpecificJobPage = () => {
       onUpvote={onUpvote}
       onDownvote={onDownvote}
       onEditReview={fetchReviews}
+      origin={Page.JOB_PAGE}
     />
   );
 
-  const renderInterviews = () => null;
+  const renderInterviews = () => {
+    return (
+      <InterviewsDataGrid
+        user={user}
+        reviewRows={interviewRows}
+        isLoading={interviewsAreLoading}
+        voteState={interviewVoteState}
+        onUpvote={interviewUpvote}
+        onDownvote={interviewDownnvote}
+        onEditReview={fetchInterviews}
+        origin={Page.JOB_PAGE}
+      />
+    );
+  };
 
   const renderMyReviews = () => {
     const renderReviewsTableBody = () =>
@@ -294,45 +293,57 @@ const SpecificJobPage = () => {
             onUpvote={onUpvote}
             onDownvote={onDownvote}
             onEditReview={fetchReviews}
+            origin={Page.JOB_PAGE}
           />
           <Spacer height={32} />
         </>
       ) : (
+        <>
+          <ReviewsEmptyState
+            afterSubmit={fetchReviews}
+            origin={Page.JOB_PAGE}
+            title="You have 0 Job Reviews! Submit a review to share your experience:"
+            company={company}
+          />
+          <Spacer height={32} />
+        </>
+      );
+
+    const renderInterviewsTableBody = () =>
+      myInterviewsRows.length ? (
+        <>
+          <Spacer height={4} />
+          <InterviewsDataGrid
+            user={user}
+            reviewRows={myInterviewsRows}
+            isLoading={interviewsAreLoading}
+            voteState={interviewVoteState}
+            onUpvote={interviewUpvote}
+            onDownvote={interviewDownnvote}
+            onEditReview={fetchInterviews}
+            origin={Page.COMPANY_PAGE}
+          />
+        </>
+      ) : (
         <ReviewsEmptyState
-          onClose={fetchReviews}
-          origin={Page.JOB_PAGE}
-          title="You have 0 Job Reviews! Submit a review to share your experience:"
+          afterSubmit={fetchReviews}
+          origin={Page.COMPANY_PAGE}
+          title="You have 0 Interview Reviews! Submit a review to share your experience:"
           company={company}
         />
       );
 
-    const renderInterviewsTableBody = () => (
-      <ReviewsEmptyState
-        onClose={fetchReviews}
-        origin={Page.COMPANY_PAGE}
-        title="You have 0 Interview Reviews! Submit a review to share your experience:"
-        company={company}
-      />
-    );
     return (
       <>
         <DataGridHeader title="Job Reviews" color={Color.rating} />
         {renderReviewsTableBody()}
 
-        <DataGridHeader title="Interview Reviews" color={Color.compatibility} />
+        <DataGridHeader title="Interview Reviews" color={Color.interview} />
         {renderInterviewsTableBody()}
       </>
     );
   };
 
-  const renderSettingsTab = () => (
-    <ConfigTab
-      onClick={() => {
-        setSubmitDomainModal(true);
-      }}
-      companyURL={companyURL}
-    />
-  );
   const renderCompanyTab = () => {
     if (!company) {
       return null;
@@ -349,21 +360,24 @@ const SpecificJobPage = () => {
           ? `Reviews (${jobReviewRows.length})`
           : `Reviews`,
     };
-    const interviewsTab = { label: "Interviews" };
+    const interviewsTab = {
+      label:
+        interviewRows.length > 0
+          ? `Interviews (${interviewRows.length})`
+          : `Interviews`,
+    };
     const myReviewsTab = {
       label:
-        myReviewsRows.length > 0
-          ? `My Reviews (${myReviewsRows.length})`
+        myReviewsRows.length + myInterviewsRows.length > 0
+          ? `My Reviews (${myReviewsRows.length + myInterviewsRows.length})`
           : `My Reviews`,
     };
-    const settingsTab = { label: "Settings" };
     const loggedInTabs = [
       detailsTab,
       companyInfoTab,
       reviewsTab,
       interviewsTab,
       myReviewsTab,
-      settingsTab,
     ];
 
     const loggedOutTabs = [
@@ -371,7 +385,6 @@ const SpecificJobPage = () => {
       companyInfoTab,
       reviewsTab,
       interviewsTab,
-      settingsTab,
     ];
 
     const tabs = isLoggedIn ? loggedInTabs : loggedOutTabs;
@@ -392,7 +405,6 @@ const SpecificJobPage = () => {
         {tabSelected === 2 ? renderReviews() : null}
         {tabSelected === 3 ? renderInterviews() : null}
         {tabSelected === 4 && isLoggedIn ? renderMyReviews() : null}
-        {tabSelected === (isLoggedIn ? 5 : 4) ? renderSettingsTab() : null}
       </>
     );
   };
@@ -492,19 +504,6 @@ const CompanyHeaderWrapper = styled.div`
   display: flex;
   position: relative;
   justify-content: space-between;
-`;
-
-const HelpButton = styled(IconButton)`
-  && {
-    position: absolute;
-    right: -72px;
-    top: -8px;
-    opacity: 0.6;
-  }
-
-  &&:hover {
-    opacity: 1;
-  }
 `;
 
 const JobFastFactsWrapper = styled(Paper).attrs({

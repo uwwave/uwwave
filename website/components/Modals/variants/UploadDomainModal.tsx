@@ -61,7 +61,7 @@ export const UploadDomainModal = (props: IUploadDomainModal) => {
             disabled={loading}
             error={error}
             variant="outlined"
-            placeholder={`www.${companyName.split(" ").join("-")}.com`}
+            placeholder={`www.${companyName?.split(" ").join("-")}.com`}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setDomain(e.target.value);
             }}

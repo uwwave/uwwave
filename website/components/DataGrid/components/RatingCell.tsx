@@ -2,50 +2,84 @@ import React from "react";
 import styled from "styled-components";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import StarIcon from "@mui/icons-material/Star";
-import SearchIcon from "@mui/icons-material/Search";
 import { Color } from "src/styles/color";
+import VideoCameraFrontIcon from "@mui/icons-material/VideoCameraFront";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 
 interface IRatingsCell {
-  ratingPercentage: number;
-  moneyPercentage: number;
-  scorePercenatge: number;
+  ratingPercentage: number | null;
+  moneyPercentage: number | null;
+  interviewPercentage: number | null;
 }
 export const RatingsCell = (props: IRatingsCell) => {
-  const { ratingPercentage, moneyPercentage, scorePercenatge } = props;
+  const { ratingPercentage, moneyPercentage, interviewPercentage } = props;
+
+  const renderTooltipContent = () => (
+    <>
+      <Typography align="center">
+        <b>Averages</b>
+      </Typography>
+      <Typography>{`Rating: ${
+        ratingPercentage
+          ? `${(ratingPercentage / 20).toFixed(1)} / 5`
+          : "No Data"
+      }`}</Typography>
+      <Typography>{`Salary: ${
+        moneyPercentage
+          ? `Top ${(100 - moneyPercentage).toFixed(1)}%`
+          : "No Data"
+      }`}</Typography>
+      <Typography>{`Interview Difficulty: ${
+        interviewPercentage
+          ? `${(interviewPercentage / 20).toFixed(1)} / 5`
+          : "No Data"
+      }`}</Typography>
+    </>
+  );
   return (
-    <StatsWrapper>
-      <Pillar>
-        <InnerPillar1 val={ratingPercentage}>
-          <RatingIcon />
-        </InnerPillar1>
-      </Pillar>
-      <Pillar>
-        <InnerPillar2 val={moneyPercentage}>
-          <MoneyIcon />
-        </InnerPillar2>
-      </Pillar>
-      <Pillar>
-        <InnerPillar3 val={scorePercenatge}>
-          <ScoreIcon />
-        </InnerPillar3>
-      </Pillar>
-    </StatsWrapper>
+    <StyledTooltip title={renderTooltipContent()} arrow placement="top">
+      <StatsWrapper>
+        <Pillar disabled={!ratingPercentage}>
+          <InnerPillar1 val={ratingPercentage ?? 0}>
+            <RatingIcon />
+          </InnerPillar1>
+        </Pillar>
+        <Pillar disabled={!moneyPercentage}>
+          <InnerPillar2 val={moneyPercentage ?? 0}>
+            <MoneyIcon />
+          </InnerPillar2>
+        </Pillar>
+        <Pillar disabled={!interviewPercentage}>
+          <InnerPillar3 val={interviewPercentage ?? 0}>
+            <InterviewIcon />
+          </InnerPillar3>
+        </Pillar>
+      </StatsWrapper>
+    </StyledTooltip>
   );
 };
 
+const StyledTooltip = styled(Tooltip)`
+  cursor: pointer;
+`;
 const StatsWrapper = styled.div`
   display: flex;
   gap: 4px;
   align-items: center;
 `;
 
-const Pillar = styled.div`
+interface IPillarWrapper {
+  disabled: boolean;
+}
+const Pillar = styled.div<IPillarWrapper>`
   height: 64px;
   width: 16px;
   border-radius: 16px;
   background-color: #ddd;
   display: flex;
   flex-direction: column-reverse;
+  opacity: ${props => (props.disabled ? 0.4 : 1)};
 `;
 
 interface IPillar {
@@ -81,7 +115,7 @@ const InnerPillar3 = styled.div<IPillar>`
   min-height: 30%;
   width: 16px;
   border-radius: 16px;
-  background-color: ${Color.compatibility};
+  background-color: ${Color.interview};
   flex-direction: column-reverse;
   display: flex;
   align-items: center;
@@ -106,10 +140,10 @@ const RatingIcon = styled(StarIcon)`
   }
 `;
 
-const ScoreIcon = styled(SearchIcon)`
+const InterviewIcon = styled(VideoCameraFrontIcon)`
   && {
     fill: white;
-    width: 16px;
+    width: 13px;
     position: relative;
     bottom: -2px;
   }

@@ -1,6 +1,11 @@
 import { useRouter } from "next/router";
 import { useState, useMemo } from "react";
+import {
+  IInterviewResourceDisplay,
+  getInterviewResourceValidator,
+} from "src/components/InterviewResources/InterviewResources";
 import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
+import { IInterviewReview } from "src/database/models/InterviewReview";
 import { IJobReview } from "src/database/models/JobReview";
 import { IJobRole } from "src/database/models/JobRole";
 import { Requests } from "src/lib/requests/Requests";
@@ -15,6 +20,8 @@ export enum AddReviewModalState {
   REVIEW_JOB_DELETE,
   INTERVIEW,
   INTERVIEW_ERROR,
+  INTERVIEW_LOADING,
+  INTERVIEW_DELETE,
 }
 
 export enum InterviewStatus {
@@ -26,32 +33,67 @@ export enum InterviewStatus {
   COMPLETE = "Completed_Interview",
 }
 
+export enum InterviewResourceType {
+  LEETCODE = "Leetcode",
+}
+
+export interface IInterviewResource {
+  resourceType: InterviewResourceType;
+  value: string;
+}
+
 const MAX_REVIEW_LENGTH = 320;
 
 export const useAddReviewModal = (
-  onClose: () => void,
+  closeModal: () => void,
+  onSuccess?: () => void,
   companyData?: ICompanyClearbitData,
   reviewProp?: IJobReview,
-  origin?: Page
+  origin?: Page,
+  interviewProp?: IInterviewReview
 ) => {
   const [state, setState] = useState<AddReviewModalState>(
-    reviewProp ? AddReviewModalState.REVIEW_JOB : AddReviewModalState.HOME
+    reviewProp
+      ? AddReviewModalState.REVIEW_JOB
+      : interviewProp
+      ? AddReviewModalState.INTERVIEW
+      : AddReviewModalState.HOME
   );
   const [company, setCompany] = useState<ICompanyClearbitData | undefined>(
     companyData
   );
-  const [role, setRole] = useState<IJobRole | undefined>(reviewProp?.role);
-  const [stars, setStars] = useState<number>((reviewProp?.rating ?? 60) / 20);
+  const [role, setRole] = useState<IJobRole | undefined>(
+    reviewProp?.role ?? interviewProp?.role
+  );
+  const [stars, setStars] = useState<number>(
+    (reviewProp?.rating ?? interviewProp?.difficulty ?? 60) / 20
+  );
   const [salary, setSalary] = useState<number>(reviewProp?.salary ?? 0);
-  const [review, setReview] = useState<string>(reviewProp?.review ?? "");
+  const [review, setReview] = useState<string>(
+    reviewProp?.review ?? interviewProp?.review ?? ""
+  );
+  const [coopNumber, setCoopNumber] = useState<number>(
+    reviewProp?.coopNumber ?? 1
+  );
   const [reviewJobServerError, setReviewJobServerError] = useState<string>();
+  const [interviewResources, setInterviewResourcesState] = useState<
+    IInterviewResourceDisplay[]
+  >(
+    interviewProp?.resources.map(x => ({ ...x, isEditMode: false })) ?? [
+      {
+        resourceType: InterviewResourceType.LEETCODE,
+        value: "",
+        isEditMode: true,
+      },
+    ]
+  );
   const router = useRouter();
 
   const [isAnonymous, setIsAnonymous] = useState<boolean>(
-    reviewProp?.anonymous ?? false
+    reviewProp?.anonymous ?? interviewProp?.anonymous ?? false
   );
   const [interviewStatus, setInterviewStatus] = useState<InterviewStatus>(
-    InterviewStatus.R
+    interviewProp?.status ?? InterviewStatus.R
   );
 
   const companyError = !company && state === AddReviewModalState.HOME_ERROR;
@@ -96,6 +138,7 @@ export const useAddReviewModal = (
     return;
   }, [companyError, roleError, state]);
   const isUpdateReview = !!reviewProp;
+  const isUpdateInterview = !!interviewProp;
   const modalTitle: string = useMemo(() => {
     switch (state) {
       case AddReviewModalState.REVIEW_JOB:
@@ -105,6 +148,8 @@ export const useAddReviewModal = (
         return isUpdateReview ? "Update Job Review" : `Job Review`;
       case AddReviewModalState.INTERVIEW:
       case AddReviewModalState.INTERVIEW_ERROR:
+      case AddReviewModalState.INTERVIEW_DELETE:
+      case AddReviewModalState.INTERVIEW_LOADING:
         return "Interview Review";
       default:
         return "Add Your Review";
@@ -135,6 +180,7 @@ export const useAddReviewModal = (
           anonymous: isAnonymous,
           salary,
           review,
+          coopNumber,
         });
       } else {
         await Requests.postJobReview({
@@ -145,6 +191,7 @@ export const useAddReviewModal = (
           anonymous: isAnonymous,
           salary,
           review,
+          coopNumber,
         });
       }
       setState(
@@ -152,14 +199,13 @@ export const useAddReviewModal = (
           ? AddReviewModalState.REVIEW_JOB
           : AddReviewModalState.HOME
       );
-      onClose();
+      onSuccess?.();
       if (origin !== Page.JOB_PAGE) {
-        router.push(
-          origin === Page.COMPANY_PAGE
-            ? `/companies/${company.id}/?tab=3`
-            : "/user?tab=1"
-        );
+        if (origin === Page.ANY) {
+          router.push("/user?tab=1");
+        }
       }
+      closeModal();
     } catch (e: any) {
       setState(AddReviewModalState.REVIEW_JOB_ERROR);
       setReviewJobServerError(e.response.data);
@@ -177,36 +223,89 @@ export const useAddReviewModal = (
           ? AddReviewModalState.REVIEW_JOB
           : AddReviewModalState.HOME
       );
-      onClose();
-      router.push(
-        origin === Page.COMPANY_PAGE
-          ? `/companies/${company.id}/?tab=3`
-          : "/user?tab=1"
-      );
+      onSuccess?.();
+      if (origin === Page.ANY) {
+        router.push("/user?tab=1");
+      }
+      closeModal();
     } catch (e: any) {
       setState(AddReviewModalState.REVIEW_JOB_ERROR);
       setReviewJobServerError(e.response.data);
     }
   };
 
-  const onSubmitInterviewReview = () => {
-    if (isReviewLengthError) {
+  const onDeleteInterview = async () => {
+    if (!company || !interviewProp) {
+      return;
+    }
+    try {
+      await Requests.deleteInterviewReview(interviewProp.id);
+      setState(
+        isUpdateInterview
+          ? AddReviewModalState.INTERVIEW
+          : AddReviewModalState.HOME
+      );
+      onSuccess?.();
+      if (origin === Page.ANY) {
+        router.push("/user?tab=1");
+      }
+      closeModal();
+    } catch (e: any) {
+      setState(AddReviewModalState.INTERVIEW_ERROR);
+      setReviewJobServerError(e.response.data);
+    }
+  };
+
+  const onSubmitInterviewReview = async () => {
+    if (isReviewLengthError || !role || !company) {
       setState(AddReviewModalState.INTERVIEW_ERROR);
       return;
     }
-    setState(AddReviewModalState.INTERVIEW);
-    console.log({
-      stars,
-      interviewStatus,
-      review,
-      isAnonymous,
-    });
+    setState(AddReviewModalState.INTERVIEW_LOADING);
+    try {
+      if (isUpdateInterview) {
+        await Requests.patchInterviewReview(interviewProp.id, {
+          role,
+          company,
+          difficulty: stars,
+          verified: false,
+          anonymous: isAnonymous,
+          status: interviewStatus,
+          review,
+          resources: interviewResources,
+        });
+      } else {
+        await Requests.postInterviewReview({
+          role,
+          company,
+          difficulty: stars,
+          verified: false,
+          anonymous: isAnonymous,
+          status: interviewStatus,
+          review,
+          resources: interviewResources,
+        });
+      }
+      setState(
+        isUpdateInterview
+          ? AddReviewModalState.INTERVIEW
+          : AddReviewModalState.HOME
+      );
+      onSuccess?.();
+      if (origin !== Page.JOB_PAGE) {
+        if (origin === Page.ANY) {
+          router.push("/user?tab=1");
+        }
+      }
+      closeModal();
+    } catch (e: any) {
+      setState(AddReviewModalState.INTERVIEW_ERROR);
+      setReviewJobServerError(e.response.data);
+    }
   };
 
   const salaryError =
-    (state === AddReviewModalState.REVIEW_JOB_ERROR ||
-      state === AddReviewModalState.INTERVIEW_ERROR) &&
-    salary === 0;
+    state === AddReviewModalState.REVIEW_JOB_ERROR && salary === 0;
   const isReviewLengthError = review.length > MAX_REVIEW_LENGTH;
   const reviewError =
     (state === AddReviewModalState.REVIEW_JOB_ERROR ||
@@ -215,11 +314,14 @@ export const useAddReviewModal = (
 
   const jobReviewErrorString: string | undefined = useMemo(() => {
     if (
-      reviewJobServerError &&
-      state === AddReviewModalState.REVIEW_JOB_ERROR
+      state !== AddReviewModalState.REVIEW_JOB_ERROR &&
+      state !== AddReviewModalState.INTERVIEW_ERROR
     ) {
+      return undefined;
+    }
+    if (reviewJobServerError) {
       return reviewJobServerError;
-    } else if (salaryError && state === AddReviewModalState.REVIEW_JOB_ERROR) {
+    } else if (salaryError) {
       return "Salary must be greater than 0";
     } else if (reviewError) {
       return `Review must be less than ${MAX_REVIEW_LENGTH} characters`;
@@ -228,15 +330,42 @@ export const useAddReviewModal = (
   }, [salaryError, reviewError, reviewJobServerError, state]);
   const reviewCharacterCountText = `${review.length} / ${MAX_REVIEW_LENGTH}`;
 
-  const submitText = isUpdateReview ? "Update Review" : "Submit Review";
+  const submitText =
+    isUpdateReview || isUpdateInterview ? "Update Review" : "Submit Review";
 
   const toggleDeleteMode = () => {
-    if (state === AddReviewModalState.REVIEW_JOB) {
-      setState(AddReviewModalState.REVIEW_JOB_DELETE);
-    } else {
-      setState(AddReviewModalState.REVIEW_JOB);
+    if (isUpdateReview) {
+      if (
+        state === AddReviewModalState.REVIEW_JOB ||
+        state === AddReviewModalState.REVIEW_JOB_ERROR
+      ) {
+        setState(AddReviewModalState.REVIEW_JOB_DELETE);
+      } else {
+        setState(AddReviewModalState.REVIEW_JOB);
+      }
+    }
+
+    if (isUpdateInterview) {
+      if (
+        state === AddReviewModalState.INTERVIEW ||
+        state === AddReviewModalState.INTERVIEW_ERROR
+      ) {
+        setState(AddReviewModalState.INTERVIEW_DELETE);
+      } else {
+        setState(AddReviewModalState.INTERVIEW);
+      }
     }
   };
+
+  const setInterviewResources = (data: IInterviewResourceDisplay[]) => {
+    setInterviewResourcesState(data);
+  };
+
+  const nValidResources: number = useMemo(() => {
+    return interviewResources.filter(x => {
+      return getInterviewResourceValidator(x.resourceType)(x.value);
+    }).length;
+  }, [interviewResources]);
 
   return {
     companyError,
@@ -272,5 +401,13 @@ export const useAddReviewModal = (
     submitText,
     toggleDeleteMode,
     onDeleteReview,
+    isUpdateReview,
+    isUpdateInterview,
+    onDeleteInterview,
+    interviewResources,
+    setInterviewResources,
+    nValidResources,
+    coopNumber,
+    setCoopNumber,
   };
 };

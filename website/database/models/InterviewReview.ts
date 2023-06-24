@@ -5,20 +5,25 @@ import { IUserData } from "src/database/models/UserData";
 import CompanyDomains from "src/database/models/CompanyDomains";
 import JobRole from "src/database/models/JobRole";
 import UserData from "src/database/models/UserData";
-export interface IJobReview {
+import {
+  IInterviewResource,
+  InterviewStatus,
+} from "src/lib/hooks/useAddReviewModal";
+
+export interface IInterviewReview {
   role: IJobRole;
   company: ICompanyClearbitData;
   user: IUserData;
   id: string;
-  rating: number;
-  salary: number;
+  difficulty: number;
+  status: InterviewStatus;
   verified: boolean;
   anonymous: boolean;
   review: string;
+  resources: IInterviewResource[];
   date: number;
   upvoters: string[];
   downvoters: string[];
-  coopNumber?: number;
 }
 
 const schema: Schema = new mongoose.Schema({
@@ -37,7 +42,20 @@ const schema: Schema = new mongoose.Schema({
   review: {
     type: String,
   },
-  rating: {
+  status: {
+    type: String,
+  },
+  resources: [
+    {
+      resourceType: {
+        type: String,
+      },
+      value: {
+        type: String,
+      },
+    },
+  ],
+  difficulty: {
     type: Number,
   },
   salary: {
@@ -62,12 +80,9 @@ const schema: Schema = new mongoose.Schema({
       type: String,
     },
   ],
-  coopNumber: {
-    type: Number,
-  },
 });
 
-interface JobReviewModel extends Model<IJobReview> {
+interface InterviewReviewModel extends Model<IInterviewReview> {
   id: string;
 }
 
@@ -79,6 +94,7 @@ schema.set("toObject", {
   },
 });
 
-export default (mongoose.models.JobReview as IJobReview &
+export default (mongoose.models.InterviewReview as IInterviewReview &
   Document &
-  JobReviewModel) || mongoose.model<IJobReview & Document>("JobReview", schema);
+  InterviewReviewModel) ||
+  mongoose.model<IInterviewReview & Document>("InterviewReview", schema);

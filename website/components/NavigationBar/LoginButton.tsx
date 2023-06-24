@@ -89,6 +89,13 @@ export const LoginButton = () => {
           </MenuItem>
           <MenuItem
             onClick={() => {
+              router.push("/user?tab=1");
+            }}
+          >
+            <ListItemText>My Reviews</ListItemText>
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
               router.push("/user?tab=2");
             }}
           >

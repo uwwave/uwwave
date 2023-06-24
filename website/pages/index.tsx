@@ -25,7 +25,7 @@ const generatePillars = (
         color = Color.salary;
         break;
       default:
-        color = Color.compatibility;
+        color = Color.interview;
     }
     out.push({
       height: Math.random() * (maxHeight - minHeight) + minHeight,
@@ -33,6 +33,8 @@ const generatePillars = (
       delay: Math.random() * 1.2,
     });
   }
+  out[0].height = minHeight - 40;
+  out[out.length - 1].height = minHeight;
   return out;
 };
 

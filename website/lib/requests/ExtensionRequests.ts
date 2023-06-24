@@ -10,14 +10,6 @@ import {
 } from "src/lib/extension/shared/tags";
 import { v4 as uuidv4 } from "uuid";
 
-// function delay(ms: number): Promise<void> {
-//   return new Promise<void>(resolve => {
-//     setTimeout(() => {
-//       resolve();
-//     }, ms);
-//   });
-// }
-
 const dummyTags: AllTagsObject = {
   Ambitious: {
     color: Color.ambitious,

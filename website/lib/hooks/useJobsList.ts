@@ -6,7 +6,7 @@ import {
 import { ISearchChip } from "src/components/SearchBar/SearchBarJobsList";
 import lunr from "lunr";
 import {
-  IGetCompanyLogosResponse,
+  IGetCompaniesDataResponse,
   IJobKeywordObject,
   Requests,
 } from "src/lib/requests/Requests";
@@ -31,16 +31,8 @@ export const useJobsList = () => {
   );
   const [numActiveChips, setNumActiveChips] = useState<number>(0);
   const { isLoading: isJobTagsLoading } = useJobTagsContext();
-  const [logos, setLogos] = useState<IGetCompanyLogosResponse>();
-
-  useEffect(() => {
-    const fire = async () => {
-      const out = await Requests.getCompanyLogos();
-      setLogos(out);
-    };
-
-    fire();
-  }, []);
+  const [companiesData, setCompaniesData] =
+    useState<IGetCompaniesDataResponse>();
 
   const uniqueCompanyNames: string[] = useMemo(() => {
     const set = new Set<string>();
@@ -50,6 +42,32 @@ export const useJobsList = () => {
     });
     return Array.from(set);
   }, [jobs]);
+
+  useEffect(() => {
+    const fire = async () => {
+      if (!uniqueCompanyNames.length || !jobs.length) {
+        return;
+      }
+      const out = await Requests.getCompaniesData(uniqueCompanyNames);
+      setCompaniesData(out);
+      const newJobsList: {
+        [jobID: string]: JobsPageRowData;
+      } = {};
+
+      jobs.forEach(job => {
+        const companyData = out.companyToData[job.companyName];
+        newJobsList[job.id] = {
+          ...job,
+          ratingsScore: companyData.ratingAverage ?? null,
+          salaryScore: companyData.salaryScore ?? null,
+          interviewScore: companyData.interviewAverage ?? null,
+        };
+      });
+      setJobsList(newJobsList);
+    };
+    fire();
+  }, [jobs, uniqueCompanyNames]);
+
   // Build Keywords
   useEffect(() => {
     if (jobs.length === 0) {
@@ -68,18 +86,6 @@ export const useJobsList = () => {
       Requests.postNewCompanies(uniqueCompanyNames);
     }
   }, [uniqueCompanyNames]);
-
-  // Build map of job id to job
-  useEffect(() => {
-    const newJobsList: any = {};
-
-    jobs.forEach(job => {
-      newJobsList[job.id] = {
-        ...job,
-      };
-    });
-    setJobsList(newJobsList);
-  }, [jobs]);
 
   // Build Search Index
   useEffect(() => {
@@ -154,6 +160,6 @@ export const useJobsList = () => {
     setChips: setSearchChips,
     setNumActiveChips,
     numActiveChips,
-    logos,
+    logos: companiesData,
   };
 };

@@ -7,7 +7,7 @@ export const WaveLogo = (props: ILogo) => {
   const fill = color ?? "black";
   return (
     <svg
-      width="40"
+      width="32"
       viewBox="0 0 53 33"
       fill={fill}
       xmlns="http://www.w3.org/2000/svg"

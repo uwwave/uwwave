@@ -11,7 +11,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import { LogoLoader } from "../Loader/LogoLoader";
 
 interface IMenuItem {
   value: string;
@@ -58,11 +57,7 @@ export const SearchWithMenuInput = ({
   };
   const renderMenuList = () => {
     if (isLoading) {
-      return (
-        <Center>
-          <LogoLoader width={64} />
-        </Center>
-      );
+      return null;
     }
     if (menuItems.length === 0 || selectedValue || !isInteracting || !init) {
       return null;
@@ -209,10 +204,4 @@ const StyledRoundedTextField = styled(RoundedTextField)`
   && div {
     height: 48px;
   }
-`;
-
-const Center = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;

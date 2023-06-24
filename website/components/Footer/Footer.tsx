@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import { BackgroundColor, Color } from "styles/color";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import { WaveLogo } from "src/components/icons/logo/Footer";
-import Link from "next/link";
 import MUITypography from "@mui/material/Typography";
 import { Spacer } from "../Spacer/Spacer";
 import { useRouter } from "next/router";
+import { TertiaryButton } from "../Buttons/TertiaryButton";
+import { ButtonBase } from "@mui/material";
+import Link from "next/link";
+import { WaveLogo } from "../icons/logo/Footer";
 
 interface IFooterWrapper {
   color: string;
@@ -35,66 +34,50 @@ export const Footer = (props: IFooter) => {
         color={useDarkFooter ? BackgroundColor.darker : BackgroundColor.dark}
       >
         {/* Weird font bug, need to wrap link with typography: https://mui.com/material-ui/api/link */}
-        <MUITypography>
-          <StyledLink href="/setup" color={Color.textPrimary} shallow>
-            Setup
-          </StyledLink>
-        </MUITypography>
+        <TertiaryButton
+          text="Setup"
+          onClick={() => router.push("/setup")}
+          white
+        />
         <Spacer height={16} />
-        <MUITypography>
-          <StyledLink href="/jobs" color={Color.textPrimary} shallow>
-            Jobs List
-          </StyledLink>
-        </MUITypography>
+        <TertiaryButton
+          text="Jobs List"
+          onClick={() => router.push("/jobs")}
+          white
+        />
         <Spacer height={16} />
-        <MUITypography>
-          <StyledLink href="/jobs/tagged" color={Color.textPrimary} shallow>
-            Tagged Jobs
-          </StyledLink>
-        </MUITypography>
+        <TertiaryButton
+          text="Tagged Jobs"
+          onClick={() => router.push("/jobs/tagged")}
+          white
+        />
         <Spacer height={16} />
-        <MUITypography>
-          <StyledLink href="/about" color={Color.textPrimary} shallow>
-            About
-          </StyledLink>
-        </MUITypography>
-        <Spacer height={16} />
-
-        <Spacer height={16} />
-        <SocialMediaWrapper>
-          <IconWrapper>
-            <FacebookIcon style={{ color: Color.textPrimary, fontSize: 40 }} />
-          </IconWrapper>
-          <IconWrapper>
-            <InstagramIcon style={{ color: Color.textPrimary, fontSize: 40 }} />
-          </IconWrapper>
-          <IconWrapper>
-            <TwitterIcon style={{ color: Color.textPrimary, fontSize: 40 }} />
-          </IconWrapper>
-        </SocialMediaWrapper>
-        <IconWrapper>
-          <WaveLogo color="white" />
-        </IconWrapper>
+        <TertiaryButton
+          text="About"
+          onClick={() => router.push("/about")}
+          white
+        />
+        <Spacer height={32} />
+        <ButtonBase>
+          <Link href="/">
+            <WaveLogo color={"white"} />
+          </Link>
+        </ButtonBase>
+        <Spacer height={32} />
       </FooterWrapper>
+      {process.env.NEXT_PUBLIC_DATABASE !== "PROD" ? (
+        <StagingFooter>
+          <MUITypography color="white">{"You're on staging ;)"}</MUITypography>
+        </StagingFooter>
+      ) : null}
     </>
   );
 };
 
-const Elemen = Link as any;
-const StyledLink = styled(Elemen)`
-  && {
-    text-decoration: none;
-    color: white;
-  }
-`;
-
-const SocialMediaWrapper = styled.div`
-  padding: 15px;
+const StagingFooter = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
-`;
-
-const IconWrapper = styled.div`
-  padding: 10px;
+  justify-content: center;
+  background-color: ${Color.primaryButton};
+  padding: 8px;
 `;

@@ -5,7 +5,7 @@ import {
 import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
 import { useEffect, useMemo, useState } from "react";
 import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
-import { IGetCompanyLogosResponse, Requests } from "src/lib/requests/Requests";
+import { IGetCompaniesDataResponse, Requests } from "src/lib/requests/Requests";
 import { getEarliestDeadline } from "src/lib/dates/dates";
 
 export const useTaggedJobsPage = () => {
@@ -30,15 +30,28 @@ export const useTaggedJobsPage = () => {
     totalTaggedJobs,
     tagToJobsCount,
   } = useJobTagsContext();
-  const [logos, setLogos] = useState<IGetCompanyLogosResponse>();
+  const [companiesData, setCompaniesData] =
+    useState<IGetCompaniesDataResponse>();
+  const uniqueCompanyNames: string[] = useMemo(() => {
+    const set = new Set<string>();
+
+    jobs.forEach(job => {
+      set.add(job.companyName);
+    });
+    return Array.from(set);
+  }, [jobs]);
+
   useEffect(() => {
     const fire = async () => {
-      const out = await Requests.getCompanyLogos();
-      setLogos(out);
+      if (!uniqueCompanyNames.length || companiesData !== undefined) {
+        return;
+      }
+      const out = await Requests.getCompaniesData(uniqueCompanyNames);
+      setCompaniesData(out);
     };
-
     fire();
-  }, []);
+  }, [uniqueCompanyNames]);
+
   const isLoading = isJobTagsLoading || !isDataReady;
   const displayJobs: JobsPageRowData[] = useMemo(() => {
     if (
@@ -49,10 +62,20 @@ export const useTaggedJobsPage = () => {
     ) {
       return [];
     }
-    return jobs.filter(job => {
-      return tagToJobs[selectedTag].includes(job.id.toString());
-    });
-  }, [selectedTag, jobs, isDataReady, tagToJobs]);
+    return jobs
+      .filter(job => {
+        return tagToJobs[selectedTag].includes(job.id.toString());
+      })
+      .map(x => ({
+        ...x,
+        salaryScore:
+          companiesData?.companyToData[x.companyName]?.salaryScore ?? null,
+        interviewScore:
+          companiesData?.companyToData[x.companyName]?.interviewAverage ?? null,
+        ratingsScore:
+          companiesData?.companyToData[x.companyName]?.ratingAverage ?? null,
+      }));
+  }, [selectedTag, jobs, isDataReady, tagToJobs, companiesData]);
 
   const taggedJobRows: JobsPageRowData[] = useMemo(() => {
     const out = jobs.filter(job => {
@@ -113,7 +136,7 @@ export const useTaggedJobsPage = () => {
     jobKeywords,
     earliestDeadline,
     differentCountries,
-    logos,
+    logos: companiesData,
     tagToJobsCount,
   };
 };

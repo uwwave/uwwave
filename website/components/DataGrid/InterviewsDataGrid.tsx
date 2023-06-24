@@ -11,10 +11,7 @@ import { BackgroundColor, Color } from "src/styles/color";
 import Paper from "@mui/material/Paper";
 import styled from "styled-components";
 import { LogoLoader } from "src/components/Loader/LogoLoader";
-import {
-  IJobReviewRow,
-  IVotesState,
-} from "src/lib/hooks/useCompanyReviewsDataGrid";
+import { IVotesState } from "src/lib/hooks/useCompanyReviewsDataGrid";
 import { JobTitleCell, getJobTitleCellProps } from "./components/JobTitleCell";
 import { StarsInput } from "../StarsInput/StarsInput";
 import Typography from "@mui/material/Typography";
@@ -28,21 +25,23 @@ import { Spacer } from "../Spacer/Spacer";
 import Tooltip from "@mui/material/Tooltip";
 import { useRouter } from "next/router";
 import { Page } from "src/lib/types/page";
+import { IInterviewReviewRow } from "src/lib/hooks/useInterviewReviewsDataGrid";
+import { ResourcesCell } from "./components/ResourcesCell";
 
 interface IJobsDataGrid {
-  jobReviewsLoading: boolean;
+  isLoading: boolean;
   voteState: IVotesState;
   onUpvote: (reviewID: string) => void;
   onDownvote: (reviewID: string) => void;
   user: IUserData | undefined;
-  jobReviewRows: IJobReviewRow[];
+  reviewRows: IInterviewReviewRow[];
   onEditReview: () => void;
   origin?: Page;
 }
-export const ReviewsDataGrid = (props: IJobsDataGrid) => {
+export const InterviewsDataGrid = (props: IJobsDataGrid) => {
   const {
-    jobReviewRows,
-    jobReviewsLoading,
+    reviewRows,
+    isLoading,
     voteState,
     onUpvote,
     onDownvote,
@@ -60,7 +59,7 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
       : Page.ANY;
 
   const headerComponent = (
-    headerData: GridColumnHeaderParams<any, IJobReviewRow>
+    headerData: GridColumnHeaderParams<any, IInterviewReviewRow>
   ) => (
     <strong style={{ fontSize: "0.84rem", color: BackgroundColor.darker }}>
       {headerData.colDef.headerName}
@@ -73,7 +72,7 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
       sort: "desc" as GridSortDirection,
     },
   ]);
-  const columns: GridColDef<IJobReviewRow>[] = [
+  const columns: GridColDef<IInterviewReviewRow>[] = [
     {
       field: "userName",
       headerName: "Username",
@@ -99,11 +98,11 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
       headerName: "Position",
       renderHeader: headerComponent,
       renderCell: () => <></>,
-      flex: 2,
+      flex: 1,
     },
     {
-      field: "rating",
-      headerName: "Rating",
+      field: "difficulty",
+      headerName: "Difficulty",
       align: "center",
       headerAlign: "center",
       renderHeader: headerComponent,
@@ -111,31 +110,16 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
         const isMine = user?.id === rowData.row.user.id;
         return (
           <StarsInput
-            color={isMine ? BackgroundColor.dark : Color.rating}
-            value={rowData.row.rating / 20}
+            color={isMine ? BackgroundColor.dark : Color.interview}
+            value={rowData.row.difficulty / 20}
             starsSize={16}
           />
         );
       },
     },
     {
-      field: "salary",
-      headerName: "Salary",
-      align: "center",
-      headerAlign: "center",
-      renderHeader: headerComponent,
-      renderCell: rowData => (
-        <div>
-          <Typography align="center">{`$${rowData.row.salary}`}</Typography>
-          <Typography align="center" variant="caption">
-            CAD, hourly
-          </Typography>
-        </div>
-      ),
-    },
-    {
       flex: 3,
-      field: "review",
+      field: "status",
       headerName: "Review",
       headerAlign: "center",
       renderHeader: headerComponent,
@@ -149,11 +133,21 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
                   <StyledVerifiedIcon />
                 </StyledTooltip>
               ) : null}
-
-              {rowData.row.review}
+              <b>{rowData.row.status.split("_").join(" ")}</b>
+              {` - ${rowData.row.review}`}
             </Typography>
           </>
         );
+      },
+    },
+    {
+      flex: 1,
+      field: "resources",
+      headerName: "Resources",
+      headerAlign: "center",
+      renderHeader: headerComponent,
+      renderCell: rowData => {
+        return <ResourcesCell resources={rowData.row.resources} />;
       },
     },
     {
@@ -194,7 +188,7 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
           <div>
             {isMine ? (
               <EditReviewButton
-                review={rowData.row}
+                interview={rowData.row}
                 onClose={onEditReview}
                 origin={page}
               />
@@ -207,6 +201,7 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
               onUpvote={onUpvote}
               onDownvote={onDownvote}
               disabled={isMine}
+              color={Color.interview}
             />
           </div>
         );
@@ -223,10 +218,10 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
         disableColumnFilter
         disableColumnSelector
         disableDensitySelector
-        rows={jobReviewRows}
+        rows={reviewRows}
         columns={columns}
         pageSize={pageSize}
-        loading={jobReviewsLoading}
+        loading={isLoading}
         disableColumnMenu
         onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
         rowsPerPageOptions={[10, 25, 100]}
