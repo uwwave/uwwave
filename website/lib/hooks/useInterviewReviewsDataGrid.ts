@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { IJobReview } from "src/database/models/JobReview";
 import { Requests } from "src/lib/requests/Requests";
 import { useUserContext } from "src/lib/context/User/UserContext";
 import { useVoteHelpful } from "./useVoteHelpful";
+import { IInterviewReview } from "src/database/models/InterviewReview";
 
-export interface IJobReviewRow extends IJobReview {
+export interface IInterviewReviewRow extends IInterviewReview {
   roleName: string;
   username: string;
 }
@@ -22,13 +22,13 @@ export interface IVotesState {
   };
 }
 
-export const useCompanyReviewsDataGrid = (companyID: string) => {
-  const [jobReviews, setJobReviews] = useState<IJobReview[]>([]);
-  const [jobReviewsLoading, setJobReviewsLoading] = useState(true);
+export const useInterviewReviewsDataGrid = (companyID: string) => {
+  const [reviews, setReviews] = useState<IInterviewReview[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useUserContext();
   const { voteState, onUpvote, onDownvote } = useVoteHelpful(
-    jobReviews,
-    Requests.updateReviewVotes
+    reviews,
+    Requests.updateInterviewReviewVotes
   );
 
   const fetchReviews = useCallback(async () => {
@@ -36,9 +36,9 @@ export const useCompanyReviewsDataGrid = (companyID: string) => {
       if (!companyID) {
         return;
       }
-      setJobReviews([]);
-      setJobReviews(await Requests.getJobReviews(companyID));
-      setJobReviewsLoading(false);
+      setReviews([]);
+      setReviews(await Requests.getInterviewReviews(companyID));
+      setIsLoading(false);
     } catch (e) {
       console.log(e);
     }
@@ -48,25 +48,24 @@ export const useCompanyReviewsDataGrid = (companyID: string) => {
     fetchReviews();
   }, [companyID]);
 
-  const jobReviewRows: IJobReviewRow[] = useMemo(() => {
-    return jobReviews.map(x => ({
+  const reviewRows: IInterviewReviewRow[] = useMemo(() => {
+    return reviews.map(x => ({
       ...x,
       roleName: x.role.role,
       username: x.user.username,
     }));
-  }, [jobReviews]);
+  }, [reviews]);
 
-  const myReviewsRows: IJobReviewRow[] = useMemo(() => {
+  const myReviewsRows: IInterviewReviewRow[] = useMemo(() => {
     if (!user) {
       return [];
     }
-    return jobReviewRows.filter(x => x.user.id === user.id);
-  }, [jobReviewRows]);
+    return reviewRows.filter(x => x.user.id === user.id);
+  }, [reviewRows, user]);
 
   return {
-    user,
-    jobReviewRows,
-    jobReviewsLoading,
+    reviewRows,
+    isLoading,
     voteState,
     onUpvote,
     onDownvote,

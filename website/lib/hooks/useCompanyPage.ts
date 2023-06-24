@@ -4,6 +4,8 @@ import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
 import { useRouter } from "next/router";
 import { useCompanyReviewsDataGrid } from "./useCompanyReviewsDataGrid";
 import { useExtensionsDataContext } from "../context/ExtensionData/ExtensionDataContext";
+import { useInterviewReviewsDataGrid } from "./useInterviewReviewsDataGrid";
+import { useCompanyReviewsSummary } from "./useCompanyReviewsSummary";
 
 export const useCompanyPage = (companyID?: string) => {
   const [companyInfo, setCompanyInfo] = useState<ICompanyClearbitData>();
@@ -20,6 +22,17 @@ export const useCompanyPage = (companyID?: string) => {
     fetchReviews,
     myReviewsRows,
   } = useCompanyReviewsDataGrid(companyID ?? "");
+  const {
+    reviewRows: interviewRows,
+    isLoading: interviewsAreLoading,
+    voteState: interviewVoteState,
+    onUpvote: interviewUpvote,
+    onDownvote: interviewDownnvote,
+    fetchReviews: fetchInterviews,
+    myReviewsRows: myInterviewsRows,
+  } = useInterviewReviewsDataGrid(companyID ?? "");
+  const { summary: reviewsSummary, isLoading: isReviewsSummaryLoading } =
+    useCompanyReviewsSummary(companyID ?? "");
   const router = useRouter();
 
   const onClearbitData = (data: ICompanyClearbitData) => {
@@ -48,7 +61,7 @@ export const useCompanyPage = (companyID?: string) => {
     setTabSelected(tab);
   }, [router]);
 
-  const isLoading = !companyInfo;
+  const isLoading = !companyInfo || isReviewsSummaryLoading;
 
   const jobsCount: number = useMemo(() => {
     return jobs.filter(x => x.companyName === companyInfo?.companyName).length;
@@ -70,5 +83,13 @@ export const useCompanyPage = (companyID?: string) => {
     myReviewsRows,
     fetchReviews,
     jobsCount,
+    interviewRows,
+    interviewsAreLoading,
+    interviewVoteState,
+    interviewUpvote,
+    interviewDownnvote,
+    fetchInterviews,
+    myInterviewsRows,
+    reviewsSummary,
   };
 };

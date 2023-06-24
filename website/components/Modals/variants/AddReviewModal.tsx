@@ -34,20 +34,26 @@ import { LogoLoader } from "src/components/Loader/LogoLoader";
 import { IJobReview } from "src/database/models/JobReview";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Page } from "src/lib/types/page";
+import { IInterviewReview } from "src/database/models/InterviewReview";
+import { coopNumberDisplay } from "src/lib/reviews/summary";
 interface IAddReviewModal {
   isOpen: boolean;
   company?: ICompanyClearbitData;
   review?: IJobReview;
+  interview?: IInterviewReview;
+  afterSubmit?: () => void;
   close: () => void;
   origin?: Page;
 }
 
 export const AddReviewModal = ({
   isOpen,
+  afterSubmit,
   close,
   company,
   review: reviewProp,
   origin,
+  interview,
 }: IAddReviewModal) => {
   const {
     companyError,
@@ -82,11 +88,21 @@ export const AddReviewModal = ({
     submitText,
     toggleDeleteMode,
     onDeleteReview,
+    isUpdateReview,
+    isUpdateInterview,
+    onDeleteInterview,
+    interviewResources,
+    setInterviewResources,
+    nValidResources,
+    coopNumber,
+    setCoopNumber,
   } = useAddReviewModal(
     close,
-    company ?? reviewProp?.company,
+    afterSubmit,
+    company ?? reviewProp?.company ?? interview?.company,
     reviewProp,
-    origin
+    origin,
+    interview
   );
   const renderHome = () => (
     <>
@@ -155,7 +171,7 @@ export const AddReviewModal = ({
         </ReviewTypeWrapper>
         <ReviewTypeWrapper>
           <ReviewTypeButton
-            bgcolor={Color.compatibility}
+            bgcolor={Color.interview}
             onClick={onClickInterviewReview}
           >
             <InterviewIcon />
@@ -185,8 +201,22 @@ export const AddReviewModal = ({
     ) : null;
 
   const renderDeleteButton = () =>
-    state === AddReviewModalState.REVIEW_JOB ||
-    state === AddReviewModalState.REVIEW_JOB_ERROR ? (
+    isUpdateReview && state !== AddReviewModalState.REVIEW_JOB_DELETE ? (
+      <>
+        <Spacer height={16} />
+        <Center>
+          <TertiaryButton
+            startIcon={<StyledDeleteOutlineIcon />}
+            text={"Delete"}
+            white
+            onClick={toggleDeleteMode}
+          />
+        </Center>
+      </>
+    ) : null;
+
+  const renderDeleteInterviewButton = () =>
+    isUpdateInterview && state !== AddReviewModalState.INTERVIEW_DELETE ? (
       <>
         <Spacer height={16} />
         <Center>
@@ -291,7 +321,10 @@ export const AddReviewModal = ({
   );
 
   const renderConfirmDelete = () => {
-    if (state !== AddReviewModalState.REVIEW_JOB_DELETE) {
+    if (
+      state !== AddReviewModalState.REVIEW_JOB_DELETE &&
+      state !== AddReviewModalState.INTERVIEW_DELETE
+    ) {
       return null;
     }
     return (
@@ -302,7 +335,13 @@ export const AddReviewModal = ({
         </Typography>
         <Spacer height={16} />
         <Center>
-          <DeleteButton onClick={onDeleteReview}>
+          <DeleteButton
+            onClick={
+              state === AddReviewModalState.REVIEW_JOB_DELETE
+                ? onDeleteReview
+                : onDeleteInterview
+            }
+          >
             <StyledDeleteOutlineIcon />
             Confirm Delete
           </DeleteButton>
@@ -320,6 +359,8 @@ export const AddReviewModal = ({
       <Spacer height={24} />
       {renderJobStarsInput()}
       <Spacer height={8} />
+      {renderCoopNumberInput()}
+      <Spacer height={8} />
       {renderSalaryInput()}
       <Spacer height={8} />
       {renderReviewTextField()}
@@ -333,94 +374,102 @@ export const AddReviewModal = ({
     </>
   );
 
-  const renderInterviewReview = () => (
-    <>
-      <Typography color="white" align="center">
-        {companyAndRole}
-      </Typography>
-      <Spacer height={24} />
+  const renderDifficultyStarsInput = () => (
+    <InputRow>
+      <InputLabel>Difficulty</InputLabel>
+      <StarsInput
+        value={stars}
+        onValue={data => {
+          setStars(data);
+        }}
+        color={Color.primaryButton}
+      />
+    </InputRow>
+  );
+
+  const renderInterviewStatusInput = () => (
+    <InputRow>
+      <InputLabel>Status</InputLabel>
+      <Select
+        value={interviewStatus}
+        onChange={(e: any) => setInterviewStatus(e.target.value)}
+        size="small"
+      >
+        {Object.values(InterviewStatus).map(item => (
+          <MenuItem value={item} key={item}>
+            {item.split("_").join(" ")}
+          </MenuItem>
+        ))}
+      </Select>
+    </InputRow>
+  );
+
+  const renderCoopNumberInput = () => {
+    return (
       <InputRow>
-        <InputLabel>Difficulty</InputLabel>
-        <StarsInput
-          value={stars}
-          onValue={data => {
-            setStars(data);
-          }}
-          color={Color.compatibility}
-        />
-      </InputRow>
-      <Spacer height={8} />
-      <InputRow>
-        <InputLabel>Status</InputLabel>
+        <InputLabel>Co-op number</InputLabel>
         <Select
-          value={interviewStatus}
-          onChange={(e: any) => setInterviewStatus(e.target.value)}
+          value={coopNumber}
+          onChange={(e: any) => setCoopNumber(e.target.value)}
+          size="small"
         >
-          {Object.values(InterviewStatus).map(item => (
-            <MenuItem value={item} key={item}>
-              {item.split("_").join(" ")}
-            </MenuItem>
-          ))}
+          {[1, 2, 3, 4, 5, 6, 7, 0].map(item => {
+            return (
+              <MenuItem value={item} key={item}>
+                {coopNumberDisplay(item)}
+              </MenuItem>
+            );
+          })}
         </Select>
       </InputRow>
-      <Spacer height={8} />
-      <StyledTextField
-        error={reviewError}
-        value={review}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setReview(e.target.value);
-        }}
-        multiline
-        rows={4}
-        variant="outlined"
-        placeholder="Add details about your interview"
-      />
-      <Typography color={isReviewLengthError ? "red" : "white"} align="right">
-        {reviewCharacterCountText}
-      </Typography>
-      <InputLabel>Resources</InputLabel>
+    );
+  };
+
+  const renderResourcesInput = () => (
+    <>
+      <InputLabel>{`Resources (${nValidResources})`}</InputLabel>
       <Spacer height={4} />
-      <InterviewResources />
-      <Spacer height={32} />
-      <InputRow>
-        <InputLabel>Anonymous</InputLabel>
-        <Checkbox
-          checked={isAnonymous}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setIsAnonymous(e.target.checked);
-          }}
-        />
-      </InputRow>
-      {jobReviewErrorString ? (
-        <>
-          <Center>
-            <Typography color="red">{jobReviewErrorString}</Typography>
-          </Center>
-          <Spacer height={8} />
-        </>
-      ) : null}
-      <Spacer height={8} />
+      <InterviewResources
+        interviewResources={interviewResources}
+        setInterviewResources={setInterviewResources}
+      />
+    </>
+  );
+
+  const renderInterviewSubmitUpdateButton = () =>
+    state !== AddReviewModalState.INTERVIEW_DELETE ? (
       <Center>
-        <PrimaryButton onClick={onSubmitInterviewReview}>Submit</PrimaryButton>
-      </Center>
-      <Spacer height={32} />
-      {
-        <>
-          {isBackToHomeDisabled ? null : (
-            <>
-              <Spacer height={32} />
-              <InputRow>
-                <TertiaryButton
-                  startIcon={<StyledChevronLeftIcon />}
-                  text="back"
-                  white
-                  onClick={onBackToHome}
-                />
-              </InputRow>
-            </>
+        <PrimaryButton
+          onClick={onSubmitInterviewReview}
+          disabled={state === AddReviewModalState.INTERVIEW_LOADING}
+        >
+          {state === AddReviewModalState.INTERVIEW_LOADING ? (
+            <LogoLoader width={32} darkMode />
+          ) : (
+            submitText
           )}
-        </>
-      }
+        </PrimaryButton>
+      </Center>
+    ) : null;
+
+  const renderInterviewReview = () => (
+    <>
+      {renderCompanyAndRoleTitle()}
+      <Spacer height={24} />
+      {renderDifficultyStarsInput()}
+      <Spacer height={8} />
+      {renderInterviewStatusInput()}
+      <Spacer height={8} />
+      {renderReviewTextField()}
+      {renderResourcesInput()}
+      <Spacer height={32} />
+      {renderIsAnonymousInput()}
+      {renderErrorMessage()}
+      <Spacer height={8} />
+      {renderInterviewSubmitUpdateButton()}
+      {renderDeleteInterviewButton()}
+      {renderConfirmDelete()}
+      {renderBackButton()}
     </>
   );
 
@@ -433,6 +482,8 @@ export const AddReviewModal = ({
         return renderJobReview();
       case AddReviewModalState.INTERVIEW:
       case AddReviewModalState.INTERVIEW_ERROR:
+      case AddReviewModalState.INTERVIEW_DELETE:
+      case AddReviewModalState.INTERVIEW_LOADING:
         return renderInterviewReview();
       default:
         return renderHome();

@@ -15,6 +15,7 @@ interface IHelpfulCell {
   onUpvote: (reviewID: string) => void;
   onDownvote: (reviewID: string) => void;
   disabled?: boolean;
+  color?: string;
 }
 export const HelpfulCell = ({
   upvoteCount,
@@ -24,6 +25,7 @@ export const HelpfulCell = ({
   onDownvote,
   voteState,
   disabled,
+  color,
 }: IHelpfulCell) => {
   const { user } = useUserContext();
   const { open } = useLoginModalContext();
@@ -60,7 +62,7 @@ export const HelpfulCell = ({
         margin={disabled ? true : !!upvoteCount}
         onClick={onClickUpvote}
         disabled={disabled}
-        fillcolor={disabled ? BackgroundColor.dark : Color.rating}
+        fillcolor={disabled ? BackgroundColor.dark : color ?? Color.rating}
       >
         {upvoteCount > 0 || disabled ? upvoteCount : ""}
       </StyledButton>
@@ -71,7 +73,7 @@ export const HelpfulCell = ({
         margin={disabled ? true : !!upvoteCount}
         onClick={onClickDownvote}
         disabled={disabled}
-        fillcolor={disabled ? BackgroundColor.dark : Color.rating}
+        fillcolor={disabled ? BackgroundColor.dark : color ?? Color.rating}
       >
         {downvoteCount > 0 || disabled ? downvoteCount : ""}
       </StyledButton>

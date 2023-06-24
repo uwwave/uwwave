@@ -134,7 +134,7 @@ const DialogWrapper = styled(otherProps => <Dialog {...otherProps} />)<IDark>`
   & > .MuiDialog-container > .MuiPaper-root {
     min-width: ${props => props.width};
     padding: 0;
-    overflow-y: unset;
+    overflow-y: auto;
     background-color: ${props => (props.dark ? BackgroundColor.dark : "white")};
   }
 

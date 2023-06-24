@@ -3,39 +3,28 @@ import { IJobReview } from "src/database/models/JobReview";
 import { Requests } from "src/lib/requests/Requests";
 import { useUserContext } from "src/lib/context/User/UserContext";
 import { useVoteHelpful } from "./useVoteHelpful";
+import { IInterviewReview } from "src/database/models/InterviewReview";
+import { IInterviewReviewRow } from "./useInterviewReviewsDataGrid";
 
 export interface IJobReviewRow extends IJobReview {
   roleName: string;
   username: string;
 }
 
-export enum VoteState {
-  NONE,
-  UP,
-  DOWN,
-}
-export interface IVotesState {
-  [reviewID: string]: {
-    voteType: VoteState;
-    upvotes: number;
-    downvotes: number;
-  };
-}
-
-export const useMyCompanyReviewsDataGrid = () => {
-  const [jobReviews, setJobReviews] = useState<IJobReview[]>([]);
-  const [jobReviewsLoading, setJobReviewsLoading] = useState(true);
+export const useMyInterviewReviewsDataGrid = () => {
+  const [reviews, setReviews] = useState<IInterviewReview[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useUserContext();
-  const { voteState } = useVoteHelpful(jobReviews, Requests.updateReviewVotes);
+  const { voteState } = useVoteHelpful(reviews, Requests.updateReviewVotes);
 
   const fetchReviews = useCallback(async () => {
     try {
       if (!user) {
         return;
       }
-      setJobReviews([]);
-      setJobReviews(await Requests.getUserJobReviews(user.id));
-      setJobReviewsLoading(false);
+      setReviews([]);
+      setReviews(await Requests.getUserInterviewReviews(user.id));
+      setIsLoading(false);
     } catch (e) {
       console.log(e);
     }
@@ -45,13 +34,13 @@ export const useMyCompanyReviewsDataGrid = () => {
     fetchReviews();
   }, [user]);
 
-  const jobReviewRows: IJobReviewRow[] = useMemo(() => {
-    return jobReviews.map(x => ({
+  const reviewRows: IInterviewReviewRow[] = useMemo(() => {
+    return reviews.map(x => ({
       ...x,
       roleName: x.role.role,
       username: x.user.username,
     }));
-  }, [jobReviews]);
+  }, [reviews]);
 
   const onUpvote = (reviewID: string) => {
     console.log(reviewID);
@@ -63,8 +52,8 @@ export const useMyCompanyReviewsDataGrid = () => {
 
   return {
     user,
-    jobReviewRows,
-    jobReviewsLoading,
+    reviewRows,
+    isLoading,
     voteState,
     onUpvote,
     onDownvote,

@@ -19,7 +19,7 @@ export const TertiaryButton = ({
   startIcon,
 }: ITertiaryButton) => {
   return (
-    <ButtonBase>
+    <StyledButtonBase>
       <Main onClick={onClick}>
         {startIcon}
         <StyledTypography
@@ -30,7 +30,7 @@ export const TertiaryButton = ({
           {text}
         </StyledTypography>
       </Main>
-    </ButtonBase>
+    </StyledButtonBase>
   );
 };
 
@@ -39,6 +39,7 @@ const Main = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  gap: 4px;
 `;
 
 interface IStyledTypography {
@@ -59,5 +60,11 @@ const StyledTypography = styled(Typography)<IStyledTypography>`
 
   &&:active {
     color: ${Color.primary};
+  }
+`;
+
+const StyledButtonBase = styled(ButtonBase)`
+  && {
+    border-radius: 4px;
   }
 `;

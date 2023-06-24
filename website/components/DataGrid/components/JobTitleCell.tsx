@@ -1,6 +1,12 @@
 import { Color } from "src/styles/color";
 import styled from "styled-components";
 import Typography from "@mui/material/Typography";
+import { IUserData } from "src/database/models/UserData";
+import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
+import { getProfileImage } from "src/lib/types/profiles";
+import { IJobRole } from "src/database/models/JobRole";
+import { Page } from "src/lib/types/page";
+import { coopNumberSubtitleDisplay } from "src/lib/reviews/summary";
 
 interface IJobTitleCell {
   subtitle: string;
@@ -8,6 +14,48 @@ interface IJobTitleCell {
   url?: string;
   imageURL?: string;
 }
+
+interface IData {
+  user: IUserData;
+  anonymous: boolean;
+  company: ICompanyClearbitData;
+  role: IJobRole;
+  coopNumber?: number;
+}
+export const getJobTitleCellProps = (rowData: IData, page?: Page) => {
+  const roleSubtitle = `${
+    rowData.coopNumber
+      ? `${rowData.role.role}${coopNumberSubtitleDisplay(rowData.coopNumber)}`
+      : rowData.role.role
+  }`;
+  const user = rowData.user;
+  const isProfilePage = page === Page.PROFILE;
+  //TITLE
+  const companyPageTitle = rowData.anonymous
+    ? "Anonymous"
+    : rowData.user.username;
+  const profilePageTitle = rowData.company.companyName;
+  const title = isProfilePage ? profilePageTitle : companyPageTitle;
+  //PROFILE IMAGE
+  const companyPageImage = getProfileImage(user?.profilePicture);
+  const profilePageImage = rowData.company.logo ?? "/logo-empty.png";
+  const imageURL = page === Page.PROFILE ? profilePageImage : companyPageImage;
+  //SUBTITLE
+  const companyPageSubtitle = rowData.anonymous ? "" : roleSubtitle;
+  const profilePageSubtitle = rowData.anonymous ? "anonymous" : roleSubtitle;
+  const subtitle = isProfilePage ? profilePageSubtitle : companyPageSubtitle;
+  //URL
+  const companyPageURL = undefined;
+  const profilePageURL = `/companies/${rowData.company.id}`;
+  const url = isProfilePage ? profilePageURL : companyPageURL;
+
+  return {
+    title,
+    imageURL,
+    subtitle,
+    url,
+  };
+};
 
 export const JobTitleCell = (props: IJobTitleCell) => {
   const { subtitle, title, url, imageURL } = props;

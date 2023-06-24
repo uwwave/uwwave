@@ -10,26 +10,23 @@ import { Page } from "src/lib/types/page";
 
 interface IAddReviewButton {
   company?: ICompanyClearbitData;
-  onClose?: () => void;
+  afterSubmit?: () => void;
   origin?: Page;
 }
 export const AddReviewButton = ({
   company,
-  onClose,
+  afterSubmit,
   origin,
 }: IAddReviewButton) => {
   const { open, isOpen, close: closeModal } = useAddReviewButton();
-  const close = () => {
-    closeModal();
-    onClose?.();
-  };
   return (
     <>
       <AddReviewModal
         isOpen={isOpen}
-        close={close}
+        close={closeModal}
         company={company}
         origin={origin}
+        afterSubmit={afterSubmit}
       />
       <StyledButton onClick={open}>
         <IconsWrapper>
@@ -52,7 +49,7 @@ const IconsWrapper = styled.div`
 const StyledButton = styled(PrimaryButton)`
   && {
     background-color: ${Color.rating}!important;
-    box-shadow: 3px 4px ${Color.compatibility};
+    box-shadow: 3px 4px ${Color.interview};
     padding-left: 16px;
     padding-right: 16px;
     min-width: 0;
@@ -60,6 +57,6 @@ const StyledButton = styled(PrimaryButton)`
 
   &&:hover {
     background-color: ${Color.rating}!important;
-    box-shadow: 3px 4px ${Color.compatibility};
+    box-shadow: 3px 4px ${Color.interview};
   }
 `;

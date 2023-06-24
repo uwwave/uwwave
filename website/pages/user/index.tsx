@@ -11,6 +11,7 @@ import { getProfileImage } from "src/lib/types/profiles";
 import { ReviewsEmptyState } from "src/components/Empty/JobReviewsEmptyState";
 import { ReviewsDataGrid } from "src/components/DataGrid/ReviewsDataGrid";
 import { Page } from "src/lib/types/page";
+import { InterviewsDataGrid } from "src/components/DataGrid/InterviewsDataGrid";
 
 const UserPage = () => {
   const {
@@ -24,6 +25,12 @@ const UserPage = () => {
     onUpvote,
     onDownvote,
     fetchReviews,
+    interviewRows,
+    interviewsAreLoading,
+    interviewVoteState,
+    interviewUpvote,
+    interviewDownnvote,
+    fetchInterviews,
   } = useUserPage();
   const renderHeader = () => (
     <ProfileHeaderCard
@@ -38,37 +45,55 @@ const UserPage = () => {
   const renderMyReviewsTabs = () => {
     const renderTableBody = () =>
       jobReviewRows.length ? (
-        <ReviewsDataGrid
-          user={user}
-          jobReviewRows={jobReviewRows}
-          jobReviewsLoading={jobReviewsLoading}
-          voteState={voteState}
-          onUpvote={onUpvote}
-          onDownvote={onDownvote}
-          onEditReview={fetchReviews}
-          origin={Page.PROFILE}
-        />
+        <>
+          <Spacer height={4} />
+          <ReviewsDataGrid
+            user={user}
+            jobReviewRows={jobReviewRows}
+            jobReviewsLoading={jobReviewsLoading}
+            voteState={voteState}
+            onUpvote={onUpvote}
+            onDownvote={onDownvote}
+            onEditReview={fetchReviews}
+            origin={Page.PROFILE}
+          />
+        </>
       ) : (
         <ReviewsEmptyState
-          onClose={fetchReviews}
+          afterSubmit={fetchReviews}
           origin={Page.PROFILE}
           title="You have 0 Job Reviews! Submit a review to share your experience:"
         />
       );
 
-    const renderInterviewsTableBody = () => (
-      <ReviewsEmptyState
-        onClose={fetchReviews}
-        origin={Page.PROFILE}
-        title="You have 0 Interview Reviews! Submit a review to share your experience:"
-      />
-    );
+    const renderInterviewsTableBody = () =>
+      interviewRows.length ? (
+        <>
+          <Spacer height={4} />
+          <InterviewsDataGrid
+            user={user}
+            reviewRows={interviewRows}
+            isLoading={interviewsAreLoading}
+            voteState={interviewVoteState}
+            onUpvote={interviewUpvote}
+            onDownvote={interviewDownnvote}
+            onEditReview={fetchInterviews}
+            origin={Page.COMPANY_PAGE}
+          />
+        </>
+      ) : (
+        <ReviewsEmptyState
+          afterSubmit={fetchReviews}
+          origin={Page.COMPANY_PAGE}
+          title="You have 0 Interview Reviews! Submit a review to share your experience:"
+        />
+      );
     return (
       <>
         <DataGridHeader title="Job Reviews" color={Color.rating} />
         {renderTableBody()}
         <Spacer height={32} />
-        <DataGridHeader title="Interview Reviews" color={Color.compatibility} />
+        <DataGridHeader title="Interview Reviews" color={Color.interview} />
         {renderInterviewsTableBody()}
       </>
     );
@@ -87,7 +112,9 @@ const UserPage = () => {
       { label: "My Account" },
       {
         label: `My Reviews ${
-          jobReviewRows.length ? `(${jobReviewRows.length})` : ""
+          jobReviewRows.length + interviewRows.length
+            ? `(${jobReviewRows.length + interviewRows.length})`
+            : ""
         }`,
       },
       { label: "Settings" },

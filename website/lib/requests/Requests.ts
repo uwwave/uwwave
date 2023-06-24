@@ -1,16 +1,38 @@
 import axios from "axios";
 import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
+import { IInterviewReview } from "src/database/models/InterviewReview";
 import { IJobReview } from "src/database/models/JobReview";
 import { IJobRole } from "src/database/models/JobRole";
 import { IUserData } from "src/database/models/UserData";
+import { IReviewsSummary } from "../types/reviews";
 
 export interface IJobKeyword {
   jobID: string;
   keywords: string[];
 }
 
-export interface IGetCompanyLogosResponse {
-  companyNameToLogo: { [key: string]: string | undefined };
+export interface ICompanyData {
+  logo?: string;
+  salaryScore?: number | null;
+  interviewAverage?: number | null;
+  ratingAverage?: number | null;
+}
+
+export interface ICompanyJobReviewData {
+  [company: string]: {
+    salaryScore: number;
+    ratingAverage: number;
+  };
+}
+
+export interface ICompanyInterviewReviewData {
+  [company: string]: {
+    interviewAverage: number;
+  };
+}
+
+export interface IGetCompaniesDataResponse {
+  companyToData: { [key: string]: ICompanyData };
 }
 
 export interface IJobKeywordObject {
@@ -19,6 +41,11 @@ export interface IJobKeywordObject {
 
 type IPostJobReviewRequest = Omit<
   Omit<Omit<Omit<Omit<IJobReview, "id">, "user">, "date">, "upvoters">,
+  "downvoters"
+>;
+
+type IPostInterviewReviewRequest = Omit<
+  Omit<Omit<Omit<Omit<IInterviewReview, "id">, "user">, "date">, "upvoters">,
   "downvoters"
 >;
 
@@ -71,8 +98,12 @@ export class Requests {
     return axios.get(`/api/companyInfo?id=${companyID}`).then(x => x.data);
   }
 
-  static async getCompanyLogos(): Promise<IGetCompanyLogosResponse> {
-    return axios.get(`/api/companyInfo/logos`).then(x => x.data);
+  static async getCompaniesData(
+    companyNames: string[]
+  ): Promise<IGetCompaniesDataResponse> {
+    return axios
+      .post(`/api/companyInfo/companies/summaryData`, { companyNames })
+      .then(x => x.data);
   }
 
   static async createAccount(
@@ -144,6 +175,62 @@ export class Requests {
   ): Promise<undefined> {
     return axios
       .post(`/api/review/job/vote`, { upvotedReviews, downvotedReviews })
+      .then(x => x.data);
+  }
+
+  static async postInterviewReview(
+    jobReview: IPostInterviewReviewRequest
+  ): Promise<undefined> {
+    return axios
+      .post("/api/review/interview", { ...jobReview })
+      .then(x => x.data);
+  }
+
+  static async patchInterviewReview(
+    reviewID: string,
+    jobReview: IPostInterviewReviewRequest
+  ): Promise<undefined> {
+    return axios
+      .patch("/api/review/interview", { ...jobReview, id: reviewID })
+      .then(x => x.data);
+  }
+
+  static async deleteInterviewReview(reviewID: string): Promise<undefined> {
+    return axios
+      .delete(`/api/review/interview?id=${reviewID}`)
+      .then(x => x.data);
+  }
+
+  static async getInterviewReviews(
+    companyID: string
+  ): Promise<IInterviewReview[]> {
+    return axios
+      .get(`/api/review/interview?companyID=${companyID}`)
+      .then(x => x.data);
+  }
+
+  static async getUserInterviewReviews(
+    userID: string
+  ): Promise<IInterviewReview[]> {
+    return axios
+      .get(`/api/review/interview?userID=${userID}`)
+      .then(x => x.data);
+  }
+
+  static async updateInterviewReviewVotes(
+    upvotedReviews: string[],
+    downvotedReviews: string[]
+  ): Promise<undefined> {
+    return axios
+      .post(`/api/review/interview/vote`, { upvotedReviews, downvotedReviews })
+      .then(x => x.data);
+  }
+
+  static async getCompanyReviewsSummary(
+    companyID: string
+  ): Promise<IReviewsSummary> {
+    return axios
+      .get(`/api/companyInfo/reviewSummary?id=${companyID}`)
       .then(x => x.data);
   }
 }

@@ -1,8 +1,7 @@
-export const validateLeetCodeUrl = (url: string): boolean => {
-  // Regex pattern to match LeetCode problem URLs
-  const leetCodeRegex =
-    /^https?:\/\/leetcode\.com\/problems\/[a-zA-Z0-9-]+\/?$/;
+const leetCodeRegex =
+  /^https?:\/\/leetcode\.com\/problems\/([a-zA-Z0-9-]+)\/?(?:\?.*)?$/;
 
+export const validateLeetCodeUrl = (url: string): boolean => {
   // Check if the URL matches the pattern
   if (leetCodeRegex.test(url)) {
     return true;
@@ -12,10 +11,6 @@ export const validateLeetCodeUrl = (url: string): boolean => {
 };
 
 export const leetcodeNameFromURL = (url: string): string => {
-  // Regex pattern to match LeetCode problem URLs
-  const leetCodeRegex =
-    /^https?:\/\/leetcode\.com\/problems\/([a-zA-Z0-9-]+)\/?$/;
-
   // Check if the URL matches the pattern
   const match = url.match(leetCodeRegex);
   if (match && match[1]) {

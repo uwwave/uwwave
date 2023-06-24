@@ -6,7 +6,7 @@ export enum Color {
   primaryButtonShadow = "#0145AC",
   rating = "#4A91F0",
   salary = "#005DD6",
-  compatibility = "#2247A3",
+  interview = "#2247A3",
   tagged = "#092648",
   taggedShadow = "#01142B",
   ambitious = "#EC3A3A",

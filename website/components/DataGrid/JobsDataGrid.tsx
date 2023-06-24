@@ -15,21 +15,20 @@ import {
 } from "src/components/LocationText/LocationText";
 import { JobTitleCell } from "src/components/DataGrid/components/JobTitleCell";
 import { ActionsCell } from "src/components/DataGrid/components/ActionsCell";
-import { IGetCompanyLogosResponse } from "src/lib/requests/Requests";
+import { IGetCompaniesDataResponse } from "src/lib/requests/Requests";
 import { RatingsCell } from "src/components/DataGrid/components/RatingCell";
 import styled from "styled-components";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import StarIcon from "@mui/icons-material/Star";
-import SearchIcon from "@mui/icons-material/Search";
 import { DeadlineCell } from "./components/DeadlineCell";
 import { useJobsDataGrid } from "src/lib/hooks/UseJobsDataGrid";
 import { LogoLoader } from "src/components/Loader/LogoLoader";
-
+import VideoCameraFrontIcon from "@mui/icons-material/VideoCameraFront";
 interface IJobsDataGrid {
   jobKeywords: { [key: string]: string[] };
   jobs: JobsPageRowData[];
   loading?: boolean;
-  companyLogos?: IGetCompanyLogosResponse;
+  companyLogos?: IGetCompaniesDataResponse;
   minHeight?: number;
 }
 export const JobsDataGrid = (props: IJobsDataGrid) => {
@@ -52,7 +51,7 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
         return <RatingIcon />;
       case "salaryScore":
         return <MoneyIcon />;
-      case "compatibilityScore":
+      case "interviewScore":
         return <ScoreIcon />;
       default:
         return null;
@@ -69,7 +68,7 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
           subtitle={rowData.row.companyName}
           url={`/jobs/${rowData.id.toString()}`}
           title={rowData.row.jobName}
-          imageURL={companyLogos?.companyNameToLogo[rowData.row.companyName]}
+          imageURL={companyLogos?.companyToData[rowData.row.companyName].logo}
         />
       ),
       colSpan: 2,
@@ -116,9 +115,10 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
         <RatingsCell
           ratingPercentage={rowData.row.ratingsScore}
           moneyPercentage={rowData.row.salaryScore}
-          scorePercenatge={rowData.row.compatibilityScore}
+          interviewPercentage={rowData.row.interviewScore}
         />
       ),
+      description: "Test description",
       colSpan: 3,
     },
     {
@@ -131,7 +131,7 @@ export const JobsDataGrid = (props: IJobsDataGrid) => {
       renderCell: () => <></>,
     },
     {
-      field: "compatibilityScore",
+      field: "interviewScore",
       headerName: "C",
       align: "center",
       headerAlign: "center",
@@ -353,7 +353,7 @@ const RatingIcon = styled(StarIcon)`
   }
 `;
 
-const ScoreIcon = styled(SearchIcon)`
+const ScoreIcon = styled(VideoCameraFrontIcon)`
   && {
     fill: ${BackgroundColor.dark};
   }

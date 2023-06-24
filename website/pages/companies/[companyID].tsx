@@ -9,8 +9,6 @@ import { useRouter } from "next/router";
 import { JobRatingCard } from "src/components/JobRatingCard/JobRatingCard";
 import Skeleton from "@mui/material/Skeleton";
 import { UploadDomainModal } from "src/components/Modals/variants/UploadDomainModal";
-import IconButton from "@mui/material/IconButton";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { JobScoreInfoModal } from "src/components/Modals/variants/JobScoreInfoModal";
 import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
 import { useCompanyPage } from "src/lib/hooks/useCompanyPage";
@@ -24,10 +22,8 @@ import { DataGridHeader } from "src/components/DataGrid/DataGridHeader";
 import { Color } from "src/styles/color";
 import { Page } from "src/lib/types/page";
 import { ReviewsEmptyState } from "src/components/Empty/JobReviewsEmptyState";
-
-const DUMMY_RATING = "4.2";
-const DUMMY_SALARY = "50-60";
-const DUMMY_COMPAT_SCORE = "20%";
+import { InterviewsDataGrid } from "src/components/DataGrid/InterviewsDataGrid";
+import { salaryDisplay, starsDisplay } from "src/lib/reviews/summary";
 
 const SpecificCompanyPage = () => {
   const router = useRouter();
@@ -49,6 +45,14 @@ const SpecificCompanyPage = () => {
     myReviewsRows,
     fetchReviews,
     jobsCount,
+    interviewRows,
+    interviewsAreLoading,
+    interviewVoteState,
+    interviewUpvote,
+    interviewDownnvote,
+    fetchInterviews,
+    myInterviewsRows,
+    reviewsSummary,
   } = useCompanyPage(companyID);
   const [submitDomainModal, setSubmitDomainModal] = useState(false);
   useEffect(() => {
@@ -82,18 +86,14 @@ const SpecificCompanyPage = () => {
           onClose={() => {
             setInfoModal(false);
           }}
-          rating={DUMMY_RATING}
-          salary={DUMMY_SALARY}
-          score={DUMMY_COMPAT_SCORE}
+          rating={starsDisplay(reviewsSummary?.ratingAverage)}
+          salary={salaryDisplay(
+            reviewsSummary?.minSalary,
+            reviewsSummary?.maxSalary
+          )}
+          interview={starsDisplay(reviewsSummary?.interviewAverage)}
         />
         <CompanyHeaderWrapper>
-          <HelpButton
-            onClick={() => {
-              setInfoModal(true);
-            }}
-          >
-            <HelpOutlineIcon />
-          </HelpButton>
           <div>
             <CompanyCard
               imageURL={companyInfo.logo ?? "/logo-empty.png"}
@@ -112,19 +112,22 @@ const SpecificCompanyPage = () => {
               <ButtonsWrapper>
                 <AddReviewButton
                   company={companyInfo}
-                  onClose={fetchReviews}
+                  afterSubmit={fetchReviews}
                   origin={Page.COMPANY_PAGE}
                 />
               </ButtonsWrapper>
             ) : null}
           </div>
           <JobRatingCard
-            rating={DUMMY_RATING}
-            salary={DUMMY_SALARY}
-            score={DUMMY_COMPAT_SCORE}
-            ratingVal={!isLoading ? Math.random() * 100 : 0}
-            salaryVal={!isLoading ? Math.random() * 100 : 0}
-            scoreVal={!isLoading ? Math.random() * 100 : 0}
+            rating={starsDisplay(reviewsSummary?.ratingAverage)}
+            salary={salaryDisplay(
+              reviewsSummary?.minSalary,
+              reviewsSummary?.maxSalary
+            )}
+            interview={starsDisplay(reviewsSummary?.interviewAverage)}
+            ratingVal={reviewsSummary?.ratingAverage ?? null}
+            salaryVal={reviewsSummary?.salaryPercentile ?? null}
+            interviewVal={reviewsSummary?.interviewAverage ?? null}
           />
         </CompanyHeaderWrapper>
       </>
@@ -143,34 +146,51 @@ const SpecificCompanyPage = () => {
             onUpvote={onUpvote}
             onDownvote={onDownvote}
             onEditReview={fetchReviews}
+            origin={Page.COMPANY_PAGE}
           />
           <Spacer height={32} />
         </>
       ) : (
+        <>
+          <ReviewsEmptyState
+            afterSubmit={fetchReviews}
+            origin={Page.COMPANY_PAGE}
+            title="You have 0 Job Reviews! Submit a review to share your experience:"
+            company={companyInfo}
+          />
+          <Spacer height={32} />
+        </>
+      );
+
+    const renderInterviewsTableBody = () =>
+      myInterviewsRows.length ? (
+        <>
+          <Spacer height={4} />
+          <InterviewsDataGrid
+            user={user}
+            reviewRows={myInterviewsRows}
+            isLoading={interviewsAreLoading}
+            voteState={interviewVoteState}
+            onUpvote={interviewUpvote}
+            onDownvote={interviewDownnvote}
+            onEditReview={fetchInterviews}
+            origin={Page.COMPANY_PAGE}
+          />
+        </>
+      ) : (
         <ReviewsEmptyState
-          onClose={fetchReviews}
+          afterSubmit={fetchReviews}
           origin={Page.COMPANY_PAGE}
-          title="You have 0 Job Reviews! Submit a review to share your experience:"
+          title="You have 0 Interview Reviews! Submit a review to share your experience:"
           company={companyInfo}
         />
       );
 
-    const renderInterviewsTableBody = () => (
-      <ReviewsEmptyState
-        onClose={fetchReviews}
-        origin={Page.COMPANY_PAGE}
-        title="You have 0 Interview Reviews! Submit a review to share your experience:"
-        company={companyInfo}
-      />
-    );
-
     return (
       <>
         <DataGridHeader title="Job Reviews" color={Color.rating} />
-
         {renderReviewsTableBody()}
-
-        <DataGridHeader title="Interview Reviews" color={Color.compatibility} />
+        <DataGridHeader title="Interview Reviews" color={Color.interview} />
         {renderInterviewsTableBody()}
       </>
     );
@@ -194,6 +214,7 @@ const SpecificCompanyPage = () => {
       onUpvote={onUpvote}
       onDownvote={onDownvote}
       onEditReview={fetchReviews}
+      origin={Page.COMPANY_PAGE}
     />
   );
 
@@ -208,11 +229,27 @@ const SpecificCompanyPage = () => {
       />
     );
   };
+
+  const renderInterviews = () => {
+    return (
+      <InterviewsDataGrid
+        user={user}
+        reviewRows={interviewRows}
+        isLoading={interviewsAreLoading}
+        voteState={interviewVoteState}
+        onUpvote={interviewUpvote}
+        onDownvote={interviewDownnvote}
+        onEditReview={fetchInterviews}
+        origin={Page.COMPANY_PAGE}
+      />
+    );
+  };
   const renderBody = () => {
     const comps = user ? (
       <>
         {tabSelected === 0 ? renderJobListings() : null}
         {tabSelected === 1 ? renderReviews() : null}
+        {tabSelected === 2 ? renderInterviews() : null}
         {tabSelected === 3 ? renderMyReviews() : null}
         {tabSelected === 4 ? renderSettings() : null}
       </>
@@ -220,6 +257,7 @@ const SpecificCompanyPage = () => {
       <>
         {tabSelected === 0 ? renderJobListings() : null}
         {tabSelected === 1 ? renderReviews() : null}
+        {tabSelected === 2 ? renderInterviews() : null}
         {tabSelected === 3 ? renderSettings() : null}
       </>
     );
@@ -234,7 +272,15 @@ const SpecificCompanyPage = () => {
     };
     const myReviewsLabel = {
       label: `My Reviews  ${
-        myReviewsRows.length ? `(${myReviewsRows.length})` : ""
+        myReviewsRows.length + myInterviewsRows.length
+          ? `(${myReviewsRows.length + myInterviewsRows.length})`
+          : ""
+      }`,
+    };
+
+    const interviewsLabel = {
+      label: `Interviews  ${
+        interviewRows.length ? `(${interviewRows.length})` : ""
       }`,
     };
 
@@ -242,16 +288,11 @@ const SpecificCompanyPage = () => {
       ? [
           jobsLabel,
           ratingsLabel,
-          { label: "Interviews" },
+          interviewsLabel,
           myReviewsLabel,
           { label: "Settings" },
         ]
-      : [
-          jobsLabel,
-          ratingsLabel,
-          { label: "Interviews" },
-          { label: "Settings" },
-        ];
+      : [jobsLabel, ratingsLabel, interviewsLabel, { label: "Settings" }];
     return (
       <>
         {!isLoading ? (
@@ -312,17 +353,4 @@ const CompanyHeaderWrapper = styled.div`
   display: flex;
   position: relative;
   justify-content: space-between;
-`;
-
-const HelpButton = styled(IconButton)`
-  && {
-    position: absolute;
-    right: -72px;
-    top: -8px;
-    opacity: 0.6;
-  }
-
-  &&:hover {
-    opacity: 1;
-  }
 `;

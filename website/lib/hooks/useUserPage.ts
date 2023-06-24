@@ -3,6 +3,7 @@ import { useLoginModalContext } from "src/lib/context/LoginModal/LoginModalConte
 import { useUserContext } from "src/lib/context/User/UserContext";
 import { useEffect, useState } from "react";
 import { useMyCompanyReviewsDataGrid } from "src/lib/hooks/useMyCompanyReviewDataGrid";
+import { useMyInterviewReviewsDataGrid } from "./useMyInterviewReviewDataGrid";
 
 export const useUserPage = () => {
   const [tabSelected, setTabSelected] = useState(0);
@@ -17,6 +18,14 @@ export const useUserPage = () => {
     onDownvote,
     fetchReviews,
   } = useMyCompanyReviewsDataGrid();
+  const {
+    reviewRows: interviewRows,
+    isLoading: interviewsAreLoading,
+    voteState: interviewVoteState,
+    onUpvote: interviewUpvote,
+    onDownvote: interviewDownnvote,
+    fetchReviews: fetchInterviews,
+  } = useMyInterviewReviewsDataGrid();
   useEffect(() => {
     if (!isUserLoading && !user) {
       openLoginModal();
@@ -44,5 +53,11 @@ export const useUserPage = () => {
     onUpvote,
     onDownvote,
     fetchReviews,
+    interviewRows,
+    interviewsAreLoading,
+    interviewVoteState,
+    interviewUpvote,
+    interviewDownnvote,
+    fetchInterviews,
   };
 };

@@ -1,8 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "src/pages/api/auth/[...nextauth]";
-import JobReviewDocument from "src/database/models/JobReview";
+import InterviewReviewDocument from "src/database/models/InterviewReview";
 import connectToDb from "src/database/mongo-db";
+import {
+  IInterviewResourceDisplay,
+  getInterviewResourceValidator,
+} from "src/components/InterviewResources/InterviewResources";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -35,16 +39,16 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
     throw "must provied companyID or userID not provided";
   }
   await connectToDb();
-  const jobReviews = companyID
-    ? await JobReviewDocument.find({ company: companyID }).populate(
+  const reviews = companyID
+    ? await InterviewReviewDocument.find({ company: companyID }).populate(
         "company role user"
       )
-    : await JobReviewDocument.find({ user: userID }).populate(
+    : await InterviewReviewDocument.find({ user: userID }).populate(
         "company role user"
       );
 
-  const populatedJobReviews = jobReviews.map(review => review.toObject());
-  res.send(populatedJobReviews);
+  const populatedReviews = reviews.map(review => review.toObject());
+  res.send(populatedReviews);
 };
 
 const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -55,43 +59,48 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   const uid = user.id;
   await connectToDb();
-  const count = await JobReviewDocument.countDocuments({ user: uid });
-  if (count >= 10 && process.env.NEXT_PUBLIC_DATABASE === "PROD") {
-    throw "User limited to 10 job reviews";
+  const count = await InterviewReviewDocument.countDocuments({ user: uid });
+  if (count >= 30 && process.env.NEXT_PUBLIC_DATABASE === "PROD") {
+    throw "User limited to 30 interview reviews";
   }
   const {
     role,
     company,
-    rating,
+    difficulty,
     verified,
     anonymous,
-    salary,
     review,
-    coopNumber,
+    status,
+    resources,
   } = req.body;
-  if (!role || !company || !rating) {
+  if (!role || !company || !difficulty || !status || !resources) {
     throw "Missing required information";
-  }
-  if (salary <= 0) {
-    throw "Invalid Salary";
-  }
-  if (coopNumber < 0) {
-    return "Invalid coop number";
   }
   if (review.length > 320) {
     throw "Review must be less than 320 characters";
   }
-  const newReview = new JobReviewDocument({
+  if (resources.length > 5) {
+    throw "Limited to 5 resources per interview review";
+  }
+  const filteredResources = resources
+    .filter((x: IInterviewResourceDisplay) => {
+      return getInterviewResourceValidator(x.resourceType)(x.value);
+    })
+    .map((x: any) => {
+      delete x.isEditMode;
+      return x;
+    });
+  const newReview = new InterviewReviewDocument({
     role: role.id,
     company: company.id,
     user: uid,
-    rating: rating * 20,
+    difficulty: difficulty * 20,
     verified,
     anonymous,
-    salary,
+    status,
+    resources: filteredResources,
     review,
     date: new Date().getTime(),
-    coopNumber,
   });
   await newReview.save();
   res.status(200).end();
@@ -105,45 +114,50 @@ const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   const uid = user.id;
   await connectToDb();
-  const count = await JobReviewDocument.countDocuments({ user: uid });
-  if (count >= 10 && process.env.NEXT_PUBLIC_DATABASE === "PROD") {
-    throw "User limited to 10 job reviews";
+  const count = await InterviewReviewDocument.countDocuments({ user: uid });
+  if (count >= 30 && process.env.NEXT_PUBLIC_DATABASE === "PROD") {
+    throw "User limited to 30 interview reviews";
   }
   const {
     id,
     role,
     company,
-    rating,
+    difficulty,
     verified,
     anonymous,
-    salary,
     review,
-    coopNumber,
+    status,
+    resources,
   } = req.body;
-  if (!id || !role || !company || !rating) {
+  if (!id || !role || !company || !difficulty || !status || !resources) {
     throw "Missing required information";
-  }
-  if (salary <= 0) {
-    throw "Invalid Salary";
-  }
-  if (coopNumber < 0) {
-    return "Invalid coop number";
   }
   if (review.length > 320) {
     throw "Review must be less than 320 characters";
   }
-  await JobReviewDocument.findOneAndUpdate(
+  if (resources.length > 5) {
+    throw "Limited to 5 resources per interview review";
+  }
+  const filteredResources = resources
+    .filter((x: IInterviewResourceDisplay) => {
+      return getInterviewResourceValidator(x.resourceType)(x.value);
+    })
+    .map((x: any) => {
+      delete x.isEditMode;
+      return x;
+    });
+  await InterviewReviewDocument.findOneAndUpdate(
     { _id: id, user: uid },
     {
       role: role.id,
       company: company.id,
       user: uid,
-      rating: rating * 20,
+      difficulty: difficulty * 20,
       verified,
       anonymous,
-      salary,
+      status,
+      resources: filteredResources,
       review,
-      coopNumber,
     },
     { upsert: false }
   );
@@ -162,6 +176,6 @@ const handleDelete = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!id) {
     throw "Missing required information";
   }
-  await JobReviewDocument.findOneAndDelete({ _id: id, user: uid });
+  await InterviewReviewDocument.findOneAndDelete({ _id: id, user: uid });
   res.status(200).end();
 };

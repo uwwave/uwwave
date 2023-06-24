@@ -49,7 +49,7 @@ const AboutPage = () => {
         </ProfileWrapper>
         <ProfileWrapper>
           <RelativeWrapper>
-            <ProfileImageBackground color={Color.compatibility} />
+            <ProfileImageBackground color={Color.interview} />
             <ProfileImageWrapper imageURL="william.png" />
           </RelativeWrapper>
           <Spacer height={4} />
@@ -111,10 +111,7 @@ const AboutPage = () => {
       <Spacer height={32} />
       <PicturesRow>
         <ProfileWrapper>
-          <RelativeWrapper>
-            <ProfileImageBackground color={Color.rating} />
-            <ProfileImageWrapper imageURL="yiwei.png" />
-          </RelativeWrapper>
+          <ProfileImage imageURL="logo.png" />
           <Spacer height={4} />
           <Name>
             <b>Yi Wei</b>
@@ -156,6 +153,16 @@ const ProfileImageWrapper = styled.div<IProfileImageWrapper>`
   position: absolute;
   top: 0;
   left: 0;
+`;
+
+const ProfileImage = styled.div<IProfileImageWrapper>`
+  width: 144px;
+  height: 144px;
+  border-radius: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-image: url(${props => props.imageURL});
 `;
 
 interface IProfileImageBackground {

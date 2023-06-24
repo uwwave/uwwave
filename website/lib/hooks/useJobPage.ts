@@ -6,6 +6,8 @@ import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
 import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
 import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
 import { useCompanyReviewsDataGrid } from "src/lib/hooks/useCompanyReviewsDataGrid";
+import { useInterviewReviewsDataGrid } from "./useInterviewReviewsDataGrid";
+import { useCompanyReviewsSummary } from "./useCompanyReviewsSummary";
 
 type JobInfo = {
   title: string;
@@ -38,6 +40,17 @@ export const useJobPage = (jobID?: string) => {
     fetchReviews,
     myReviewsRows,
   } = useCompanyReviewsDataGrid(company?.id ?? "");
+  const {
+    reviewRows: interviewRows,
+    isLoading: interviewsAreLoading,
+    voteState: interviewVoteState,
+    onUpvote: interviewUpvote,
+    onDownvote: interviewDownnvote,
+    fetchReviews: fetchInterviews,
+    myReviewsRows: myInterviewsRows,
+  } = useInterviewReviewsDataGrid(company?.id ?? "");
+  const { summary: reviewsSummary, isLoading: isReviewsSummaryLoading } =
+    useCompanyReviewsSummary(company?.id ?? "");
   const jobInfo: JobInfo[] = [
     {
       title: "Job Summary",
@@ -105,7 +118,8 @@ export const useJobPage = (jobID?: string) => {
     companyInfo.positionTitle === "" ||
     job === null ||
     companyURL === undefined ||
-    isTagsLoading;
+    isTagsLoading ||
+    isReviewsSummaryLoading;
 
   return {
     imageURL,
@@ -129,5 +143,13 @@ export const useJobPage = (jobID?: string) => {
     onDownvote,
     fetchReviews,
     myReviewsRows,
+    interviewRows,
+    interviewsAreLoading,
+    interviewVoteState,
+    interviewUpvote,
+    interviewDownnvote,
+    fetchInterviews,
+    myInterviewsRows,
+    reviewsSummary,
   };
 };

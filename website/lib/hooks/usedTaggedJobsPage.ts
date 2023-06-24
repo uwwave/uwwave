@@ -5,7 +5,7 @@ import {
 import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
 import { useEffect, useMemo, useState } from "react";
 import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
-import { IGetCompanyLogosResponse, Requests } from "src/lib/requests/Requests";
+import { IGetCompaniesDataResponse, Requests } from "src/lib/requests/Requests";
 import { getEarliestDeadline } from "src/lib/dates/dates";
 
 export const useTaggedJobsPage = () => {
@@ -30,10 +30,10 @@ export const useTaggedJobsPage = () => {
     totalTaggedJobs,
     tagToJobsCount,
   } = useJobTagsContext();
-  const [logos, setLogos] = useState<IGetCompanyLogosResponse>();
+  const [logos, setLogos] = useState<IGetCompaniesDataResponse>();
   useEffect(() => {
     const fire = async () => {
-      const out = await Requests.getCompanyLogos();
+      const out = await Requests.getCompaniesData();
       setLogos(out);
     };
 

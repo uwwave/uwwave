@@ -6,9 +6,11 @@ import { AddReviewModal } from "src/components/Modals/variants/AddReviewModal";
 import { useAddReviewButton } from "src/lib/hooks/useAddReviewButton";
 import { IJobReview } from "src/database/models/JobReview";
 import { Page } from "src/lib/types/page";
+import { IInterviewReview } from "src/database/models/InterviewReview";
 
 interface IEditReviewButton {
-  review: IJobReview;
+  review?: IJobReview;
+  interview?: IInterviewReview;
   onClose: () => void;
   origin?: Page;
 }
@@ -16,19 +18,18 @@ export const EditReviewButton = ({
   review,
   onClose,
   origin,
+  interview,
 }: IEditReviewButton) => {
   const { open, isOpen, close: closeModal } = useAddReviewButton();
-  const close = () => {
-    closeModal();
-    onClose();
-  };
   return (
     <>
       <AddReviewModal
         isOpen={isOpen}
-        close={close}
+        close={closeModal}
+        afterSubmit={onClose}
         review={review}
         origin={origin}
+        interview={interview}
       />
       <EditButton
         variant="contained"

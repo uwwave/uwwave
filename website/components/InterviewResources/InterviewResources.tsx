@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { Select } from "src/components/Select/Select";
 import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
@@ -16,21 +15,16 @@ import {
   leetcodeNameFromURL,
   validateLeetCodeUrl,
 } from "src/lib/interviewResource/interviewResource";
+import {
+  IInterviewResource,
+  InterviewResourceType,
+} from "src/lib/hooks/useAddReviewModal";
 
-enum InterviewResourceType {
-  LEETCODE = "Leetcode",
-}
-
-interface IInterviewResource {
-  type: InterviewResourceType;
-  value: string;
-}
-
-interface IInterviewResourceDisplay extends IInterviewResource {
+export interface IInterviewResourceDisplay extends IInterviewResource {
   isEditMode: boolean;
 }
 
-const getInterviewResourceIcon = (
+export const getInterviewResourceIcon = (
   resource: InterviewResourceType,
   dark?: boolean
 ): React.ReactNode => {
@@ -40,7 +34,7 @@ const getInterviewResourceIcon = (
   }
 };
 
-const getInterviewResourceValidator = (
+export const getInterviewResourceValidator = (
   resource: InterviewResourceType
 ): ((value: string) => boolean) => {
   switch (resource) {
@@ -49,7 +43,7 @@ const getInterviewResourceValidator = (
   }
 };
 
-const getInterviewResourceDisplayName = (
+export const getInterviewResourceDisplayName = (
   resource: InterviewResourceType
 ): ((value: string) => string) => {
   switch (resource) {
@@ -58,17 +52,14 @@ const getInterviewResourceDisplayName = (
   }
 };
 
-export const InterviewResources = () => {
-  const [interviewResources, setInterviewResources] = useState<
-    IInterviewResourceDisplay[]
-  >([
-    {
-      type: InterviewResourceType.LEETCODE,
-      value: "",
-      isEditMode: true,
-    },
-  ]);
-
+interface IInterviewResources {
+  interviewResources: IInterviewResourceDisplay[];
+  setInterviewResources: (data: IInterviewResourceDisplay[]) => void;
+}
+export const InterviewResources = ({
+  interviewResources,
+  setInterviewResources,
+}: IInterviewResources) => {
   const editResource = (
     i: number,
     resource: IInterviewResourceDisplay,
@@ -82,7 +73,7 @@ export const InterviewResources = () => {
           return x;
         }
         return {
-          type: type ?? resource.type,
+          resourceType: type ?? resource.resourceType,
           value: value ?? resource.value,
           isEditMode: editMode ?? resource.isEditMode,
         };
@@ -99,9 +90,9 @@ export const InterviewResources = () => {
     resource: IInterviewResourceDisplay
   ) => (
     <ResourceWrapper key={i}>
-      {getInterviewResourceIcon(resource.type)}
+      {getInterviewResourceIcon(resource.resourceType)}
       <ResourceValue>
-        {getInterviewResourceDisplayName(resource.type)(resource.value)}
+        {getInterviewResourceDisplayName(resource.resourceType)(resource.value)}
       </ResourceValue>
       <IconButton
         onClick={() => {
@@ -124,7 +115,7 @@ export const InterviewResources = () => {
       <ResourceWrapper key={i}>
         <Select
           size="small"
-          value={resource.type}
+          value={resource.resourceType}
           onChange={(e: any) => {
             editResource(i, resource, e.target.value, undefined, undefined);
           }}
@@ -132,7 +123,7 @@ export const InterviewResources = () => {
           {Object.values(InterviewResourceType).map(item => (
             <MenuItem value={item} key={item}>
               <Center gap={8}>
-                {getInterviewResourceIcon(resource.type, true)}
+                {getInterviewResourceIcon(resource.resourceType, true)}
                 {item.split("_").join(" ")}
               </Center>
             </MenuItem>
@@ -146,14 +137,22 @@ export const InterviewResources = () => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             editResource(i, resource, undefined, e.target.value, undefined);
           }}
-          error={!getInterviewResourceValidator(resource.type)(resource.value)}
+          error={
+            !getInterviewResourceValidator(resource.resourceType)(
+              resource.value
+            )
+          }
         />
         <IconButton
           onClick={() => {
             if (!resource.value) {
               deleteResource(i);
             }
-            if (!getInterviewResourceValidator(resource.type)(resource.value)) {
+            if (
+              !getInterviewResourceValidator(resource.resourceType)(
+                resource.value
+              )
+            ) {
               return;
             }
             setInterviewResources(
@@ -162,7 +161,7 @@ export const InterviewResources = () => {
                   return resource;
                 }
                 return {
-                  type: resource.type,
+                  resourceType: resource.resourceType,
                   value: resource.value,
                   isEditMode: false,
                 };
@@ -185,7 +184,7 @@ export const InterviewResources = () => {
         setInterviewResources([
           ...interviewResources,
           {
-            type: InterviewResourceType.LEETCODE,
+            resourceType: InterviewResourceType.LEETCODE,
             value: "",
             isEditMode: true,
           },
