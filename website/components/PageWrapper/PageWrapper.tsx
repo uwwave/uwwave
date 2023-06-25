@@ -5,6 +5,8 @@ import { BackgroundColor } from "src/styles/color";
 import { Spacer } from "src/components/Spacer/Spacer";
 import { Footer } from "src/components/Footer/Footer";
 import Paper from "@mui/material/Paper";
+import { IMobile } from "src/lib/types/mobile";
+import { useViewport } from "src/lib/hooks/useViewport";
 
 interface IPageWrapper {
   HeaderComponents: React.ReactNode[];
@@ -20,25 +22,28 @@ export const PageWrapper = ({
   BeforeFooter,
   lighterBackground,
 }: IPageWrapper) => {
+  const { isMobile } = useViewport();
   return (
     <Main>
       <NavigationBar />
       <Container>
-        <Spacer height={64} />
+        <Spacer height={isMobile ? 72 : 64} />
         {HeaderComponents.map((x, i) => {
           if (x === null) {
             return;
           }
           return (
             <div key={i}>
-              <StyledPaper elevation={0}>{x}</StyledPaper>
+              <StyledPaper elevation={0} isMobile={isMobile}>
+                {x}
+              </StyledPaper>
               {i < HeaderComponents.length - 1 ? <Spacer height={4} /> : null}
             </div>
           );
         })}
       </Container>
       <WaterWrapper lighter={lighterBackground ?? false}>
-        <Spacer height={32} />
+        <Spacer height={isMobile ? 8 : 32} />
         <Container>{Body}</Container>
         <Spacer height={128} />
       </WaterWrapper>
@@ -53,9 +58,9 @@ const Main = styled.div`
   overflow: hidden;
 `;
 
-const StyledPaper = styled(Paper)`
+const StyledPaper = styled(Paper)<IMobile>`
   && {
-    padding: 32px;
+    padding: ${props => (props.isMobile ? 8 : 32)}px;
   }
 `;
 

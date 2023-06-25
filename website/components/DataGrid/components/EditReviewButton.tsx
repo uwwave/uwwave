@@ -7,6 +7,7 @@ import { useAddReviewButton } from "src/lib/hooks/useAddReviewButton";
 import { IJobReview } from "src/database/models/JobReview";
 import { Page } from "src/lib/types/page";
 import { IInterviewReview } from "src/database/models/InterviewReview";
+import { useViewport } from "src/lib/hooks/useViewport";
 
 interface IEditReviewButton {
   review?: IJobReview;
@@ -21,6 +22,7 @@ export const EditReviewButton = ({
   interview,
 }: IEditReviewButton) => {
   const { open, isOpen, close: closeModal } = useAddReviewButton();
+  const { isMobile } = useViewport();
   return (
     <>
       <AddReviewModal
@@ -34,7 +36,7 @@ export const EditReviewButton = ({
       <EditButton
         variant="contained"
         startIcon={<EditIcon />}
-        size="small"
+        size={isMobile ? "medium" : "small"}
         onClick={open}
       >
         Edit

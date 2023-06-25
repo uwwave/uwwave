@@ -78,6 +78,7 @@ const ValueString = styled(Typography).attrs({
   && {
     color: white;
     font-weight: bold;
+    text-wrap: nowrap;
   }
 `;
 

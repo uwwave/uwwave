@@ -24,6 +24,9 @@ import { Page } from "src/lib/types/page";
 import { ReviewsEmptyState } from "src/components/Empty/JobReviewsEmptyState";
 import { InterviewsDataGrid } from "src/components/DataGrid/InterviewsDataGrid";
 import { salaryDisplay, starsDisplay } from "src/lib/reviews/summary";
+import { useViewport } from "src/lib/hooks/useViewport";
+import { Center } from "src/components/Center/Center";
+import { isMobile as isMobileDevice } from "react-device-detect";
 
 const SpecificCompanyPage = () => {
   const router = useRouter();
@@ -62,20 +65,29 @@ const SpecificCompanyPage = () => {
     document.title = companyInfo.companyName;
   }, [companyInfo]);
 
+  const { isMobile, isViewportLoading } = useViewport();
+  if (isViewportLoading) {
+    return null;
+  }
+
   const renderCompanyHeader = () => {
     if (isLoading || !companyID || !companyInfo) {
       return (
         <CompanyHeaderWrapper>
           <div>
             <LoadingCompanyCard />
-            <Spacer height={24} />
-            <ButtonsWrapper>
-              <Skeleton variant="rounded" width={180} height={48} />
-              <Spacer width={8} />
-              <Skeleton variant="rounded" width={180} height={48} />
-            </ButtonsWrapper>
+            {isMobile ? null : <Spacer height={24} />}
+            {isMobile ? null : (
+              <ButtonsWrapper>
+                <Skeleton variant="rounded" width={180} height={48} />
+                <Spacer width={8} />
+                <Skeleton variant="rounded" width={180} height={48} />
+              </ButtonsWrapper>
+            )}
           </div>
-          <Skeleton variant="rounded" width={320} height={240} />
+          {isMobile ? null : (
+            <Skeleton variant="rounded" width={320} height={240} />
+          )}
         </CompanyHeaderWrapper>
       );
     }
@@ -92,6 +104,11 @@ const SpecificCompanyPage = () => {
             reviewsSummary?.maxSalary
           )}
           interview={starsDisplay(reviewsSummary?.interviewAverage)}
+          percentileString={
+            reviewsSummary?.salaryPercentile
+              ? `Top ${(100 - reviewsSummary.salaryPercentile).toFixed(1)}%`
+              : null
+          }
         />
         <CompanyHeaderWrapper>
           <div>
@@ -107,8 +124,8 @@ const SpecificCompanyPage = () => {
                 setSubmitDomainModal(true);
               }}
             />
-            <Spacer height={24} />
-            {companyInfo ? (
+            {isMobile ? null : <Spacer height={24} />}
+            {companyInfo && !isMobile ? (
               <ButtonsWrapper>
                 <AddReviewButton
                   company={companyInfo}
@@ -118,17 +135,7 @@ const SpecificCompanyPage = () => {
               </ButtonsWrapper>
             ) : null}
           </div>
-          <JobRatingCard
-            rating={starsDisplay(reviewsSummary?.ratingAverage)}
-            salary={salaryDisplay(
-              reviewsSummary?.minSalary,
-              reviewsSummary?.maxSalary
-            )}
-            interview={starsDisplay(reviewsSummary?.interviewAverage)}
-            ratingVal={reviewsSummary?.ratingAverage ?? null}
-            salaryVal={reviewsSummary?.salaryPercentile ?? null}
-            interviewVal={reviewsSummary?.interviewAverage ?? null}
-          />
+          {isMobile ? null : jobRatingsCard}
         </CompanyHeaderWrapper>
       </>
     );
@@ -218,6 +225,37 @@ const SpecificCompanyPage = () => {
     />
   );
 
+  const jobRatingsCard = isLoading ? (
+    <Skeleton width="100%" height={300} variant="rounded" />
+  ) : (
+    <>
+      <JobRatingCard
+        rating={starsDisplay(reviewsSummary?.ratingAverage)}
+        salary={salaryDisplay(
+          reviewsSummary?.minSalary,
+          reviewsSummary?.maxSalary
+        )}
+        interview={starsDisplay(reviewsSummary?.interviewAverage)}
+        ratingVal={reviewsSummary?.ratingAverage ?? null}
+        salaryVal={reviewsSummary?.salaryPercentile ?? null}
+        interviewVal={reviewsSummary?.interviewAverage ?? null}
+      />
+      {isMobile ? (
+        <>
+          <Spacer height={16} />
+          <Center>
+            <AddReviewButton
+              company={companyInfo}
+              afterSubmit={fetchReviews}
+              origin={Page.COMPANY_PAGE}
+            />
+          </Center>{" "}
+          <Spacer height={16} />
+        </>
+      ) : null}
+    </>
+  );
+
   const renderJobListings = () => {
     if (!companyInfo) {
       return null;
@@ -245,7 +283,7 @@ const SpecificCompanyPage = () => {
     );
   };
   const renderBody = () => {
-    const comps = user ? (
+    const desktopComps = user ? (
       <>
         {tabSelected === 0 ? renderJobListings() : null}
         {tabSelected === 1 ? renderReviews() : null}
@@ -261,6 +299,22 @@ const SpecificCompanyPage = () => {
         {tabSelected === 3 ? renderSettings() : null}
       </>
     );
+    const mobileComps = user ? (
+      <>
+        {tabSelected === 0 ? renderReviews() : null}
+        {tabSelected === 1 ? renderInterviews() : null}
+        {tabSelected === 2 ? renderMyReviews() : null}
+        {tabSelected === 3 ? renderSettings() : null}
+      </>
+    ) : (
+      <>
+        {tabSelected === 0 ? renderReviews() : null}
+        {tabSelected === 1 ? renderInterviews() : null}
+        {tabSelected === 2 ? renderSettings() : null}
+      </>
+    );
+
+    const comps = isMobileDevice ? mobileComps : desktopComps;
 
     const jobsLabel = {
       label: `Job Listings ${jobsCount ? `(${jobsCount})` : ""}`,
@@ -293,11 +347,13 @@ const SpecificCompanyPage = () => {
           { label: "Settings" },
         ]
       : [jobsLabel, ratingsLabel, interviewsLabel, { label: "Settings" }];
+
+    const mobileTabs = tabLabels.slice(1);
     return (
       <>
         {!isLoading ? (
           <Tabs
-            tabs={tabLabels}
+            tabs={isMobileDevice ? mobileTabs : tabLabels}
             currentTab={tabSelected}
             onSelectTab={(i: number) => {
               setTabSelected(i);
@@ -315,7 +371,11 @@ const SpecificCompanyPage = () => {
   );
 
   const companyHeader = renderCompanyHeader();
-  const headerComponents = companyInfo?.description
+  const headerComponents = isMobile
+    ? companyInfo?.description
+      ? [companyHeader, renderCompanyDescription(), jobRatingsCard]
+      : [companyHeader, jobRatingsCard]
+    : companyInfo?.description
     ? [companyHeader, renderCompanyDescription()]
     : [companyHeader];
   return (

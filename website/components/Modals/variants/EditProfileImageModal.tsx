@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { ProfileImage } from "src/components/HeaderCard/ProfileImage";
 import { BaseModal } from "src/components/Modals/BaseModal";
 import { Spacer } from "src/components/Spacer/Spacer";
+import { useViewport } from "src/lib/hooks/useViewport";
 import {
   baseProfileImages,
   getBaseImage,
@@ -30,6 +31,7 @@ export const EditProfileImageModal = (props: IUploadDomainModal) => {
   }, [image]);
 
   const canUpdateImage = currentImage !== image;
+  const { isMobile } = useViewport();
   return (
     <BaseModal
       open={isOpen}
@@ -53,7 +55,7 @@ export const EditProfileImageModal = (props: IUploadDomainModal) => {
             <ProfileImage
               key={x}
               imageURL={x}
-              width={120}
+              width={isMobile ? 96 : 120}
               canEditPhoto
               isSelected={x === baseImage}
               onEditPhoto={() => {
@@ -72,7 +74,7 @@ export const EditProfileImageModal = (props: IUploadDomainModal) => {
             <ProfileImage
               key={x}
               imageURL={x}
-              width={120}
+              width={isMobile ? 96 : 120}
               canEditPhoto
               isSelected={x === image}
               onEditPhoto={() => setImage(x)}

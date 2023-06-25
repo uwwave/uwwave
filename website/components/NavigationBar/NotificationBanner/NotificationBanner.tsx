@@ -7,10 +7,16 @@ import {
 import Typography from "@mui/material/Typography";
 import { WarningIcon } from "src/components/icons/WarningIcon";
 import { TertiaryButton } from "src/components/Buttons/TertiaryButton";
+import { Color } from "src/styles/color";
+import { isMobile as isMobileDevice } from "react-device-detect";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import { useState } from "react";
 
 export const NotificationBanner = () => {
   const { bannerState, bannerColor, openLoginModal, gotoSetup } =
     useNotificationBanner();
+  const [mobileBannerOpen, setMobileBannerOpen] = useState(true);
 
   const renderBannerState = () => {
     switch (bannerState) {
@@ -80,6 +86,32 @@ export const NotificationBanner = () => {
   if (bannerState === NavBannerState.EMPTY) {
     return null;
   }
+
+  const renderMobileBanner = () => {
+    if (!mobileBannerOpen) {
+      return null;
+    }
+    return (
+      <MobileMain bgcolor={Color.primaryButton}>
+        <MobileContainer>
+          <Typography color="white">
+            Unlock all features on Desktop Browser
+          </Typography>
+          <IconButton
+            onClick={() => {
+              setMobileBannerOpen(false);
+            }}
+          >
+            <StyledCloseIcon />
+          </IconButton>
+        </MobileContainer>
+      </MobileMain>
+    );
+  };
+
+  if (isMobileDevice) {
+    return renderMobileBanner();
+  }
   return (
     <Main bgcolor={bannerColor}>
       <MainContainer>{renderBannerState()}</MainContainer>
@@ -101,5 +133,25 @@ const MainContainer = styled(Container)`
     align-items: center;
     justify-content: center;
     gap: 8px;
+  }
+`;
+
+const MobileContainer = styled(Container)`
+  && {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+`;
+
+const MobileMain = styled.div<IMain>`
+  background-color: ${props => props.bgcolor};
+  padding-top: 4px;
+  padding-bottom: 4px;
+`;
+
+const StyledCloseIcon = styled(CloseIcon)`
+  && {
+    color: white;
   }
 `;

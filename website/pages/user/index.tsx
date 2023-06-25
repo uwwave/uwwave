@@ -16,6 +16,7 @@ import { JobPagePaper } from "src/components/Paper/JobPagePaper";
 import Typography from "@mui/material/Typography";
 import { ProfileImageWithModal } from "src/components/HeaderCard/ProfileImage";
 import { EditUsernameButton } from "src/components/Account/EditUsernameButton";
+import { useViewport } from "src/lib/hooks/useViewport";
 
 const UserPage = () => {
   const {
@@ -36,6 +37,7 @@ const UserPage = () => {
     interviewDownnvote,
     fetchInterviews,
   } = useUserPage();
+  const { isMobile } = useViewport();
   const renderHeader = () => (
     <ProfileHeaderCard
       imageURL={getProfileImage(user?.profilePicture)}
@@ -115,6 +117,7 @@ const UserPage = () => {
           imageURL={getProfileImage(user?.profilePicture)}
           canEditPhoto
           showEditIcon
+          width={isMobile ? 104 : undefined}
         />
         <Spacer height={16} />
         <Typography color="white">Username</Typography>

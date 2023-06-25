@@ -24,7 +24,12 @@ export const Tabs = (props: ITabs) => {
 
   return (
     <TabsWrapper>
-      <MUITabs value={currentTab} onChange={handleChange} textColor="inherit">
+      <MUITabs
+        value={currentTab}
+        onChange={handleChange}
+        textColor="inherit"
+        variant="scrollable"
+      >
         {tabs.map((x, i) => {
           const selected = currentTab === i;
           return (

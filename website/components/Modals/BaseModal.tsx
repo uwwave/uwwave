@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import styled from "styled-components";
 import { Spacer } from "src/components/Spacer/Spacer";
 import { BackgroundColor } from "src/styles/color";
+import { useViewport } from "src/lib/hooks/useViewport";
 
 export interface ModalProps {
   open: boolean;
@@ -56,8 +57,11 @@ export const BaseModal = (props: ModalProps): JSX.Element => {
     onClickOk && onClickOk();
   };
 
+  const { isMobile } = useViewport();
+
   return (
     <DialogWrapper
+      fullScreen={isMobile}
       open={open}
       onClose={handleClose}
       maxWidth={maxWidth ?? "md"}
@@ -69,7 +73,7 @@ export const BaseModal = (props: ModalProps): JSX.Element => {
         {title || hasCloseX ? (
           <DialogTitle align={"center"} color={dark ? "white" : undefined}>
             <b>{title}</b>
-            {hasCloseX && (
+            {hasCloseX || isMobile ? (
               <CloseButtonWrapper
                 aria-label="close"
                 onClick={handleClose}
@@ -77,7 +81,7 @@ export const BaseModal = (props: ModalProps): JSX.Element => {
               >
                 <CloseIcon />
               </CloseButtonWrapper>
-            )}
+            ) : null}
           </DialogTitle>
         ) : null}
         <DialogContent style={{ overflow: "visible" }}>

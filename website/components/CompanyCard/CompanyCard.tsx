@@ -10,6 +10,8 @@ import IconButton from "@mui/material/IconButton";
 import { LocationText } from "../LocationText/LocationText";
 import { LogoLoader } from "../Loader/LogoLoader";
 import { useRouter } from "next/router";
+import { IMobile } from "src/lib/types/mobile";
+import { useViewport } from "src/lib/hooks/useViewport";
 
 interface CompanyCardProps {
   imageURL: string;
@@ -94,13 +96,17 @@ export const CompanyCard = ({
   onOpenSubmitDomain,
   companyPageURL,
 }: CompanyCardProps) => {
+  const { isMobile } = useViewport();
   return (
     <MainWrapper variant={isOutlined ? "outlined" : "elevation"} elevation={0}>
-      <ImageWrapper src={imageURL} />
+      <ImageWrapper src={imageURL} isMobile={isMobile} />
       <Spacer width={16} />
       <NameWrapper>
         {positionTitle ? (
-          <Typography variant="h5">
+          <Typography
+            variant={isMobile ? "h6" : "h5"}
+            sx={{ lineHeight: isMobile ? "1.4rem" : undefined }}
+          >
             <b>{positionTitle}</b>
           </Typography>
         ) : null}
@@ -110,7 +116,7 @@ export const CompanyCard = ({
           onOpenSubmitDomain={onOpenSubmitDomain}
           companyPageURL={companyPageURL}
         />
-        <Spacer height={24} />
+        <Spacer height={isMobile ? 8 : 24} />
         <LocationText icon city={city} province={province} country={country} />
       </NameWrapper>
     </MainWrapper>
@@ -118,25 +124,30 @@ export const CompanyCard = ({
 };
 
 export const LoadingCompanyCard = () => {
+  const { isMobile } = useViewport();
   return (
     <MainWrapper elevation={0}>
-      <LoadingProfileWrapper>
-        <LogoLoader />
+      <LoadingProfileWrapper isMobile={isMobile}>
+        <LogoLoader width={isMobile ? 64 : 96} />
       </LoadingProfileWrapper>
-      <Spacer width={16} />
-      <NameWrapper>
-        <Skeleton variant="text" sx={{ fontSize: "3rem" }} width={300} />
-        <Skeleton variant="text" sx={{ fontSize: "1rem" }} width={160} />
-        <Spacer height={16} />
-        <Skeleton variant="text" sx={{ fontSize: "1rem" }} width={110} />
-      </NameWrapper>
+      {isMobile ? null : (
+        <>
+          <Spacer width={16} />
+          <NameWrapper>
+            <Skeleton variant="text" sx={{ fontSize: "3rem" }} width={300} />
+            <Skeleton variant="text" sx={{ fontSize: "1rem" }} width={160} />
+            <Spacer height={16} />
+            <Skeleton variant="text" sx={{ fontSize: "1rem" }} width={110} />
+          </NameWrapper>
+        </>
+      )}
     </MainWrapper>
   );
 };
 
-const LoadingProfileWrapper = styled.div`
-  width: 160px;
-  height: 160px;
+const LoadingProfileWrapper = styled.div<IMobile>`
+  width: ${props => (props.isMobile ? 96 : 160)}px;
+  height: ${props => (props.isMobile ? 96 : 160)}px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -154,9 +165,9 @@ const MainWrapper = styled(Paper)<MainWrapperProps>`
 interface IImageWrapper {
   src: string;
 }
-const ImageWrapper = styled.div<IImageWrapper>`
-  min-width: 160px;
-  height: 160px;
+const ImageWrapper = styled.div<IImageWrapper & IMobile>`
+  min-width: ${props => (props.isMobile ? 96 : 160)}px;
+  height: ${props => (props.isMobile ? 96 : 160)}px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-image: url(${props => props.src});
@@ -170,6 +181,7 @@ const NameWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   padding-right: 32px;
+  flex-wrap: wrap;
 `;
 
 const LinkWrapper = styled.div`

@@ -7,87 +7,94 @@ import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
 import { BackgroundColor, Color } from "src/styles/color";
 import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
 import EmailIcon from "@mui/icons-material/Email";
+import { useViewport } from "src/lib/hooks/useViewport";
+
+interface IMember {
+  name: string;
+  imageURL: string;
+  title: string;
+  color?: string;
+}
+
+const mainTeam: IMember[] = [
+  {
+    name: "Bryan",
+    imageURL: "bryan.png",
+    title: "Design & Full Stack",
+    color: Color.rating,
+  },
+  {
+    name: "Michelle",
+    imageURL: "michelle.png",
+    title: "Machine Learning",
+    color: Color.salary,
+  },
+  {
+    name: "William",
+    imageURL: "william.png",
+    title: "Extension",
+    color: Color.interview,
+  },
+  {
+    name: "Linda",
+    imageURL: "linda.png",
+    title: "Frontend",
+    color: Color.rating,
+  },
+  {
+    name: "Andrew",
+    imageURL: "andrew.png",
+    title: "Frontend",
+    color: Color.salary,
+  },
+];
+
 const AboutPage = () => {
+  const { isMobile } = useViewport();
   const renderHeader = () => (
     <>
-      <Typography variant="h5" align="center">
+      <Typography variant={isMobile ? "h6" : "h5"} align="center">
         UW Wave is a Capstone Project created by SE2024s
       </Typography>
-      <Spacer height={64} />
-      <Typography variant="h4" align="center">
+      <Spacer height={isMobile ? 32 : 64} />
+      <Typography variant={isMobile ? "h5" : "h4"} align="center">
         <b>Meet The Team</b>
       </Typography>
     </>
   );
 
-  const renderBody = () => (
+  const renderProfile = (x: IMember) => (
+    <ProfileWrapper key={x.name}>
+      <RelativeWrapper>
+        {x.color ? <ProfileImageBackground color={x.color} /> : null}
+        <ProfileImageWrapper imageURL={x.imageURL} />
+      </RelativeWrapper>
+      <Spacer height={4} />
+      <Name>
+        <b>{x.name}</b>
+      </Name>
+      <Spacer height={4} />
+      <Name>{x.title}</Name>
+    </ProfileWrapper>
+  );
+  const renderMobileMainTeamProfiles = () => (
+    <PicturesRow>{mainTeam.map(x => renderProfile(x))}</PicturesRow>
+  );
+  const renderDesktopMainTeamProfiles = () => (
     <>
       <PicturesRow>
-        <ProfileWrapper>
-          <RelativeWrapper>
-            <ProfileImageBackground color={Color.rating} />
-            <ProfileImageWrapper imageURL="bryan.png" />
-          </RelativeWrapper>
-          <Spacer height={4} />
-          <Name>
-            <b>Bryan</b>
-          </Name>
-          <Spacer height={4} />
-          <Name>Design & Full Stack</Name>
-        </ProfileWrapper>
-        <ProfileWrapper>
-          <RelativeWrapper>
-            <ProfileImageBackground color={Color.salary} />
-            <ProfileImageWrapper imageURL="michelle.png" />
-          </RelativeWrapper>
-          <Spacer height={4} />
-          <Name>
-            <b>Michelle</b>
-          </Name>
-          <Spacer height={4} />
-          <Name>Machine Learning</Name>
-        </ProfileWrapper>
-        <ProfileWrapper>
-          <RelativeWrapper>
-            <ProfileImageBackground color={Color.interview} />
-            <ProfileImageWrapper imageURL="william.png" />
-          </RelativeWrapper>
-          <Spacer height={4} />
-          <Name>
-            <b>William</b>
-          </Name>
-          <Spacer height={4} />
-          <Name>Extension</Name>
-        </ProfileWrapper>
+        {mainTeam.slice(0, 3).map(x => renderProfile(x))}
       </PicturesRow>
-      <Spacer height={32} />
       <PicturesRow>
-        <ProfileWrapper>
-          <RelativeWrapper>
-            <ProfileImageBackground color={Color.rating} />
-            <ProfileImageWrapper imageURL="linda.png" />
-          </RelativeWrapper>
-          <Spacer height={4} />
-          <Name>
-            <b>Linda</b>
-          </Name>
-          <Spacer height={4} />
-          <Name>Frontend</Name>
-        </ProfileWrapper>
-
-        <ProfileWrapper>
-          <RelativeWrapper>
-            <ProfileImageBackground color={Color.salary} />
-            <ProfileImageWrapper imageURL="andrew.png" />
-          </RelativeWrapper>
-          <Spacer height={4} />
-          <Name>
-            <b>Andrew</b>
-          </Name>
-          <Spacer height={4} />
-          <Name>Frontend</Name>
-        </ProfileWrapper>
+        {mainTeam.slice(3, 5).map(x => renderProfile(x))}
       </PicturesRow>
+    </>
+  );
+  const renderBody = () => (
+    <>
+      {isMobile
+        ? renderMobileMainTeamProfiles()
+        : renderDesktopMainTeamProfiles()}
       <Spacer height={32} />
       <ContactPaper>
         <Typography variant="h5" align="center">

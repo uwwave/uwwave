@@ -6,6 +6,7 @@ import { BackgroundColor, Color } from "src/styles/color";
 import { useUserContext } from "src/lib/context/User/UserContext";
 import { VoteState } from "src/lib/hooks/useCompanyReviewsDataGrid";
 import { useLoginModalContext } from "src/lib/context/LoginModal/LoginModalContext";
+import { useViewport } from "src/lib/hooks/useViewport";
 
 interface IHelpfulCell {
   voteState: VoteState;
@@ -29,6 +30,7 @@ export const HelpfulCell = ({
 }: IHelpfulCell) => {
   const { user } = useUserContext();
   const { open } = useLoginModalContext();
+  const { isMobile } = useViewport();
 
   const upvoteHighlighted = voteState === VoteState.UP;
   const downvoteHighlighted = voteState === VoteState.DOWN;
@@ -56,7 +58,7 @@ export const HelpfulCell = ({
   return (
     <Main>
       <StyledButton
-        size="small"
+        size={isMobile ? "large" : "small"}
         startIcon={<ThumbUpIcon />}
         highlighted={upvoteHighlighted}
         margin={disabled ? true : !!upvoteCount}
@@ -67,7 +69,7 @@ export const HelpfulCell = ({
         {upvoteCount > 0 || disabled ? upvoteCount : ""}
       </StyledButton>
       <StyledButton
-        size="small"
+        size={isMobile ? "large" : "small"}
         startIcon={<ThumbDownIcon />}
         highlighted={downvoteHighlighted}
         margin={disabled ? true : !!upvoteCount}
