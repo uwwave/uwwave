@@ -1,9 +1,7 @@
 import List from "@mui/material/List";
 import Drawer from "@mui/material/Drawer";
-import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import Link from "next/link";
 import styled from "styled-components";
 import { BackgroundColor } from "src/styles/color";
 import ListItemIcon from "@mui/material/ListItemIcon";
