@@ -8,6 +8,7 @@ import { UWaterlooLogo } from "src/components/icons/UWaterlooLogo";
 import { BackgroundColor, Color } from "src/styles/color";
 import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
 import { Footer } from "src/components/Footer/Footer";
+import { useViewport } from "src/lib/hooks/useViewport";
 
 const generatePillars = (
   pillars: number,
@@ -39,9 +40,13 @@ const generatePillars = (
 };
 
 const HomePage = () => {
+  const { isMobile, isViewportLoading } = useViewport();
   const pillars = useMemo(() => {
-    return generatePillars(24, 170, 400);
-  }, []);
+    return generatePillars(isMobile ? 12 : 24, 170, isMobile ? 360 : 400);
+  }, [isMobile]);
+  if (isViewportLoading) {
+    return null;
+  }
 
   return (
     <>
@@ -49,23 +54,40 @@ const HomePage = () => {
         <NavigationBar />
         <Container>
           <FadeIn>
-            <Spacer height={80} />
-            <Title>
-              The Ultimate <br /> Waterloo Works Companion
-            </Title>
+            <Spacer height={isMobile ? 142 : 80} />
+            {isMobile ? (
+              <MobileTitle>The Ultimate WaterlooWorks Companion</MobileTitle>
+            ) : (
+              <Title>
+                The Ultimate <br /> WaterlooWorks Companion
+              </Title>
+            )}
             <Spacer height={16} />
             <SubTitleWrapper>
-              <UWaterlooLogo />
-              <Spacer width={8} />
-              <SubTitle>
-                {" "}
-                Browse Jobs, Salaries and Reviews with Upgraded Search
-              </SubTitle>
+              {isMobile ? null : (
+                <>
+                  <UWaterlooLogo />
+                  <Spacer width={8} />
+                </>
+              )}
+
+              {isMobile ? (
+                <MobileSubTitle>
+                  Browse Jobs, Salaries and Reviews with Upgraded Search
+                </MobileSubTitle>
+              ) : (
+                <SubTitle>
+                  Browse Jobs, Salaries and Reviews with Upgraded Search
+                </SubTitle>
+              )}
             </SubTitleWrapper>
-            <Spacer height={64} />
-            <Center>
-              <PrimaryButton href="/setup">Get Started</PrimaryButton>
-            </Center>
+            <Spacer height={isMobile ? 32 : 64} />
+            {isMobile ? null : (
+              <Center>
+                <PrimaryButton href="/setup">Get Started</PrimaryButton>
+              </Center>
+            )}
+
             <Spacer height={64} />
           </FadeIn>
           <WaveDesignWrapper>
@@ -112,7 +134,7 @@ const WaveDesignWrapper = styled.div`
   justify-content: center;
   gap: 16px;
   height: 40vh;
-  overflow: hidden;
+  overflow: visible;
 `;
 
 const HeroWrapper = styled.div`
@@ -130,6 +152,26 @@ const Title = styled(Typography).attrs({
     text-align: center;
     font-weight: bold;
     text-shadow: 1px 4px rgba(7, 20, 30, 0.42);
+  }
+`;
+
+const MobileTitle = styled(Typography).attrs({
+  variant: "h4",
+})`
+  && {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 1px 4px rgba(7, 20, 30, 0.42);
+  }
+`;
+
+const MobileSubTitle = styled(Typography).attrs({
+  variant: "h6",
+})`
+  && {
+    color: white;
+    text-align: center;
   }
 `;
 

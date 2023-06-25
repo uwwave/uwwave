@@ -56,6 +56,9 @@ export const JobRatingCard = (props: IJobRatingCard) => {
         rating={rating}
         salary={salary}
         interview={interview}
+        percentileString={
+          salaryVal ? `Top ${(100 - salaryVal).toFixed(1)}%` : null
+        }
       />
       <MainWrapper>
         <HeaderWrapper>
@@ -127,6 +130,7 @@ const InnerWrapper = styled.div`
   gap: 12px;
   padding: 0 16px 8px 16px;
   position: relative;
+  justify-content: center;
 `;
 
 const Pillar = styled.div`

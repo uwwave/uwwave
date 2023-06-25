@@ -7,6 +7,7 @@ import { ProfilePicture, getProfileImage } from "src/lib/types/profiles";
 import { IJobRole } from "src/database/models/JobRole";
 import { Page } from "src/lib/types/page";
 import { coopNumberSubtitleDisplay } from "src/lib/reviews/summary";
+import { useViewport } from "src/lib/hooks/useViewport";
 
 interface IJobTitleCell {
   subtitle: string;
@@ -63,6 +64,7 @@ export const getJobTitleCellProps = (rowData: IData, page?: Page) => {
 
 export const JobTitleCell = (props: IJobTitleCell) => {
   const { subtitle, title, url, imageURL } = props;
+  const { isMobile } = useViewport();
   return (
     <JobTitleCellWrapper>
       <StyledLink href={url} target="_blank">
@@ -72,7 +74,9 @@ export const JobTitleCell = (props: IJobTitleCell) => {
         <StyledLink href={url} target="_blank">
           <Typography>{title}</Typography>
         </StyledLink>
-        <Typography variant="caption">{subtitle}</Typography>
+        <Typography variant={isMobile ? undefined : "caption"}>
+          {subtitle}
+        </Typography>
       </CompanyDetailsWrapper>
     </JobTitleCellWrapper>
   );

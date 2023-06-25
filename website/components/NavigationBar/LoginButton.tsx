@@ -11,6 +11,7 @@ import { TertiaryButton } from "../Buttons/TertiaryButton";
 import { useRouter } from "next/router";
 import ButtonBase from "@mui/material/ButtonBase";
 import { getProfileImage } from "src/lib/types/profiles";
+import { useViewport } from "src/lib/hooks/useViewport";
 
 export const LoginButton = () => {
   const { isLoading, isLoggedIn, user } = useUserContext();
@@ -18,6 +19,7 @@ export const LoginButton = () => {
   const { open } = useLoginModalContext();
   const router = useRouter();
   const loggedInMenuOpen = Boolean(anchorEl);
+  const { isMobile } = useViewport();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -27,6 +29,81 @@ export const LoginButton = () => {
   if (isLoading) {
     return <Spacer width={48} height={48} />;
   }
+
+  const renderMenu = () => (
+    <Menu
+      anchorEl={anchorEl}
+      open={loggedInMenuOpen}
+      onClose={handleClose}
+      MenuListProps={{
+        "aria-labelledby": "basic-button",
+      }}
+      slotProps={{
+        paper: {
+          elevation: 0,
+          sx: {
+            "width": "240px",
+            "overflow": "visible",
+            "filter": "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            "mt": 1.5,
+            "& .MuiAvatar-root": {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            "&:before": {
+              content: '""',
+              display: "block",
+              position: "absolute",
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: "background.paper",
+              transform: "translateY(-50%) rotate(45deg)",
+              zIndex: 0,
+            },
+          },
+        },
+      }}
+      transformOrigin={{ horizontal: "right", vertical: "top" }}
+      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+    >
+      <WelcomeWrapper>
+        <ListItemText>{`Hey ${user?.username ?? "Timmy"}!`}</ListItemText>
+      </WelcomeWrapper>
+      <MenuItem
+        onClick={() => {
+          router.push("/user?tab=0");
+        }}
+      >
+        <ListItemText>My Account</ListItemText>
+      </MenuItem>
+      <MenuItem
+        onClick={() => {
+          router.push("/user?tab=1");
+        }}
+      >
+        <ListItemText>My Reviews</ListItemText>
+      </MenuItem>
+      <MenuItem
+        onClick={() => {
+          router.push("/user?tab=2");
+        }}
+      >
+        <ListItemText>Settings</ListItemText>
+      </MenuItem>
+      <Spacer height={64} />
+      <MenuItem
+        onClick={() => {
+          signOut();
+        }}
+      >
+        <ListItemText>Sign out</ListItemText>
+      </MenuItem>
+    </Menu>
+  );
   if (isLoggedIn) {
     return (
       <div>
@@ -38,78 +115,7 @@ export const LoginButton = () => {
         >
           <ProfileImage imageURL={getProfileImage(user?.profilePicture)} />
         </StyledButtonBase>
-        <Menu
-          anchorEl={anchorEl}
-          open={loggedInMenuOpen}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-          slotProps={{
-            paper: {
-              elevation: 0,
-              sx: {
-                "width": "240px",
-                "overflow": "visible",
-                "filter": "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                "mt": 1.5,
-                "& .MuiAvatar-root": {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
-                },
-                "&:before": {
-                  content: '""',
-                  display: "block",
-                  position: "absolute",
-                  top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: "background.paper",
-                  transform: "translateY(-50%) rotate(45deg)",
-                  zIndex: 0,
-                },
-              },
-            },
-          }}
-          transformOrigin={{ horizontal: "right", vertical: "top" }}
-          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-        >
-          <WelcomeWrapper>
-            <ListItemText>{`Hey ${user?.username ?? "Timmy"}!`}</ListItemText>
-          </WelcomeWrapper>
-          <MenuItem
-            onClick={() => {
-              router.push("/user?tab=0");
-            }}
-          >
-            <ListItemText>My Account</ListItemText>
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              router.push("/user?tab=1");
-            }}
-          >
-            <ListItemText>My Reviews</ListItemText>
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              router.push("/user?tab=2");
-            }}
-          >
-            <ListItemText>Settings</ListItemText>
-          </MenuItem>
-          <Spacer height={64} />
-          <MenuItem
-            onClick={() => {
-              signOut();
-            }}
-          >
-            <ListItemText>Sign out</ListItemText>
-          </MenuItem>
-        </Menu>
+        {isMobile ? null : renderMenu()}
       </div>
     );
   }

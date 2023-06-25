@@ -25,9 +25,9 @@ export const useCompanyJobsDataGrid = (
       .filter(x => x.companyName === companyName)
       .map(x => ({
         ...x,
-        salaryScore: companyData.salaryScore ?? null,
-        interviewScore: companyData.interviewAverage ?? null,
-        ratingsScore: companyData.ratingAverage ?? null,
+        salaryScore: companyData?.salaryScore ?? null,
+        interviewScore: companyData?.interviewAverage ?? null,
+        ratingsScore: companyData?.ratingAverage ?? null,
       }));
   }, [jobs, companyName, companiesData]);
 

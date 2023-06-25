@@ -28,6 +28,7 @@ import { Spacer } from "../Spacer/Spacer";
 import Tooltip from "@mui/material/Tooltip";
 import { useRouter } from "next/router";
 import { Page } from "src/lib/types/page";
+import { useViewport } from "src/lib/hooks/useViewport";
 
 interface IJobsDataGrid {
   jobReviewsLoading: boolean;
@@ -52,6 +53,7 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
   } = props;
   const router = useRouter();
   const [pageSize, setPageSize] = useState(10);
+  const { isMobile } = useViewport();
   const page: Page =
     origin !== undefined
       ? origin
@@ -73,6 +75,76 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
       sort: "desc" as GridSortDirection,
     },
   ]);
+  const mobileColumns: GridColDef<IJobReviewRow>[] = [
+    {
+      flex: 100,
+      field: "date",
+      renderHeader: () => null,
+      renderCell: rowData => {
+        const date = new Date(rowData.row.date);
+        const formattedDate = moment(date).format("MMMM D, YYYY");
+        const { title, imageURL, subtitle, url } = getJobTitleCellProps(
+          rowData.row,
+          page
+        );
+        const isMine = user?.id === rowData.row.user.id;
+        const state = voteState[rowData.row.id];
+        if (!state) {
+          return null;
+        }
+        return (
+          <div>
+            <JobTitleCell
+              subtitle={subtitle}
+              title={title}
+              imageURL={imageURL}
+              url={url}
+            />
+            <Spacer height={8} />
+            <Typography variant="caption">{formattedDate}</Typography>
+            <Spacer height={8} />
+            <StarsInput
+              color={isMine ? BackgroundColor.dark : Color.rating}
+              value={rowData.row.rating / 20}
+              starsSize={28}
+            />
+            <div>
+              <Spacer height={8} />
+              <Typography>{`$${rowData.row.salary} CAD, hourly`}</Typography>
+              <Spacer width={8} />
+              <Typography>
+                {rowData.row.verified ? (
+                  <StyledTooltip title="Verified Review" arrow placement="top">
+                    <StyledVerifiedIcon />
+                  </StyledTooltip>
+                ) : null}
+                <b>{rowData.row.review}</b>
+              </Typography>
+            </div>
+            <Spacer height={8} />
+            <div>
+              {isMine ? (
+                <EditReviewButton
+                  review={rowData.row}
+                  onClose={onEditReview}
+                  origin={page}
+                />
+              ) : null}
+              <HelpfulCell
+                voteState={state.voteType}
+                upvoteCount={state.upvotes}
+                downvoteCount={state.downvotes}
+                reviewID={rowData.row.id}
+                onUpvote={onUpvote}
+                onDownvote={onDownvote}
+                disabled={isMine}
+              />
+            </div>
+          </div>
+        );
+      },
+    },
+  ];
   const columns: GridColDef<IJobReviewRow>[] = [
     {
       field: "userName",
@@ -218,13 +290,14 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
   return (
     <Main>
       <StyledGrid
+        isMobile={isMobile}
         sortModel={sortModel}
         onSortModelChange={(model: any) => setSortModel(model)}
         disableColumnFilter
         disableColumnSelector
         disableDensitySelector
         rows={jobReviewRows}
-        columns={columns}
+        columns={isMobile ? mobileColumns : columns}
         pageSize={pageSize}
         loading={jobReviewsLoading}
         disableColumnMenu
@@ -296,10 +369,41 @@ const Main = styled(Paper).attrs({
 interface IGrid {
   pageSize: number;
   minHeight: number;
+  isMobile: boolean;
 }
 const StyledGrid = styled(props => (
   <DataGrid {...props} loadingOverlay={<CustomLoadingOverlay />} />
-))<IGrid>``;
+))<IGrid>`
+  ${props =>
+    props.isMobile
+      ? `&& .MuiDataGrid-columnHeaders{
+      display: none;
+    }`
+      : ""}
+  ${props =>
+    props.isMobile
+      ? `&& .MuiDataGrid-virtualScroller{
+      margin-top: 0!important;
+    }`
+      : ""}
+
+  ${props =>
+    props.isMobile
+      ? `&& .MuiDataGrid-cell{
+      min-width: 100% !important;
+      width: 100% !important;
+      justify-content: start;
+    }`
+      : ""}
+  
+  ${props =>
+    props.isMobile
+      ? `&& .MuiDataGrid-row{
+      min-width: 100% !important;
+      width: 100% !important;
+    }`
+      : ""}
+`;
 
 const StyledVerifiedIcon = styled(VerifiedIcon).attrs({
   fontSize: "small",

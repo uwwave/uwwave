@@ -21,8 +21,12 @@ import { CompanySearchInput } from "../TextField/variants/CompanySearchInput";
 import ButtonBase from "@mui/material/ButtonBase";
 import { Spacer } from "../Spacer/Spacer";
 import { Page } from "src/lib/types/page";
+import { useViewport } from "src/lib/hooks/useViewport";
+import MenuIcon from "@mui/icons-material/Menu";
+import { SideNav } from "./SideNav";
 
 export const NavigationBar = () => {
+  const { isMobile } = useViewport();
   const textColor = "white";
   const backgroundColor = BackgroundColor.dark;
   const { totalTaggedJobs } = useJobTagsContext();
@@ -32,6 +36,7 @@ export const NavigationBar = () => {
   const areJobs = !!Object.keys(extensionData).length;
   const router = useRouter();
   const [showLogo, setShowLogo] = useState(true);
+  const [sideNavOpen, setSideNavOpen] = useState(false);
 
   const path = router.pathname;
   const color = textColor ?? "white";
@@ -91,15 +96,26 @@ export const NavigationBar = () => {
 
   const renderTabs = () => {
     return (
-      <FlexWrapper>
-        <LogoWrapper width={showLogo ? 170 : 0}>
-          <ButtonBase>
-            <Link href="/">
-              <WaveLogo color={color} />
-            </Link>
-          </ButtonBase>
-          <Spacer width={24} />
-        </LogoWrapper>
+      <FlexWrapper isMobile={isMobile}>
+        {isMobile ? (
+          <StyledButtonBase
+            width={showLogo ? 40 : 0}
+            onClick={() => {
+              setSideNavOpen(true);
+            }}
+          >
+            <StyledMenuIcon />
+          </StyledButtonBase>
+        ) : (
+          <LogoWrapper width={showLogo ? 170 : 0}>
+            <ButtonBase>
+              <Link href="/">
+                <WaveLogo color={color} />
+              </Link>
+            </ButtonBase>
+            <Spacer width={24} />
+          </LogoWrapper>
+        )}
 
         <SearchWrapper>
           <CompanySearchInput
@@ -117,7 +133,7 @@ export const NavigationBar = () => {
             }}
           />
         </SearchWrapper>
-        {isLoading ? null : (
+        {isLoading || isMobile ? null : (
           <>
             <Spacer width={24} />
             {renderConditionalTabs()}
@@ -131,19 +147,42 @@ export const NavigationBar = () => {
   };
   return (
     <>
-      {isLoading ? null : <NotificationBanner />}
-      <AppBar position="static" elevation={0} sx={{ bgcolor: backgroundColor }}>
-        <Container>{renderTabs()}</Container>
+      <SideNav
+        isOpen={sideNavOpen}
+        onClose={() => {
+          setSideNavOpen(false);
+        }}
+      />
+      {isLoading || isMobile ? null : <NotificationBanner />}
+      <AppBar
+        position={isMobile ? "fixed" : "static"}
+        elevation={0}
+        sx={{ bgcolor: backgroundColor, padding: 0 }}
+      >
+        {isMobile ? <NotificationBanner /> : null}
+        {isMobile ? null : <Container>{renderTabs()}</Container>}
+        {isMobile ? (
+          <MobileWrapper isMobile={showLogo}> {renderTabs()}</MobileWrapper>
+        ) : null}
       </AppBar>
     </>
   );
 };
 
-const FlexWrapper = styled.div`
+interface IMobile {
+  isMobile: boolean;
+}
+const FlexWrapper = styled.div<IMobile>`
   display: flex;
   align-items: center;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: ${props => (props.isMobile ? 0 : 8)}px;
+  padding-bottom: ${props => (props.isMobile ? 0 : 8)}px;
+  gap: ${props => (props.isMobile ? 8 : 0)}px;
+`;
+
+const MobileWrapper = styled.div<IMobile>`
+  padding-right: ${props => (props.isMobile ? 8 : 0)}px;
+  padding-left: ${props => (props.isMobile ? 8 : 0)}px;
 `;
 
 const SearchWrapper = styled.div`
@@ -170,6 +209,14 @@ const StyledLink = styled(Elemen)<ILink>`
 interface ILogoWrapper {
   width: number;
 }
+const StyledButtonBase = styled(ButtonBase)<ILogoWrapper>`
+  && {
+    width: ${props => props.width}px;
+    transition: 0.3s ease width;
+    overflow: hidden;
+  }
+`;
+
 const LogoWrapper = styled.div<ILogoWrapper>`
   && a {
     display: flex;
@@ -209,5 +256,12 @@ const TagListWrapper = styled.div<ITagListWrapper>`
 const TaggedJobsText = styled(Typography)`
   && {
     margin-left: -12px;
+  }
+`;
+
+const StyledMenuIcon = styled(MenuIcon)`
+  && {
+    color: white;
+    font-size: 32px;
   }
 `;

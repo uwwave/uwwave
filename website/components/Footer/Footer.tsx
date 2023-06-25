@@ -7,6 +7,7 @@ import { TertiaryButton } from "../Buttons/TertiaryButton";
 import { ButtonBase } from "@mui/material";
 import Link from "next/link";
 import { WaveLogo } from "../icons/logo/Footer";
+import { useViewport } from "src/lib/hooks/useViewport";
 
 interface IFooterWrapper {
   color: string;
@@ -18,6 +19,8 @@ const FooterWrapper = styled.div<IFooterWrapper>`
   justify-content: center;
   align-items: center;
   padding: 20px;
+  position: relative;
+  z-index: 100;
 `;
 
 interface IFooter {
@@ -28,29 +31,34 @@ export const Footer = (props: IFooter) => {
   const router = useRouter();
   const pathname = router.pathname;
   const useDarkFooter = pathname === "/" || pathname === "/about" || dark;
+  const { isMobile } = useViewport();
+  const renderDesktopLinks = () => (
+    <>
+      <TertiaryButton
+        text="Setup"
+        onClick={() => router.push("/setup")}
+        white
+      />
+      <Spacer height={16} />
+      <TertiaryButton
+        text="Jobs List"
+        onClick={() => router.push("/jobs")}
+        white
+      />
+      <Spacer height={16} />
+      <TertiaryButton
+        text="Tagged Jobs"
+        onClick={() => router.push("/jobs/tagged")}
+        white
+      />
+    </>
+  );
   return (
     <>
       <FooterWrapper
         color={useDarkFooter ? BackgroundColor.darker : BackgroundColor.dark}
       >
-        {/* Weird font bug, need to wrap link with typography: https://mui.com/material-ui/api/link */}
-        <TertiaryButton
-          text="Setup"
-          onClick={() => router.push("/setup")}
-          white
-        />
-        <Spacer height={16} />
-        <TertiaryButton
-          text="Jobs List"
-          onClick={() => router.push("/jobs")}
-          white
-        />
-        <Spacer height={16} />
-        <TertiaryButton
-          text="Tagged Jobs"
-          onClick={() => router.push("/jobs/tagged")}
-          white
-        />
+        {isMobile ? null : renderDesktopLinks()}
         <Spacer height={16} />
         <TertiaryButton
           text="About"
