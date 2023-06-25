@@ -126,5 +126,6 @@ const SalaryValueString = styled(Typography).attrs({
     color: white;
     font-weight: bold;
     transform: translateY(2px);
+    text-wrap: nowrap;
   }
 `;

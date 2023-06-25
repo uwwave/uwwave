@@ -5,6 +5,7 @@ export interface UserContextType {
   isLoading: boolean;
   isLoggedIn: boolean;
   user?: IUserData;
+  refetchUser: () => Promise<void>;
 }
 
 export const UserContext = createContext<UserContextType | undefined>(

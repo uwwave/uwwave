@@ -15,7 +15,7 @@ export const salaryDisplay = (
   if (min === max) {
     return min.toString();
   }
-  return `${min} - ${max}`;
+  return `${min}-${max}`;
 };
 
 export const coopNumberDisplay = (num: number): string => {

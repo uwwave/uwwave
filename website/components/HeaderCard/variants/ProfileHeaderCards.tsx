@@ -7,14 +7,12 @@ interface IProfileHeaderCard {
   imageURL?: string;
   dateJoined?: number;
   isLoading: boolean;
-  canEditPhoto?: boolean;
 }
 export const ProfileHeaderCard = ({
   username,
   imageURL,
   isLoading,
   dateJoined,
-  canEditPhoto,
 }: IProfileHeaderCard) => {
   const renderDate = () => {
     if (!dateJoined) {
@@ -31,7 +29,6 @@ export const ProfileHeaderCard = ({
       title={username}
       isLoading={isLoading}
       subTitle={renderDate()}
-      canEditPhoto={canEditPhoto}
     />
   );
 };

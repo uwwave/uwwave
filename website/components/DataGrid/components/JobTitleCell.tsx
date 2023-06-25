@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Typography from "@mui/material/Typography";
 import { IUserData } from "src/database/models/UserData";
 import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
-import { getProfileImage } from "src/lib/types/profiles";
+import { ProfilePicture, getProfileImage } from "src/lib/types/profiles";
 import { IJobRole } from "src/database/models/JobRole";
 import { Page } from "src/lib/types/page";
 import { coopNumberSubtitleDisplay } from "src/lib/reviews/summary";
@@ -37,7 +37,9 @@ export const getJobTitleCellProps = (rowData: IData, page?: Page) => {
   const profilePageTitle = rowData.company.companyName;
   const title = isProfilePage ? profilePageTitle : companyPageTitle;
   //PROFILE IMAGE
-  const companyPageImage = getProfileImage(user?.profilePicture);
+  const companyPageImage = rowData.anonymous
+    ? ProfilePicture.UW_LOGO_GREY
+    : getProfileImage(user?.profilePicture);
   const profilePageImage = rowData.company.logo ?? "/logo-empty.png";
   const imageURL = page === Page.PROFILE ? profilePageImage : companyPageImage;
   //SUBTITLE
@@ -45,9 +47,11 @@ export const getJobTitleCellProps = (rowData: IData, page?: Page) => {
   const profilePageSubtitle = rowData.anonymous ? "anonymous" : roleSubtitle;
   const subtitle = isProfilePage ? profilePageSubtitle : companyPageSubtitle;
   //URL
-  const companyPageURL = undefined;
-  const profilePageURL = `/companies/${rowData.company.id}`;
-  const url = isProfilePage ? profilePageURL : companyPageURL;
+  const companyPageURL = `/companies/${rowData.company.id}`;
+  const profilePageURL = rowData.anonymous
+    ? undefined
+    : `/user/${rowData.user.id}`;
+  const url = isProfilePage ? companyPageURL : profilePageURL;
 
   return {
     title,
