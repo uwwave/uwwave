@@ -1,32 +1,33 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { IJobReview } from "src/database/models/JobReview";
 import { Requests } from "src/lib/requests/Requests";
-import { useUserContext } from "src/lib/context/User/UserContext";
 import { useVoteHelpful } from "./useVoteHelpful";
 import { IJobReviewRow } from "./useCompanyReviewsDataGrid";
 
-export const useMyCompanyReviewsDataGrid = () => {
+export const useUserCompanyReviewsDataGrid = (userID: string) => {
   const [jobReviews, setJobReviews] = useState<IJobReview[]>([]);
   const [jobReviewsLoading, setJobReviewsLoading] = useState(true);
-  const { user } = useUserContext();
-  const { voteState } = useVoteHelpful(jobReviews, Requests.updateReviewVotes);
+  const { voteState, onUpvote, onDownvote } = useVoteHelpful(
+    jobReviews,
+    Requests.updateReviewVotes
+  );
 
   const fetchReviews = useCallback(async () => {
     try {
-      if (!user) {
+      if (!userID) {
         return;
       }
       setJobReviews([]);
-      setJobReviews(await Requests.getUserJobReviews(user.id));
+      setJobReviews(await Requests.getUserJobReviews(userID));
       setJobReviewsLoading(false);
     } catch (e) {
       console.log(e);
     }
-  }, [user]);
+  }, [userID]);
 
   useEffect(() => {
     fetchReviews();
-  }, [user]);
+  }, [userID]);
 
   const jobReviewRows: IJobReviewRow[] = useMemo(() => {
     return jobReviews.map(x => ({
@@ -36,16 +37,7 @@ export const useMyCompanyReviewsDataGrid = () => {
     }));
   }, [jobReviews]);
 
-  const onUpvote = (reviewID: string) => {
-    console.log(reviewID);
-  };
-
-  const onDownvote = (reviewID: string) => {
-    console.log(reviewID);
-  };
-
   return {
-    user,
     jobReviewRows,
     jobReviewsLoading,
     voteState,

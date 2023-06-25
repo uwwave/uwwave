@@ -11,6 +11,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import { LogoLoader } from "../Loader/LogoLoader";
 
 interface IMenuItem {
   value: string;
@@ -117,7 +118,12 @@ export const SearchWithMenuInput = ({
             onChangeSearchValue("");
           }}
           InputProps={{
-            startAdornment: (
+            startAdornment: isLoading ? (
+              <>
+                <LogoLoader width={32} />
+                <Spacer width={8} />
+              </>
+            ) : (
               <InputAdornment position="start">
                 {selectedValue ? (
                   menuItems.find(x => x.value === selectedValue)?.icon ??

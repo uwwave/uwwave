@@ -1,6 +1,5 @@
 import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
 import { ProfileHeaderCard } from "src/components/HeaderCard/variants/ProfileHeaderCards";
-import { useUserPage } from "src/lib/hooks/useUserPage";
 import { Tabs } from "src/components/Tabs/Tabs";
 import { Spacer } from "src/components/Spacer/Spacer";
 import { LogoLoader } from "src/components/Loader/LogoLoader";
@@ -12,13 +11,11 @@ import { ReviewsEmptyState } from "src/components/Empty/JobReviewsEmptyState";
 import { ReviewsDataGrid } from "src/components/DataGrid/ReviewsDataGrid";
 import { Page } from "src/lib/types/page";
 import { InterviewsDataGrid } from "src/components/DataGrid/InterviewsDataGrid";
-import { JobPagePaper } from "src/components/Paper/JobPagePaper";
-import Typography from "@mui/material/Typography";
-import { ProfileImageWithModal } from "src/components/HeaderCard/ProfileImage";
-import { EditUsernameButton } from "src/components/Account/EditUsernameButton";
+import { useOtherUserPage } from "src/lib/hooks/userOtherUsersPage";
 
 const UserPage = () => {
   const {
+    me,
     isLoading,
     user,
     tabSelected,
@@ -35,7 +32,7 @@ const UserPage = () => {
     interviewUpvote,
     interviewDownnvote,
     fetchInterviews,
-  } = useUserPage();
+  } = useOtherUserPage();
   const renderHeader = () => (
     <ProfileHeaderCard
       imageURL={getProfileImage(user?.profilePicture)}
@@ -51,7 +48,7 @@ const UserPage = () => {
         <>
           <Spacer height={4} />
           <ReviewsDataGrid
-            user={user}
+            user={me}
             jobReviewRows={jobReviewRows}
             jobReviewsLoading={jobReviewsLoading}
             voteState={voteState}
@@ -74,7 +71,7 @@ const UserPage = () => {
         <>
           <Spacer height={4} />
           <InterviewsDataGrid
-            user={user}
+            user={me}
             reviewRows={interviewRows}
             isLoading={interviewsAreLoading}
             voteState={interviewVoteState}
@@ -102,27 +99,6 @@ const UserPage = () => {
     );
   };
 
-  const renderMyAccountTab = () => {
-    return (
-      <JobPagePaper>
-        <Typography color="white" variant="h5">
-          <b>My Profile</b>
-        </Typography>
-        <Spacer height={16} />
-        <Typography color="white">Profile Image</Typography>
-        <Spacer height={8} />
-        <ProfileImageWithModal
-          imageURL={getProfileImage(user?.profilePicture)}
-          canEditPhoto
-          showEditIcon
-        />
-        <Spacer height={16} />
-        <Typography color="white">Username</Typography>
-        <Spacer height={8} />
-        <EditUsernameButton />
-      </JobPagePaper>
-    );
-  };
   const renderBody = () => {
     if (isLoading) {
       return (
@@ -131,23 +107,16 @@ const UserPage = () => {
         </Center>
       );
     }
-    const comps = (
-      <>
-        {tabSelected === 0 ? renderMyAccountTab() : null}
-        {tabSelected === 1 ? renderMyReviewsTabs() : null}
-      </>
-    );
+    const comps = <>{tabSelected === 0 ? renderMyReviewsTabs() : null}</>;
 
     const tabLabels = [
-      { label: "My Account" },
       {
-        label: `My Reviews ${
+        label: `Reviews ${
           jobReviewRows.length + interviewRows.length
             ? `(${jobReviewRows.length + interviewRows.length})`
             : ""
         }`,
       },
-      { label: "Settings" },
     ];
     return (
       <>

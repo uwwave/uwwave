@@ -233,4 +233,14 @@ export class Requests {
       .get(`/api/companyInfo/reviewSummary?id=${companyID}`)
       .then(x => x.data);
   }
+
+  static patchProfilePhoto = async (photo: string): Promise<undefined> => {
+    return axios
+      .patch(`/api/account/profilePhoto`, { photo })
+      .then(x => x.data);
+  };
+
+  static patchUsername = async (username: string): Promise<undefined> => {
+    return axios.patch(`/api/account/username`, { username }).then(x => x.data);
+  };
 }

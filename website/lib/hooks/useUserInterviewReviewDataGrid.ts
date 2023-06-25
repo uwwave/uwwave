@@ -1,32 +1,33 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Requests } from "src/lib/requests/Requests";
-import { useUserContext } from "src/lib/context/User/UserContext";
 import { useVoteHelpful } from "./useVoteHelpful";
 import { IInterviewReview } from "src/database/models/InterviewReview";
 import { IInterviewReviewRow } from "./useInterviewReviewsDataGrid";
 
-export const useMyInterviewReviewsDataGrid = () => {
+export const useUserInterviewReviewsDataGrid = (userID: string) => {
   const [reviews, setReviews] = useState<IInterviewReview[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { user } = useUserContext();
-  const { voteState } = useVoteHelpful(reviews, Requests.updateReviewVotes);
+  const { voteState, onDownvote, onUpvote } = useVoteHelpful(
+    reviews,
+    Requests.updateReviewVotes
+  );
 
   const fetchReviews = useCallback(async () => {
     try {
-      if (!user) {
+      if (!userID) {
         return;
       }
       setReviews([]);
-      setReviews(await Requests.getUserInterviewReviews(user.id));
+      setReviews(await Requests.getUserInterviewReviews(userID));
       setIsLoading(false);
     } catch (e) {
       console.log(e);
     }
-  }, [user]);
+  }, [userID]);
 
   useEffect(() => {
     fetchReviews();
-  }, [user]);
+  }, [userID]);
 
   const reviewRows: IInterviewReviewRow[] = useMemo(() => {
     return reviews.map(x => ({
@@ -36,16 +37,7 @@ export const useMyInterviewReviewsDataGrid = () => {
     }));
   }, [reviews]);
 
-  const onUpvote = (reviewID: string) => {
-    console.log(reviewID);
-  };
-
-  const onDownvote = (reviewID: string) => {
-    console.log(reviewID);
-  };
-
   return {
-    user,
     reviewRows,
     isLoading,
     voteState,

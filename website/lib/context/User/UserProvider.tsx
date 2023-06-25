@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { UserContextType, UserContext } from "src/lib/context/User/UserContext";
 import { useSession } from "next-auth/react";
 import { Requests } from "src/lib/requests/Requests";
@@ -21,21 +21,21 @@ export const UserProvider = ({ children }: IProvider) => {
   const sessionLoading = status === "loading";
   const sessionUser = session?.user as ISession | undefined;
 
-  useEffect(() => {
-    const fire = async () => {
-      if (!sessionUser) {
-        return;
-      }
-      try {
-        setUser(await Requests.getUser(sessionUser.id));
-        setUserRequsetLoading(false);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    fire();
+  const refetchUser = useCallback(async () => {
+    if (!sessionUser) {
+      return;
+    }
+    try {
+      setUser(await Requests.getUser(sessionUser.id));
+      setUserRequsetLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
   }, [sessionUser]);
+
+  useEffect(() => {
+    refetchUser();
+  }, [refetchUser]);
 
   const isLoading = sessionLoading || (userRequestLoading && !!sessionUser);
 
@@ -43,6 +43,7 @@ export const UserProvider = ({ children }: IProvider) => {
     isLoading,
     isLoggedIn: status === "authenticated",
     user: user,
+    refetchUser,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
