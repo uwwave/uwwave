@@ -53,7 +53,7 @@ const AboutPage = () => {
   const { isMobile } = useViewport();
   const renderHeader = () => (
     <>
-      <Typography variant={isMobile ? "h6" : "h5"} align="center">
+      <Typography variant={isMobile ? "subtitle1" : "h5"} align="center">
         UW Wave is a Capstone Project created by SE2024s
       </Typography>
       <Spacer height={isMobile ? 32 : 64} />
