@@ -27,7 +27,7 @@ export const PageWrapper = ({
     <Main>
       <NavigationBar />
       <Container>
-        <Spacer height={isMobile ? 72 : 64} />
+        <Spacer height={isMobile ? 128 : 64} />
         {HeaderComponents.map((x, i) => {
           if (x === null) {
             return;
@@ -43,7 +43,7 @@ export const PageWrapper = ({
         })}
       </Container>
       <WaterWrapper lighter={lighterBackground ?? false}>
-        <Spacer height={isMobile ? 8 : 32} />
+        <Spacer height={32} />
         <Container>{Body}</Container>
         <Spacer height={128} />
       </WaterWrapper>

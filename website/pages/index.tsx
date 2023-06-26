@@ -9,6 +9,7 @@ import { BackgroundColor, Color } from "src/styles/color";
 import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
 import { Footer } from "src/components/Footer/Footer";
 import { useViewport } from "src/lib/hooks/useViewport";
+import { ExtensionAnimation } from "src/components/Homepage/Animation/ExtensionAnimation";
 
 const generatePillars = (
   pillars: number,
@@ -42,7 +43,7 @@ const generatePillars = (
 const HomePage = () => {
   const { isMobile, isViewportLoading } = useViewport();
   const pillars = useMemo(() => {
-    return generatePillars(isMobile ? 12 : 24, 170, isMobile ? 360 : 400);
+    return generatePillars(isMobile ? 12 : 24, 80, 200);
   }, [isMobile]);
   if (isViewportLoading) {
     return null;
@@ -54,7 +55,7 @@ const HomePage = () => {
         <NavigationBar />
         <Container>
           <FadeIn>
-            <Spacer height={isMobile ? 142 : 80} />
+            <Spacer height={isMobile ? 142 : 32} />
             {isMobile ? (
               <MobileTitle>The Ultimate WaterlooWorks Companion</MobileTitle>
             ) : (
@@ -73,22 +74,25 @@ const HomePage = () => {
 
               {isMobile ? (
                 <MobileSubTitle>
-                  Browse Jobs, Salaries and Reviews with Upgraded Search
+                  Upgraded Search, Multi-shortlists, Interview Ratings & More
                 </MobileSubTitle>
               ) : (
                 <SubTitle>
-                  Browse Jobs, Salaries and Reviews with Upgraded Search
+                  Upgraded Search, Interview Ratings, Multi-shortlists & More
                 </SubTitle>
               )}
             </SubTitleWrapper>
-            <Spacer height={isMobile ? 32 : 64} />
+            <Spacer height={16} />
             {isMobile ? null : (
               <Center>
                 <PrimaryButton href="/setup">Get Started</PrimaryButton>
               </Center>
             )}
-
-            <Spacer height={64} />
+            {isMobile ? null : <Spacer height={40} />}
+            <Center>
+              <ExtensionAnimation />
+            </Center>
+            <Spacer height={isMobile ? 24 : 64} />
           </FadeIn>
           <WaveDesignWrapper>
             {pillars.map((x, i) => (
@@ -133,7 +137,7 @@ const WaveDesignWrapper = styled.div`
   align-items: end;
   justify-content: center;
   gap: 16px;
-  height: 40vh;
+  height: 200px;
   overflow: visible;
 `;
 
