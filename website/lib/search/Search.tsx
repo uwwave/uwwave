@@ -55,7 +55,6 @@ export const getSearchTypeField = (type: SearchTypes) => {
   }
 };
 
-// TODO: Color NOT CHANGING
 export const getSearchTypeIcon = (type: SearchTypes, isActive: boolean) => {
   switch (type) {
     case SearchTypes.JobTitle:
