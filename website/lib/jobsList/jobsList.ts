@@ -14,7 +14,7 @@ import {
   appDocsTextToFilterTag,
   specialReqsTextToFilterTag,
   lookupFilterTags,
-  JobFilters,
+  JobFilters, SpecialReqFilterTags,
 } from "src/lib/extension/jobFilters";
 
 export interface JobsPageRowData {
@@ -276,7 +276,7 @@ export function buildCoopJobsFilterTagsFromExtensionData(
             additionalText.toLowerCase().includes("apply")
           ) {
             jobListFilterTags[job.jobId][JobFilters.specialReqFilter].push(
-              "External application"
+              SpecialReqFilterTags.externalApplication
             );
           }
         }

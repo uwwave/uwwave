@@ -1,76 +1,74 @@
 import {
   JobFilters,
-  durationFilterTags,
-  appDocFilterTags,
-  specialReqFilterTags,
+  DurationFilterTags,
+  AppDocFilterTags,
+  SpecialReqFilterTags,
   JobFilterTags,
 } from "src/lib/extension/jobFilters";
 
-export enum filterState {
+export enum FilterState {
   none = 0,
   plus = 1,
   minus = 2,
 }
 
-export enum operator {
+export enum FilterOperator {
   and = 0,
   or = 1,
   not = 2,
 }
 
-export interface filterStates {
+export interface FilterStates {
   [JobFilters.durationFilter]: {
-    [key in durationFilterTags]: filterState;
+    [key in DurationFilterTags]: FilterState;
   };
   [JobFilters.appDocFilter]: {
-    [key in appDocFilterTags]: filterState;
+    [key in AppDocFilterTags]: FilterState;
   };
   [JobFilters.specialReqFilter]: {
-    [key in specialReqFilterTags]: filterState;
+    [key in SpecialReqFilterTags]: FilterState;
   };
-  // Tech
-  // Industry
 }
 
-export interface formulaNode {
-  operator: operator;
-  operands: (formulaNode | filter)[];
+export interface FormulaNode {
+  operator: FilterOperator;
+  operands: (FormulaNode | FilterOperand)[];
 }
 
-export interface filter {
+export interface FilterOperand {
   category: JobFilters;
   tag: string;
 }
 
-export function getFormula(filterStates: filterStates): formulaNode {
-  const formula: formulaNode = {
-    operator: operator.and,
+export function getFormula(filterStates: FilterStates): FormulaNode {
+  const formula: FormulaNode = {
+    operator: FilterOperator.and,
     operands: [],
   };
 
   for (const [category, tags] of Object.entries(filterStates)) {
-    const subFormula: formulaNode = {
-      operator: operator.and,
+    const subFormula: FormulaNode = {
+      operator: FilterOperator.and,
       operands: [],
     };
-    const orFormula: formulaNode = {
-      operator: operator.or,
+    const orFormula: FormulaNode = {
+      operator: FilterOperator.or,
       operands: [],
     };
-    const orNotFormula: formulaNode = {
-      operator: operator.or,
+    const orNotFormula: FormulaNode = {
+      operator: FilterOperator.or,
       operands: [],
     };
 
     for (const [tag, state] of Object.entries(tags)) {
-      const term: filter = {
+      const term: FilterOperand = {
         category: category as JobFilters,
         tag: tag,
       };
 
-      if (state == filterState.plus) {
+      if (state == FilterState.plus) {
         orFormula.operands.push(term);
-      } else if (state == filterState.minus) {
+      } else if (state == FilterState.minus) {
         orNotFormula.operands.push(term);
       }
     }
@@ -79,7 +77,7 @@ export function getFormula(filterStates: filterStates): formulaNode {
     }
     if (orNotFormula.operands.length > 0) {
       subFormula.operands.push({
-        operator: operator.not,
+        operator: FilterOperator.not,
         operands: [orNotFormula],
       });
     }
@@ -93,7 +91,7 @@ export function getFormula(filterStates: filterStates): formulaNode {
 }
 
 export function isJobMatched(
-  formula: formulaNode | filter,
+  formula: FormulaNode | FilterOperand,
   filterTags: JobFilterTags
 ): boolean {
   if (filterTags === undefined) {
@@ -102,11 +100,11 @@ export function isJobMatched(
 
   // formulaNode
   if ("operator" in formula) {
-    if (formula.operator === operator.and) {
+    if (formula.operator === FilterOperator.and) {
       return formula.operands.every(operand =>
         isJobMatched(operand, filterTags)
       );
-    } else if (formula.operator === operator.or) {
+    } else if (formula.operator === FilterOperator.or) {
       return formula.operands.some(operand =>
         isJobMatched(operand, filterTags)
       );

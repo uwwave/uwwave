@@ -4,21 +4,21 @@ export enum JobFilters {
   specialReqFilter = "Special Requirements",
 }
 
-export enum durationFilterTags {
+export enum DurationFilterTags {
   fourMonth = "4 Month",
   eightMonthReq = "8 Month Required",
   eightMonthPref = "8 Month Preferred",
 }
 
-export enum appDocFilterTags {
+export enum AppDocFilterTags {
   // coopWorkHistory = "Co-op Work History",
   // resume = "Resume",
   // gradeReport = "Grade Report",
   coverLetter = "Cover Letter",
-  other = "Other - per job posting",
+  other = "Other",
 }
 
-export enum specialReqFilterTags {
+export enum SpecialReqFilterTags {
   swpp = "Canada SWPP",
   fullyVaccinated = "Fully Vaccinated",
   usaWorkEligibility = "USA Work Eligibility",
@@ -36,13 +36,13 @@ export const durationToFilterTags = (duration: string): string[] => {
   duration = duration.toLowerCase();
   const durationTags: string[] = [];
   if (duration.includes("4 month")) {
-    durationTags.push(durationFilterTags.fourMonth);
+    durationTags.push(DurationFilterTags.fourMonth);
   }
   if (duration.includes("8 Month") || duration.includes("2 work term")) {
     if (duration.includes("preferred")) {
-      durationTags.push(durationFilterTags.eightMonthPref);
+      durationTags.push(DurationFilterTags.eightMonthPref);
     } else {
-      durationTags.push(durationFilterTags.eightMonthReq);
+      durationTags.push(DurationFilterTags.eightMonthReq);
     }
   }
 
@@ -53,20 +53,20 @@ export const appDocsTextToFilterTag: Record<string, string> = {
   // "University of Waterloo Co-op Work History": "Co-op Work History",
   // "Resume": "Resume",
   // "Grade Report": "Grade Report",
-  "Cover Letter": "Cover Letter",
-  "Other": "Other - per job posting",
+  "Cover Letter": AppDocFilterTags.coverLetter,
+  "Other": AppDocFilterTags.other,
 };
 
 export const specialReqsTextToFilterTag: Record<string, string> = {
-  "swpp": "Canada SWPP",
-  "fully vaccinated": "Fully Vaccinated",
-  "eligible to work in the usa": "USA Work Eligibility",
-  "usa visa": "USA Work Eligibility",
-  "this job requires you to work remotely from canada": "Remote From Canada",
-  "security clearance": "Security Clearance",
-  "driver's license": "Driver's License",
-  "drivers license": "Driver's License",
-  "external application": "External Application",
+  "swpp": SpecialReqFilterTags.swpp,
+  "fully vaccinated": SpecialReqFilterTags.fullyVaccinated,
+  "eligible to work in the usa": SpecialReqFilterTags.usaWorkEligibility,
+  "usa visa": SpecialReqFilterTags.usaWorkEligibility,
+  "this job requires you to work remotely from canada": SpecialReqFilterTags.remoteFromCanada,
+  "security clearance": SpecialReqFilterTags.securityClearance,
+  "driver's license": SpecialReqFilterTags.driversLicense,
+  "drivers license": SpecialReqFilterTags.driversLicense,
+  // external app calculated in `buildCoopJobsFilterTagsFromExtensionData`
 };
 
 export function lookupFilterTags(
