@@ -1018,8 +1018,8 @@ export const ExtensionAnimation = () => {
       filterBottomPaper.add(showFilterBottomPaper);
       filterBottomPaper.add(industryInputTL, ">-=0.2");
       filterBottomPaper.add(techInputTL, ">-=1.2");
-      filterBottomPaper.add(showFilterDivider, ">-=0.4");
-      filterBottomPaper.add(durationInputTL, ">-=0.2");
+      filterBottomPaper.add(showFilterDivider, "<+=0.1.2");
+      filterBottomPaper.add(durationInputTL, ">-=0.6");
       filterBottomPaper.add(documentsInputTL, "<+=0.4");
 
       //show filters modal
