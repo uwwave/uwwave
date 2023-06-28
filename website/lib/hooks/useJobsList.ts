@@ -58,9 +58,9 @@ export const useJobsList = () => {
         const companyData = out.companyToData[job.companyName];
         newJobsList[job.id] = {
           ...job,
-          ratingsScore: companyData.ratingAverage ?? null,
-          salaryScore: companyData.salaryScore ?? null,
-          interviewScore: companyData.interviewAverage ?? null,
+          ratingsScore: companyData?.ratingAverage ?? null,
+          salaryScore: companyData?.salaryScore ?? null,
+          interviewScore: companyData?.interviewAverage ?? null,
         };
       });
       setJobsList(newJobsList);

@@ -208,7 +208,6 @@ export const SearchBarJobsList = (props: ISearchBarJobsList) => {
       <StyledIconButton onClick={onSearchHelpClick}>
         <HelpOutlineOutlinedIcon />
       </StyledIconButton>
-      <Spacer height={8} />
       <StyledPaper>
         <SearchBarJobsListInner
           chips={chips}
