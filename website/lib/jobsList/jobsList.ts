@@ -308,6 +308,8 @@ export function buildCoopJobsFilterTagsFromExtensionData(
       );
     }
   });
+
+  return jobListFilterTags;
 }
 
 export const getDifferentCountries = (jobs: JobsPageRowData[]) => {
