@@ -11,7 +11,7 @@ import { ReviewsEmptyState } from "src/components/Empty/JobReviewsEmptyState";
 import { ReviewsDataGrid } from "src/components/DataGrid/ReviewsDataGrid";
 import { Page } from "src/lib/types/page";
 import { InterviewsDataGrid } from "src/components/DataGrid/InterviewsDataGrid";
-import { useOtherUserPage } from "src/lib/hooks/userOtherUsersPage";
+import { useOtherUserPage } from "src/lib/hooks/useOtherUsersPage";
 
 const UserPage = () => {
   const {
