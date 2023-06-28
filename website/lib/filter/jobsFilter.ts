@@ -4,7 +4,7 @@ import {
   appDocFilterTags,
   specialReqFilterTags,
   JobFilterTags,
-} from "src/lib/extension/jobfilters";
+} from "src/lib/extension/jobFilters";
 
 export enum filterState {
   none = 0,

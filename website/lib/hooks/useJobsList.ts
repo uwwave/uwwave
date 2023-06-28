@@ -106,7 +106,7 @@ export const useJobsList = () => {
     );
   }, [jobsList]);
 
-  // Filter out jobs based on search
+  // Filter out jobs based on search and filtering
   useEffect(() => {
     let queryString = "";
     searchChips.forEach(chip => {

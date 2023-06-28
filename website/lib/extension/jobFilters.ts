@@ -2,8 +2,6 @@ export enum JobFilters {
   appDocFilter = "Documents Required",
   durationFilter = "Work Term Duration",
   specialReqFilter = "Special Requirements",
-  technologyFilter = "Technologies",
-  industryFilter = "Industries",
 }
 
 export enum durationFilterTags {

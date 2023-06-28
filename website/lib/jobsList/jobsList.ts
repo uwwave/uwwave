@@ -15,7 +15,7 @@ import {
   specialReqsTextToFilterTag,
   lookupFilterTags,
   JobFilters,
-} from "src/lib/extension/jobfilters";
+} from "src/lib/extension/jobFilters";
 
 export interface JobsPageRowData {
   id: number;
@@ -245,8 +245,6 @@ export function buildCoopJobsFilterTagsFromExtensionData(
         [JobFilters.appDocFilter]: [],
         [JobFilters.durationFilter]: [],
         [JobFilters.specialReqFilter]: [],
-        [JobFilters.technologyFilter]: [],
-        [JobFilters.industryFilter]: [],
       };
 
       const jobPostingInformation =
