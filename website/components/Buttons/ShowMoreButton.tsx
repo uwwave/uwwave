@@ -20,6 +20,7 @@ export const ShowMoreButton = (props: IShowMoreButton) => {
   // list of information to include
   // update each time new field is added or removed to a specific job page
   const allowedJobInfo: string[] = [
+    'Location',
     JobInfoFieldsCoop.additionalInformation,
     JobInfoFieldsCoop.additionalJobIdentifiers,
     JobInfoFieldsCoop.employerInternalJobNumber,
