@@ -53,8 +53,8 @@ export const appDocsTextToFilterTag: Record<string, string> = {
   // "University of Waterloo Co-op Work History": "Co-op Work History",
   // "Resume": "Resume",
   // "Grade Report": "Grade Report",
-  "Cover Letter": AppDocFilterTags.coverLetter,
-  "Other": AppDocFilterTags.other,
+  "cover letter": AppDocFilterTags.coverLetter,
+  "other": AppDocFilterTags.other,
 };
 
 export const specialReqsTextToFilterTag: Record<string, string> = {
@@ -62,7 +62,8 @@ export const specialReqsTextToFilterTag: Record<string, string> = {
   "fully vaccinated": SpecialReqFilterTags.fullyVaccinated,
   "eligible to work in the usa": SpecialReqFilterTags.usaWorkEligibility,
   "usa visa": SpecialReqFilterTags.usaWorkEligibility,
-  "this job requires you to work remotely from canada": SpecialReqFilterTags.remoteFromCanada,
+  "this job requires you to work remotely from canada":
+    SpecialReqFilterTags.remoteFromCanada,
   "security clearance": SpecialReqFilterTags.securityClearance,
   "driver's license": SpecialReqFilterTags.driversLicense,
   "drivers license": SpecialReqFilterTags.driversLicense,
