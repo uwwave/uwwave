@@ -249,6 +249,7 @@ const SpecificJobPage = () => {
         {(job?.jobPostingInformation || job?.applicationInformation) && (
           <ShowMoreButton
             extraJobInfo={{
+              Location: job?.location,
               ...job?.jobPostingInformation,
               ...job?.applicationInformation,
             }}
