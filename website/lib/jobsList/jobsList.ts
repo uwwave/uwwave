@@ -27,6 +27,7 @@ export interface JobsPageRowData {
   location: string;
   duration: string;
   jobPostingInformation: any;
+  applicationInformation: any;
   ratingsScore: number | null;
   salaryScore: number | null;
   interviewScore: number | null;
@@ -60,6 +61,7 @@ export function buildCoopJobsListFromExtensionData(
         requiredSkills: "",
         compensationAndBenefitsInformation: "",
         jobPostingInformation: null,
+        applicationInformation: null,
         ratingsScore: null,
         salaryScore: null,
         interviewScore: null,
@@ -89,6 +91,9 @@ export function buildCoopJobsListFromExtensionData(
           ] ?? "";
         jobList[job.jobId].jobPostingInformation = jobPostingInformation;
       }
+
+      jobList[job.jobId].applicationInformation =
+        job.pageData[PostingSections.applicationInformation];
     }
   });
   return Object.values(jobList);
@@ -122,6 +127,7 @@ export function buildFulltimeJobsListFromExtensionData(
         location: "",
         duration: "",
         jobPostingInformation: null,
+        applicationInformation: null,
         ratingsScore: null,
         salaryScore: null,
         interviewScore: null,
@@ -146,6 +152,9 @@ export function buildFulltimeJobsListFromExtensionData(
           jobInfo[JobInfoFieldsFulltime.compensationAndBenefits];
         jobList[job.jobId].jobPostingInformation = jobInfo;
       }
+
+      jobList[job.jobId].applicationInformation =
+        job.pageData[PostingSections.applicationDelivery];
     }
   });
   return Object.values(jobList);
@@ -181,6 +190,7 @@ export function buildCoopJobWithJobID(
     location: "",
     duration: "",
     jobPostingInformation: null,
+    applicationInformation: null,
     ratingsScore: null,
     salaryScore: null,
     interviewScore: null,
@@ -206,6 +216,9 @@ export function buildCoopJobWithJobID(
       ] ?? "";
     job.jobPostingInformation = jobPostingInformation;
   }
+
+  job.applicationInformation =
+    jobInfo.pageData[PostingSections.applicationInformation];
   return job;
 }
 

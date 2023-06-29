@@ -246,8 +246,13 @@ const SpecificJobPage = () => {
             )
           );
         })}
-        {job?.jobPostingInformation && (
-          <ShowMoreButton extraJobInfo={job?.jobPostingInformation} />
+        {(job?.jobPostingInformation || job?.applicationInformation) && (
+          <ShowMoreButton
+            extraJobInfo={{
+              ...job?.jobPostingInformation,
+              ...job?.applicationInformation,
+            }}
+          />
         )}
       </>
     );
