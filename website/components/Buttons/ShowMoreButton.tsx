@@ -3,7 +3,11 @@ import { Color } from "src/styles/color";
 import styled from "styled-components";
 import React, { useMemo, useState } from "react";
 import { SpecificJobPageSection } from "../SpecificJobPageSection/SpecificJobPageSection";
-import { JobInfoFieldsCoop } from "src/lib/extension/jobKeys";
+import {
+  AppDeliveryFields,
+  AppInfoFields,
+  JobInfoFieldsCoop,
+} from "src/lib/extension/jobKeys";
 import ReactHtmlParser from "react-html-parser";
 
 interface IShowMoreButton {
@@ -15,7 +19,7 @@ export const ShowMoreButton = (props: IShowMoreButton) => {
 
   // list of information to include
   // update each time new field is added or removed to a specific job page
-  const allowedJobInfo = [
+  const allowedJobInfo: string[] = [
     JobInfoFieldsCoop.additionalInformation,
     JobInfoFieldsCoop.additionalJobIdentifiers,
     JobInfoFieldsCoop.employerInternalJobNumber,
@@ -27,10 +31,12 @@ export const ShowMoreButton = (props: IShowMoreButton) => {
     JobInfoFieldsCoop.workTerm,
     JobInfoFieldsCoop.workTermDuration,
     JobInfoFieldsCoop.transportationAndHousing,
+    ...Object.values(AppInfoFields),
+    ...Object.values(AppDeliveryFields),
   ];
   const extraInfoString: string = useMemo(() => {
     const filteredInfo = Object.keys(extraJobInfo)
-      .filter(key => allowedJobInfo.includes(key as JobInfoFieldsCoop))
+      .filter(key => allowedJobInfo.includes(key))
       .reduce((obj, key) => {
         return {
           ...obj,
