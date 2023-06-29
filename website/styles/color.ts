@@ -15,6 +15,7 @@ export enum Color {
   green = "#4CD137",
   yellow = "#EC9D05",
   red2 = "#b33939",
+  hover = "#e3e3e3",
 }
 
 export enum BackgroundColor {

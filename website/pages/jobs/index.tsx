@@ -8,6 +8,7 @@ import { JobsListPageHeader } from "src/components/Headers/variants/JobsListPage
 import Skeleton from "@mui/material/Skeleton";
 import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
 import { Typography } from "@mui/material";
+import { FilterJobsList } from "src/components/Filters/FiltersJobsList";
 
 const JobsListPage = () => {
   useEffect(() => {
@@ -43,6 +44,8 @@ const JobsListPage = () => {
           numActiveChips={numActiveChips}
         />
       )}
+      <Spacer height={16} />
+      <FilterJobsList />
       <Spacer height={16} />
       <JobsDataGrid
         jobs={displayJobs}
