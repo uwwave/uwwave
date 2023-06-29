@@ -1,6 +1,6 @@
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
-import { useEffect, useState } from "react";
+import Typography from "@mui/material/Typography";
 import {
   AppDocFilterTags,
   DurationFilterTags,
@@ -11,59 +11,59 @@ import { getFilterChipIcon } from "src/lib/filter/filterChipsIcon";
 import { FilterState, FilterStates } from "src/lib/filter/jobsFilterEval";
 import { BackgroundColor, Color } from "src/styles/color";
 import styled from "styled-components";
+import { Spacer } from "../Spacer/Spacer";
 
-export const FilterJobsList = () => {
-  const [filterStates, setFilterStates] = useState<FilterStates>({
-    [JobFilters.durationFilter]: {
-      [DurationFilterTags.fourMonth]: FilterState.none,
-      [DurationFilterTags.eightMonthPref]: FilterState.none,
-      [DurationFilterTags.eightMonthReq]: FilterState.none,
-    },
-    [JobFilters.appDocFilter]: {
-      [AppDocFilterTags.coverLetter]: FilterState.none,
-      [AppDocFilterTags.other]: FilterState.none,
-    },
-    [JobFilters.specialReqFilter]: {
-      [SpecialReqFilterTags.swpp]: FilterState.none,
-      [SpecialReqFilterTags.fullyVaccinated]: FilterState.none,
-      [SpecialReqFilterTags.usaWorkEligibility]: FilterState.none,
-      [SpecialReqFilterTags.remoteFromCanada]: FilterState.none,
-      [SpecialReqFilterTags.securityClearance]: FilterState.none,
-      [SpecialReqFilterTags.driversLicense]: FilterState.none,
-      [SpecialReqFilterTags.externalApplication]: FilterState.none,
-    },
-  });
+interface IFilterJobsList {
+  filterStates: FilterStates;
+  setFilterStates: (filterstates: FilterStates) => void;
+}
+
+export const FilterJobsList = (props: IFilterJobsList) => {
+  const { filterStates, setFilterStates } = props;
 
   return (
-    <FilterWrapper>
+    <FiltersWrapper>
       <StyledPaper>
-        <ChipsWrapper>
-          {Object.entries(filterStates[JobFilters.appDocFilter]).map(
-            ([key, value]) => (
-              <StyledChip
-                onClick={() => {
-                  const newFilterStates = { ...filterStates };
-                  newFilterStates[JobFilters.appDocFilter][
-                    key as AppDocFilterTags
-                  ] = (value + 1) % 3;
-                  setFilterStates(newFilterStates);
-                }}
-                label={key}
-                icon={getFilterChipIcon(value)}
-              />
-            )
-          )}
-        </ChipsWrapper>
-        {/* <StyledChip
-        onClick={() => {
-          onClickChip(i);
-        }}
-        icon={getSearchTypeIcon(searchType, chips[i].isActive)}
-        label={`${getSearchTypeName(searchType)}: ${searchVal}`}
-        key={i}
-      /> */}
+        {filterStates &&
+          Object.entries(filterStates).map(([category, filters]) => (
+            <FilterGroup>
+              <div>
+                <Typography color="white" sx={{ fontSize: "1.1rem" }}>
+                  <b>{category}</b>
+                </Typography>
+              </div>
+              <Spacer height={8} />
+              <ChipsWrapper>
+                {Object.entries(filters).map(([tag, state]) => (
+                  <StyledChip
+                    onClick={() => {
+                      const newFilterStates: FilterStates = { ...filterStates };
+                      category === JobFilters.appDocFilter
+                        ? (newFilterStates[category as JobFilters.appDocFilter][
+                            tag as AppDocFilterTags
+                          ] = ((state as FilterState) + 1) % 3)
+                        : category === JobFilters.durationFilter
+                        ? (newFilterStates[
+                            category as JobFilters.durationFilter
+                          ][tag as DurationFilterTags] =
+                            ((state as FilterState) + 1) % 3)
+                        : category === JobFilters.specialReqFilter
+                        ? (newFilterStates[
+                            category as JobFilters.specialReqFilter
+                          ][tag as SpecialReqFilterTags] =
+                            ((state as FilterState) + 1) % 3)
+                        : null;
+                      setFilterStates(newFilterStates);
+                    }}
+                    label={tag}
+                    icon={getFilterChipIcon(state as FilterState)}
+                  />
+                ))}
+              </ChipsWrapper>
+            </FilterGroup>
+          ))}
       </StyledPaper>
-    </FilterWrapper>
+    </FiltersWrapper>
   );
 };
 
@@ -83,7 +83,7 @@ const ChipsWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-const FilterWrapper = styled.div`
+const FiltersWrapper = styled.div`
   width: 100%;
   min-width: 300px;
   position: relative;
@@ -94,5 +94,14 @@ const StyledPaper = styled(Paper)`
     padding: 32px;
     border-radius: 16px;
     background-color: ${BackgroundColor.darker};
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
+`;
+
+const FilterGroup = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `;

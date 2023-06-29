@@ -26,6 +26,8 @@ const JobsListPage = () => {
     earliestDeadline,
     differentCountries,
     logos,
+    filterStates,
+    setFilterStates,
   } = useJobsList();
   const isLoading = isLoadingState || !logos;
   const renderBody = () => (
@@ -45,7 +47,10 @@ const JobsListPage = () => {
         />
       )}
       <Spacer height={16} />
-      <FilterJobsList />
+      <FilterJobsList
+        filterStates={filterStates}
+        setFilterStates={setFilterStates}
+      />
       <Spacer height={16} />
       <JobsDataGrid
         jobs={displayJobs}
