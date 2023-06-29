@@ -23,6 +23,7 @@ export const ExtensionDataProvider = ({ children }: IJobsTagsProvider) => {
     extensionData,
     fetchExtensionData,
     isLoading,
+    coopJobsFilterTags,
   } = useExtensionData();
   useEffect(() => {
     fetchExtensionData();
@@ -47,6 +48,7 @@ export const ExtensionDataProvider = ({ children }: IJobsTagsProvider) => {
     fulltimeJobsListPageRows,
     extensionData,
     isLoading,
+    coopJobsFilterTags,
   };
 
   return (
