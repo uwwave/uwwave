@@ -5,9 +5,9 @@ export enum JobFilters {
 }
 
 export enum DurationFilterTags {
-  fourMonth = "4 Month",
-  eightMonthReq = "8 Month Required",
-  eightMonthPref = "8 Month Preferred",
+  fourMonth = "4 month",
+  eightMonthReq = "8 month required",
+  eightMonthPref = "8 month preferred",
 }
 
 export enum AppDocFilterTags {
@@ -34,19 +34,18 @@ export type JobFilterTags = {
 
 export const durationToFilterTags = (duration: string): string[] => {
   duration = duration.toLowerCase();
-  const durationTags: string[] = [];
-  if (duration.includes("4 month")) {
-    durationTags.push(DurationFilterTags.fourMonth);
-  }
-  if (duration.includes("8 Month") || duration.includes("2 work term")) {
+  let durationTag: string;
+  if (duration.includes("8 month") || duration.includes("2 work term")) {
     if (duration.includes("preferred")) {
-      durationTags.push(DurationFilterTags.eightMonthPref);
+      durationTag = DurationFilterTags.eightMonthPref;
     } else {
-      durationTags.push(DurationFilterTags.eightMonthReq);
+      durationTag = DurationFilterTags.eightMonthReq;
     }
+  } else {
+    durationTag = DurationFilterTags.fourMonth;
   }
 
-  return durationTags;
+  return [durationTag];
 };
 
 export const appDocsTextToFilterTag: Record<string, string> = {

@@ -211,9 +211,8 @@ export function buildCoopJobWithJobID(
     job.province = jobPostingInformation[JobInfoFieldsCoop.jobProvince];
     job.country = jobPostingInformation[JobInfoFieldsCoop.jobCountry];
     job.location = `${job.country}, ${job.city}`;
-    job.duration = jobPostingInformation[JobInfoFieldsCoop.workTermDuration]
-      .replace(" work term", "")
-      .replace(" consecutive", "");
+    const durationTags = durationToFilterTags(jobPostingInformation[JobInfoFieldsCoop.workTermDuration])
+    job.duration = durationTags[0]
     job.jobSummary = jobPostingInformation[JobInfoFieldsCoop.jobSummary];
     job.jobResponsibilities =
       jobPostingInformation[JobInfoFieldsCoop.jobResponsibilities];
