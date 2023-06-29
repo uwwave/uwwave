@@ -174,6 +174,90 @@ export const ExtensionAnimation = () => {
   const modalSelect3BackRef = useRef<SVGPathElement>(null);
   const modalSelect3CircleRef = useRef<SVGCircleElement>(null);
   const modalSelect3CheckRef = useRef<SVGPathElement>(null);
+  const tagsDemoRef = useRef<SVGGElement>(null);
+  const allButtonTextRef = useRef<SVGGElement>(null);
+  const ambButtonRef = useRef<SVGGElement>(null);
+  const ambButtonBackRef = useRef<SVGRectElement>(null);
+  const ambButtonTextRef = useRef<SVGGElement>(null);
+  const ambButtonText1Ref = useRef<SVGGElement>(null);
+  const ambButtonText2Ref = useRef<SVGGElement>(null);
+  const abroadTextRef = useRef<SVGGElement>(null);
+  const abroadTextBackRef = useRef<SVGRectElement>(null);
+  const abroadText1Ref = useRef<SVGGElement>(null);
+  const abroadText = useRef<SVGGElement>(null);
+  const allButtonUnderlineRef = useRef<SVGRectElement>(null);
+  const uwJobRef = useRef<SVGGElement>(null);
+  const uwPaperRef = useRef<SVGRectElement>(null);
+  const uwTopTextRef = useRef<SVGRectElement>(null);
+  const uwBottomTextRef = useRef<SVGRectElement>(null);
+  const uwPillarsRef = useRef<SVGGElement>(null);
+  const uwBackPillar1Ref = useRef<SVGRectElement>(null);
+  const uwInsidePillar1Ref = useRef<SVGRectElement>(null);
+  const uwBackPillar2Ref = useRef<SVGRectElement>(null);
+  const uwInsidePillar2Ref = useRef<SVGRectElement>(null);
+  const uwBackPillar3Ref = useRef<SVGRectElement>(null);
+  const uwInsidePillar3Ref = useRef<SVGRectElement>(null);
+  const pillarIcon1Ref = useRef<SVGPathElement>(null);
+  const pillarIcon2Ref = useRef<SVGPathElement>(null);
+  const pillarIcon3Ref = useRef<SVGPathElement>(null);
+  const uwJobFlagRef = useRef<SVGGElement>(null);
+  const uwBookmarkIconRef = useRef<SVGPathElement>(null);
+  const uwLogoRef = useRef<SVGGElement>(null);
+  const uwLogoBackRef = useRef<SVGRectElement>(null);
+  const uwLogoInsideRef = useRef<SVGGElement>(null);
+  const snowJobListingRef = useRef<SVGGElement>(null);
+  const snowflakePaperRef = useRef<SVGRectElement>(null);
+  const snowflakeLogoBackRef = useRef<SVGRectElement>(null);
+  const snowflakeLogoInsideRef = useRef<SVGGElement>(null);
+  const snowflakeTopTextRef = useRef<SVGRectElement>(null);
+  const snowflakBottomTextRef = useRef<SVGRectElement>(null);
+  const snowPillarsRef = useRef<SVGGElement>(null);
+  const snowBackPillar1Ref = useRef<SVGRectElement>(null);
+  const snowInnerPillar1Ref = useRef<SVGRectElement>(null);
+  const snowBackPillar2Ref = useRef<SVGRectElement>(null);
+  const snowInnerPillar2Ref = useRef<SVGRectElement>(null);
+  const snowBackPillar3Ref = useRef<SVGRectElement>(null);
+  const snowInnerPillar3Ref = useRef<SVGRectElement>(null);
+  const snowPillarIcon1Ref = useRef<SVGPathElement>(null);
+  const snowPillarIcon2Ref = useRef<SVGPathElement>(null);
+  const snowPillarIcon3Ref = useRef<SVGPathElement>(null);
+  const snowFlagRef = useRef<SVGGElement>(null);
+  const snowBookmarkRef = useRef<SVGGElement>(null);
+  const snowBookmarkOutlineRef = useRef<SVGPathElement>(null);
+  const snowBookmarkFilledBackRef = useRef<SVGPathElement>(null);
+  const snowBookmarkFilledFrontRef = useRef<SVGPathElement>(null);
+  const snowBookmarkText1Ref = useRef<SVGGElement>(null);
+  const snowBookmarkIconText2Ref = useRef<SVGGElement>(null);
+  const shopifyJobRef = useRef<SVGGElement>(null);
+  const shopifyPaperRef = useRef<SVGRectElement>(null);
+  const shopifyBackRef = useRef<SVGRectElement>(null);
+  const shopifyTopTextRef = useRef<SVGRectElement>(null);
+  const shopifyBottomTextRef = useRef<SVGRectElement>(null);
+  const shopPillarsRef = useRef<SVGGElement>(null);
+  const shipOuterPillar1Ref = useRef<SVGRectElement>(null);
+  const shopPillarInner1Ref = useRef<SVGRectElement>(null);
+  const shopOuterPillar2Ref = useRef<SVGRectElement>(null);
+  const shopInnerPillar2Ref = useRef<SVGRectElement>(null);
+  const shopOuterPillar3Ref = useRef<SVGRectElement>(null);
+  const shopInnerPillar3Ref = useRef<SVGRectElement>(null);
+  const shopPillarIcon1Ref = useRef<SVGPathElement>(null);
+  const shopPIllarIcon2Ref = useRef<SVGPathElement>(null);
+  const shopPillarIcon3Ref = useRef<SVGPathElement>(null);
+  const shopFlagRef = useRef<SVGGElement>(null);
+  const shopifyBookmarkRef = useRef<SVGGElement>(null);
+  const shopBookmarkBackRef = useRef<SVGPathElement>(null);
+  const shopBookmarkFrontRef = useRef<SVGPathElement>(null);
+  const shopBookmarkText1Ref = useRef<SVGGElement>(null);
+  const shopifyInnerRef = useRef<SVGGElement>(null);
+  const bookmarkDropRef = useRef<SVGGElement>(null);
+  const bookmarkDropBackRef = useRef<SVGRectElement>(null);
+  const bookmarkDropPill1Ref = useRef<SVGGElement>(null);
+  const bookmarkDropPill2Ref = useRef<SVGGElement>(null);
+  const bookmarkDropAmbTextRef = useRef<SVGGElement>(null);
+  const boomarkDropAmbText2Ref = useRef<SVGGElement>(null);
+  const boomarkDropSafeTextRef = useRef<SVGGElement>(null);
+  const boomarkDropAbroadTextRef = useRef<SVGGElement>(null);
+  const boomarkDropAbroadText1Ref = useRef<SVGGElement>(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -1255,7 +1339,7 @@ export const ExtensionAnimation = () => {
       filtersModalTL.add(showApplyButton, ">-=0.4");
       filtersModalTL.add(showApplyButtonText, ">-=0.4");
       filtersModalTL.add(showApplyButtonBack, "<");
-      filtersModalTL.add(selectModalSelectBack, ">+=0.4");
+      filtersModalTL.add(selectModalSelectBack, ">+=0.2");
       filtersModalTL.add(selectModalSelectCircle, "<");
       filtersModalTL.add(selectModalSelectPulseIn, "<");
       filtersModalTL.add(selectModalSelectPulseOut, ">");
@@ -1288,8 +1372,563 @@ export const ExtensionAnimation = () => {
       filtersTL.add(filtersModalTL, ">+=0.2");
       filtersTL.add(hideFilters, ">+=1");
 
+      //JOBS LIST TAGS ANIMATION
+      const TagsTL = gsap.timeline();
+
+      //show initial
+      const initTagsTL = gsap.timeline();
+      const showAllTab = gsap.from(allButtonTextRef.current, {
+        opacity: 0,
+        transformOrigin: "center",
+        scale: 0.4,
+        ease: "back",
+      });
+      const showAllUnderline = gsap.from(allButtonUnderlineRef.current, {
+        width: 0,
+        ease: "power.out",
+      });
+      const showAmbText = gsap.fromTo(
+        ambButtonTextRef.current,
+        { opacity: 0, transformOrigin: "center", scale: 0.4, fill: "#FF605C" },
+        { opacity: 1, scale: 1, ease: "back", fill: "#FF605C" }
+      );
+      const showAmb1Text = gsap.fromTo(
+        ambButtonText1Ref.current,
+        { opacity: 0, transformOrigin: "center", scale: 0.4, fill: "#FF605C" },
+        { opacity: 1, scale: 1, ease: "back", fill: "#FF605C" }
+      );
+      const showUWJobPaper = gsap.from(uwPaperRef.current, {
+        scale: 0.5,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: "back",
+      });
+      const showUWJobLogoBack = gsap.from(uwLogoBackRef.current, {
+        scale: 0.5,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: "back",
+      });
+      const showUWJobLogoFront = gsap.from(uwLogoInsideRef.current, {
+        scale: 0.5,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: "back",
+      });
+      const showUWJobTopLine = gsap.from(uwTopTextRef.current, {
+        width: 0,
+        ease: "back",
+      });
+      const showUWJobBottomLine = gsap.from(uwBottomTextRef.current, {
+        width: 0,
+        ease: "back",
+      });
+      const showUWJobPillar1Back = gsap.from(uwBackPillar1Ref.current, {
+        height: 0,
+      });
+      const showUWJobPillar2Back = gsap.from(uwBackPillar2Ref.current, {
+        height: 0,
+      });
+      const showUWJobPillar3Back = gsap.from(uwBackPillar3Ref.current, {
+        height: 0,
+      });
+      const showUWJobPillar1Inner = gsap.from(uwInsidePillar1Ref.current, {
+        height: 0,
+      });
+      const showUWJobPillar2Inner = gsap.from(uwInsidePillar2Ref.current, {
+        height: 0,
+      });
+      const showUWJobPillar3Inner = gsap.from(uwInsidePillar3Ref.current, {
+        height: 0,
+      });
+      const showUWJobPillar1Icon = gsap.from(pillarIcon1Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showUWJobPillar2Icon = gsap.from(pillarIcon2Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showUWJobPillar3Icon = gsap.from(pillarIcon3Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showUWJobFlag = gsap.from(uwJobFlagRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showUWJobBookmark = gsap.from(uwBookmarkIconRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showSnowPaper = gsap.from(snowflakePaperRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: "back",
+      });
+      const showSnowLogoBack = gsap.from(snowflakeLogoBackRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showSnowLogoInner = gsap.from(snowflakeLogoInsideRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showSnowJobTopLine = gsap.from(snowflakeTopTextRef.current, {
+        width: 0,
+        ease: "back",
+      });
+      const showSnowJobBottomLine = gsap.from(snowflakBottomTextRef.current, {
+        width: 0,
+        ease: "back",
+      });
+      const showSnowJobPillar1Back = gsap.from(snowBackPillar1Ref.current, {
+        height: 0,
+      });
+      const showSnowJobPillar2Back = gsap.from(snowBackPillar2Ref.current, {
+        height: 0,
+      });
+      const showSnowJobPillar3Back = gsap.from(snowBackPillar3Ref.current, {
+        height: 0,
+      });
+      const showSnowJobPillar1Inner = gsap.from(snowInnerPillar1Ref.current, {
+        height: 0,
+      });
+      const showSnowJobPillar2Inner = gsap.from(snowInnerPillar2Ref.current, {
+        height: 0,
+      });
+      const showSnowJobPillar3Inner = gsap.from(snowInnerPillar3Ref.current, {
+        height: 0,
+      });
+      const showSnowJobPillar1Icon = gsap.from(snowPillarIcon1Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showSnowJobPillar2Icon = gsap.from(snowPillarIcon2Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showSnowJobPillar3Icon = gsap.from(snowPillarIcon3Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showSnowJobFlag = gsap.from(snowFlagRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showSnowJobBookmark = gsap.from(snowBookmarkOutlineRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showShopPaper = gsap.from(shopifyPaperRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: "back",
+      });
+      const showShopLogoBack = gsap.from(shopifyBackRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showShopLogoInner = gsap.from(shopifyInnerRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showShopJobTopLine = gsap.from(shopifyTopTextRef.current, {
+        width: 0,
+        ease: "back",
+      });
+      const showShopJobBottomLine = gsap.from(shopifyBottomTextRef.current, {
+        width: 0,
+        ease: "back",
+      });
+      const showShopJobPillar1Back = gsap.from(shipOuterPillar1Ref.current, {
+        height: 0,
+      });
+      const showShopJobPillar2Back = gsap.from(shopOuterPillar2Ref.current, {
+        height: 0,
+      });
+      const showShopJobPillar3Back = gsap.from(shopOuterPillar3Ref.current, {
+        height: 0,
+      });
+      const showShopJobPillar1Inner = gsap.from(shopPillarInner1Ref.current, {
+        height: 0,
+      });
+      const showShopJobPillar2Inner = gsap.from(shopInnerPillar2Ref.current, {
+        height: 0,
+      });
+      const showShopJobPillar3Inner = gsap.from(shopInnerPillar3Ref.current, {
+        height: 0,
+      });
+      const showShopJobPillar1Icon = gsap.from(shopPillarIcon1Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showShopJobPillar2Icon = gsap.from(shopPIllarIcon2Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showShopJobPillar3Icon = gsap.from(shopPillarIcon3Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showShopJobFlag = gsap.from(shopFlagRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showShopJobBookmarkFront = gsap.from(shopBookmarkFrontRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showShopJobBookmarkBack = gsap.from(shopBookmarkBackRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "left bottom",
+        ease: Back.easeOut.config(3),
+      });
+      const showShopJobBookmarkText = gsap.from(shopBookmarkText1Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const pulseBookmarkPulseIn = gsap.to(snowBookmarkOutlineRef.current, {
+        scale: 2.4,
+        transformOrigin: "center",
+        duration: 0.2,
+      });
+      const pulseBookmarkPulseOut = gsap.to(snowBookmarkOutlineRef.current, {
+        scale: 1,
+        transformOrigin: "center",
+        ease: "power3.out",
+      });
+      const showBookmarkDropBack = gsap.from(bookmarkDropBackRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "right top",
+        ease: Back.easeOut.config(3),
+      });
+      const showTagDropAmb = gsap.from(bookmarkDropAmbTextRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "right top",
+        ease: Back.easeOut.config(3),
+      });
+      const showTagDropAmb2 = gsap.from(boomarkDropAmbText2Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "right top",
+        ease: Back.easeOut.config(3),
+      });
+      const showTagDropSafe = gsap.from(boomarkDropSafeTextRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "right top",
+        ease: Back.easeOut.config(3),
+      });
+      const showTagAbroad = gsap.from(boomarkDropAbroadTextRef.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "right top",
+        ease: Back.easeOut.config(3),
+      });
+      const showTagAbroad2 = gsap.from(boomarkDropAbroadText1Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "right top",
+        ease: Back.easeOut.config(3),
+      });
+      const showAmbPill = gsap.from(bookmarkDropPill1Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "left center",
+        ease: Back.easeOut.config(3),
+      });
+      const showAbroadPill = gsap.from(bookmarkDropPill2Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "left center",
+        ease: Back.easeOut.config(3),
+      });
+      const showSnowBookmarkFilledFront = gsap.from(
+        snowBookmarkFilledFrontRef.current,
+        {
+          scale: 0.3,
+          opacity: 0,
+          transformOrigin: "center",
+          ease: Back.easeOut.config(3),
+        }
+      );
+      const showSnowBookmarkFilledBack = gsap.from(
+        snowBookmarkFilledBackRef.current,
+        {
+          scale: 0.3,
+          opacity: 0,
+          transformOrigin: "left bottom",
+          ease: Back.easeOut.config(3),
+        }
+      );
+      const showSnowBookmark1 = gsap.from(snowBookmarkText1Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const showSnowBookmark1Hide = gsap.to(snowBookmarkText1Ref.current, {
+        opacity: 0,
+      });
+      const showSnowBookmark2 = gsap.from(snowBookmarkIconText2Ref.current, {
+        scale: 0.3,
+        opacity: 0,
+        transformOrigin: "center",
+        ease: Back.easeOut.config(3),
+      });
+      const hideAmbButtonText1 = gsap.to(ambButtonText1Ref.current, {
+        opacity: 0,
+      });
+      const showAmbButtonText2 = gsap.fromTo(
+        ambButtonText2Ref.current,
+        { scale: 0.3, opacity: 0, transformOrigin: "center" },
+        {
+          fill: "#FF605C",
+          scale: 1,
+          opacity: 1,
+          transformOrigin: "center",
+          ease: Back.easeOut.config(3),
+        }
+      );
+      const showAbroadText = gsap.fromTo(
+        abroadText.current,
+        { opacity: 0, transformOrigin: "center", scale: 0.4, fill: "#FC7800" },
+        { opacity: 1, scale: 1, ease: "back", fill: "#FC7800" }
+      );
+      const showAbroad1Text = gsap.fromTo(
+        abroadText1Ref.current,
+        { opacity: 0, transformOrigin: "center", scale: 0.4, fill: "#FC7800" },
+        { opacity: 1, scale: 1, ease: "back", fill: "#FC7800" }
+      );
+
+      const showUWJobTL = gsap.timeline();
+      showUWJobTL.add(showUWJobPaper);
+      showUWJobTL.add(showUWJobLogoBack, ">-=0.4");
+      showUWJobTL.add(showUWJobLogoFront, ">-=0.4");
+      showUWJobTL.add(showUWJobTopLine, "<");
+      showUWJobTL.add(showUWJobBottomLine, ">-=0.4");
+      showUWJobTL.add(showUWJobPillar1Back, "<");
+      showUWJobTL.add(showUWJobPillar2Back, "<");
+      showUWJobTL.add(showUWJobPillar3Back, "<");
+      showUWJobTL.add(showUWJobPillar1Inner, ">-=0.2");
+      showUWJobTL.add(showUWJobPillar2Inner, "<");
+      showUWJobTL.add(showUWJobPillar3Inner, "<");
+      showUWJobTL.add(showUWJobPillar1Icon, ">-=0.4");
+      showUWJobTL.add(showUWJobPillar2Icon, "<");
+      showUWJobTL.add(showUWJobPillar3Icon, "<");
+      showUWJobTL.add(showUWJobFlag, ">-=0.4");
+      showUWJobTL.add(showUWJobBookmark, ">-=0.4");
+
+      const showSnowJobTL = gsap.timeline();
+      showSnowJobTL.add(showSnowPaper);
+      showSnowJobTL.add(showSnowLogoBack, ">-=0.4");
+      showSnowJobTL.add(showSnowLogoInner, ">-=0.4");
+      showSnowJobTL.add(showSnowJobTopLine, "<");
+      showSnowJobTL.add(showSnowJobBottomLine, ">-=0.4");
+      showSnowJobTL.add(showSnowJobPillar1Back, "<");
+      showSnowJobTL.add(showSnowJobPillar2Back, "<");
+      showSnowJobTL.add(showSnowJobPillar3Back, "<");
+      showSnowJobTL.add(showSnowJobPillar1Inner, ">-=0.2");
+      showSnowJobTL.add(showSnowJobPillar2Inner, "<");
+      showSnowJobTL.add(showSnowJobPillar3Inner, "<");
+      showSnowJobTL.add(showSnowJobPillar1Icon, ">-=0.4");
+      showSnowJobTL.add(showSnowJobPillar2Icon, "<");
+      showSnowJobTL.add(showSnowJobPillar3Icon, "<");
+      showSnowJobTL.add(showSnowJobFlag, ">-=0.4");
+      showSnowJobTL.add(showSnowJobBookmark, ">-=0.4");
+
+      const showShopJobTL = gsap.timeline();
+      showShopJobTL.add(showShopPaper);
+      showShopJobTL.add(showShopLogoBack, ">-=0.4");
+      showShopJobTL.add(showShopLogoInner, ">-=0.4");
+      showShopJobTL.add(showShopJobTopLine, "<");
+      showShopJobTL.add(showShopJobBottomLine, ">-=0.4");
+      showShopJobTL.add(showShopJobPillar1Back, "<");
+      showShopJobTL.add(showShopJobPillar2Back, "<");
+      showShopJobTL.add(showShopJobPillar3Back, "<");
+      showShopJobTL.add(showShopJobPillar1Inner, ">-=0.2");
+      showShopJobTL.add(showShopJobPillar2Inner, "<");
+      showShopJobTL.add(showShopJobPillar3Inner, "<");
+      showShopJobTL.add(showShopJobPillar1Icon, ">-=0.4");
+      showShopJobTL.add(showShopJobPillar2Icon, "<");
+      showShopJobTL.add(showShopJobPillar3Icon, "<");
+      showShopJobTL.add(showShopJobFlag, ">-=0.4");
+      showShopJobTL.add(showShopJobBookmarkFront, ">-=0.4");
+      showShopJobTL.add(showShopJobBookmarkBack, ">-=0.4");
+      showShopJobTL.add(showShopJobBookmarkText, ">-=0.4");
+
+      initTagsTL.add(showAllTab);
+      initTagsTL.add(showAllUnderline, "<");
+      initTagsTL.add(showAmbText, ">-=0.2");
+      initTagsTL.add(showAmb1Text, "<+=0.2");
+      initTagsTL.add(showUWJobTL, ">-=0.6");
+      initTagsTL.add(showSnowJobTL, "<+=0.4");
+      initTagsTL.add(showShopJobTL, "<+=0.2");
+
+      initTagsTL.add(pulseBookmarkPulseIn, ">+=0.4");
+      initTagsTL.add(pulseBookmarkPulseOut);
+      initTagsTL.add(showBookmarkDropBack, ">-=0.4");
+      initTagsTL.add(showTagDropAmb, ">-=0.2");
+      initTagsTL.add(showTagDropAmb2, "<");
+      initTagsTL.add(showAmbPill, "<");
+      initTagsTL.add(showSnowBookmarkFilledFront, "<");
+      initTagsTL.add(hideAmbButtonText1, "<");
+      initTagsTL.add(showAmbButtonText2, "<");
+      initTagsTL.add(showSnowBookmarkFilledBack, "<");
+      initTagsTL.add(showSnowBookmark1, "<");
+      initTagsTL.add(showTagDropSafe);
+      initTagsTL.add(showTagAbroad2);
+      initTagsTL.add(showTagAbroad, "<");
+      initTagsTL.add(showAbroadPill, "<");
+      initTagsTL.add(showSnowBookmark1Hide, "<");
+      initTagsTL.add(showSnowBookmark2, "<");
+      initTagsTL.add(showAbroadText, "<");
+      initTagsTL.add(showAbroad1Text, "<");
+
+      //Transfer to ambiscious tab
+      const toAmbTab = gsap.timeline();
+      const showAmbButtonBack = gsap.from(ambButtonBackRef.current, {
+        opacity: 0,
+        scale: 0.3,
+        transformOrigin: "center",
+        ease: "back",
+      });
+      const showAmbButtonTextToWhite = gsap.to(ambButtonTextRef.current, {
+        fill: "white",
+      });
+      const showAmbButtonText2ToWhite = gsap.to(ambButtonText2Ref.current, {
+        fill: "white",
+      });
+      const closeTagDropdown = gsap.to(bookmarkDropRef.current, {
+        scale: 0,
+        transformOrigin: "right top",
+        ease: "power3.out",
+        opacity: 0,
+      });
+      const hideUWJob = gsap.to(uwJobRef.current, {
+        opacity: 0,
+        ease: "power3.out",
+        scale: 0,
+        transformOrigin: "center",
+      });
+      const slideUpSnowflake = gsap.to(snowJobListingRef.current, {
+        translateY: -86.81,
+        ease: "power3.out",
+      });
+      const slideUpShopify = gsap.to(shopifyJobRef.current, {
+        translateY: -86.81,
+        ease: "power3.out",
+      });
+      toAmbTab.add(showAmbButtonBack);
+      toAmbTab.add(showAmbButtonTextToWhite, "<");
+      toAmbTab.add(showAmbButtonText2ToWhite, "<");
+      toAmbTab.add(closeTagDropdown, "<");
+      toAmbTab.add(hideUWJob, ">-=0.4");
+      toAmbTab.add(slideUpSnowflake, "<");
+      toAmbTab.add(slideUpShopify, "<");
+
+      //Transfer to Abroad tab
+      const toAbroadTab = gsap.timeline();
+      const showAbroadButtonBack = gsap.from(abroadTextBackRef.current, {
+        opacity: 0,
+        scale: 0.3,
+        transformOrigin: "center",
+        ease: "back",
+      });
+      const showAbroadButtonTextToWhite = gsap.to(abroadText1Ref.current, {
+        fill: "white",
+      });
+      const showAbroadButtonText2ToWhite = gsap.to(abroadText.current, {
+        fill: "white",
+      });
+      const hideAmbButton = gsap.to(ambButtonBackRef.current, {
+        opacity: 0,
+        scale: 0,
+        transformOrigin: "center",
+        ease: "power3.out",
+      });
+      const transitionAmbText1 = gsap.to(ambButtonTextRef.current, {
+        fill: "#FF605C",
+        ease: "power3.out",
+      });
+      const transitionAmbText2 = gsap.to(ambButtonText2Ref.current, {
+        fill: "#FF605C",
+        ease: "power3.out",
+      });
+      const hideShopify = gsap.to(shopifyJobRef.current, {
+        opacity: 0,
+        scale: 0,
+        transformOrigin: "center",
+        ease: "power3.out",
+      });
+      const hideTags = gsap.to(tagsDemoRef.current, {
+        opacity: 0,
+        scale: 0.7,
+        transformOrigin: "center",
+        ease: "power3.out",
+      });
+      toAbroadTab.add(showAbroadButtonBack);
+      toAbroadTab.add(showAbroadButtonTextToWhite, "<");
+      toAbroadTab.add(showAbroadButtonText2ToWhite, "<");
+      toAbroadTab.add(hideAmbButton, "<");
+      toAbroadTab.add(transitionAmbText1, "<");
+      toAbroadTab.add(transitionAmbText2, "<");
+      toAbroadTab.add(hideShopify, ">-=0.4");
+      toAbroadTab.add(hideTags, ">+=0.8");
+
+      TagsTL.add(initTagsTL);
+      TagsTL.add(toAmbTab, ">+=0.8");
+      TagsTL.add(toAbroadTab, ">+=0.6");
+
       mainTL.add(ExtensionAnimationTL);
       mainTL.add(filtersTL, ">-=1.2");
+      mainTL.add(TagsTL);
       mainTL.play();
     }, comp);
 
@@ -2846,6 +3485,878 @@ export const ExtensionAnimation = () => {
             transform="translate(-1270.66 -457.32)"
             fill="#fff"
           />
+        </g>
+      </g>
+      <g ref={tagsDemoRef}>
+        <g ref={allButtonTextRef}>
+          <path
+            d="M213.48,1159.85h-1.24a0.54,0.54,0,0,1-.35-0.11,0.66,0.66,0,0,1-.2-0.27l-1.11-2.87h-5.33l-1.11,2.87a0.65,0.65,0,0,1-.2.27,0.53,0.53,0,0,1-.35.12h-1.24L207.1,1148h1.63Zm-7.79-4.41h4.44l-1.87-4.83a9,9,0,0,1-.36-1.12c-0.06.23-.12,0.44-0.18,0.63s-0.11.36-.17,0.5Z"
+            transform="translate(-156.61 -1117.92)"
+            fill="#fff"
+          />
+          <path
+            d="M216.59,1158.49h5.14v1.35H215V1148h1.61v10.53Z"
+            transform="translate(-156.61 -1117.92)"
+            fill="#fff"
+          />
+          <path
+            d="M225.12,1158.49h5.14v1.35h-6.75V1148h1.61v10.53Z"
+            transform="translate(-156.61 -1117.92)"
+            fill="#fff"
+          />
+        </g>
+        <g ref={ambButtonRef}>
+          <rect
+            ref={ambButtonBackRef}
+            x="100.06"
+            y="21.74"
+            width="119.94"
+            height="32.84"
+            rx="4"
+            ry="4"
+            fill="#ff605c"
+          />
+          <g ref={ambButtonTextRef}>
+            <path
+              d="M279.24,1161.68H278a0.54,0.54,0,0,1-.35-0.11,0.66,0.66,0,0,1-.2-0.27l-1.11-2.87H271l-1.11,2.87a0.65,0.65,0,0,1-.2.27,0.53,0.53,0,0,1-.35.12H268.1l4.75-11.88h1.63Zm-7.79-4.41h4.44l-1.87-4.83a9,9,0,0,1-.36-1.12c-0.06.23-.12,0.44-0.18,0.63s-0.11.36-.17,0.5Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M280.51,1161.68v-8.4h0.88a0.38,0.38,0,0,1,.4.31l0.11,0.86a4.32,4.32,0,0,1,1-.94,2.45,2.45,0,0,1,1.34-.37,2,2,0,0,1,1.38.47,2.66,2.66,0,0,1,.76,1.28,2.64,2.64,0,0,1,.46-0.79,2.68,2.68,0,0,1,.64-0.55,2.73,2.73,0,0,1,.76-0.32,3.39,3.39,0,0,1,.82-0.1,3.09,3.09,0,0,1,1.18.21,2.34,2.34,0,0,1,.88.62,2.77,2.77,0,0,1,.55,1,4.42,4.42,0,0,1,.19,1.36v5.35h-1.48v-5.35a2.26,2.26,0,0,0-.43-1.5,1.55,1.55,0,0,0-1.25-.51,1.87,1.87,0,0,0-.69.13,1.65,1.65,0,0,0-.58.38,1.76,1.76,0,0,0-.39.63,2.43,2.43,0,0,0-.15.88v5.35h-1.48v-5.35a2.35,2.35,0,0,0-.41-1.51,1.44,1.44,0,0,0-1.19-.5,1.87,1.87,0,0,0-1,.29,3.34,3.34,0,0,0-.86.8v6.26h-1.48Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M294.18,1161.68v-12.21h1.48v5a4.3,4.3,0,0,1,1.2-1,3.17,3.17,0,0,1,1.55-.37,3.1,3.1,0,0,1,1.32.27,2.66,2.66,0,0,1,1,.82,3.94,3.94,0,0,1,.64,1.34,6.87,6.87,0,0,1,.22,1.85,5.79,5.79,0,0,1-.25,1.73,4.17,4.17,0,0,1-.72,1.38,3.32,3.32,0,0,1-2.67,1.26,2.81,2.81,0,0,1-1.38-.32,3.13,3.13,0,0,1-1-.88l-0.07.76a0.35,0.35,0,0,1-.38.32h-1Zm3.75-7.36a2.37,2.37,0,0,0-1.26.33,3.64,3.64,0,0,0-1,.94v4.06a2.32,2.32,0,0,0,.88.77,2.55,2.55,0,0,0,1.08.22,2.13,2.13,0,0,0,1.81-.84,3.91,3.91,0,0,0,.63-2.39,6,6,0,0,0-.15-1.41,2.76,2.76,0,0,0-.42-1,1.63,1.63,0,0,0-.67-0.55A2.23,2.23,0,0,0,297.92,1154.33Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M305.37,1150.64a0.93,0.93,0,0,1-.09.4,1.15,1.15,0,0,1-.23.33,1.1,1.1,0,0,1-.34.23,1,1,0,0,1-.41.08,1,1,0,0,1-.4-0.08,1.1,1.1,0,0,1-.33-0.23,1.08,1.08,0,0,1-.23-0.33,1,1,0,0,1-.08-0.4,1,1,0,0,1,.08-0.41,1.06,1.06,0,0,1,.23-0.34,1.08,1.08,0,0,1,.33-0.23,1,1,0,0,1,.4-0.08,1,1,0,0,1,.41.08,1.08,1.08,0,0,1,.34.23,1.13,1.13,0,0,1,.23.34A1,1,0,0,1,305.37,1150.64Zm-0.33,2.64v8.4h-1.48v-8.4H305Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M310.19,1161.81a2,2,0,0,1-1.53-.56,2.22,2.22,0,0,1-.53-1.6v-5.14h-1a0.33,0.33,0,0,1-.22-0.08,0.31,0.31,0,0,1-.09-0.25v-0.59l1.38-.17,0.34-2.6a0.31,0.31,0,0,1,.11-0.2,0.34,0.34,0,0,1,.23-0.08h0.75v2.89H312v1.07h-2.4v5a1.07,1.07,0,0,0,.26.79,0.9,0.9,0,0,0,.66.26,1.16,1.16,0,0,0,.4-0.06,1.68,1.68,0,0,0,.29-0.14l0.21-.14a0.28,0.28,0,0,1,.15-0.06,0.26,0.26,0,0,1,.21.14l0.43,0.71a2.76,2.76,0,0,1-.92.56A3.14,3.14,0,0,1,310.19,1161.81Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M315.8,1150.64a0.93,0.93,0,0,1-.09.4,1.15,1.15,0,0,1-.23.33,1.1,1.1,0,0,1-.34.23,1,1,0,0,1-.41.08,1,1,0,0,1-.4-0.08,1.1,1.1,0,0,1-.33-0.23,1.08,1.08,0,0,1-.23-0.33,1,1,0,0,1-.08-0.4,1,1,0,0,1,.08-0.41,1.06,1.06,0,0,1,.23-0.34,1.08,1.08,0,0,1,.33-0.23,1,1,0,0,1,.4-0.08,1,1,0,0,1,.41.08,1.08,1.08,0,0,1,.34.23,1.13,1.13,0,0,1,.23.34A1,1,0,0,1,315.8,1150.64Zm-0.33,2.64v8.4H314v-8.4h1.48Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M321.47,1153.15a4.33,4.33,0,0,1,1.66.31,3.51,3.51,0,0,1,1.26.87,3.86,3.86,0,0,1,.8,1.36,5.9,5.9,0,0,1,0,3.58,3.87,3.87,0,0,1-.8,1.36,3.46,3.46,0,0,1-1.26.87,4.72,4.72,0,0,1-3.33,0,3.5,3.5,0,0,1-1.26-.87,3.88,3.88,0,0,1-.8-1.36,5.82,5.82,0,0,1,0-3.58,3.87,3.87,0,0,1,.8-1.36,3.55,3.55,0,0,1,1.26-.87A4.32,4.32,0,0,1,321.47,1153.15Zm0,7.5a2.16,2.16,0,0,0,1.86-.83,4.74,4.74,0,0,0,0-4.66,2.15,2.15,0,0,0-1.86-.84,2.58,2.58,0,0,0-1.09.22,2,2,0,0,0-.78.62,2.75,2.75,0,0,0-.46,1,5.35,5.35,0,0,0-.15,1.34,5.29,5.29,0,0,0,.15,1.33,2.71,2.71,0,0,0,.46,1,2.06,2.06,0,0,0,.78.62A2.58,2.58,0,0,0,321.47,1160.64Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M328.57,1153.28v5.36a2.23,2.23,0,0,0,.44,1.48,1.64,1.64,0,0,0,1.33.52,2.55,2.55,0,0,0,1.22-.31,3.8,3.8,0,0,0,1.05-.85v-6.19h1.48v8.4h-0.88a0.38,0.38,0,0,1-.4-0.31l-0.12-.9a4.62,4.62,0,0,1-1.23,1,3.22,3.22,0,0,1-1.56.37,3,3,0,0,1-1.21-.23,2.4,2.4,0,0,1-.88-0.64,2.72,2.72,0,0,1-.54-1,4.47,4.47,0,0,1-.18-1.3v-5.36h1.48Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M341.33,1154.67a0.33,0.33,0,0,1-.31.18,0.57,0.57,0,0,1-.28-0.09l-0.39-.2a3.65,3.65,0,0,0-.54-0.21,2.6,2.6,0,0,0-.75-0.1,2.2,2.2,0,0,0-.67.1,1.6,1.6,0,0,0-.51.26,1.16,1.16,0,0,0-.32.38,1,1,0,0,0-.11.48,0.79,0.79,0,0,0,.19.54,1.63,1.63,0,0,0,.49.37,4.35,4.35,0,0,0,.7.28l0.8,0.26q0.41,0.14.8,0.3a2.89,2.89,0,0,1,.7.41,1.9,1.9,0,0,1,.49.61,1.86,1.86,0,0,1,.19.87,2.74,2.74,0,0,1-.21,1.07,2.34,2.34,0,0,1-.61.85,3,3,0,0,1-1,.57,4.1,4.1,0,0,1-1.36.21,4.25,4.25,0,0,1-1.59-.29,4,4,0,0,1-1.21-.73l0.35-.56a0.51,0.51,0,0,1,.16-0.17,0.45,0.45,0,0,1,.24-0.06,0.55,0.55,0,0,1,.32.12l0.4,0.26a3.09,3.09,0,0,0,.57.26,2.62,2.62,0,0,0,.84.12,2.29,2.29,0,0,0,.75-0.11,1.57,1.57,0,0,0,.54-0.3,1.19,1.19,0,0,0,.32-0.44,1.36,1.36,0,0,0,.1-0.53,0.88,0.88,0,0,0-.19-0.58,1.57,1.57,0,0,0-.49-0.39,4,4,0,0,0-.7-0.28l-0.8-.25q-0.41-.13-0.8-0.3a2.84,2.84,0,0,1-.7-0.43,1.93,1.93,0,0,1-.49-0.63,2,2,0,0,1-.19-0.92,2.23,2.23,0,0,1,.2-0.92,2.26,2.26,0,0,1,.58-0.78,2.85,2.85,0,0,1,.94-0.54,3.75,3.75,0,0,1,1.27-.2,4,4,0,0,1,1.49.26,3.52,3.52,0,0,1,1.14.72Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M348.1,1156.46a13,13,0,0,0,.46,3.45,13.76,13.76,0,0,0,1.32,3.19,0.67,0.67,0,0,1,.07.16,0.54,0.54,0,0,1,0,.13,0.3,0.3,0,0,1-.06.19,0.58,0.58,0,0,1-.15.13l-0.66.4a15.13,15.13,0,0,1-1.06-1.89,12.75,12.75,0,0,1-.71-1.88,13,13,0,0,1-.39-1.9,15.61,15.61,0,0,1,0-3.94,12.73,12.73,0,0,1,1.1-3.78,15.65,15.65,0,0,1,1.06-1.9l0.66,0.41a0.58,0.58,0,0,1,.15.13,0.3,0.3,0,0,1,.06.19,0.61,0.61,0,0,1-.08.28A13.19,13.19,0,0,0,348.1,1156.46Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M362.75,1156.46a13.2,13.2,0,0,0-1.77-6.63,0.61,0.61,0,0,1-.08-0.28,0.3,0.3,0,0,1,.06-0.19,0.57,0.57,0,0,1,.15-0.13l0.66-.41a15.65,15.65,0,0,1,1.06,1.9,12.75,12.75,0,0,1,1.1,3.78,15.67,15.67,0,0,1,0,3.94,13.09,13.09,0,0,1-.39,1.9,12.75,12.75,0,0,1-.71,1.88,15.13,15.13,0,0,1-1.06,1.89l-0.66-.4a0.57,0.57,0,0,1-.15-0.13,0.3,0.3,0,0,1-.06-0.19,0.54,0.54,0,0,1,0-.13,0.68,0.68,0,0,1,.07-0.16,13.78,13.78,0,0,0,1.32-3.19A13,13,0,0,0,362.75,1156.46Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+          </g>
+          <g ref={ambButtonText1Ref}>
+            <path
+              d="M352.71,1160.55h2.55v-8.1q0-.36,0-0.74l-2.12,1.82a0.55,0.55,0,0,1-.17.09l-0.16,0a0.46,0.46,0,0,1-.22-0.05,0.41,0.41,0,0,1-.15-0.13l-0.46-.64,3.53-3.06h1.2v10.78h2.34v1.13h-6.37v-1.13Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+          </g>
+          <g ref={ambButtonText2Ref}>
+            <path
+              d="M355.7,1149.67a4.33,4.33,0,0,1,1.41.22,3.26,3.26,0,0,1,1.13.65,3,3,0,0,1,.75,1,3.39,3.39,0,0,1,.27,1.39,3.66,3.66,0,0,1-.2,1.23,5,5,0,0,1-.54,1.08,7.9,7.9,0,0,1-.78,1q-0.44.48-.94,1l-3.13,3.2a6.05,6.05,0,0,1,.67-0.15,4.16,4.16,0,0,1,.65-0.05h4a0.52,0.52,0,0,1,.38.14,0.5,0.5,0,0,1,.14.37v0.9h-7.93v-0.51a0.92,0.92,0,0,1,.06-0.32,0.86,0.86,0,0,1,.2-0.31l3.81-3.82q0.47-.48.86-0.92a6.72,6.72,0,0,0,.67-0.89,4.13,4.13,0,0,0,.43-0.91,3.17,3.17,0,0,0,.15-1,2.35,2.35,0,0,0-.17-0.92,1.78,1.78,0,0,0-.46-0.65,1.93,1.93,0,0,0-.68-0.39,2.68,2.68,0,0,0-.84-0.13,2.5,2.5,0,0,0-.83.13,2.22,2.22,0,0,0-1.17.93,2.18,2.18,0,0,0-.29.71,0.67,0.67,0,0,1-.2.35,0.54,0.54,0,0,1-.35.11h-0.19l-0.77-.13a4.36,4.36,0,0,1,.45-1.44,3.42,3.42,0,0,1,.84-1,3.58,3.58,0,0,1,1.17-.64A4.47,4.47,0,0,1,355.7,1149.67Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+          </g>
+        </g>
+        <g ref={abroadTextRef}>
+          <rect
+            ref={abroadTextBackRef}
+            x="220.19"
+            y="21.74"
+            width="95.27"
+            height="32.84"
+            rx="4"
+            ry="4"
+            fill="#fc7800"
+          />
+          <g ref={abroadText1Ref}>
+            <path
+              d="M450.45,1160.55H453v-8.1q0-.36,0-0.74l-2.12,1.82a0.55,0.55,0,0,1-.17.09l-0.16,0a0.46,0.46,0,0,1-.22-0.05,0.41,0.41,0,0,1-.15-0.13l-0.46-.64,3.53-3.06h1.2v10.78h2.34v1.13h-6.37v-1.13Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+          </g>
+          <g ref={abroadText} data-name="abroadText">
+            <path
+              d="M397.21,1161.68H396a0.54,0.54,0,0,1-.35-0.11,0.66,0.66,0,0,1-.2-0.27l-1.11-2.87H389l-1.11,2.87a0.65,0.65,0,0,1-.2.27,0.53,0.53,0,0,1-.35.12h-1.24l4.75-11.88h1.63Zm-7.79-4.41h4.44l-1.87-4.83a9,9,0,0,1-.36-1.12c-0.06.23-.12,0.44-0.18,0.63s-0.11.36-.17,0.5Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M398.53,1161.68v-12.21H400v5a4.3,4.3,0,0,1,1.2-1,3.17,3.17,0,0,1,1.55-.37,3.1,3.1,0,0,1,1.32.27,2.66,2.66,0,0,1,1,.82,3.94,3.94,0,0,1,.64,1.34,6.87,6.87,0,0,1,.22,1.85,5.79,5.79,0,0,1-.25,1.73,4.17,4.17,0,0,1-.72,1.38,3.32,3.32,0,0,1-2.67,1.26,2.81,2.81,0,0,1-1.38-.32,3.13,3.13,0,0,1-1-.88l-0.07.76a0.35,0.35,0,0,1-.38.32h-1Zm3.75-7.36a2.37,2.37,0,0,0-1.26.33,3.64,3.64,0,0,0-1,.94v4.06a2.32,2.32,0,0,0,.88.77,2.55,2.55,0,0,0,1.08.22,2.13,2.13,0,0,0,1.81-.84,3.91,3.91,0,0,0,.63-2.39,6,6,0,0,0-.15-1.41,2.76,2.76,0,0,0-.42-1,1.63,1.63,0,0,0-.67-0.55A2.23,2.23,0,0,0,402.28,1154.33Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M407.75,1161.68v-8.4h0.85a0.47,0.47,0,0,1,.33.09,0.56,0.56,0,0,1,.12.32l0.1,1.31a3.84,3.84,0,0,1,1.07-1.37,2.36,2.36,0,0,1,1.49-.49,2.33,2.33,0,0,1,.63.08,2.21,2.21,0,0,1,.52.22l-0.19,1.1a0.25,0.25,0,0,1-.26.21,1.28,1.28,0,0,1-.36-0.08,2.24,2.24,0,0,0-.67-0.08,1.9,1.9,0,0,0-1.29.45,3.36,3.36,0,0,0-.87,1.3v5.35h-1.48Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M417.84,1153.15a4.33,4.33,0,0,1,1.66.31,3.51,3.51,0,0,1,1.26.87,3.86,3.86,0,0,1,.8,1.36,5.9,5.9,0,0,1,0,3.58,3.87,3.87,0,0,1-.8,1.36,3.46,3.46,0,0,1-1.26.87,4.72,4.72,0,0,1-3.33,0,3.5,3.5,0,0,1-1.26-.87,3.88,3.88,0,0,1-.8-1.36,5.82,5.82,0,0,1,0-3.58,3.87,3.87,0,0,1,.8-1.36,3.55,3.55,0,0,1,1.26-.87A4.32,4.32,0,0,1,417.84,1153.15Zm0,7.5a2.16,2.16,0,0,0,1.86-.83,4.74,4.74,0,0,0,0-4.66,2.15,2.15,0,0,0-1.86-.84,2.58,2.58,0,0,0-1.09.22,2,2,0,0,0-.78.62,2.75,2.75,0,0,0-.46,1,5.35,5.35,0,0,0-.15,1.34,5.29,5.29,0,0,0,.15,1.33,2.71,2.71,0,0,0,.46,1,2.06,2.06,0,0,0,.78.62A2.58,2.58,0,0,0,417.84,1160.64Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M429.83,1161.68h-0.66a0.79,0.79,0,0,1-.35-0.07,0.37,0.37,0,0,1-.17-0.28l-0.17-.78q-0.33.3-.65,0.54a3.69,3.69,0,0,1-.66.4,3.42,3.42,0,0,1-.74.25,4.29,4.29,0,0,1-.87.08,3,3,0,0,1-.92-0.14,2.08,2.08,0,0,1-.74-0.41,2,2,0,0,1-.5-0.7,2.43,2.43,0,0,1-.19-1,1.86,1.86,0,0,1,.27-1,2.41,2.41,0,0,1,.88-0.82,5.74,5.74,0,0,1,1.6-.59,10.81,10.81,0,0,1,2.41-.23v-0.66a2.29,2.29,0,0,0-.42-1.49,1.52,1.52,0,0,0-1.24-.5,2.63,2.63,0,0,0-.91.14,3.41,3.41,0,0,0-.64.31l-0.46.31a0.67,0.67,0,0,1-.39.14,0.44,0.44,0,0,1-.26-0.08,0.6,0.6,0,0,1-.18-0.2l-0.27-.47a4.79,4.79,0,0,1,1.5-1,4.62,4.62,0,0,1,1.78-.33,3.17,3.17,0,0,1,1.25.23,2.56,2.56,0,0,1,.92.65,2.74,2.74,0,0,1,.56,1,4.17,4.17,0,0,1,.19,1.29v5.37Zm-3.83-.9a3,3,0,0,0,.71-0.08,2.78,2.78,0,0,0,.61-0.22,3.27,3.27,0,0,0,.55-0.35,4.85,4.85,0,0,0,.51-0.47v-1.73a9.92,9.92,0,0,0-1.73.13,4.89,4.89,0,0,0-1.16.34,1.61,1.61,0,0,0-.65.49,1.06,1.06,0,0,0-.2.63,1.4,1.4,0,0,0,.11.58,1.08,1.08,0,0,0,.29.4,1.13,1.13,0,0,0,.43.23A2,2,0,0,0,426,1160.78Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M438,1161.68a0.38,0.38,0,0,1-.4-0.31l-0.13-1a4.42,4.42,0,0,1-1.23,1,3.17,3.17,0,0,1-1.59.39,3,3,0,0,1-1.31-.28,2.71,2.71,0,0,1-1-.82,3.89,3.89,0,0,1-.64-1.34,6.93,6.93,0,0,1-.22-1.85,5.81,5.81,0,0,1,.25-1.73,4.23,4.23,0,0,1,.72-1.39,3.29,3.29,0,0,1,2.67-1.26,3,3,0,0,1,1.32.26,3.15,3.15,0,0,1,1,.73v-4.66h1.48v12.21H438Zm-2.86-1.08a2.37,2.37,0,0,0,1.26-.33,3.64,3.64,0,0,0,1-.94v-4.06a2.34,2.34,0,0,0-.89-0.77,2.59,2.59,0,0,0-1.07-.22,2.13,2.13,0,0,0-1.81.84,3.91,3.91,0,0,0-.63,2.39,6.09,6.09,0,0,0,.14,1.41,2.7,2.7,0,0,0,.42,1,1.63,1.63,0,0,0,.67.55A2.25,2.25,0,0,0,435.12,1160.6Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M445.73,1156.46a13,13,0,0,0,.46,3.45,13.76,13.76,0,0,0,1.32,3.19,0.67,0.67,0,0,1,.07.16,0.54,0.54,0,0,1,0,.13,0.3,0.3,0,0,1-.06.19,0.58,0.58,0,0,1-.15.13l-0.66.4a15.13,15.13,0,0,1-1.06-1.89,12.75,12.75,0,0,1-.71-1.88,13,13,0,0,1-.39-1.9,15.61,15.61,0,0,1,0-3.94,12.73,12.73,0,0,1,1.1-3.78,15.65,15.65,0,0,1,1.06-1.9l0.66,0.41a0.58,0.58,0,0,1,.15.13,0.3,0.3,0,0,1,.06.19,0.61,0.61,0,0,1-.08.28A13.19,13.19,0,0,0,445.73,1156.46Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+            <path
+              d="M460.38,1156.46a13.2,13.2,0,0,0-1.77-6.63,0.61,0.61,0,0,1-.08-0.28,0.3,0.3,0,0,1,.06-0.19,0.57,0.57,0,0,1,.15-0.13l0.66-.41a15.65,15.65,0,0,1,1.06,1.9,12.75,12.75,0,0,1,1.1,3.78,15.67,15.67,0,0,1,0,3.94,13.09,13.09,0,0,1-.39,1.9,12.75,12.75,0,0,1-.71,1.88,15.13,15.13,0,0,1-1.06,1.89l-0.66-.4a0.57,0.57,0,0,1-.15-0.13,0.3,0.3,0,0,1-.06-0.19,0.54,0.54,0,0,1,0-.13,0.68,0.68,0,0,1,.07-0.16,13.78,13.78,0,0,0,1.32-3.19A13,13,0,0,0,460.38,1156.46Z"
+              transform="translate(-156.61 -1117.92)"
+            />
+          </g>
+        </g>
+        <rect
+          ref={allButtonUnderlineRef}
+          x="20.39"
+          y="54.81"
+          width="78.16"
+          height="0.89"
+          fill="#fff"
+        />
+        <g ref={uwJobRef}>
+          <rect
+            ref={uwPaperRef}
+            x="19.73"
+            y="63.15"
+            width="542.5"
+            height="78.32"
+            rx="8"
+            ry="8"
+            fill="#fff"
+          />
+          <rect
+            ref={uwTopTextRef}
+            x="98.55"
+            y="84.88"
+            width="91.11"
+            height="14.69"
+            rx="7.35"
+            ry="7.35"
+            fill="#d3d3d3"
+          />
+          <rect
+            ref={uwBottomTextRef}
+            x="98.55"
+            y="106.87"
+            width="51.93"
+            height="14.69"
+            rx="7.35"
+            ry="7.35"
+            fill="#d3d3d3"
+          />
+          <g ref={uwPillarsRef}>
+            <rect
+              ref={uwBackPillar1Ref}
+              x="496.54"
+              y="1190.2"
+              width="13.71"
+              height="62.93"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(850.17 1325.4) rotate(-180)"
+              fill="#d3d3d3"
+            />
+            <rect
+              ref={uwInsidePillar1Ref}
+              x="496.54"
+              y="1212.91"
+              width="13.71"
+              height="40.41"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(850.17 1348.31) rotate(-180)"
+              fill="#4a91f0"
+            />
+            <rect
+              ref={uwBackPillar2Ref}
+              x="515.17"
+              y="1190.2"
+              width="13.71"
+              height="62.93"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(887.44 1325.4) rotate(-180)"
+              fill="#d3d3d3"
+            />
+            <rect
+              ref={uwInsidePillar2Ref}
+              x="515.17"
+              y="1219.64"
+              width="13.71"
+              height="33.69"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(887.44 1355.04) rotate(180)"
+              fill="#005dd6"
+            />
+            <rect
+              ref={uwBackPillar3Ref}
+              x="533.26"
+              y="1190.2"
+              width="13.71"
+              height="62.93"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(923.62 1325.4) rotate(-180)"
+              fill="#d3d3d3"
+            />
+            <rect
+              ref={uwInsidePillar3Ref}
+              x="533.26"
+              y="1228.56"
+              width="13.71"
+              height="24.76"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(923.62 1363.96) rotate(180)"
+              fill="#2247a3"
+            />
+            <path
+              ref={pillarIcon1Ref}
+              d="M503.83,1245.18l2.52,1.52-0.67-2.85,2.21-1.92-2.92-.26-1.14-2.69v6.21Zm-4,3.51,1-4.51-3.5-3,4.62-.4,1.8-4.25,1.8,4.25,4.62,0.4-3.5,3,1,4.51-4-2.39Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+            <path
+              ref={pillarIcon2Ref}
+              d="M521.52,1248.92v-1.42a3.06,3.06,0,0,1-1.58-.73,3.19,3.19,0,0,1-.89-1.43l0.95-.39a2.46,2.46,0,0,0,.83,1.21,2.36,2.36,0,0,0,2.63,0A1.33,1.33,0,0,0,524,1245a1.44,1.44,0,0,0-.46-1.15,5.41,5.41,0,0,0-1.75-.83,4.18,4.18,0,0,1-1.82-1,2.26,2.26,0,0,1-.6-1.6,2.16,2.16,0,0,1,.6-1.55,2.37,2.37,0,0,1,1.56-.71v-1.4h1v1.4a2.61,2.61,0,0,1,1.31.5,2.66,2.66,0,0,1,.84,1.06l-0.95.41a1.67,1.67,0,0,0-.63-0.79,2.32,2.32,0,0,0-2.27.11,1.15,1.15,0,0,0-.46,1,1.26,1.26,0,0,0,.51,1,6.3,6.3,0,0,0,1.87.82,3.45,3.45,0,0,1,1.7,1A2.56,2.56,0,0,1,525,1245a2.37,2.37,0,0,1-.62,1.71,3.12,3.12,0,0,1-1.84.84v1.4h-1Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+            <path
+              ref={pillarIcon3Ref}
+              d="M536.71,1245.63h4.54v-0.28a1.1,1.1,0,0,0-.61-1,4,4,0,0,0-3.33,0,1.1,1.1,0,0,0-.61,1v0.28Zm2.27-2.37a1,1,0,1,0-.78-0.3A1.05,1.05,0,0,0,539,1243.27Zm-3.52,4.5a0.83,0.83,0,0,1-.81-0.81v-7a0.83,0.83,0,0,1,.81-0.81h7a0.83,0.83,0,0,1,.81.81v2.91l2.16-2.16v5.54l-2.16-2.16V1247a0.83,0.83,0,0,1-.81.81h-7Zm0-.81h7v-7h-7v7Zm0,0v0Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+          </g>
+          <g ref={uwJobFlagRef}>
+            <path
+              d="M594.61,1209.56h32v21.33h-32v-21.33Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+            <path
+              d="M594.61,1209.56h8.86v21.33h-8.86v-21.33Zm23.14,0h8.86v21.33h-8.86v-21.33Zm-4,12.85,3.14-1.57-1.57-.79v-1.57l-3.14,1.57,1.57-3.14h-1.57l-1.57-2.36-1.57,2.36h-1.57l1.57,3.14-3.14-1.57v1.57l-1.57.79,3.14,1.57-0.79,1.57h3.14v2.36h1.57V1224h3.14Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="red"
+            />
+          </g>
+          <path
+            ref={uwBookmarkIconRef}
+            d="M689,1209.54H677.11a2.38,2.38,0,0,0-2.37,2.37v19l8.31-3.56,8.31,3.56v-19A2.38,2.38,0,0,0,689,1209.54Zm0,17.81-5.94-2.59-5.94,2.59v-15.44H689v15.44Z"
+            transform="translate(-156.61 -1117.92)"
+            fill="#01142b"
+          />
+          <g ref={uwLogoRef}>
+            <rect
+              ref={uwLogoBackRef}
+              x="35.28"
+              y="75.89"
+              width="55.7"
+              height="55.7"
+              rx="4"
+              ry="4"
+            />
+            <g ref={uwLogoInsideRef}>
+              <polygon
+                points="51.89 106.84 63.14 98 74.41 106.84 72.79 110.86 71.19 113.16 69.84 115.16 66.06 118.41 63.06 120.02 59.85 118.14 57.41 116.05 55.44 113.33 53.54 110.64 51.89 106.84"
+                fill="#ffd54f"
+              />
+              <polygon
+                points="51.89 106.61 63.32 97.7 74.41 106.61 72.57 110.64 63.04 102.74 53.09 110.37 51.89 106.61"
+                fill="#fff"
+              />
+              <polygon
+                points="49.65 87.5 49.95 97.22 50.68 102.69 51.82 106.44 63.04 97.47 74.41 106.84 75.81 101.44 76.47 93.27 76.47 87.4 49.65 87.5"
+                fill="#ffd54f"
+              />
+              <path
+                d="M211.75,1209.94a1.31,1.31,0,0,1-.11.1,2.5,2.5,0,0,0-.17.28,1.8,1.8,0,0,0-.19.39s-0.06,0-.08,0a0.78,0.78,0,0,1-.08,0c-0.14,0-.13,0-0.23,0l-0.19,0h-0.1a0.24,0.24,0,0,1-.1,0c0-.08,0-0.16-0.05-0.24a0.65,0.65,0,0,0-.16-0.11,0.6,0.6,0,0,0-.16-0.08l-0.14-.06a0.92,0.92,0,0,1-.24-0.09,1.3,1.3,0,0,1-.21-0.2c-0.11-.14-0.13-0.34-0.23-0.49a0.65,0.65,0,0,0-.44-0.28c-0.39-.07,0-0.08-0.11-0.37a1.2,1.2,0,0,0-1.08-.62c-0.1,0-.13-0.39-0.38-0.28a1.06,1.06,0,0,1,.57-0.4c0.1-.1,0-0.13,0-0.13a0.47,0.47,0,0,0-.23-0.07,0.5,0.5,0,0,1-.16-0.2,0.94,0.94,0,0,0,0-.25s0,0,0,0a0.54,0.54,0,0,0,.29-0.16l0,0a0.68,0.68,0,0,1,.26,0c0.12,0,.16.1,0.13,0.07a0.25,0.25,0,0,1,.14.16,0.63,0.63,0,0,0,0,.11,0.67,0.67,0,0,0,.09.23,0.18,0.18,0,0,1,0,.05,0.43,0.43,0,0,0,.13,0l0,0c0.05,0,0,.05.06,0s0,0,0-.08a0.44,0.44,0,0,1,0-.4,0.21,0.21,0,0,1,0-.06,0.2,0.2,0,0,0,.05-0.06,0.62,0.62,0,0,0,.06-0.16,0.19,0.19,0,0,0,.08.06,0.43,0.43,0,0,0,.15.07,0.2,0.2,0,0,1,.05,0,0.63,0.63,0,0,1,.18.4c-0.3,1.37,1,2.44,2.43,2.75m-3.61.17a0.77,0.77,0,0,0-.5-0.06,0.14,0.14,0,0,0-.09.18c0.07-.07.17,0,0.16,0.06-0.06.21-.1,0.24,0.18,0.41-1-.05-0.67.8-0.55,0.6a0.42,0.42,0,0,1,.44.15,0.86,0.86,0,0,1-.2.45,0.52,0.52,0,0,0,.16.39c0-.2.25-0.13,0.36-0.07a2.26,2.26,0,0,1,.37-0.29c0.27,0,.31,0,0.37.18a0.41,0.41,0,0,1,0,.23c0.33,0,.58-0.41.88-0.29a2,2,0,0,0,1.36.21,4.3,4.3,0,0,1,.05-1,2.55,2.55,0,0,1-2.21-.19c-0.38-.19-0.32-0.75-0.75-1m2-2.07c0.51,0.76,1.67.14,2.06,0.28-0.53-.93-1.45-0.14-2.06-0.28m5.12,1.35a3.25,3.25,0,0,0-.66-2,1.9,1.9,0,0,1-.84,1.76c-0.85.5-1.91,0.82-2.2,1.87a3.09,3.09,0,0,0-.06,1.63,0.47,0.47,0,0,1,.41-0.39,2.34,2.34,0,0,0,1.61-.59,1.44,1.44,0,0,1,.7.35c0-.1,0-0.56.07-0.48a1.4,1.4,0,0,0,.79.25c-0.67-.76.16-1.62,0.17-2.42m-3.89,9c0.1,0,0,.11,0,0.13a0.67,0.67,0,0,0-.2.21,0.29,0.29,0,0,0-.05.21,1.09,1.09,0,0,0,.05.16,0.32,0.32,0,0,0,.07.08l0,0.06a0.14,0.14,0,0,1,.12-0.15c0.53,0.3.56-.31,0.87-0.52a0.25,0.25,0,0,1,.36.29,3.36,3.36,0,0,0,.65-0.86,6,6,0,0,1,2-1.29,6.1,6.1,0,0,1-.84-0.82c-0.1-.16-0.21-0.46,0-0.41a1.11,1.11,0,0,0,1.48-1c1.31,0.17,1.65-1.07,1.83-2a1.47,1.47,0,0,0,.06-1.27c-0.11-.32.58-0.43,0.46-1a0.51,0.51,0,0,0-.34-0.33c0.11,0.3-.4.38-0.45,0.5a1.84,1.84,0,0,0-.23.55,1.59,1.59,0,0,1,.32-1.86c0.59-.8,1.8-0.38,2.31.14a1.18,1.18,0,0,0-.36-0.75,3.36,3.36,0,0,0,1.65-.12,1.68,1.68,0,0,0,.93-0.81c-0.8.11-1.88-.51-2.6-0.63a2.53,2.53,0,0,0-2.73,1.77,2.63,2.63,0,0,0,.35,2.72c0.13,0.2-.46.07-0.69,0.19a0.59,0.59,0,0,0-.27.65,0.71,0.71,0,0,1,1.11.41c0.09,0.71-.62,1.74-1.31,1.43a2.87,2.87,0,0,1-1.4-2c-0.63.55-1.8,0.1-2.35,0.63s0.81,0.85,1.32,1.09a0.54,0.54,0,0,1,.35.52,1.11,1.11,0,0,0-1.73.92,1.5,1.5,0,0,0,1.48,1.1,0.27,0.27,0,0,1,.1.53c-0.58.37-1.23,0.77-1.86,0.11a0.42,0.42,0,0,0-.56.16,0.76,0.76,0,0,0,0,.35,0.2,0.2,0,0,1,.13-0.14,0.15,0.15,0,0,1,.13.12c-0.05.32-.48,0.11-0.61,0.37v0l0,0.06c-0.09.17-.2,0.28,0,0.41a0.41,0.41,0,0,1,.1.17,0.16,0.16,0,0,1,.17-0.15h0.09Zm-2.75-3c0.06,0,.13.09,0.07,0.14a0.73,0.73,0,0,0-.18.17,0.39,0.39,0,0,0,0,.3,0.64,0.64,0,0,0,.17.15l0.09,0.07a0.09,0.09,0,0,1,0-.11,0.1,0.1,0,0,1,.09,0,0.28,0.28,0,0,0,.26,0,0.3,0.3,0,0,0,.17-0.09,2.44,2.44,0,0,0,.2-0.32l0.18-.12a0.39,0.39,0,0,1,.31.67,2.32,2.32,0,0,1,1.87-.45,1.27,1.27,0,0,1,.66-1.81c-0.8-.77-1.47-0.73-1.78.07-0.15.39,0.31,0.86-.15,1.06a1,1,0,0,1-.78,0c-0.48-.17-0.19-0.79-0.58-1.1a0.54,0.54,0,0,0-.89.36s0.09-.09.14,0a0.44,0.44,0,0,0,.38.42c0.06,0,0,.15-0.07.14a1.94,1.94,0,0,1-.27-0.06,0.47,0.47,0,0,0-.53.1l-0.06.06a0.4,0.4,0,0,0-.05.09,0.47,0.47,0,0,0,0,.22,0.19,0.19,0,0,0,0,.08,0.35,0.35,0,0,0,0,.08l0.07,0.08a0.56,0.56,0,0,0,.3.16,0.13,0.13,0,0,1,0-.07,0.13,0.13,0,0,1,0-.1,0.23,0.23,0,0,1,.15-0.05,0.35,0.35,0,0,1,.25,0m14.66-7c0.06,0,0,.14-0.07.16s-0.19,0-.25,0a0.83,0.83,0,0,0-.26.77,0.46,0.46,0,0,1,.41,0,2.16,2.16,0,0,0,.56-0.41,1.33,1.33,0,0,1,.84.78,0.59,0.59,0,0,0-.16.24,1.82,1.82,0,0,1,1.27.57,3,3,0,0,1,.55-0.69c-0.74-.72-2.22-0.95-2-2.26a0.54,0.54,0,0,0-.25-0.4,1.06,1.06,0,0,0-.45-0.13,2.25,2.25,0,0,1-.08.78s0,0-.06,0a1.74,1.74,0,0,1-.25-0.15,0.32,0.32,0,0,0-.23,0,0.36,0.36,0,0,0-.14.06,0.67,0.67,0,0,0-.15.19l0,0a0.18,0.18,0,0,0,0,.09,0.28,0.28,0,0,1,.18,0c0,0.05,0,.12.08,0.17a0.31,0.31,0,0,0,.17.1,0.69,0.69,0,0,0,.34.06m1.95-.51a3.61,3.61,0,0,0-.45-0.07,1.05,1.05,0,0,0,1.62.26,0.27,0.27,0,0,1,.26,0c-0.51-.6-1-0.25-1.43-0.21m2,1.68c-0.52.27-1.93,1.46-1.44,1.91a2.44,2.44,0,0,1,1,.48,1.7,1.7,0,0,1,1.35-.54,1.8,1.8,0,0,1,.86.29c-0.17-1.18.64-2.32,0.23-3.47,0,0-.15-0.48-0.21-0.3a3,3,0,0,1-1.84,1.64m-2.08,7.66a0.35,0.35,0,0,1,.09.18A2.19,2.19,0,0,1,227,1217a1.6,1.6,0,0,1,.7-1.72,0.79,0.79,0,0,0-.95-0.72c-0.58.21-.34,0.94-0.45,1.45a0.57,0.57,0,0,1-.7.39,1.36,1.36,0,0,1-.79-1.11,0.53,0.53,0,0,0-.87-0.1c-0.4.78,0.24-.09,0.2,0.5a1,1,0,0,0-.57.38c-0.07.24,0.16,0.4,0.44,0.48a0.5,0.5,0,0,1,0-.15,0.36,0.36,0,0,1,.23.1c-0.27.17-.34,0.56,0.15,0.72a0.28,0.28,0,0,1,0-.17,0.69,0.69,0,0,1,.78,0m-7.93,7.83c0.39,0.83,1.13.3,1.73,0.21a1.23,1.23,0,0,0-.52-0.32,1.72,1.72,0,0,1-1.21.11m-0.24.48a0.26,0.26,0,0,0-.1-0.06l-0.12,0-0.1,0a0.28,0.28,0,0,1,0,.11,0.38,0.38,0,0,0-.1.09,0.21,0.21,0,0,0,0,.07,1.64,1.64,0,0,0,0,.17,0.57,0.57,0,0,0,0,.13l0,0.1,0.07,0.08c0.09,0.09,0,0,.12.14s0,0.14-.08.12a8,8,0,0,1-.73-0.64,0.48,0.48,0,0,0-.61.45,0.13,0.13,0,0,1,.18.07c0.09,0.36.61,0.14,0.63,0.4a1.17,1.17,0,0,1-.55.08,0.58,0.58,0,0,0-.05.78,2.54,2.54,0,0,1,.62,0,2.2,2.2,0,0,1,.31-0.28c0.4-.18.52,0.2,0.43,0.57a6.85,6.85,0,0,1,.85-0.24c0.21-.06.22-0.55,0.49-0.73a0.94,0.94,0,0,1-.93-0.52,0.49,0.49,0,0,1,0-.13,0.86,0.86,0,0,0-.06-0.4l0,0,0-.06a0.45,0.45,0,0,0-.14-0.11,0.21,0.21,0,0,1-.07,0m-2.72,2.56c0.16,0.31-.64-0.19-0.94.28a1.59,1.59,0,0,0,0,.68,1.76,1.76,0,0,0,.71-0.15s0.08,0.06,0,.11a0.4,0.4,0,0,0-.13.44,1,1,0,0,0,.33.29c0-.21.38,0,0.44-0.4,0-.17.07-0.44,0.31-0.34a0.48,0.48,0,0,1,.21.59,1.67,1.67,0,0,1,1.34-.21,6.9,6.9,0,0,0,1.89.69,1.6,1.6,0,0,1-.44-1.42,4.44,4.44,0,0,1-2.72-.24,0.77,0.77,0,0,1-.27-0.59,0.71,0.71,0,0,0-.67-0.45,0.76,0.76,0,0,0-.45.35s0,0,0,.07a0.13,0.13,0,0,1,.19.07,0.45,0.45,0,0,0,.09.15,0.73,0.73,0,0,1,.16.11m2.19,5a0.32,0.32,0,0,1,.4-0.1c0.19,0,.17.27,0.15,0.43a3.51,3.51,0,0,1,2.27-.67,1.11,1.11,0,0,1,.38-1.77,4.21,4.21,0,0,1-.5-0.1c-0.61-.39-1.36-0.76-1.76.06a1,1,0,0,0,.45,1.06c0.05,0.06,0,.1-0.1.11-0.67.17-1.89,0.27-2-.73a0.49,0.49,0,0,0-.86.42c0.11-.08.44-0.05,0.4,0.2s-0.5-.12-0.68.11a0.74,0.74,0,0,0,0,.74,0.14,0.14,0,0,1,.12-0.15c0.51-.09.54,0.09,0.39,0.59a0.7,0.7,0,0,0,.26.38,0.15,0.15,0,0,1,0-.1,0.13,0.13,0,0,1,.07-0.05l0.17,0,0.07,0a0.41,0.41,0,0,0,.1-0.1,0.71,0.71,0,0,1,.42-0.36,0.34,0.34,0,0,1,.23.08m5.29,2.32c0.47-.46.81-1.08,1.31-1.54a2,2,0,0,1-1.3-1.38,0.11,0.11,0,0,1,.1-0.1,1.75,1.75,0,0,0,2.34-.32c0.44-.63.64-1.65,1.5-1.71a1.17,1.17,0,0,1,.51-1.48,1.15,1.15,0,0,0-.54-0.16c-0.22,0-.31.33-0.56,0.38,0.39-1.32-.37-3.16-1.82-3.13a0.82,0.82,0,0,0-.72.52,1,1,0,0,0,.08.88,2.28,2.28,0,0,1,.67,1.94,1.63,1.63,0,0,0,.64-1.18c0-.11.2,0,0.24-0.08,0.4-.58-0.25-0.94-0.6-1.31-0.1-.1.15-0.25,0.18-0.24,1.25,0.37,1.37,1.91.83,2.91a2.08,2.08,0,0,0-.85-0.18c0.58,0.29.43,0.34,0.41,0.43a2.69,2.69,0,0,1-.67.23,1.29,1.29,0,0,0-.32,1.07,0.88,0.88,0,0,1,.9-0.48c0.73,0.38,0,1.65-.73,1.86a1.3,1.3,0,0,1-1.51-.52c-0.53-.75-0.14-1.65-0.52-2.4-0.31.08-.24,0.49-0.4,0.41a4.37,4.37,0,0,1-1.32-1.4,1.26,1.26,0,0,1-.42.21,1.59,1.59,0,0,0-.81,0,1.26,1.26,0,0,0,.82,1.57,3.49,3.49,0,0,1,1.67,1,3.17,3.17,0,0,1-.63-0.13,1,1,0,0,0-.56.18,0.79,0.79,0,0,0-.33.69c0.16,1.27,1.65,1.28,2.34,2.09a1.12,1.12,0,0,1-.46.91c-0.24.19-.81-0.29-0.72-0.69s-0.71-.54-1-0.17a0.1,0.1,0,0,1,.13.11,0.92,0.92,0,0,0,.31.46c0,0.21-.2-0.09-0.34-0.11a0.8,0.8,0,0,0-.81.3,0.35,0.35,0,0,0-.12.33c0.24-.12.37,0.26,0.59,0.14a0.58,0.58,0,0,1,.41-0.15c0.07,0,.13.11,0.07,0.14-0.44.28-.79,0.68-0.47,1.13a0.24,0.24,0,0,1,.16-0.2c0.13,0,.3.05,0.42,0s0.1-.27.18-0.42,0.54-.61.77-0.33a0.17,0.17,0,0,1-.12.24,2.84,2.84,0,0,0,.35.1l0.09,0a0.22,0.22,0,0,0,.07,0,0.31,0.31,0,0,0,.12-0.19,0.3,0.3,0,0,0,.28-0.06,1.46,1.46,0,0,1,.2-0.2m-2.17-9.14a2.38,2.38,0,0,0-1.5,1.66,1,1,0,0,0-.05.28,1.11,1.11,0,0,1,.78-0.32,0.93,0.93,0,0,1-.16.49,2.21,2.21,0,0,0,1.25-.42,3.72,3.72,0,0,1,.08.45,2.23,2.23,0,0,0,.91,1,1,1,0,0,0,.28-0.34,0.73,0.73,0,0,1,.58.21,1.13,1.13,0,0,0-.16-0.51c-0.24-1.19.26-2.17,0.24-3.31a0.84,0.84,0,0,0-.33-0.69,2.41,2.41,0,0,1-1.92,1.56m-5.72-19.37a3,3,0,0,0-1-.16,11.77,11.77,0,0,1-1.18.43,0.43,0.43,0,0,0-.34.48,0.86,0.86,0,0,1,1.16.08,0.91,0.91,0,0,1,0,.83,0.86,0.86,0,0,1-.9.29,0.25,0.25,0,0,1,.07.28c0.78-.2,1.93.1,2.45-0.79a2.87,2.87,0,0,0,0-.9,3.62,3.62,0,0,1,.32-0.4,1.11,1.11,0,0,0-.1-0.42,0.71,0.71,0,0,1-.5.29m-0.58.44c-0.26.12-.86,0.2-0.76,0s0.51-.41.8,0a0.07,0.07,0,0,1,0,0m14.94,1.27a1.44,1.44,0,0,0,.48-0.91c0.09-.21.33-0.2,0.42-0.44a0.6,0.6,0,0,0,0-.39,1.35,1.35,0,0,1-.76.17c-0.75-.21-0.94-0.59-1.66-0.06a2,2,0,0,0-.89.33,0.64,0.64,0,0,0,0,.29c0.38,0,.92-0.4,1.15,0a0.57,0.57,0,0,1,.08.22v0a1.14,1.14,0,0,1,0,.3,0.58,0.58,0,0,1-.16.34,1,1,0,0,1-.1.08l0,0a0.57,0.57,0,0,1-.13.07l-0.11,0h-0.2c-0.09,0-.1,0-0.16,0a0.23,0.23,0,0,0-.06.16,0.55,0.55,0,0,1,.17,0l0.25,0.06a1.61,1.61,0,0,0,.32,0h0.47a1,1,0,0,0,.19,0l0.19-.08,0.23-.16c0.13-.09.31-0.08,0.43-0.18m-0.52-1.38c-0.28.15-1,.37-0.89,0.06s0.57-.22.89-0.06c0,0,0,0,0,0m-7.14,16.77a1.5,1.5,0,0,0-1.26,0s-0.28.3-.26,0.31a0.66,0.66,0,0,0-.82.57,0.71,0.71,0,0,1,.62-0.15,0.9,0.9,0,0,1,.2.83,0.62,0.62,0,0,1-.52.36c-0.12,0-.06.17-0.06,0.26a6.18,6.18,0,0,0,2.2-.82,1.2,1.2,0,0,0,.43-0.84,0.88,0.88,0,0,0,.38-0.73,0.83,0.83,0,0,1-.91.2m-1,.58a0.24,0.24,0,0,1-.11-0.07,0.22,0.22,0,0,1,0-.18,0.2,0.2,0,0,1,.08-0.11,0.42,0.42,0,0,1,.13,0l0.07,0h0.06c0.08,0,.14.07,0.22,0.08l0.31,0h0a0.36,0.36,0,0,1-.08.08,1.38,1.38,0,0,1-.65.24m10.72-3.73a5.39,5.39,0,0,0,.27-0.68c0-.81.51-1.2,0.53-2.07,0-.23-0.94-0.44-1-0.93,0-.24-0.1-0.59.14-0.59a1.2,1.2,0,0,0,.84-0.24c1-.87.15-2,0-3.09a7.82,7.82,0,0,1,.39-0.88,5.79,5.79,0,0,1,.08-2.56c-0.25.22-.32,0.59-0.53,0.77s-0.15-.11-0.14-0.15a7.75,7.75,0,0,1,.78-2.16,1.16,1.16,0,0,0-.57-1.82,1.22,1.22,0,0,0-1.47,1.1,5.26,5.26,0,0,0,.27,1.88c0,0.15,0,.32,0,0.45a6.22,6.22,0,0,0,.13-1.6,0.4,0.4,0,0,1,.24-0.35,0.47,0.47,0,0,1,.67.46,18.64,18.64,0,0,1-.46,2.25,7.94,7.94,0,0,0,.21,2.75,0.52,0.52,0,0,0-.88.33,1.76,1.76,0,0,0,.27.86c0-.35.34-0.84,0.67-0.62a2.26,2.26,0,0,1,.32,1.7,0.8,0.8,0,0,1-1,.5,1.22,1.22,0,0,1-.3-0.6,4.41,4.41,0,0,1-1.22-2.93c0-.17.08-0.6,0.05-0.61a1.39,1.39,0,0,0-1.94.61,0.8,0.8,0,0,0-.5-0.39,1.21,1.21,0,0,0,.16,1.28,6.43,6.43,0,0,1,2,2.14,1.22,1.22,0,0,0-1.13.7,1.11,1.11,0,0,0,.43,1.46,4.29,4.29,0,0,0,1.39,0,1,1,0,0,1,.94.93s-0.2,1.08-.66.82c-0.25-.14-0.11-0.72-0.49-0.81a0.5,0.5,0,0,0-.57.53c0.16-.15.28,0.1,0.59,0.27-1.06-.23-0.73.74-0.69,0.64s0.25,0,.63,0a0.59,0.59,0,0,1-.09.09,1.64,1.64,0,0,0-.13.25,0.3,0.3,0,0,0,0,.15,0.35,0.35,0,0,0,.05.14l0,0,0,0s0-.08,0-0.08H229l0.1,0,0.09,0a0.28,0.28,0,0,0,.16,0,0.51,0.51,0,0,0,.16-0.07l0.07-.06a0.19,0.19,0,0,1,.12-0.13,0.35,0.35,0,0,1,.46-0.2,0.21,0.21,0,0,1,.09.08,0.27,0.27,0,0,0,.06.11,2.5,2.5,0,0,1,.1.26m-7.57-9.61c0.05,0-.08.1-0.11,0.06-0.47-.55-1.25-0.47-1.19.41,0.3-.15.34,0.26,0.53,0.15a0.5,0.5,0,0,1,.47-0.13,0.16,0.16,0,0,1,0,.26c-0.86.3-.17,0.87-0.3,1a1.65,1.65,0,0,0,.81-0.61,0.88,0.88,0,0,1,.63-0.07c0.23,0.07,0,.43.09,0.41a1.71,1.71,0,0,1,1,.46,5.07,5.07,0,0,0,1.48.73,1.55,1.55,0,0,1-.28-1.52,6.07,6.07,0,0,1-1.54-.27c-1-.24-0.91-1.24-1.09-1.65l-0.06-.07a0.47,0.47,0,0,0-.42-0.27h-0.19a0.07,0.07,0,0,1,0,.12s0,0,0,0,0,0,0,0l0,0v0a0.39,0.39,0,0,0-.12.43,0.22,0.22,0,0,0,0,.09l0,0a1,1,0,0,0,.13.18Z"
+                transform="translate(-156.61 -1117.92)"
+                fill="#ba0c2f"
+              />
+              <path
+                d="M206,1205.39q0,1,0,1.9c0.17,8.22.32,16,5,23.45a20.45,20.45,0,0,0,8.57,7.41l0.11,0.05,0.11-.05a20.47,20.47,0,0,0,8.56-7.41c4.68-7.46,4.84-15.22,5-23.44,0-.63,0-1.27,0-1.9v-0.28H206v0.28Zm22,25a19.92,19.92,0,0,1-8.23,7.16,19.9,19.9,0,0,1-8.24-7.16c-0.31-.5-0.6-1-0.87-1.49l9.13-7.52,9.09,7.5C228.59,1229.43,228.3,1229.94,228,1230.44Zm1.63-3-9.84-8.11-9.88,8.14q-0.51-1.09-.91-2.18l10.79-8.89,10.75,8.86Q230.12,1226.37,229.61,1227.45Zm3.32-21.79c0,0.54,0,1.08,0,1.63-0.11,5.66-.22,11.1-1.83,16.35l-11.3-9.32-11.35,9.34c-1.61-5.26-1.72-10.71-1.83-16.38q0-.81,0-1.62h26.37Z"
+                transform="translate(-156.61 -1117.92)"
+              />
+            </g>
+          </g>
+        </g>
+        <g ref={snowJobListingRef}>
+          <rect
+            ref={snowflakePaperRef}
+            x="19.73"
+            y="149.97"
+            width="542.5"
+            height="78.32"
+            rx="8"
+            ry="8"
+            fill="#fff"
+          />
+          <rect
+            ref={snowflakeLogoBackRef}
+            x="35.28"
+            y="162.27"
+            width="55.7"
+            height="55.7"
+            rx="4"
+            ry="4"
+            fill="#29b5e8"
+          />
+          <g
+            ref={snowflakeLogoInsideRef}
+            id="Clip-Path:_Clip-Path:_Fill-1"
+            data-name="Clip-Path: Clip-Path: Fill-1"
+          >
+            <g id="Clip-Path:_Fill-1" data-name="Clip-Path: Fill-1">
+              <path
+                id="Fill-1"
+                d="M215,1308.19a2,2,0,0,1-.93,1.15l-6.92,4a2,2,0,0,1-2.78-.74,2,2,0,0,1,.74-2.76l3.87-2.21-3.87-2.22a2,2,0,0,1-.74-2.76,2,2,0,0,1,2.78-.74l6.92,4a2,2,0,0,1,.95,1.21,2.07,2.07,0,0,1,.07.48A2,2,0,0,1,215,1308.19Zm1.88,3.71a2,2,0,0,1,1.88,2v7.92a2,2,0,0,1-4.07,0v-4.43l-3.88,2.22a2,2,0,0,1-2.78-.74,2,2,0,0,1,.75-2.76l6.92-4A2,2,0,0,1,216.85,1311.91Zm7.09-8.61a2,2,0,0,1-1.89-2v-7.92a2,2,0,0,1,4.08,0v4.43l3.88-2.22a2,2,0,0,1,2.78.74,2,2,0,0,1-.75,2.76l-6.92,4A2,2,0,0,1,223.94,1303.29Zm-15.19-4.23a2,2,0,0,1-.75-2.76,2,2,0,0,1,2.78-.74l3.88,2.22v-4.43a2,2,0,0,1,4.07,0v7.92a2,2,0,0,1-1.88,2,2.05,2.05,0,0,1-1.18-.26Zm12.43,12.16a0.57,0.57,0,0,1-.36.15H220a0.59,0.59,0,0,1-.36-0.15l-2.88-2.85a0.58,0.58,0,0,1-.15-0.36v-0.84a0.58,0.58,0,0,1,.15-0.36l2.88-2.85a0.59,0.59,0,0,1,.36-0.15h0.85a0.58,0.58,0,0,1,.36.15l2.88,2.85a0.58,0.58,0,0,1,.15.36V1308a0.58,0.58,0,0,1-.15.36Zm0.58-3.64a0.6,0.6,0,0,0-.15-0.36l-0.83-.82a0.59,0.59,0,0,0-.36-0.15h0a0.58,0.58,0,0,0-.36.15l-0.83.82a0.59,0.59,0,0,0-.15.36v0a0.57,0.57,0,0,0,.15.36l0.83,0.82a0.58,0.58,0,0,0,.36.15h0a0.59,0.59,0,0,0,.36-0.15l0.83-.82a0.58,0.58,0,0,0,.15-0.36v0Zm10.29,8.54a2,2,0,0,1,.75,2.76,2,2,0,0,1-2.78.74l-3.88-2.22v4.43a2,2,0,0,1-4.08,0v-7.92a2,2,0,0,1,3.07-1.75Zm-0.21-8.53,3.87,2.21a2,2,0,0,1,.75,2.76,2,2,0,0,1-2.78.74l-6.92-4a2,2,0,0,1-.92-1.15,2,2,0,0,1-.09-0.66,1.93,1.93,0,0,1,.07-0.48,2,2,0,0,1,.94-1.21l6.92-4a2,2,0,0,1,2.78.74,2,2,0,0,1-.75,2.76Z"
+                transform="translate(-156.61 -1117.92)"
+                fill="#fff"
+              />
+            </g>
+          </g>
+          <rect
+            ref={snowflakeTopTextRef}
+            x="98.55"
+            y="171.69"
+            width="111.32"
+            height="14.69"
+            rx="7.35"
+            ry="7.35"
+            fill="#d3d3d3"
+          />
+          <rect
+            ref={snowflakBottomTextRef}
+            x="98.55"
+            y="193.68"
+            width="82.35"
+            height="14.69"
+            rx="7.35"
+            ry="7.35"
+            fill="#d3d3d3"
+          />
+          <g ref={snowPillarsRef}>
+            <rect
+              ref={snowBackPillar1Ref}
+              x="496.81"
+              y="1277.01"
+              width="13.71"
+              height="62.93"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(850.72 1499.02) rotate(180)"
+              fill="#d3d3d3"
+            />
+            <rect
+              ref={snowInnerPillar1Ref}
+              x="496.81"
+              y="1289.61"
+              width="13.71"
+              height="50.53"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(850.72 1511.82) rotate(180)"
+              fill="#4a91f0"
+            />
+            <rect
+              ref={snowBackPillar2Ref}
+              x="515.45"
+              y="1277.01"
+              width="13.71"
+              height="62.93"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(887.99 1499.02) rotate(180)"
+              fill="#d3d3d3"
+            />
+            <rect
+              ref={snowInnerPillar2Ref}
+              x="515.45"
+              y="1282.72"
+              width="13.71"
+              height="57.41"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(887.99 1504.94) rotate(180)"
+              fill="#005dd6"
+            />
+            <rect
+              ref={snowBackPillar3Ref}
+              x="533.54"
+              y="1277.01"
+              width="13.71"
+              height="62.93"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(924.17 1499.02) rotate(180)"
+              fill="#d3d3d3"
+            />
+            <rect
+              ref={snowInnerPillar3Ref}
+              x="533.54"
+              y="1289.61"
+              width="13.71"
+              height="50.53"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(924.17 1511.82) rotate(-180)"
+              fill="#2247a3"
+            />
+            <path
+              ref={snowPillarIcon1Ref}
+              d="M504.1,1332l2.52,1.52-0.67-2.85,2.21-1.92-2.92-.26-1.14-2.69V1332Zm-4,3.51,1-4.51-3.5-3,4.62-.4,1.8-4.25,1.8,4.25,4.62,0.4-3.5,3,1,4.51-4-2.39Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+            <path
+              ref={snowPillarIcon2Ref}
+              d="M521.8,1335.73v-1.42a3.06,3.06,0,0,1-1.58-.73,3.19,3.19,0,0,1-.89-1.43l0.95-.39a2.46,2.46,0,0,0,.83,1.21,2.36,2.36,0,0,0,2.63,0,1.33,1.33,0,0,0,.52-1.11,1.44,1.44,0,0,0-.46-1.15,5.41,5.41,0,0,0-1.75-.83,4.18,4.18,0,0,1-1.82-1,2.26,2.26,0,0,1-.6-1.6,2.16,2.16,0,0,1,.6-1.55,2.37,2.37,0,0,1,1.56-.71v-1.4h1v1.4a2.61,2.61,0,0,1,1.31.5,2.66,2.66,0,0,1,.84,1.06l-0.95.41a1.67,1.67,0,0,0-.63-0.79,2.32,2.32,0,0,0-2.27.11,1.15,1.15,0,0,0-.46,1,1.26,1.26,0,0,0,.51,1,6.3,6.3,0,0,0,1.87.82,3.45,3.45,0,0,1,1.7,1,2.56,2.56,0,0,1,.55,1.68,2.37,2.37,0,0,1-.62,1.71,3.12,3.12,0,0,1-1.84.84v1.4h-1Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+            <path
+              ref={snowPillarIcon3Ref}
+              d="M537,1332.44h4.54v-0.28a1.1,1.1,0,0,0-.61-1,4,4,0,0,0-3.33,0,1.1,1.1,0,0,0-.61,1v0.28Zm2.27-2.37a1,1,0,1,0-.78-0.3A1.05,1.05,0,0,0,539.26,1330.08Zm-3.52,4.5a0.83,0.83,0,0,1-.81-0.81v-7a0.83,0.83,0,0,1,.81-0.81h7a0.83,0.83,0,0,1,.81.81v2.91l2.16-2.16V1333l-2.16-2.16v2.91a0.83,0.83,0,0,1-.81.81h-7Zm0-.81h7v-7h-7v7Zm0,0v0Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+          </g>
+          <g ref={snowFlagRef}>
+            <path
+              d="M594.89,1295.78h32v21.33h-32v-21.33Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+            <path
+              d="M594.89,1295.78h32v1.64h-32v-1.64Zm0,3.28h32v1.64h-32v-1.64Zm0,3.28h32V1304h-32v-1.64Zm0,3.28h32v1.64h-32v-1.64Zm0,3.29h32v1.64h-32v-1.64Zm0,3.28h32v1.64h-32v-1.64Zm0,3.28h32v1.64h-32v-1.64Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#d80027"
+            />
+            <path
+              d="M594.89,1295.78h16v11.48h-16v-11.48Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#2e52b2"
+            />
+            <path
+              d="M597.87,1304.45l-0.25-.8-0.27.8h-0.82l0.67,0.48-0.25.8,0.68-.49,0.66,0.49-0.26-.8,0.68-.48h-0.84Zm3.51,0-0.26-.8-0.26.8H600l0.67,0.48-0.25.8,0.67-.49,0.67,0.49-0.25-.8,0.67-.48h-0.84Zm3.52,0-0.27-.8-0.25.8h-0.84l0.69,0.48-0.26.8,0.67-.49,0.69,0.49-0.26-.8,0.67-.48h-0.82Zm3.51,0-0.25-.8-0.26.8h-0.83l0.67,0.48-0.25.8,0.67-.49,0.67,0.49-0.27-.8,0.69-.48h-0.84Zm-7.29-4-0.26.8H600l0.67,0.49-0.25.79,0.67-.49,0.67,0.49-0.25-.79,0.67-.49h-0.84Zm-3.51,0-0.27.8h-0.82l0.67,0.49-0.25.79,0.68-.49,0.66,0.49-0.26-.79,0.68-.49h-0.84Zm7,0-0.25.8h-0.84l0.69,0.49-0.26.79,0.67-.49,0.69,0.49-0.26-.79,0.67-.49h-0.82Zm3.52,0-0.26.8h-0.83l0.67,0.49-0.25.79,0.67-.49,0.67,0.49-0.27-.79,0.69-.49h-0.84Zm-10.54-3.16-0.27.79h-0.82l0.67,0.49-0.25.79,0.68-.49,0.66,0.49-0.26-.79,0.68-.49h-0.84Zm3.51,0-0.26.79H600l0.67,0.49-0.25.79,0.67-.49,0.67,0.49-0.25-.79,0.67-.49h-0.84Zm3.51,0-0.25.79h-0.84l0.69,0.49-0.26.79,0.67-.49,0.69,0.49-0.26-.79,0.67-.49h-0.82Zm3.52,0-0.26.79h-0.83l0.67,0.49-0.25.79,0.67-.49,0.67,0.49-0.27-.79,0.69-.49h-0.84Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+          </g>
+          <g ref={snowBookmarkRef}>
+            <path
+              ref={snowBookmarkOutlineRef}
+              d="M689,1296.36H677.11a2.38,2.38,0,0,0-2.37,2.37v19l8.31-3.56,8.31,3.56v-19A2.38,2.38,0,0,0,689,1296.36Zm0,17.81-5.94-2.59-5.94,2.59v-15.44H689v15.44Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#01142b"
+            />
+            <path
+              ref={snowBookmarkFilledBackRef}
+              d="M691.43,1293.72H679.56a2.38,2.38,0,0,0-2.37,2.37v19l8.31-3.56,8.31,3.56v-19A2.38,2.38,0,0,0,691.43,1293.72Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#ff605c"
+            />
+            <path
+              ref={snowBookmarkFilledFrontRef}
+              d="M689,1296.16H677.11a2.38,2.38,0,0,0-2.37,2.37v19l8.31-3.56,8.31,3.56v-19A2.38,2.38,0,0,0,689,1296.16Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#01142b"
+            />
+            <g ref={snowBookmarkText1Ref}>
+              <path
+                d="M681.19,1309h1.76V1304q0-.29,0-0.62l-1.25,1a0.43,0.43,0,0,1-.16.09l-0.16,0a0.47,0.47,0,0,1-.22-0.05,0.41,0.41,0,0,1-.15-0.12l-0.47-.64,2.65-2.25h1.22V1309H686v1.11h-4.8V1309Z"
+                transform="translate(-156.61 -1117.92)"
+                fill="#fff"
+              />
+            </g>
+            <g ref={snowBookmarkIconText2Ref}>
+              <path
+                d="M683.19,1301.41a3.26,3.26,0,0,1,1.1.18,2.47,2.47,0,0,1,.85.5,2.26,2.26,0,0,1,.55.78,2.53,2.53,0,0,1,.2,1,2.7,2.7,0,0,1-.14.89,3.66,3.66,0,0,1-.38.78,5.23,5.23,0,0,1-.55.72l-0.67.71-2,2a4.84,4.84,0,0,1,.56-0.13,3.26,3.26,0,0,1,.53,0h2.23a0.53,0.53,0,0,1,.38.13,0.47,0.47,0,0,1,.14.36v0.89h-6v-0.49a0.88,0.88,0,0,1,.26-0.61l2.63-2.64q0.33-.34.59-0.64a4.35,4.35,0,0,0,.44-0.61,2.78,2.78,0,0,0,.27-0.61,2.27,2.27,0,0,0,.09-0.65,1.55,1.55,0,0,0-.09-0.55,1.05,1.05,0,0,0-.66-0.64,1.57,1.57,0,0,0-.52-0.08,1.38,1.38,0,0,0-.88.27,1.41,1.41,0,0,0-.48.73,0.6,0.6,0,0,1-.2.33,0.54,0.54,0,0,1-.34.1l-0.2,0-0.78-.14a3.21,3.21,0,0,1,.35-1.09,2.61,2.61,0,0,1,.65-0.79,2.68,2.68,0,0,1,.89-0.47A3.56,3.56,0,0,1,683.19,1301.41Z"
+                transform="translate(-156.61 -1117.92)"
+                fill="#fff"
+              />
+            </g>
+          </g>
+        </g>
+        <g ref={shopifyJobRef}>
+          <rect
+            ref={shopifyPaperRef}
+            x="19.73"
+            y="238.55"
+            width="542.5"
+            height="78.32"
+            rx="8"
+            ry="8"
+            fill="#fff"
+          />
+          <rect
+            ref={shopifyBackRef}
+            x="35.28"
+            y="250.85"
+            width="55.7"
+            height="55.7"
+            rx="4"
+            ry="4"
+            fill="#fff"
+            stroke="#d3d3d3"
+            stroke-miterlimit="10"
+          />
+          <rect
+            ref={shopifyTopTextRef}
+            x="98.55"
+            y="260.27"
+            width="82.35"
+            height="14.69"
+            rx="7.35"
+            ry="7.35"
+            fill="#d3d3d3"
+          />
+          <rect
+            ref={shopifyBottomTextRef}
+            x="98.55"
+            y="282.26"
+            width="104.41"
+            height="14.69"
+            rx="7.35"
+            ry="7.35"
+            fill="#d3d3d3"
+          />
+          <g ref={shopPillarsRef}>
+            <rect
+              ref={shipOuterPillar1Ref}
+              x="496.81"
+              y="1365.59"
+              width="13.71"
+              height="62.93"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(850.72 1676.19) rotate(-180)"
+              fill="#d3d3d3"
+            />
+            <rect
+              ref={shopPillarInner1Ref}
+              x="496.81"
+              y="1376.12"
+              width="13.71"
+              height="52.6"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(850.72 1686.91) rotate(180)"
+              fill="#4a91f0"
+            />
+            <rect
+              ref={shopOuterPillar2Ref}
+              x="515.45"
+              y="1365.59"
+              width="13.71"
+              height="62.93"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(887.99 1676.19) rotate(-180)"
+              fill="#d3d3d3"
+            />
+            <rect
+              ref={shopInnerPillar2Ref}
+              x="515.45"
+              y="1380.27"
+              width="13.71"
+              height="48.45"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(887.99 1691.07) rotate(180)"
+              fill="#005dd6"
+            />
+            <rect
+              ref={shopOuterPillar3Ref}
+              x="533.54"
+              y="1365.59"
+              width="13.71"
+              height="62.93"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(924.17 1676.19) rotate(-180)"
+              fill="#d3d3d3"
+            />
+            <rect
+              ref={shopInnerPillar3Ref}
+              x="533.54"
+              y="1368.77"
+              width="13.71"
+              height="59.95"
+              rx="6.85"
+              ry="6.85"
+              transform="translate(924.17 1679.57) rotate(-180)"
+              fill="#2247a3"
+            />
+            <path
+              ref={shopPillarIcon1Ref}
+              d="M504.1,1420.58l2.52,1.52-0.67-2.85,2.21-1.92-2.92-.26-1.14-2.69v6.21Zm-4,3.51,1-4.51-3.5-3,4.62-.4,1.8-4.25,1.8,4.25,4.62,0.4-3.5,3,1,4.51-4-2.39Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+            <path
+              ref={shopPIllarIcon2Ref}
+              d="M521.8,1424.31v-1.42a3.06,3.06,0,0,1-1.58-.73,3.19,3.19,0,0,1-.89-1.43l0.95-.39a2.46,2.46,0,0,0,.83,1.21,2.36,2.36,0,0,0,2.63,0,1.33,1.33,0,0,0,.52-1.11,1.44,1.44,0,0,0-.46-1.15,5.41,5.41,0,0,0-1.75-.83,4.18,4.18,0,0,1-1.82-1,2.26,2.26,0,0,1-.6-1.6,2.16,2.16,0,0,1,.6-1.55,2.37,2.37,0,0,1,1.56-.71v-1.4h1v1.4a2.61,2.61,0,0,1,1.31.5,2.66,2.66,0,0,1,.84,1.06l-0.95.41a1.67,1.67,0,0,0-.63-0.79,2.32,2.32,0,0,0-2.27.11,1.15,1.15,0,0,0-.46,1,1.26,1.26,0,0,0,.51,1,6.3,6.3,0,0,0,1.87.82,3.45,3.45,0,0,1,1.7,1,2.56,2.56,0,0,1,.55,1.68,2.37,2.37,0,0,1-.62,1.71,3.12,3.12,0,0,1-1.84.84v1.4h-1Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+            <path
+              ref={shopPillarIcon3Ref}
+              d="M537,1421h4.54v-0.28a1.1,1.1,0,0,0-.61-1,4,4,0,0,0-3.33,0,1.1,1.1,0,0,0-.61,1V1421Zm2.27-2.37a1,1,0,1,0-.78-0.3A1.05,1.05,0,0,0,539.26,1418.66Zm-3.52,4.5a0.83,0.83,0,0,1-.81-0.81v-7a0.83,0.83,0,0,1,.81-0.81h7a0.83,0.83,0,0,1,.81.81v2.91l2.16-2.16v5.54l-2.16-2.16v2.91a0.83,0.83,0,0,1-.81.81h-7Zm0-.81h7v-7h-7v7Zm0,0v0Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+          </g>
+          <g ref={shopFlagRef}>
+            <path
+              d="M594.61,1386h32v21.33h-32V1386Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+            <path
+              d="M594.61,1386h8.86v21.33h-8.86V1386Zm23.14,0h8.86v21.33h-8.86V1386Zm-4,12.85,3.14-1.57-1.57-.79V1395l-3.14,1.57,1.57-3.14h-1.57l-1.57-2.36-1.57,2.36h-1.57l1.57,3.14-3.14-1.57v1.57l-1.57.79,3.14,1.57-0.79,1.57h3.14v2.36h1.57v-2.36h3.14Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="red"
+            />
+          </g>
+          <g ref={shopifyBookmarkRef}>
+            <path
+              ref={shopBookmarkBackRef}
+              d="M691.43,1383.92H679.56a2.38,2.38,0,0,0-2.37,2.37v19l8.31-3.56,8.31,3.56v-19A2.38,2.38,0,0,0,691.43,1383.92Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#ff605c"
+            />
+            <path
+              ref={shopBookmarkFrontRef}
+              d="M689,1386.37H677.11a2.38,2.38,0,0,0-2.37,2.37v19l8.31-3.56,8.31,3.56v-19A2.38,2.38,0,0,0,689,1386.37Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#01142b"
+            />
+            <g ref={shopBookmarkText1Ref}>
+              <path
+                d="M681.19,1399.24h1.76v-5.06q0-.29,0-0.62l-1.25,1a0.43,0.43,0,0,1-.16.09l-0.16,0a0.47,0.47,0,0,1-.22-0.05,0.41,0.41,0,0,1-.15-0.12l-0.47-.64,2.65-2.25h1.22v7.58H686v1.11h-4.8v-1.11Z"
+                transform="translate(-156.61 -1117.92)"
+                fill="#fff"
+              />
+            </g>
+          </g>
+          <g ref={shopifyInnerRef}>
+            <path
+              d="M233.39,1383.66a0.38,0.38,0,0,0-.34-0.32l-2.93-.05-2.56-2.5a1,1,0,0,0-.86-0.11l-1.17.36a8.22,8.22,0,0,0-.56-1.38,4,4,0,0,0-3.52-2.43h0l-0.31,0-0.13-.15a3.08,3.08,0,0,0-2.44-1c-1.9.05-3.79,1.43-5.32,3.86a15.28,15.28,0,0,0-2.13,5.53l-3.74,1.16c-1.1.35-1.13,0.38-1.28,1.42-0.11.78-3,23-3,23l24.12,4.17,10.46-2.6S233.42,1383.86,233.39,1383.66Zm-9.07-2.24-1.87.58a10.37,10.37,0,0,0-.58-3.45C223.31,1378.82,224,1380.45,224.32,1381.42Zm-3.13,1-4,1.25a9.55,9.55,0,0,1,2-3.95,4.06,4.06,0,0,1,1.37-1A9.05,9.05,0,0,1,221.18,1382.39Zm-2.59-5a1.94,1.94,0,0,1,1.14.3,5.49,5.49,0,0,0-1.47,1.15,11.06,11.06,0,0,0-2.5,5.24l-3.31,1C213.11,1382,215.67,1377.47,218.6,1377.38Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#95bf47"
+            />
+            <path
+              d="M233,1383.34l-2.93-.05-2.56-2.5a0.57,0.57,0,0,0-.32-0.15v34.65l10.45-2.6s-4.27-28.84-4.29-29A0.38,0.38,0,0,0,233,1383.34Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#5e8e3e"
+            />
+            <path
+              d="M221.43,1388.72l-1.21,4.54a6.9,6.9,0,0,0-3-.52c-2.35.15-2.38,1.63-2.36,2,0.13,2,5.47,2.48,5.77,7.23,0.24,3.74-2,6.3-5.19,6.51a7.77,7.77,0,0,1-6-2l0.81-3.46s2.13,1.61,3.83,1.5a1.51,1.51,0,0,0,1.47-1.62c-0.17-2.65-4.52-2.49-4.79-6.85-0.23-3.66,2.18-7.38,7.49-7.71A6.53,6.53,0,0,1,221.43,1388.72Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+          </g>
+        </g>
+        <g ref={bookmarkDropRef}>
+          <rect
+            ref={bookmarkDropBackRef}
+            x="412.14"
+            y="202.64"
+            width="125.61"
+            height="119.43"
+            rx="4"
+            ry="4"
+            fill="#01142b"
+          />
+          <g ref={bookmarkDropPill1Ref}>
+            <path
+              d="M580.48,1325h49.43a8.15,8.15,0,0,1,8.15,8.15h0a8.15,8.15,0,0,1-8.15,8.15H580.48a8.15,8.15,0,0,1-8.15-8.15h0A8.15,8.15,0,0,1,580.48,1325Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#ff605c"
+            />
+            <path
+              d="M631.3,1335.15h-0.87a0.27,0.27,0,0,1-.18-0.06,0.63,0.63,0,0,1-.1-0.13l-1.3-2,0,0.14a0.42,0.42,0,0,1-.06.12l-1.2,1.76-0.11.13a0.21,0.21,0,0,1-.16.06h-0.81l1.81-2.65-1.74-2.51h0.87a0.29,0.29,0,0,1,.16,0,0.33,0.33,0,0,1,.09.1l1.27,1.94a1.07,1.07,0,0,1,.13-0.29l1.11-1.63a0.46,0.46,0,0,1,.1-0.11,0.2,0.2,0,0,1,.13,0h0.84l-1.74,2.47Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+          </g>
+          <g ref={bookmarkDropPill2Ref}>
+            <rect
+              x="484.77"
+              y="207.35"
+              width="45.1"
+              height="15.99"
+              rx="8"
+              ry="8"
+              fill="#fc7800"
+            />
+            <path
+              d="M680.58,1335.86h-0.87a0.27,0.27,0,0,1-.18-0.06,0.63,0.63,0,0,1-.1-0.13l-1.3-2,0,0.14a0.42,0.42,0,0,1-.06.12l-1.2,1.76-0.11.13a0.21,0.21,0,0,1-.16.06h-0.81l1.81-2.65-1.74-2.51h0.87a0.29,0.29,0,0,1,.16,0,0.33,0.33,0,0,1,.09.1l1.27,1.94a1.07,1.07,0,0,1,.13-0.29l1.11-1.63a0.46,0.46,0,0,1,.1-0.11,0.2,0.2,0,0,1,.13,0h0.84l-1.74,2.47Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fff"
+            />
+          </g>
+          <g ref={bookmarkDropAmbTextRef}>
+            <path
+              d="M628.33,1367.67h-0.84a0.36,0.36,0,0,1-.24-0.07,0.44,0.44,0,0,1-.13-0.18l-0.75-1.94h-3.6l-0.75,1.94a0.44,0.44,0,0,1-.13.18,0.36,0.36,0,0,1-.24.08h-0.84l3.21-8h1.1Zm-5.26-3h3l-1.26-3.27a6.1,6.1,0,0,1-.24-0.76l-0.12.42c0,0.13-.08.24-0.12,0.34Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#ff605c"
+            />
+            <path
+              d="M629.19,1367.67V1362h0.59a0.25,0.25,0,0,1,.27.21l0.07,0.58a2.92,2.92,0,0,1,.7-0.63,1.66,1.66,0,0,1,.91-0.25,1.35,1.35,0,0,1,.93.32,1.8,1.8,0,0,1,.51.86,1.75,1.75,0,0,1,.31-0.53,1.8,1.8,0,0,1,.43-0.37,1.84,1.84,0,0,1,.51-0.21,2.28,2.28,0,0,1,.55-0.07,2.09,2.09,0,0,1,.8.14,1.57,1.57,0,0,1,.59.42,1.85,1.85,0,0,1,.37.67,3,3,0,0,1,.13.92v3.62h-1v-3.62a1.53,1.53,0,0,0-.29-1,1,1,0,0,0-.85-0.34,1.26,1.26,0,0,0-.47.09,1.12,1.12,0,0,0-.39.25,1.2,1.2,0,0,0-.27.42,1.64,1.64,0,0,0-.1.59v3.62h-1v-3.62a1.6,1.6,0,0,0-.27-1,1,1,0,0,0-.8-0.34,1.27,1.27,0,0,0-.69.2,2.26,2.26,0,0,0-.58.54v4.23h-1Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#ff605c"
+            />
+            <path
+              d="M638.43,1367.67v-8.26h1v3.4a2.9,2.9,0,0,1,.81-0.66,2.15,2.15,0,0,1,1-.25,2.1,2.1,0,0,1,.89.18,1.8,1.8,0,0,1,.68.55,2.67,2.67,0,0,1,.43.91,4.66,4.66,0,0,1,.15,1.25,3.91,3.91,0,0,1-.17,1.17,2.83,2.83,0,0,1-.49.94,2.24,2.24,0,0,1-1.8.85,1.89,1.89,0,0,1-.93-0.21,2.12,2.12,0,0,1-.67-0.59l0,0.52a0.24,0.24,0,0,1-.26.21h-0.65Zm2.53-5a1.6,1.6,0,0,0-.85.22,2.46,2.46,0,0,0-.68.63v2.75a1.56,1.56,0,0,0,.6.52,1.72,1.72,0,0,0,.73.15,1.44,1.44,0,0,0,1.22-.57,2.65,2.65,0,0,0,.43-1.61,4,4,0,0,0-.1-1,1.87,1.87,0,0,0-.28-0.65,1.12,1.12,0,0,0-.45-0.37A1.52,1.52,0,0,0,641,1362.7Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#ff605c"
+            />
+            <path
+              d="M646,1360.21a0.63,0.63,0,0,1-.06.27,0.77,0.77,0,0,1-.16.22,0.72,0.72,0,0,1-.23.15,0.69,0.69,0,0,1-.28.06,0.67,0.67,0,0,1-.27-0.06,0.74,0.74,0,0,1-.22-0.15,0.72,0.72,0,0,1-.15-0.22,0.65,0.65,0,0,1-.06-0.27,0.69,0.69,0,0,1,.06-0.28,0.71,0.71,0,0,1,.15-0.23,0.74,0.74,0,0,1,.22-0.15,0.67,0.67,0,0,1,.27-0.06,0.69,0.69,0,0,1,.28.06,0.72,0.72,0,0,1,.23.15,0.76,0.76,0,0,1,.16.23A0.68,0.68,0,0,1,646,1360.21Zm-0.22,1.78v5.68h-1V1362h1Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#ff605c"
+            />
+            <path
+              d="M649.25,1367.76a1.37,1.37,0,0,1-1-.38,1.5,1.5,0,0,1-.36-1.08v-3.47h-0.68a0.22,0.22,0,0,1-.15-0.05,0.21,0.21,0,0,1-.06-0.17v-0.4l0.93-.12,0.23-1.75a0.21,0.21,0,0,1,.07-0.14,0.23,0.23,0,0,1,.16-0.05h0.5v2h1.63v0.72h-1.62v3.41a0.72,0.72,0,0,0,.17.53,0.6,0.6,0,0,0,.45.17,0.8,0.8,0,0,0,.27,0l0.2-.09,0.14-.09a0.2,0.2,0,0,1,.1,0,0.17,0.17,0,0,1,.14.1l0.29,0.48a1.88,1.88,0,0,1-.62.38A2.1,2.1,0,0,1,649.25,1367.76Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#ff605c"
+            />
+            <path
+              d="M653,1360.21a0.63,0.63,0,0,1-.06.27,0.77,0.77,0,0,1-.16.22,0.72,0.72,0,0,1-.23.15,0.69,0.69,0,0,1-.28.06,0.67,0.67,0,0,1-.27-0.06,0.74,0.74,0,0,1-.22-0.15,0.72,0.72,0,0,1-.15-0.22,0.65,0.65,0,0,1-.06-0.27,0.69,0.69,0,0,1,.06-0.28,0.71,0.71,0,0,1,.15-0.23,0.74,0.74,0,0,1,.22-0.15,0.67,0.67,0,0,1,.27-0.06,0.69,0.69,0,0,1,.28.06,0.72,0.72,0,0,1,.23.15,0.76,0.76,0,0,1,.16.23A0.68,0.68,0,0,1,653,1360.21Zm-0.22,1.78v5.68h-1V1362h1Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#ff605c"
+            />
+            <path
+              d="M656.88,1361.9a2.91,2.91,0,0,1,1.12.21,2.36,2.36,0,0,1,.85.59,2.6,2.6,0,0,1,.54.92,4,4,0,0,1,0,2.42,2.61,2.61,0,0,1-.54.92,2.34,2.34,0,0,1-.85.59,3.19,3.19,0,0,1-2.25,0,2.37,2.37,0,0,1-.86-0.59,2.62,2.62,0,0,1-.54-0.92,3.94,3.94,0,0,1,0-2.42,2.62,2.62,0,0,1,.54-0.92,2.39,2.39,0,0,1,.86-0.59A2.91,2.91,0,0,1,656.88,1361.9Zm0,5.07a1.46,1.46,0,0,0,1.26-.56,3.2,3.2,0,0,0,0-3.15,1.45,1.45,0,0,0-1.26-.57,1.75,1.75,0,0,0-.74.15,1.39,1.39,0,0,0-.52.42,1.86,1.86,0,0,0-.31.68,4,4,0,0,0,0,1.81,1.84,1.84,0,0,0,.31.67,1.39,1.39,0,0,0,.52.42A1.73,1.73,0,0,0,656.88,1367Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#ff605c"
+            />
+            <path
+              d="M661.68,1362v3.62a1.5,1.5,0,0,0,.3,1,1.11,1.11,0,0,0,.9.35,1.71,1.71,0,0,0,.82-0.21,2.55,2.55,0,0,0,.71-0.58V1362h1v5.68h-0.59a0.25,0.25,0,0,1-.27-0.21l-0.08-.61a3.13,3.13,0,0,1-.83.66,2.17,2.17,0,0,1-1.05.25,2.05,2.05,0,0,1-.82-0.15,1.61,1.61,0,0,1-.6-0.43,1.83,1.83,0,0,1-.36-0.68,3,3,0,0,1-.12-0.88V1362h1Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#ff605c"
+            />
+            <path
+              d="M670.3,1362.93a0.22,0.22,0,0,1-.21.12,0.39,0.39,0,0,1-.19-0.06l-0.26-.14a2.53,2.53,0,0,0-.37-0.14,1.76,1.76,0,0,0-.5-0.06,1.49,1.49,0,0,0-.45.06,1.09,1.09,0,0,0-.34.18,0.78,0.78,0,0,0-.22.26,0.71,0.71,0,0,0-.08.32,0.54,0.54,0,0,0,.13.36,1.1,1.1,0,0,0,.33.25,2.81,2.81,0,0,0,.47.19l0.54,0.17,0.54,0.21a2,2,0,0,1,.47.28,1.28,1.28,0,0,1,.33.41,1.26,1.26,0,0,1,.13.59,1.85,1.85,0,0,1-.14.73,1.58,1.58,0,0,1-.42.58,2,2,0,0,1-.67.38,2.75,2.75,0,0,1-.92.14,2.87,2.87,0,0,1-1.08-.19,2.73,2.73,0,0,1-.82-0.5l0.24-.38a0.35,0.35,0,0,1,.11-0.11,0.3,0.3,0,0,1,.16,0,0.38,0.38,0,0,1,.21.08l0.27,0.17a2.12,2.12,0,0,0,.39.17,1.78,1.78,0,0,0,.57.08A1.57,1.57,0,0,0,669,1367a1.08,1.08,0,0,0,.36-0.21,0.8,0.8,0,0,0,.22-0.3,0.92,0.92,0,0,0,.07-0.36,0.59,0.59,0,0,0-.13-0.39,1,1,0,0,0-.33-0.26,2.63,2.63,0,0,0-.47-0.19l-0.54-.17c-0.18-.06-0.37-0.13-0.54-0.21a1.87,1.87,0,0,1-.47-0.29,1.29,1.29,0,0,1-.33-0.43,1.39,1.39,0,0,1-.13-0.62,1.53,1.53,0,0,1,.53-1.15,1.94,1.94,0,0,1,.63-0.36,2.53,2.53,0,0,1,.86-0.13,2.73,2.73,0,0,1,1,.18,2.38,2.38,0,0,1,.77.49Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#ff605c"
+            />
+            <path
+              d="M674.88,1364.15a8.79,8.79,0,0,0,.31,2.33,9.3,9.3,0,0,0,.89,2.16,0.47,0.47,0,0,1,0,.11,0.35,0.35,0,0,1,0,.09,0.2,0.2,0,0,1,0,.13,0.38,0.38,0,0,1-.1.09l-0.44.27a10.3,10.3,0,0,1-.71-1.28,8.58,8.58,0,0,1-.48-1.27,9,9,0,0,1-.27-1.29,10.57,10.57,0,0,1,0-2.66,8.85,8.85,0,0,1,.27-1.29,8.63,8.63,0,0,1,.48-1.27,10.57,10.57,0,0,1,.71-1.28l0.44,0.27a0.39,0.39,0,0,1,.1.09,0.21,0.21,0,0,1,0,.13,0.43,0.43,0,0,1-.06.19A8.92,8.92,0,0,0,674.88,1364.15Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#ff605c"
+            />
+            <path
+              d="M684.79,1364.15a8.91,8.91,0,0,0-1.2-4.48,0.42,0.42,0,0,1-.06-0.19,0.2,0.2,0,0,1,0-.13,0.41,0.41,0,0,1,.1-0.09l0.44-.27a10.57,10.57,0,0,1,.71,1.28,8.74,8.74,0,0,1,.48,1.27,8.59,8.59,0,0,1,.27,1.29,10.57,10.57,0,0,1,0,2.66,8.72,8.72,0,0,1-.74,2.56,10.3,10.3,0,0,1-.71,1.28l-0.44-.27a0.39,0.39,0,0,1-.1-0.09,0.2,0.2,0,0,1,0-.13,0.39,0.39,0,0,1,0-.09,0.47,0.47,0,0,1,0-.11,9.34,9.34,0,0,0,.89-2.16A8.83,8.83,0,0,0,684.79,1364.15Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#ff605c"
+            />
+          </g>
+          <g ref={boomarkDropAmbText2Ref}>
+            <path
+              d="M680,1360.11a2.91,2.91,0,0,1,1,.15,2.19,2.19,0,0,1,.76.44,2.07,2.07,0,0,1,.51.7,2.29,2.29,0,0,1,.18.94,2.47,2.47,0,0,1-.13.83,3.39,3.39,0,0,1-.36.73,5.46,5.46,0,0,1-.53.68l-0.64.67-2.11,2.16,0.45-.1a2.81,2.81,0,0,1,.44,0h2.69a0.34,0.34,0,0,1,.26.1,0.33,0.33,0,0,1,.09.25v0.61h-5.36v-0.34a0.62,0.62,0,0,1,0-.22,0.58,0.58,0,0,1,.14-0.21l2.57-2.58q0.32-.32.58-0.62a4.46,4.46,0,0,0,.45-0.6,2.77,2.77,0,0,0,.29-0.61,2.14,2.14,0,0,0,.1-0.66,1.58,1.58,0,0,0-.11-0.62,1.19,1.19,0,0,0-.31-0.44,1.29,1.29,0,0,0-.46-0.26,1.81,1.81,0,0,0-.57-0.09,1.7,1.7,0,0,0-.56.09,1.5,1.5,0,0,0-.79.63,1.46,1.46,0,0,0-.19.48,0.44,0.44,0,0,1-.13.24,0.36,0.36,0,0,1-.24.07h-0.13l-0.52-.09a3,3,0,0,1,.3-1,2.32,2.32,0,0,1,.57-0.71,2.42,2.42,0,0,1,.79-0.43A3,3,0,0,1,680,1360.11Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#ff605c"
+            />
+          </g>
+          <g ref={boomarkDropSafeTextRef}>
+            <path
+              d="M670.29,1387.38a0.41,0.41,0,0,1-.11.13,0.23,0.23,0,0,1-.15,0,0.39,0.39,0,0,1-.22-0.1l-0.32-.21A2.61,2.61,0,0,0,669,1387a2,2,0,0,0-.66-0.09,1.94,1.94,0,0,0-.64.1,1.37,1.37,0,0,0-.47.27,1.09,1.09,0,0,0-.28.4,1.24,1.24,0,0,0-.1.49,0.91,0.91,0,0,0,.17.56,1.42,1.42,0,0,0,.44.38,3.35,3.35,0,0,0,.62.27l0.71,0.24q0.36,0.12.71,0.28a2.46,2.46,0,0,1,.62.39,1.78,1.78,0,0,1,.44.58,1.92,1.92,0,0,1,.17.84,2.72,2.72,0,0,1-.18,1,2.29,2.29,0,0,1-.52.8,2.45,2.45,0,0,1-.85.54,3.11,3.11,0,0,1-1.14.2,3.49,3.49,0,0,1-1.42-.28,3.32,3.32,0,0,1-1.1-.77l0.31-.52a0.42,0.42,0,0,1,.11-0.1,0.25,0.25,0,0,1,.14,0,0.45,0.45,0,0,1,.27.13,4.56,4.56,0,0,0,.38.28,2.9,2.9,0,0,0,.55.28,2.17,2.17,0,0,0,.79.13,2.09,2.09,0,0,0,.69-0.11,1.48,1.48,0,0,0,.51-0.3,1.31,1.31,0,0,0,.32-0.46,1.55,1.55,0,0,0,.11-0.6,1,1,0,0,0-.17-0.6,1.38,1.38,0,0,0-.43-0.39,3,3,0,0,0-.61-0.27l-0.71-.22a7,7,0,0,1-.71-0.27,2.32,2.32,0,0,1-.61-0.39,1.8,1.8,0,0,1-.43-0.6,2.2,2.2,0,0,1,.48-2.42,2.32,2.32,0,0,1,.78-0.49,2.85,2.85,0,0,1,1.06-.18,3.39,3.39,0,0,1,1.23.21,2.83,2.83,0,0,1,1,.62Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#00ca4e"
+            />
+            <path
+              d="M676.13,1394.15h-0.44a0.52,0.52,0,0,1-.24,0,0.25,0.25,0,0,1-.12-0.19l-0.11-.53c-0.15.13-.3,0.26-0.44,0.36a2.5,2.5,0,0,1-.45.27,2.29,2.29,0,0,1-.5.17,2.83,2.83,0,0,1-.59.06,2,2,0,0,1-.62-0.09,1.41,1.41,0,0,1-.5-0.28,1.32,1.32,0,0,1-.34-0.47,1.65,1.65,0,0,1-.13-0.67,1.25,1.25,0,0,1,.19-0.65,1.63,1.63,0,0,1,.6-0.55,3.86,3.86,0,0,1,1.08-.4,7.31,7.31,0,0,1,1.63-.16v-0.45a1.55,1.55,0,0,0-.28-1,1,1,0,0,0-.84-0.34,1.78,1.78,0,0,0-.61.09,2.25,2.25,0,0,0-.43.21l-0.31.21a0.45,0.45,0,0,1-.26.09,0.3,0.3,0,0,1-.18-0.05,0.41,0.41,0,0,1-.12-0.13l-0.18-.32a3.25,3.25,0,0,1,1-.68,3.13,3.13,0,0,1,1.21-.22,2.15,2.15,0,0,1,.85.16,1.73,1.73,0,0,1,.62.44,1.86,1.86,0,0,1,.38.68,2.82,2.82,0,0,1,.13.87v3.63Zm-2.59-.61a2,2,0,0,0,.48-0.05,1.92,1.92,0,0,0,.41-0.15,2.15,2.15,0,0,0,.37-0.24,3.26,3.26,0,0,0,.34-0.32v-1.17a6.66,6.66,0,0,0-1.17.09,3.24,3.24,0,0,0-.78.23,1.1,1.1,0,0,0-.44.33,0.72,0.72,0,0,0-.14.43,0.94,0.94,0,0,0,.07.39,0.74,0.74,0,0,0,.2.27,0.75,0.75,0,0,0,.29.15A1.31,1.31,0,0,0,673.54,1393.54Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#00ca4e"
+            />
+            <path
+              d="M677.87,1394.15v-4.83l-0.63-.07a0.49,0.49,0,0,1-.19-0.09A0.2,0.2,0,0,1,677,1389v-0.41h0.9V1388a2.52,2.52,0,0,1,.14-0.87,1.77,1.77,0,0,1,.39-0.64,1.66,1.66,0,0,1,.61-0.39,2.28,2.28,0,0,1,.81-0.13,2.14,2.14,0,0,1,.71.11l0,0.5a0.13,0.13,0,0,1-.09.13,1.05,1.05,0,0,1-.25,0H680a1.54,1.54,0,0,0-.47.07,0.89,0.89,0,0,0-.36.22,1,1,0,0,0-.23.4,2,2,0,0,0-.08.61v0.52h1.64v0.72h-1.61v4.84h-1Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#00ca4e"
+            />
+            <path
+              d="M683.67,1388.39a2.53,2.53,0,0,1,.94.17,2.11,2.11,0,0,1,.75.49,2.25,2.25,0,0,1,.49.8,3.08,3.08,0,0,1,.18,1.08,0.65,0.65,0,0,1-.05.31,0.21,0.21,0,0,1-.19.08H682a3.14,3.14,0,0,0,.15.94,1.9,1.9,0,0,0,.37.66,1.48,1.48,0,0,0,.56.4,1.92,1.92,0,0,0,.73.13,2.14,2.14,0,0,0,.65-0.09,3,3,0,0,0,.47-0.19l0.33-.19a0.44,0.44,0,0,1,.23-0.09,0.22,0.22,0,0,1,.19.1l0.28,0.36a1.91,1.91,0,0,1-.44.39,2.74,2.74,0,0,1-.55.27,3.44,3.44,0,0,1-.61.16,3.74,3.74,0,0,1-.62.05,2.91,2.91,0,0,1-1.08-.2,2.39,2.39,0,0,1-.86-0.58,2.68,2.68,0,0,1-.56-1,3.89,3.89,0,0,1-.2-1.3,3.32,3.32,0,0,1,.18-1.11,2.63,2.63,0,0,1,.52-0.89,2.4,2.4,0,0,1,.83-0.59A2.73,2.73,0,0,1,683.67,1388.39Zm0,0.73a1.53,1.53,0,0,0-1.14.42,2,2,0,0,0-.52,1.16h3.09a2,2,0,0,0-.09-0.64,1.43,1.43,0,0,0-.28-0.5,1.28,1.28,0,0,0-.45-0.33A1.53,1.53,0,0,0,683.69,1389.12Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#00ca4e"
+            />
+          </g>
+          <g ref={boomarkDropAbroadTextRef}>
+            <path
+              d="M642.09,1420.63h-0.84a0.36,0.36,0,0,1-.24-0.07,0.44,0.44,0,0,1-.13-0.18l-0.75-1.94h-3.6l-0.75,1.94a0.44,0.44,0,0,1-.13.18,0.36,0.36,0,0,1-.24.08h-0.84l3.21-8h1.1Zm-5.26-3h3l-1.26-3.27a6.1,6.1,0,0,1-.24-0.76l-0.12.42c0,0.13-.08.24-0.12,0.34Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fc7800"
+            />
+            <path
+              d="M643,1420.63v-8.26h1v3.4a2.9,2.9,0,0,1,.81-0.66,2.15,2.15,0,0,1,1-.25,2.1,2.1,0,0,1,.89.18,1.8,1.8,0,0,1,.68.55,2.67,2.67,0,0,1,.43.91,4.66,4.66,0,0,1,.15,1.25,3.91,3.91,0,0,1-.17,1.17,2.83,2.83,0,0,1-.49.94,2.24,2.24,0,0,1-1.8.85,1.89,1.89,0,0,1-.93-0.21,2.12,2.12,0,0,1-.67-0.59l0,0.52a0.24,0.24,0,0,1-.26.21H643Zm2.53-5a1.6,1.6,0,0,0-.85.22,2.46,2.46,0,0,0-.68.63v2.75a1.56,1.56,0,0,0,.6.52,1.72,1.72,0,0,0,.73.15,1.44,1.44,0,0,0,1.22-.57,2.65,2.65,0,0,0,.43-1.61,4,4,0,0,0-.1-1,1.87,1.87,0,0,0-.28-0.65,1.12,1.12,0,0,0-.45-0.37A1.52,1.52,0,0,0,645.51,1415.66Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fc7800"
+            />
+            <path
+              d="M649.21,1420.63V1415h0.57a0.32,0.32,0,0,1,.22.06,0.38,0.38,0,0,1,.08.21l0.07,0.89a2.59,2.59,0,0,1,.72-0.93,1.59,1.59,0,0,1,1-.33,1.55,1.55,0,0,1,.43.05,1.48,1.48,0,0,1,.35.15l-0.13.75a0.17,0.17,0,0,1-.17.14,0.89,0.89,0,0,1-.24-0.05,1.53,1.53,0,0,0-.45-0.05,1.28,1.28,0,0,0-.87.3,2.25,2.25,0,0,0-.59.88v3.62h-1Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fc7800"
+            />
+            <path
+              d="M656,1414.87a2.91,2.91,0,0,1,1.12.21,2.36,2.36,0,0,1,.85.59,2.6,2.6,0,0,1,.54.92,4,4,0,0,1,0,2.42,2.61,2.61,0,0,1-.54.92,2.34,2.34,0,0,1-.85.59,3.19,3.19,0,0,1-2.25,0,2.37,2.37,0,0,1-.86-0.59,2.62,2.62,0,0,1-.54-0.92,3.94,3.94,0,0,1,0-2.42,2.62,2.62,0,0,1,.54-0.92,2.39,2.39,0,0,1,.86-0.59A2.91,2.91,0,0,1,656,1414.87Zm0,5.07a1.46,1.46,0,0,0,1.26-.56,3.2,3.2,0,0,0,0-3.15,1.45,1.45,0,0,0-1.26-.57,1.75,1.75,0,0,0-.74.15,1.39,1.39,0,0,0-.52.42,1.86,1.86,0,0,0-.31.68,4,4,0,0,0,0,1.81,1.84,1.84,0,0,0,.31.67,1.39,1.39,0,0,0,.52.42A1.73,1.73,0,0,0,656,1419.93Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fc7800"
+            />
+            <path
+              d="M664.14,1420.63h-0.44a0.52,0.52,0,0,1-.24,0,0.25,0.25,0,0,1-.12-0.19l-0.11-.53c-0.15.13-.3,0.26-0.44,0.36a2.5,2.5,0,0,1-.45.27,2.29,2.29,0,0,1-.5.17,2.83,2.83,0,0,1-.59.06,2,2,0,0,1-.62-0.09,1.41,1.41,0,0,1-.5-0.28,1.32,1.32,0,0,1-.34-0.47,1.65,1.65,0,0,1-.13-0.67,1.25,1.25,0,0,1,.19-0.65,1.63,1.63,0,0,1,.6-0.55,3.86,3.86,0,0,1,1.08-.4,7.31,7.31,0,0,1,1.63-.16V1417a1.55,1.55,0,0,0-.28-1,1,1,0,0,0-.84-0.34,1.78,1.78,0,0,0-.61.09,2.25,2.25,0,0,0-.43.21l-0.31.21a0.45,0.45,0,0,1-.26.09,0.3,0.3,0,0,1-.18-0.05,0.41,0.41,0,0,1-.12-0.13l-0.18-.32a3.25,3.25,0,0,1,1-.68,3.13,3.13,0,0,1,1.21-.22,2.15,2.15,0,0,1,.85.16,1.73,1.73,0,0,1,.62.44,1.86,1.86,0,0,1,.38.68,2.82,2.82,0,0,1,.13.87v3.63Zm-2.59-.61A2,2,0,0,0,662,1420a1.92,1.92,0,0,0,.41-0.15,2.15,2.15,0,0,0,.37-0.24,3.26,3.26,0,0,0,.34-0.32v-1.17a6.66,6.66,0,0,0-1.17.09,3.24,3.24,0,0,0-.78.23,1.1,1.1,0,0,0-.44.33,0.72,0.72,0,0,0-.14.43,0.94,0.94,0,0,0,.07.39,0.74,0.74,0,0,0,.2.27,0.75,0.75,0,0,0,.29.15A1.31,1.31,0,0,0,661.55,1420Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fc7800"
+            />
+            <path
+              d="M669.65,1420.63a0.25,0.25,0,0,1-.27-0.21l-0.09-.69a3,3,0,0,1-.83.71,2.13,2.13,0,0,1-1.07.27,2.05,2.05,0,0,1-.89-0.19,1.84,1.84,0,0,1-.68-0.55,2.65,2.65,0,0,1-.43-0.91,4.69,4.69,0,0,1-.15-1.25,3.94,3.94,0,0,1,.17-1.17,2.85,2.85,0,0,1,.49-0.94,2.23,2.23,0,0,1,1.8-.85,2,2,0,0,1,.89.18,2.12,2.12,0,0,1,.66.5v-3.15h1v8.26h-0.59Zm-1.93-.73a1.61,1.61,0,0,0,.86-0.22,2.47,2.47,0,0,0,.67-0.63v-2.75a1.57,1.57,0,0,0-.6-0.52,1.74,1.74,0,0,0-.73-0.15,1.44,1.44,0,0,0-1.22.57,2.64,2.64,0,0,0-.43,1.61,4.11,4.11,0,0,0,.1,1,1.85,1.85,0,0,0,.28.65,1.09,1.09,0,0,0,.45.37A1.51,1.51,0,0,0,667.71,1419.9Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fc7800"
+            />
+          </g>
+          <g ref={boomarkDropAbroadText1Ref}>
+            <path
+              d="M677.93,1419.87h1.73v-5.48c0-.16,0-0.33,0-0.5l-1.44,1.23-0.11.06-0.11,0a0.31,0.31,0,0,1-.15,0,0.26,0.26,0,0,1-.1-0.09l-0.31-.43,2.39-2.07h0.81v7.29h1.58v0.76h-4.31v-0.76Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fc7800"
+            />
+            <path
+              d="M674.88,1417.11a8.79,8.79,0,0,0,.31,2.33,9.3,9.3,0,0,0,.89,2.16,0.47,0.47,0,0,1,0,.11,0.35,0.35,0,0,1,0,.09,0.2,0.2,0,0,1,0,.13,0.38,0.38,0,0,1-.1.09l-0.44.27a10.3,10.3,0,0,1-.71-1.28,8.58,8.58,0,0,1-.48-1.27,9,9,0,0,1-.27-1.29,10.57,10.57,0,0,1,0-2.66,8.85,8.85,0,0,1,.27-1.29,8.63,8.63,0,0,1,.48-1.27,10.57,10.57,0,0,1,.71-1.28l0.44,0.27a0.39,0.39,0,0,1,.1.09,0.21,0.21,0,0,1,0,.13,0.42,0.42,0,0,1-.06.19A8.92,8.92,0,0,0,674.88,1417.11Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fc7800"
+            />
+            <path
+              d="M684.79,1417.11a8.91,8.91,0,0,0-1.2-4.48,0.42,0.42,0,0,1-.06-0.19,0.2,0.2,0,0,1,0-.13,0.41,0.41,0,0,1,.1-0.09l0.44-.27a10.57,10.57,0,0,1,.71,1.28,8.74,8.74,0,0,1,.48,1.27,8.59,8.59,0,0,1,.27,1.29,10.57,10.57,0,0,1,0,2.66,8.72,8.72,0,0,1-.74,2.56,10.3,10.3,0,0,1-.71,1.28l-0.44-.27a0.39,0.39,0,0,1-.1-0.09,0.2,0.2,0,0,1,0-.13,0.39,0.39,0,0,1,0-.09,0.47,0.47,0,0,1,0-.11,9.34,9.34,0,0,0,.89-2.16A8.83,8.83,0,0,0,684.79,1417.11Z"
+              transform="translate(-156.61 -1117.92)"
+              fill="#fc7800"
+            />
+          </g>
         </g>
       </g>
     </svg>
