@@ -26,7 +26,7 @@ export const FilterJobsList = (props: IFilterJobsList) => {
       <StyledPaper>
         {filterStates &&
           Object.entries(filterStates).map(([category, filters]) => (
-            <FilterGroup>
+            <FilterGroup key={category}>
               <div>
                 <Typography color="white" sx={{ fontSize: "1.1rem" }}>
                   <b>{category}</b>
@@ -57,6 +57,7 @@ export const FilterJobsList = (props: IFilterJobsList) => {
                     }}
                     label={tag}
                     icon={getFilterChipIcon(state as FilterState)}
+                    key={tag}
                   />
                 ))}
               </ChipsWrapper>

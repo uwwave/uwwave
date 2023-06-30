@@ -40,18 +40,21 @@ const JobsListPage = () => {
           height={88}
         />
       ) : (
-        <SearchBarJobsList
-          onSearchUpdated={setChips}
-          setNumActiveChips={setNumActiveChips}
-          numActiveChips={numActiveChips}
-        />
+        <>
+          <SearchBarJobsList
+            onSearchUpdated={setChips}
+            setNumActiveChips={setNumActiveChips}
+            numActiveChips={numActiveChips}
+          />
+          <Spacer height={16} />
+          <FilterJobsList
+            filterStates={filterStates}
+            setFilterStates={setFilterStates}
+          />
+          <Spacer height={16} />
+        </>
       )}
-      <Spacer height={16} />
-      <FilterJobsList
-        filterStates={filterStates}
-        setFilterStates={setFilterStates}
-      />
-      <Spacer height={16} />
+
       <JobsDataGrid
         jobs={displayJobs}
         loading={isLoading}
