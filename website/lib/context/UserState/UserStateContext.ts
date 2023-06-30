@@ -12,7 +12,7 @@ export const UserStateContext = createContext<UserStateContextType | undefined>(
 export const useUserStateContext = () => {
   const userContext = useContext(UserStateContext);
   if (!userContext) {
-    throw new Error("UsetStaterovider not wrapped");
+    throw new Error("UserStateProvider not wrapped");
   }
   return userContext;
 };

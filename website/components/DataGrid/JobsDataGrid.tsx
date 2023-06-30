@@ -21,7 +21,7 @@ import styled from "styled-components";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import StarIcon from "@mui/icons-material/Star";
 import { DeadlineCell } from "./components/DeadlineCell";
-import { useJobsDataGrid } from "src/lib/hooks/UseJobsDataGrid";
+import { useJobsDataGrid } from "src/lib/hooks/useJobsDataGrid";
 import { LogoLoader } from "src/components/Loader/LogoLoader";
 import VideoCameraFrontIcon from "@mui/icons-material/VideoCameraFront";
 interface IJobsDataGrid {

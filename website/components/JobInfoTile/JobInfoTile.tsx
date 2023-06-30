@@ -15,7 +15,7 @@ export const JobInfoTile = (props: IJobInfoTile) => {
   const valueString = useTooltip ? `${value.substring(0, 18)}...` : value;
   return (
     <div>
-      <TitleWrapper alighLeft={alignCenter}>
+      <TitleWrapper alignLeft={alignCenter}>
         {icon}
         <Typography
           color="gray"
@@ -46,12 +46,12 @@ export const JobInfoTile = (props: IJobInfoTile) => {
 };
 
 interface ITitleWrapper {
-  alighLeft?: boolean;
+  alignLeft?: boolean;
 }
 const TitleWrapper = styled.div<ITitleWrapper>`
   display: flex;
   align-items: center;
-  justify-content: ${props => (props.alighLeft ? "center" : "start")};
+  justify-content: ${props => (props.alignLeft ? "center" : "start")};
   gap: 4px;
   margin-left: -4px;
 

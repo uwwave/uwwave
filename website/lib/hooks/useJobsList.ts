@@ -14,10 +14,26 @@ import { getSearchTypeField, SearchTypes } from "src/lib/search/Search";
 import { useJobTagsContext } from "src/lib/context/jobTags/JobTagsContext";
 import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
 import { getEarliestDeadline } from "src/lib/dates/dates";
+import {
+  FilterState,
+  FilterStates,
+  FormulaNode,
+  getFormula,
+  isJobMatched,
+} from "../filter/jobsFilterEval";
+import {
+  AppDocFilterTags,
+  DurationFilterTags,
+  JobFilters,
+  SpecialReqFilterTags,
+} from "../extension/jobFilters";
 
 export const useJobsList = () => {
-  const { coopJobsListPageRows: jobs, isDataReady } =
-    useExtensionsDataContext();
+  const {
+    coopJobsListPageRows: jobs,
+    isDataReady,
+    coopJobsFilterTags,
+  } = useExtensionsDataContext();
   // Search and job states
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const [searchIndex, setSearchIndex] = useState(lunr(() => {}));
@@ -29,6 +45,27 @@ export const useJobsList = () => {
   const [jobKeywords, setJobKeywords] = useState<{ [key: string]: string[] }>(
     {}
   );
+  const [filterStates, setFilterStates] = useState<FilterStates>({
+    [JobFilters.durationFilter]: {
+      [DurationFilterTags.fourMonth]: FilterState.none,
+      [DurationFilterTags.eightMonthPref]: FilterState.none,
+      [DurationFilterTags.eightMonthReq]: FilterState.none,
+    },
+    [JobFilters.appDocFilter]: {
+      [AppDocFilterTags.coverLetter]: FilterState.none,
+      [AppDocFilterTags.other]: FilterState.none,
+    },
+    [JobFilters.specialReqFilter]: {
+      [SpecialReqFilterTags.swpp]: FilterState.none,
+      [SpecialReqFilterTags.fullyVaccinated]: FilterState.none,
+      [SpecialReqFilterTags.usaWorkEligibility]: FilterState.none,
+      [SpecialReqFilterTags.remoteFromCanada]: FilterState.none,
+      [SpecialReqFilterTags.securityClearance]: FilterState.none,
+      [SpecialReqFilterTags.driversLicense]: FilterState.none,
+      [SpecialReqFilterTags.externalApplication]: FilterState.none,
+    },
+  });
+  const [filterFormula, setFilterFormula] = useState<FormulaNode>();
   const [numActiveChips, setNumActiveChips] = useState<number>(0);
   const { isLoading: isJobTagsLoading } = useJobTagsContext();
   const [companiesData, setCompaniesData] =
@@ -106,7 +143,12 @@ export const useJobsList = () => {
     );
   }, [jobsList]);
 
-  // Filter out jobs based on search
+  // Build Filter Formula
+  useEffect(() => {
+    setFilterFormula(getFormula(filterStates));
+  }, [filterStates]);
+
+  // Filter out jobs based on search and filtering
   useEffect(() => {
     let queryString = "";
     searchChips.forEach(chip => {
@@ -134,9 +176,14 @@ export const useJobsList = () => {
         return jobsList[searchResult.ref];
       });
     }
+    if (filterFormula !== undefined) {
+      newJobs = newJobs.filter(job =>
+        isJobMatched(filterFormula, coopJobsFilterTags[job.id])
+      );
+    }
 
     setDisplayJobs(newJobs);
-  }, [jobsList, searchIndex, searchChips, numActiveChips]);
+  }, [jobsList, searchIndex, searchChips, numActiveChips, filterFormula]);
 
   const earliestDeadline = useMemo(() => {
     return getEarliestDeadline(jobs);
@@ -150,6 +197,7 @@ export const useJobsList = () => {
     !isDataReady ||
     isJobTagsLoading ||
     Object.keys(differentCountries).length === 0;
+
   return {
     differentCountries,
     earliestDeadline,
@@ -161,5 +209,7 @@ export const useJobsList = () => {
     setNumActiveChips,
     numActiveChips,
     logos: companiesData,
+    filterStates,
+    setFilterStates,
   };
 };

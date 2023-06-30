@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import { JobFilterTags } from "src/lib/extension/jobFilters";
 import { JobsPageRowData } from "src/lib/jobsList/jobsList";
 
 export interface ExtensionDataContextType {
@@ -9,6 +10,7 @@ export interface ExtensionDataContextType {
   dataAgeMessage: string;
   isStale: boolean;
   isLoading: boolean;
+  coopJobsFilterTags: Record<number, JobFilterTags>;
 }
 
 export const ExtensionDataContext = createContext<

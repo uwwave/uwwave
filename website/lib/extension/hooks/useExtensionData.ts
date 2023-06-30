@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import {
   buildCoopJobsListFromExtensionData,
   buildFulltimeJobsListFromExtensionData,
+  buildCoopJobsFilterTagsFromExtensionData,
 } from "src/lib/jobsList/jobsList";
 import { sendMessageOnLoadAndSetupListenerHook } from "src/lib/extension/extensionService";
 import { ListenerId } from "src/lib/extension/listenerId";
@@ -19,6 +20,11 @@ export const useExtensionData = () => {
   );
   const fulltimeJobsListPageRows = useMemo(
     () => buildFulltimeJobsListFromExtensionData(extensionData),
+    [extensionData]
+  );
+
+  const coopJobsFilterTags = useMemo(
+    () => buildCoopJobsFilterTagsFromExtensionData(extensionData),
     [extensionData]
   );
 
@@ -60,5 +66,6 @@ export const useExtensionData = () => {
     fulltimeJobsListPageRows,
     extensionData,
     fetchExtensionData,
+    coopJobsFilterTags,
   };
 };

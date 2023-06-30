@@ -1,12 +1,21 @@
 import { JOB_DATA_IDENTIFIERS } from "src/lib/extension/shared/job";
 import { JobBoard } from "src/lib/extension/shared/jobBoard";
 import {
+  AppInfoFields,
   JobPostingCoop,
   JobPostingFulltime,
   JobInfoFieldsCoop,
   JobInfoFieldsFulltime,
   PostingSections,
 } from "src/lib/extension/jobKeys";
+import {
+  JobFilterTags,
+  durationToFilterTags,
+  appDocsTextToFilterTag,
+  specialReqsTextToFilterTag,
+  lookupFilterTags,
+  JobFilters, SpecialReqFilterTags,
+} from "src/lib/extension/jobFilters";
 
 export interface JobsPageRowData {
   id: number;
@@ -202,9 +211,8 @@ export function buildCoopJobWithJobID(
     job.province = jobPostingInformation[JobInfoFieldsCoop.jobProvince];
     job.country = jobPostingInformation[JobInfoFieldsCoop.jobCountry];
     job.location = `${job.country}, ${job.city}`;
-    job.duration = jobPostingInformation[JobInfoFieldsCoop.workTermDuration]
-      .replace(" work term", "")
-      .replace(" consecutive", "");
+    const durationTags = durationToFilterTags(jobPostingInformation[JobInfoFieldsCoop.workTermDuration])
+    job.duration = durationTags[0]
     job.jobSummary = jobPostingInformation[JobInfoFieldsCoop.jobSummary];
     job.jobResponsibilities =
       jobPostingInformation[JobInfoFieldsCoop.jobResponsibilities];
@@ -220,6 +228,85 @@ export function buildCoopJobWithJobID(
   job.applicationInformation =
     jobInfo.pageData[PostingSections.applicationInformation];
   return job;
+}
+
+export function buildCoopJobsFilterTagsFromExtensionData(
+  extensionData: Record<string, any>
+) {
+  const jobListFilterTags: Record<number, JobFilterTags> = {};
+
+  Object.entries(extensionData).forEach(pair => {
+    const key = pair[0];
+    if (key.startsWith(JOB_DATA_IDENTIFIERS[JobBoard.coop])) {
+      const job: JobPostingCoop = pair[1];
+
+      jobListFilterTags[job.jobId] = {
+        [JobFilters.appDocFilter]: [],
+        [JobFilters.durationFilter]: [],
+        [JobFilters.specialReqFilter]: [],
+      };
+
+      const jobPostingInformation =
+        job.pageData[PostingSections.jobPostingInformation];
+
+      const applicationInformation =
+        job.pageData[PostingSections.applicationInformation];
+
+      if (applicationInformation !== undefined) {
+        const appDocsText =
+          applicationInformation[AppInfoFields.documentsRequired];
+        if (appDocsText !== undefined) {
+          jobListFilterTags[job.jobId][JobFilters.appDocFilter] =
+            lookupFilterTags(appDocsText, appDocsTextToFilterTag);
+        }
+
+        const additionalText =
+          applicationInformation[AppInfoFields.additionalInfo];
+        if (additionalText !== undefined) {
+          jobListFilterTags[job.jobId][JobFilters.specialReqFilter] =
+            jobListFilterTags[job.jobId][JobFilters.specialReqFilter].concat(
+              lookupFilterTags(additionalText, specialReqsTextToFilterTag)
+            );
+
+          // check for external application
+          if (
+            (additionalText.includes("https://") ||
+              additionalText.includes("http://")) &&
+            additionalText.toLowerCase().includes("apply")
+          ) {
+            jobListFilterTags[job.jobId][JobFilters.specialReqFilter].push(
+              SpecialReqFilterTags.externalApplication
+            );
+          }
+        }
+      }
+
+      if (jobPostingInformation !== undefined) {
+        const durationText =
+          jobPostingInformation[JobInfoFieldsCoop.workTermDuration];
+        if (durationText !== undefined) {
+          jobListFilterTags[job.jobId][JobFilters.durationFilter] =
+            durationToFilterTags(durationText);
+        }
+
+        const specialReqsText =
+          jobPostingInformation[JobInfoFieldsCoop.specialJobRequirements];
+        if (specialReqsText !== undefined) {
+          jobListFilterTags[job.jobId][JobFilters.specialReqFilter] =
+            jobListFilterTags[job.jobId][JobFilters.specialReqFilter].concat(
+              lookupFilterTags(specialReqsText, specialReqsTextToFilterTag)
+            );
+        }
+      }
+
+      // dedupe special_reqs_tags
+      jobListFilterTags[job.jobId][JobFilters.specialReqFilter] = Array.from(
+        new Set(jobListFilterTags[job.jobId][JobFilters.specialReqFilter])
+      );
+    }
+  });
+
+  return jobListFilterTags;
 }
 
 export const getDifferentCountries = (jobs: JobsPageRowData[]) => {

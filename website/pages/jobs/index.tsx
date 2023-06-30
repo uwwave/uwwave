@@ -8,6 +8,7 @@ import { JobsListPageHeader } from "src/components/Headers/variants/JobsListPage
 import Skeleton from "@mui/material/Skeleton";
 import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
 import { Typography } from "@mui/material";
+import { FilterJobsList } from "src/components/Filters/FiltersJobsList";
 
 const JobsListPage = () => {
   useEffect(() => {
@@ -25,6 +26,8 @@ const JobsListPage = () => {
     earliestDeadline,
     differentCountries,
     logos,
+    filterStates,
+    setFilterStates,
   } = useJobsList();
   const isLoading = isLoadingState || !logos;
   const renderBody = () => (
@@ -37,13 +40,21 @@ const JobsListPage = () => {
           height={88}
         />
       ) : (
-        <SearchBarJobsList
-          onSearchUpdated={setChips}
-          setNumActiveChips={setNumActiveChips}
-          numActiveChips={numActiveChips}
-        />
+        <>
+          <SearchBarJobsList
+            onSearchUpdated={setChips}
+            setNumActiveChips={setNumActiveChips}
+            numActiveChips={numActiveChips}
+          />
+          <Spacer height={16} />
+          <FilterJobsList
+            filterStates={filterStates}
+            setFilterStates={setFilterStates}
+          />
+          <Spacer height={16} />
+        </>
       )}
-      <Spacer height={16} />
+
       <JobsDataGrid
         jobs={displayJobs}
         loading={isLoading}
