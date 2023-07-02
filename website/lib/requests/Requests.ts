@@ -11,6 +11,16 @@ export interface IJobKeyword {
   keywords: string[];
 }
 
+export interface IJobRoles {
+  jobID: string;
+  roles: string[];
+}
+
+export interface IJobTechnologies {
+  jobID: string;
+  technologies: string[];
+}
+
 export interface ICompanyData {
   logo?: string;
   salaryScore?: number | null;
