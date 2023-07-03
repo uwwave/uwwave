@@ -43,16 +43,17 @@ const OptionalExternalLink = (props: IOptionalExternalLink) => {
   const { text, link, onOpenSubmitDomain, companyPageURL } = props;
   const router = useRouter();
   if (!link) {
+    console.log(companyPageURL);
     return (
       <LinkWrapper
         onClick={() => {
-          companyPageURL ? router.push(companyPageURL) : onOpenSubmitDomain();
+          onOpenSubmitDomain();
         }}
       >
         <PulseText>{text}</PulseText>
         <StyledIconButton
           onClick={() => {
-            companyPageURL ? onOpenSubmitDomain() : null;
+            onOpenSubmitDomain();
           }}
         >
           <EditIcon />

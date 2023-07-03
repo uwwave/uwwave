@@ -36,6 +36,7 @@ import { Page } from "src/lib/types/page";
 import { ShowMoreButton } from "src/components/Buttons/ShowMoreButton";
 import { InterviewsDataGrid } from "src/components/DataGrid/InterviewsDataGrid";
 import { salaryDisplay, starsDisplay } from "src/lib/reviews/summary";
+import { JobsDataGrid } from "src/components/DataGrid/JobsDataGrid";
 
 const SpecificJobPage = () => {
   const router = useRouter();
@@ -68,6 +69,8 @@ const SpecificJobPage = () => {
     fetchInterviews,
     reviewsSummary,
     myInterviewsRows,
+    recommendedDisplayJobs,
+    recommendedJobLogos,
   } = useJobPage(jobID);
   const [submitDomainModal, setSubmitDomainModal] = useState(false);
   useEffect(() => {
@@ -356,6 +359,15 @@ const SpecificJobPage = () => {
     }
     return <CompanyTab company={company} />;
   };
+
+  const renderJobRecommendations = () => (
+    <JobsDataGrid
+      jobs={recommendedDisplayJobs}
+      companyLogos={recommendedJobLogos}
+      jobKeywords={{}}
+    />
+  );
+
   const renderJobBody = () => {
     const isLoggedIn = !!user;
     const detailsTab = { label: "Details" };
@@ -378,12 +390,20 @@ const SpecificJobPage = () => {
           ? `My Reviews (${myReviewsRows.length + myInterviewsRows.length})`
           : `My Reviews`,
     };
+
+    const jobRecommendationsTab = recommendedDisplayJobs.length
+      ? {
+          label: `Similar Jobs (${recommendedDisplayJobs.length})`,
+        }
+      : null;
+
     const loggedInTabs = [
       detailsTab,
       companyInfoTab,
       reviewsTab,
       interviewsTab,
       myReviewsTab,
+      ...(jobRecommendationsTab ? [jobRecommendationsTab] : []),
     ];
 
     const loggedOutTabs = [
@@ -391,6 +411,7 @@ const SpecificJobPage = () => {
       companyInfoTab,
       reviewsTab,
       interviewsTab,
+      ...(jobRecommendationsTab ? [jobRecommendationsTab] : []),
     ];
 
     const tabs = isLoggedIn ? loggedInTabs : loggedOutTabs;
@@ -411,6 +432,9 @@ const SpecificJobPage = () => {
         {tabSelected === 2 ? renderReviews() : null}
         {tabSelected === 3 ? renderInterviews() : null}
         {tabSelected === 4 && isLoggedIn ? renderMyReviews() : null}
+        {(tabSelected === 5 && isLoggedIn) || (tabSelected === 4 && !isLoggedIn)
+          ? renderJobRecommendations()
+          : null}
       </>
     );
   };

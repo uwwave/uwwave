@@ -30,7 +30,7 @@ export const CompanyTab = ({ company }: ICompanyTab) => {
         <Spacer height={16} />
         <CompanyJobsDataGrid
           companyName={company.companyName}
-          companyLogo={company.logo ?? "/logo-empty"}
+          companyLogo={company.logo ? company.logo : "/logo-empty.png"}
         />
       </JobPagePaper>
     </>
