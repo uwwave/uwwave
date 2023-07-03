@@ -8,6 +8,7 @@ import { useExtensionsDataContext } from "src/lib/context/ExtensionData/Extensio
 import { useCompanyReviewsDataGrid } from "src/lib/hooks/useCompanyReviewsDataGrid";
 import { useInterviewReviewsDataGrid } from "./useInterviewReviewsDataGrid";
 import { useCompanyReviewsSummary } from "./useCompanyReviewsSummary";
+import { useJobRecommendationsList } from "./useJobRecommendationsList";
 
 type JobInfo = {
   title: string;
@@ -51,6 +52,8 @@ export const useJobPage = (jobID?: string) => {
   } = useInterviewReviewsDataGrid(company?.id ?? "");
   const { summary: reviewsSummary, isLoading: isReviewsSummaryLoading } =
     useCompanyReviewsSummary(company?.id ?? "");
+  const { displayJobs: recommendedDisplayJobs, logos: recommendedJobLogos } =
+    useJobRecommendationsList(jobID ?? "");
   const jobInfo: JobInfo[] = [
     {
       title: "Job Summary",
@@ -151,5 +154,7 @@ export const useJobPage = (jobID?: string) => {
     fetchInterviews,
     myInterviewsRows,
     reviewsSummary,
+    recommendedDisplayJobs,
+    recommendedJobLogos,
   };
 };

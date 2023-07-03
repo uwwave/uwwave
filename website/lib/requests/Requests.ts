@@ -16,6 +16,11 @@ export interface IJobRoles {
   roles: string[];
 }
 
+export interface IJobRecommendations {
+  jobID: string;
+  jobRecommendations: string[];
+}
+
 export interface IJobTechnologies {
   jobID: string;
   technologies: string[];
@@ -252,5 +257,11 @@ export class Requests {
 
   static patchUsername = async (username: string): Promise<undefined> => {
     return axios.patch(`/api/account/username`, { username }).then(x => x.data);
+  };
+
+  static getJobRecommendations = async (jobID: string): Promise<string[]> => {
+    return axios
+      .get(`/api/jobRecommendations/fetch?jobID=${jobID}`)
+      .then(x => x.data);
   };
 }

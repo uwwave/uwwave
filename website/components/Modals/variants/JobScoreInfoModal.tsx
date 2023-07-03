@@ -72,7 +72,9 @@ export const JobScoreInfoModal = (props: IUploadDomainModal) => {
       <Spacer height={16} />
       <Typography color="white">
         We compare salaries from all other companies and assign a percentile.
-        The salary range is the minimum and maximum hourly rate in CAD
+        The salary range is the minimum and maximum hourly rate in CAD. Keep in
+        mind that the job listing may have more accurate salary specifics as
+        this metric is based on past user submissions.
       </Typography>
       <Spacer height={16} />
       <Header>
