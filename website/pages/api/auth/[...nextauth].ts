@@ -119,6 +119,7 @@ export const nextAuthOptions: AuthOptions = {
         token.user = {
           id: userData?.id,
           username: userData?.username,
+          isAdmin: userData?.isAdmin,
         };
       }
       return token;

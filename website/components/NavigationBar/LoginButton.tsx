@@ -94,6 +94,16 @@ export const LoginButton = () => {
       >
         <ListItemText>Settings</ListItemText>
       </MenuItem>
+      {user?.isAdmin ? (
+        <MenuItem
+          onClick={() => {
+            router.push("/admin");
+          }}
+        >
+          <AdminListItemText>Admin Dashboard</AdminListItemText>
+        </MenuItem>
+      ) : null}
+
       <Spacer height={64} />
       <MenuItem
         onClick={() => {
@@ -147,5 +157,11 @@ const ProfileImage = styled.div<IProfileImage>`
 const StyledButtonBase = styled(ButtonBase)`
   && {
     border-radius: 100%;
+  }
+`;
+
+const AdminListItemText = styled(ListItemText)`
+  && {
+    color: red;
   }
 `;

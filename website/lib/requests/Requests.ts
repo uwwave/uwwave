@@ -26,6 +26,13 @@ export interface IJobTechnologies {
   technologies: string[];
 }
 
+export interface IMetricGoals {
+  accountsCreated?: number;
+  extensionInstallations?: number;
+  startingAccountsCreated?: number;
+  startingExtensionInstallations?: number;
+}
+
 export interface ICompanyData {
   logo?: string;
   salaryScore?: number | null;
@@ -263,5 +270,17 @@ export class Requests {
     return axios
       .get(`/api/jobRecommendations/fetch?jobID=${jobID}`)
       .then(x => x.data);
+  };
+
+  static getUserAccountsCreated = async (): Promise<number> => {
+    return axios.get(`/api/admin/metrics/accountsCreated`).then(x => x.data);
+  };
+
+  static getExtensionInstalls = async (): Promise<number> => {
+    return axios.get(`/api/admin/metrics/extensionInstalls`).then(x => x.data);
+  };
+
+  static getMetricGoals = async (): Promise<IMetricGoals> => {
+    return axios.get(`/api/admin/metrics/goals`).then(x => x.data);
   };
 }
