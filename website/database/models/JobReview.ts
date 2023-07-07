@@ -10,7 +10,9 @@ export interface IJobReview {
   company: ICompanyClearbitData;
   user: IUserData;
   id: string;
-  rating: number;
+  mentorshipRating: number;
+  workLifeRating: number;
+  meaningfulRating: number;
   salary: number;
   verified: boolean;
   anonymous: boolean;
@@ -37,7 +39,13 @@ const schema: Schema = new mongoose.Schema({
   review: {
     type: String,
   },
-  rating: {
+  mentorshipRating: {
+    type: Number,
+  },
+  workLifeRating: {
+    type: Number,
+  },
+  meaningfulRating: {
     type: Number,
   },
   salary: {

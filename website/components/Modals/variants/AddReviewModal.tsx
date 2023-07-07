@@ -96,6 +96,12 @@ export const AddReviewModal = ({
     nValidResources,
     coopNumber,
     setCoopNumber,
+    meaningfulStars,
+    setMeaninfgulStars,
+    workLifeStars,
+    setWorkLifeStars,
+    mentorshipStars,
+    setMentorshipStars,
   } = useAddReviewModal(
     close,
     afterSubmit,
@@ -308,16 +314,38 @@ export const AddReviewModal = ({
   );
 
   const renderJobStarsInput = () => (
-    <InputRow>
-      <InputLabel>Rating</InputLabel>
-      <StarsInput
-        value={stars}
-        onValue={data => {
-          setStars(data);
-        }}
-        color={Color.rating}
-      />
-    </InputRow>
+    <>
+      <InputRow>
+        <InputLabel>Mentorship</InputLabel>
+        <StarsInput
+          value={mentorshipStars}
+          onValue={data => {
+            setMentorshipStars(data);
+          }}
+          color={Color.rating}
+        />
+      </InputRow>
+      <InputRow>
+        <InputLabel>Work-Life Balance</InputLabel>
+        <StarsInput
+          value={workLifeStars}
+          onValue={data => {
+            setWorkLifeStars(data);
+          }}
+          color={Color.rating}
+        />
+      </InputRow>
+      <InputRow>
+        <InputLabel>Meaningful Work</InputLabel>
+        <StarsInput
+          value={meaningfulStars}
+          onValue={data => {
+            setMeaninfgulStars(data);
+          }}
+          color={Color.rating}
+        />
+      </InputRow>
+    </>
   );
 
   const renderConfirmDelete = () => {
@@ -357,12 +385,12 @@ export const AddReviewModal = ({
     <>
       {renderCompanyAndRoleTitle()}
       <Spacer height={24} />
-      {renderJobStarsInput()}
-      <Spacer height={8} />
       {renderCoopNumberInput()}
       <Spacer height={8} />
       {renderSalaryInput()}
-      <Spacer height={8} />
+      <Spacer height={16} />
+      {renderJobStarsInput()}
+      <Spacer height={32} />
       {renderReviewTextField()}
       {renderIsAnonymousInput()}
       {renderErrorMessage()}

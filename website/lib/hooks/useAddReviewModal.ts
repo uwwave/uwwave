@@ -66,9 +66,18 @@ export const useAddReviewModal = (
     reviewProp?.role ?? interviewProp?.role
   );
   const [stars, setStars] = useState<number>(
-    (reviewProp?.rating ?? interviewProp?.difficulty ?? 60) / 20
+    (interviewProp?.difficulty ?? 60) / 20
   );
-  const [salary, setSalary] = useState<number>(reviewProp?.salary ?? 0);
+  const [mentorshipStars, setMentorshipStars] = useState<number>(
+    (reviewProp?.mentorshipRating ?? interviewProp?.difficulty ?? 60) / 20
+  );
+  const [workLifeStars, setWorkLifeStars] = useState<number>(
+    (reviewProp?.workLifeRating ?? interviewProp?.difficulty ?? 60) / 20
+  );
+  const [meaningfulStars, setMeaninfgulStars] = useState<number>(
+    (reviewProp?.meaningfulRating ?? interviewProp?.difficulty ?? 60) / 20
+  );
+  const [salary, setSalary] = useState<number>(reviewProp?.salary ?? 14);
   const [review, setReview] = useState<string>(
     reviewProp?.review ?? interviewProp?.review ?? ""
   );
@@ -175,7 +184,9 @@ export const useAddReviewModal = (
         await Requests.patchJobReview(reviewProp.id, {
           role,
           company,
-          rating: stars,
+          mentorshipRating: mentorshipStars,
+          workLifeRating: workLifeStars,
+          meaningfulRating: meaningfulStars,
           verified: false,
           anonymous: isAnonymous,
           salary,
@@ -186,7 +197,9 @@ export const useAddReviewModal = (
         await Requests.postJobReview({
           role,
           company,
-          rating: stars,
+          mentorshipRating: mentorshipStars,
+          workLifeRating: workLifeStars,
+          meaningfulRating: meaningfulStars,
           verified: false,
           anonymous: isAnonymous,
           salary,
@@ -385,6 +398,12 @@ export const useAddReviewModal = (
     onSubmitJobReview,
     stars,
     setStars,
+    meaningfulStars,
+    setMeaninfgulStars,
+    workLifeStars,
+    setWorkLifeStars,
+    mentorshipStars,
+    setMentorshipStars,
     salary,
     setSalary,
     salaryError,

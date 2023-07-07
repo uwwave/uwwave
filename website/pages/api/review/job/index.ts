@@ -62,14 +62,22 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
     role,
     company,
-    rating,
     verified,
     anonymous,
     salary,
     review,
     coopNumber,
+    mentorshipRating,
+    workLifeRating,
+    meaningfulRating,
   } = req.body;
-  if (!role || !company || !rating) {
+  if (
+    !role ||
+    !company ||
+    !mentorshipRating ||
+    !workLifeRating ||
+    !meaningfulRating
+  ) {
     throw "Missing required information";
   }
   if (salary <= 0) {
@@ -85,7 +93,9 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     role: role.id,
     company: company.id,
     user: uid,
-    rating: rating * 20,
+    mentorshipRating: mentorshipRating * 20,
+    workLifeRating: workLifeRating * 20,
+    meaningfulRating: meaningfulRating * 20,
     verified,
     anonymous,
     salary,
@@ -113,14 +123,23 @@ const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
     id,
     role,
     company,
-    rating,
+    mentorshipRating,
+    workLifeRating,
+    meaningfulRating,
     verified,
     anonymous,
     salary,
     review,
     coopNumber,
   } = req.body;
-  if (!id || !role || !company || !rating) {
+  if (
+    !id ||
+    !role ||
+    !company ||
+    !mentorshipRating ||
+    !workLifeRating ||
+    !meaningfulRating
+  ) {
     throw "Missing required information";
   }
   if (salary <= 0) {
@@ -138,7 +157,9 @@ const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
       role: role.id,
       company: company.id,
       user: uid,
-      rating: rating * 20,
+      mentorshipRating: mentorshipRating * 20,
+      workLifeRating: workLifeRating * 20,
+      meaningfulRating: meaningfulRating * 20,
       verified,
       anonymous,
       salary,

@@ -50,7 +50,11 @@ export const getMetrics = async (): Promise<IMetrics> => {
     {
       $group: {
         _id: "$companyDetails",
-        ratingAverage: { $avg: "$rating" },
+        ratingAverage: {
+          $avg: {
+            $avg: ["$mentorshipRating", "$workLifeRating", "$meaningfulRating"],
+          },
+        },
         salaries: { $push: "$salary" },
       },
     },

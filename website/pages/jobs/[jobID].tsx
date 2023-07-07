@@ -133,7 +133,7 @@ const SpecificJobPage = () => {
           )}
           interview={starsDisplay(reviewsSummary?.interviewAverage)}
           ratingVal={reviewsSummary?.ratingAverage ?? null}
-          salaryVal={reviewsSummary?.ratingAverage ?? null}
+          salaryVal={reviewsSummary?.salaryPercentile ?? null}
           interviewVal={reviewsSummary?.interviewAverage ?? null}
         />
       </CompanyHeaderWrapper>
