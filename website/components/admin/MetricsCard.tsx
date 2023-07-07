@@ -6,18 +6,21 @@ import LinearProgress, {
 import Typography from "@mui/material/Typography";
 import styled from "styled-components";
 import { Spacer } from "src/components/Spacer/Spacer";
+import Tooltip from "@mui/material/Tooltip";
 
 interface IMetricsCard {
   title: string;
   value: number;
   goal?: number;
   startingValue?: number;
+  description?: string;
 }
 export const MetricsCard = ({
   title,
   value,
   goal,
   startingValue,
+  description,
 }: IMetricsCard) => {
   const renderGoal = () => {
     if (!goal) {
@@ -49,13 +52,34 @@ export const MetricsCard = ({
       </>
     );
   };
+
+  const renderValue = () => {
+    if (!description) {
+      return (
+        <Typography variant="h2" align="center">
+          <b>{value}</b>
+        </Typography>
+      );
+    }
+
+    return (
+      <Tooltip
+        title={description ? <Typography>{description}</Typography> : undefined}
+        arrow
+      >
+        <HoverTypography variant="h2" align="center">
+          <b>{value}</b>
+        </HoverTypography>
+      </Tooltip>
+    );
+  };
   return (
     <Card variant="outlined">
       <CardContent>
         <Typography variant="h5">{title}</Typography>
-        <Typography variant="h2" align="center">
-          <b>{value}</b>
-        </Typography>
+
+        {renderValue()}
+
         <Spacer height={16} />
         {renderGoal()}
       </CardContent>
@@ -100,4 +124,10 @@ const StyledTypography = styled(Typography)<IStyledTypography>`
 const GoalWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const HoverTypography = styled(Typography)`
+  && {
+    cursor: pointer;
+  }
 `;

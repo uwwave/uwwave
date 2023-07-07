@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "src/pages/api/auth/[...nextauth]";
-import chromium from "chrome-aws-lambda";
+import { BetaAnalyticsDataClient } from "@google-analytics/data";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -26,30 +26,25 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!user.isAdmin) {
     throw "Must be signed in admin";
   }
-
-  const browser = await chromium.puppeteer.launch({
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath,
-    headless: chromium.headless,
-    ignoreHTTPSErrors: true,
+  const analyticsDataClient = new BetaAnalyticsDataClient({
+    credentials: {
+      client_email: process.env.FIREBASE_CLIENT_EMAIL,
+      private_key: process.env.FIREBASE_PRIVATE_KEY,
+    },
+    projectId: process.env.FIREBASE_PROJECT_ID,
   });
-  const page = await browser.newPage();
-
-  // Navigate to the extension page
-  await page.goto(
-    "https://chrome.google.com/webstore/detail/uw-wave/bjpmedhmknbhefgbakephgbifiiceajm"
-  );
-
-  // Wait for the installation count element to appear
-  await page.waitForSelector(".e-f-ih");
-
-  // Get the installation count value
-  const installationCount = await page.$eval(".e-f-ih", (element: any) => {
-    const countText = element.textContent?.replace(/[^\d]/g, "");
-    return countText ? parseInt(countText, 10) : 0;
+  const [response] = await analyticsDataClient.runReport({
+    property: `properties/${process.env.GA4_PROPERTY_ID}`,
+    dimensions: [{ name: "fullPageUrl" }],
+    metrics: [{ name: "screenPageViewsPerSession" }],
+    dateRanges: [{ startDate: "365daysAgo", endDate: "yesterday" }],
+    dimensionFilter: {
+      filter: {
+        fieldName: "fullPageUrl",
+        stringFilter: { matchType: "ENDS_WITH", value: "setup?step=2" },
+      },
+    },
+    metricAggregations: [1],
   });
-
-  await browser.close();
-  res.send(installationCount);
+  res.send(response?.totals?.[0].metricValues?.[0].value ?? 0);
 };

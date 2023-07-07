@@ -8,9 +8,8 @@ import {
   PrimaryButtonWithClientLink,
 } from "src/components/Buttons/PrimaryButton";
 import { BackgroundColor } from "src/styles/color";
-import { LocalStorageMetadataKeys } from "src/lib/extension/shared/userProfile";
-import { useExtensionsDataContext } from "src/lib/context/ExtensionData/ExtensionDataContext";
 import { PageWrapper } from "src/components/PageWrapper/PageWrapper";
+import { useSetupPage } from "src/lib/hooks/useSetupPage";
 
 const Step2 = () => {
   return (
@@ -75,14 +74,7 @@ const Step4 = () => {
 };
 
 const Setup = () => {
-  const { extensionData, isDataReady } = useExtensionsDataContext();
-  let step = 1;
-  if (isDataReady) {
-    step = 2;
-  }
-  if (extensionData && extensionData[LocalStorageMetadataKeys.SCRAPE_AT]) {
-    step = 3;
-  }
+  const { step } = useSetupPage();
   const steps = [
     "Discover Wave",
     "Download Browser Extension",

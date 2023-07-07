@@ -24,6 +24,7 @@ const AboutPage = () => {
         value={extensionInstalls}
         goal={goals?.extensionInstallations}
         startingValue={goals?.startingExtensionInstallations}
+        description="Taken from Google Analytics (24-48 hour delay) of the number of unique visits to /setup?step=2"
       />
     </>
   );
@@ -37,7 +38,7 @@ const AboutPage = () => {
   return (
     <AdminPageWrapper>
       <Typography variant="h4" align="center">
-        Admin Home
+        <b>Admin Home</b>
       </Typography>
       <Spacer height={32} />
       <StatsWrapper>
