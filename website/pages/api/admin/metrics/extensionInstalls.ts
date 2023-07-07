@@ -29,7 +29,9 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
   const analyticsDataClient = new BetaAnalyticsDataClient({
     credentials: {
       client_email: process.env.FIREBASE_CLIENT_EMAIL,
-      private_key: process.env.FIREBASE_PRIVATE_KEY,
+      private_key: process.env.FIREBASE_PRIVATE_KEY?.split(String.raw`\n`).join(
+        "\n"
+      ),
     },
     projectId: process.env.FIREBASE_PROJECT_ID,
   });
