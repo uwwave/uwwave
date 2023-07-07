@@ -34,7 +34,11 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
     {
       $group: {
         _id: null,
-        ratingAverage: { $avg: "$rating" },
+        ratingAverage: {
+          $avg: {
+            $avg: ["$mentorshipRating", "$workLifeRating", "$meaningfulRating"],
+          },
+        },
         maxSalary: { $max: "$salary" },
         minSalary: { $min: "$salary" },
       },
@@ -87,6 +91,7 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
     // Compute the competitiveness score
     salaryScore = calculatePercentile(salaries, allSalaries);
   }
+  console.log(salaryScore);
 
   res.send({
     ratingAverage: reviewResult.length ? reviewResult[0].ratingAverage : null,

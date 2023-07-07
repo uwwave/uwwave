@@ -29,6 +29,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { useRouter } from "next/router";
 import { Page } from "src/lib/types/page";
 import { useViewport } from "src/lib/hooks/useViewport";
+import { RatingsDisplay } from "../StarsInput/RatingsDisplay";
 
 interface IJobsDataGrid {
   jobReviewsLoading: boolean;
@@ -102,16 +103,17 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
             />
             <Spacer height={8} />
             <Typography variant="caption">{formattedDate}</Typography>
-            <Spacer height={8} />
-            <StarsInput
-              color={isMine ? BackgroundColor.dark : Color.rating}
-              value={rowData.row.rating / 20}
-              starsSize={28}
-            />
             <div>
               <Spacer height={8} />
               <Typography>{`$${rowData.row.salary} CAD, hourly`}</Typography>
               <Spacer width={8} />
+
+              <RatingsDisplay
+                mentorshipVal={rowData.row.mentorshipRating / 20}
+                workLifeVal={rowData.row.workLifeRating / 20}
+                meaningfulVal={rowData.row.meaningfulRating / 20}
+              />
+              <Spacer height={8} />
               <Typography>
                 {rowData.row.verified ? (
                   <StyledTooltip title="Verified Review" arrow placement="top">
@@ -121,6 +123,7 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
                 <b>{rowData.row.review}</b>
               </Typography>
             </div>
+
             <Spacer height={8} />
             <div>
               {isMine ? (
@@ -175,18 +178,38 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
     },
     {
       field: "rating",
-      headerName: "Rating",
+      headerName: "Overall",
       align: "center",
       headerAlign: "center",
       renderHeader: headerComponent,
       renderCell: rowData => {
         const isMine = user?.id === rowData.row.user.id;
+        const averageRating = Math.floor(
+          (rowData.row.mentorshipRating / 20 +
+            rowData.row.workLifeRating / 20 +
+            rowData.row.meaningfulRating / 20) /
+            3
+        );
         return (
-          <StarsInput
-            color={isMine ? BackgroundColor.dark : Color.rating}
-            value={rowData.row.rating / 20}
-            starsSize={16}
-          />
+          <Tooltip
+            arrow
+            title={
+              <RatingsDisplay
+                mentorshipVal={rowData.row.mentorshipRating / 20}
+                workLifeVal={rowData.row.workLifeRating / 20}
+                meaningfulVal={rowData.row.meaningfulRating / 20}
+              />
+            }
+            placement="top"
+          >
+            <div>
+              <StarsInput
+                color={isMine ? BackgroundColor.dark : Color.rating}
+                value={averageRating}
+                starsSize={16}
+              />
+            </div>
+          </Tooltip>
         );
       },
     },
@@ -213,18 +236,21 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
       renderHeader: headerComponent,
       renderCell: rowData => {
         return (
-          <>
-            <Spacer width={16} />
+          <div>
+            <RatingsDisplay
+              mentorshipVal={rowData.row.mentorshipRating / 20}
+              workLifeVal={rowData.row.workLifeRating / 20}
+              meaningfulVal={rowData.row.meaningfulRating / 20}
+            />
             <Typography>
               {rowData.row.verified ? (
                 <StyledTooltip title="Verified Review" arrow placement="top">
                   <StyledVerifiedIcon />
                 </StyledTooltip>
               ) : null}
-
-              {rowData.row.review}
+              <b>{rowData.row.review}</b>
             </Typography>
-          </>
+          </div>
         );
       },
     },
