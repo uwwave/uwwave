@@ -10,6 +10,7 @@ import { LoginModalProvider } from "src/lib/context/LoginModal/LoginModalProvide
 import { LoginModal } from "src/components/Modals/variants/LoginModal";
 import { SessionProvider } from "next-auth/react";
 import { createGlobalStyle } from "styled-components";
+import Script from "next/script";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -48,6 +49,18 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
       <Head>
         <title>Wave</title>
       </Head>
+      <Script
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_G_ANALYTICS_MEASUREMENT_ID}`}
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${process.env.NEXT_PUBLIC_G_ANALYTICS_MEASUREMENT_ID}');
+    `}
+      </Script>
       <Provider theme={theme}>
         <SessionProvider session={session}>
           <CssBaseline />

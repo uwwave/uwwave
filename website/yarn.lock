@@ -1434,6 +1434,13 @@
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.10.1.tgz#60bb2aaf129f9e00621f8d698722ddba6ee1f8ac"
   integrity sha512-Dq5rYfEpdeel0bLVN+nfD1VWmzCkK+pJbSjIawGE+RY4+NIJqhbUDDQjvV0NUK84fMfwxvtFoCtEe70HfZjFcw==
 
+"@google-analytics/data@^3.2.2":
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/@google-analytics/data/-/data-3.2.2.tgz#6f2a0fe131130d331d4d6011230b9335d71c99c5"
+  integrity sha512-6miRi6o22onmGfZvbPfqtVJ6vkN/l6utC5Mh/it3YjBk48olS+PEppdNJfJLk5mKHM46UaONi/97++rPWB9DVQ==
+  dependencies:
+    google-gax "^3.5.8"
+
 "@google-cloud/firestore@^6.6.0":
   version "6.6.1"
   resolved "https://registry.yarnpkg.com/@google-cloud/firestore/-/firestore-6.6.1.tgz#63bc93b414189a8a8e658a69c516a2ef995b6872"
@@ -4152,7 +4159,7 @@ google-auth-library@^8.0.1, google-auth-library@^8.0.2:
     jws "^4.0.0"
     lru-cache "^6.0.0"
 
-google-gax@^3.5.7:
+google-gax@^3.5.7, google-gax@^3.5.8:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/google-gax/-/google-gax-3.6.0.tgz#0f4ae350159737fe0aa289815c0d92838b19f6af"
   integrity sha512-2fyb61vWxUonHiArRNJQmE4tx5oY1ni8VPo08fzII409vDSCWG7apDX4qNOQ2GXXT82gLBn3d3P1Dydh7pWjyw==

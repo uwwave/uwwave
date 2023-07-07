@@ -5,6 +5,7 @@ export interface IUserData {
   id: string;
   dateJoined?: number;
   profilePicture?: string;
+  isAdmin?: boolean;
 }
 
 const schema: Schema = new mongoose.Schema({
@@ -19,6 +20,9 @@ const schema: Schema = new mongoose.Schema({
   },
   profilePicture: {
     type: String,
+  },
+  isAdmin: {
+    type: Boolean,
   },
 });
 
