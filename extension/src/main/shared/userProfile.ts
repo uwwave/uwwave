@@ -11,6 +11,8 @@ export enum UserSyncStorageKeys {
 
 export enum LocalStorageMetadataKeys {
     SCRAPE_AT = 'SCRAPE_AT',
+    SCRAPE_AT_FULLTIME = 'SCRAPE_AT_FULLTIME',
+    SCRAPE_AT_OTHER = 'SCRAPE_AT_OTHER',
 }
 
 export enum TargetSearchAction {

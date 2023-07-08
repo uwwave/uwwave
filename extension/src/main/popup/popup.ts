@@ -243,6 +243,12 @@ function updateProgressBar() {
         case ScrapeStage.workTermRatings:
             newMessage = 'Fetching company ratings...'
             break
+        case ScrapeStage.interviews:
+            newMessage = 'Fetching interviews...'
+            break
+        case ScrapeStage.workHistory:
+            newMessage = 'Fetching work history...'
+            break
         default:
             newMessage = '...'
             break

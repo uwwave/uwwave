@@ -14,7 +14,6 @@ import {
     scrapeWorkTermRatingButton,
 } from './scraperUtil'
 import {
-    getSyncStorage,
     setLocalStorageByKey,
     setSyncStorage,
     setSyncStorageByKey,
@@ -43,6 +42,8 @@ export enum ScrapeStage {
     standby,
     jobPostings,
     workTermRatings,
+    interviews,
+    workHistory,
     finished,
     failed,
 }
@@ -278,60 +279,107 @@ class Scraper {
         this.stage = ScrapeStage.standby
 
         const jobBoardHomeScrape = scrapeJobBoardHome(jobBoardHomeDoc)
-        if (
-            !jobBoardHomeScrape.searchAction ||
-            !jobBoardHomeScrape.reloadQuickSearchAction
-        ) {
-            throw `Unable to scrape job board home for necessary form actions`
-        }
-
-        const quickSearchResp = await this.scraperSendForm({
-            action: jobBoardHomeScrape.reloadQuickSearchAction,
-        })
-        const quickSearchDoc = $.parseHTML(quickSearchResp.data)
-        const quickSearchScrape = scrapeQuickSearches(quickSearchDoc)
-
-        this.advanceStage()
-        const searchActionMap = {
-            [TargetSearchAction.DEFAULT_SEARCH]:
-                jobBoardHomeScrape.searchAction,
-            [TargetSearchAction.FOR_MY_PROGRAM]:
-                quickSearchScrape.forMyProgramAction,
-            [TargetSearchAction.VIEWED]: quickSearchScrape.viewedAction,
-        }
-        const searchAction = searchActionMap[this.targetSearchAction]
-        console.log(
-            `${this.stage}) Scraping jobs available for target search action ${this.targetSearchAction}`,
-        )
-        if (searchAction) {
+        const hasAccessToJobPostings =
+            jobBoardHomeScrape.searchAction ||
+            jobBoardHomeScrape.reloadQuickSearchAction
+        if (!hasAccessToJobPostings) {
             console.log(
-                `${this.stage}) Search action for ${this.targetSearchAction} found, scraping`,
+                `No access to WaterlooWorks co-op job postings, skipping stages`,
             )
-            await this.scrapeAllPages(searchAction)
+            for (const stage of [
+                ScrapeStage.jobPostings,
+                ScrapeStage.workTermRatings,
+            ]) {
+                this.advanceStage()
+            }
         } else {
+            let searchAction
+            if (this.targetSearchAction === TargetSearchAction.DEFAULT_SEARCH) {
+                if (!jobBoardHomeScrape.searchAction) {
+                    throw `Unable to scrape job board home for default search action`
+                }
+
+                searchAction = jobBoardHomeScrape.searchAction
+            } else {
+                if (!jobBoardHomeScrape.reloadQuickSearchAction) {
+                    throw `Unable to scrape job board home for reload quick searches action`
+                }
+
+                const quickSearchResp = await this.scraperSendForm({
+                    action: jobBoardHomeScrape.reloadQuickSearchAction,
+                })
+                const quickSearchDoc = $.parseHTML(quickSearchResp.data)
+                const quickSearchScrape = scrapeQuickSearches(quickSearchDoc)
+
+                switch (this.targetSearchAction) {
+                    case TargetSearchAction.FOR_MY_PROGRAM:
+                        searchAction = quickSearchScrape.forMyProgramAction
+                        break
+                    case TargetSearchAction.VIEWED:
+                        searchAction = quickSearchScrape.viewedAction
+                        break
+                    default:
+                        throw `Invalid target search action ${this.targetSearchAction}`
+                }
+
+                if (!searchAction) {
+                    throw `Target search action ${this.targetSearchAction} not found`
+                }
+            }
+
+            this.advanceStage()
+            // Jobs scrape
             console.log(
-                `${this.stage}) Search action for ${this.targetSearchAction} not found, skipping`,
+                `${this.stage}) Scraping jobs available for target search action ${this.targetSearchAction}`,
             )
+            if (searchAction) {
+                console.log(
+                    `${this.stage}) Search action for ${this.targetSearchAction} found, scraping`,
+                )
+                await this.scrapeAllPages(searchAction)
+            } else {
+                console.log(
+                    `${this.stage}) Search action for ${this.targetSearchAction} not found, skipping`,
+                )
+            }
+
+            this.advanceStage()
+            // Work term ratings scrape
+            console.log(`${this.stage}) Scraping work term ratings`)
+            this.stageTarget = this.pendingWorkTermRatings.length
+            for await (const result of asyncPool(
+                100,
+                this.pendingWorkTermRatings,
+                this.scrapeWorkTermRating,
+            )) {
+                this.stageProgress += 1
+            }
         }
 
         this.advanceStage()
-        console.log(`${this.stage}) Scraping work term ratings`)
-        this.stageTarget = this.pendingWorkTermRatings.length
-        for await (const result of asyncPool(
-            100,
-            this.pendingWorkTermRatings,
-            this.scrapeWorkTermRating,
-        )) {
-            this.stageProgress += 1
-        }
+        // Interviews scrape
+        // TODO implement this
+        console.log(`${this.stage}) Scraping interviews, skipping for now...`)
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        this.advanceStage()
+        // Work term history scrape
+        // TODO implement this
+        console.log(`${this.stage}) Scraping work term history, skipping for now...`)
+        await new Promise(resolve => setTimeout(resolve, 2000));
 
         this.advanceStage()
         console.log('Scraping done!')
 
         clearInterval(this.heartbeatInterval)
         // set after clearing interval to avoid race condition
+        const jobBoardToTimestampKey = {
+            [JobBoard.coop]: LocalStorageMetadataKeys.SCRAPE_AT,
+            [JobBoard.fulltime]: LocalStorageMetadataKeys.SCRAPE_AT_FULLTIME,
+            [JobBoard.other]: LocalStorageMetadataKeys.SCRAPE_AT_OTHER,
+        }
         await setLocalStorageByKey(
-            LocalStorageMetadataKeys.SCRAPE_AT,
+            jobBoardToTimestampKey[this.jobBoard],
             this.getUtcNowIsoString(),
         )
         await setSyncStorageByKey(
