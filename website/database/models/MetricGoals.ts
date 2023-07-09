@@ -14,6 +14,18 @@ const schema: Schema = new mongoose.Schema({
   startingExtensionInstallations: {
     type: Number,
   },
+  jobReviews: {
+    type: Number,
+  },
+  startingJobReviews: {
+    type: Number,
+  },
+  interviewReviews: {
+    type: Number,
+  },
+  startingInterviewReviews: {
+    type: Number,
+  },
 });
 
 interface MetricGoalsModel extends Model<IMetricGoals> {

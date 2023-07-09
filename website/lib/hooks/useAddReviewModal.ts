@@ -13,6 +13,7 @@ import { Page } from "src/lib/types/page";
 
 export enum AddReviewModalState {
   HOME,
+  HOME_SUBMIT_DOMAIN,
   HOME_ERROR,
   REVIEW_JOB_1,
   REVIEW_JOB_2,
@@ -45,6 +46,7 @@ export interface IInterviewResource {
 }
 
 const MAX_REVIEW_LENGTH = 320;
+export const CANNOT_FIND_COMPANY_STRING = `I can't find my company`;
 
 export const useAddReviewModal = (
   closeModal: () => void,
@@ -129,6 +131,10 @@ export const useAddReviewModal = (
   };
 
   const onChangeCompany = (data?: ICompanyClearbitData) => {
+    if (data?.id === "0" && data?.companyName === CANNOT_FIND_COMPANY_STRING) {
+      setState(AddReviewModalState.HOME_SUBMIT_DOMAIN);
+      return;
+    }
     setCompany(data);
   };
 
@@ -166,6 +172,8 @@ export const useAddReviewModal = (
       case AddReviewModalState.INTERVIEW_DELETE:
       case AddReviewModalState.INTERVIEW_LOADING:
         return "Interview Review";
+      case AddReviewModalState.HOME_SUBMIT_DOMAIN:
+        return "Submit Company Domain";
       default:
         return "Add Your Review";
     }
@@ -177,6 +185,10 @@ export const useAddReviewModal = (
     switch (state) {
       case AddReviewModalState.REVIEW_JOB_2:
         setState(AddReviewModalState.REVIEW_JOB_1);
+        return;
+      case AddReviewModalState.HOME_SUBMIT_DOMAIN:
+        setCompany(undefined);
+        setState(AddReviewModalState.HOME);
         return;
       default:
         setState(AddReviewModalState.HOME);
@@ -435,6 +447,11 @@ export const useAddReviewModal = (
     return false;
   }, [state, showNextButton, salary, location]);
 
+  const onSubmitCompanySuccess = (company: ICompanyClearbitData) => {
+    setCompany(company);
+    setState(AddReviewModalState.HOME);
+  };
+
   return {
     companyError,
     roleError,
@@ -489,5 +506,7 @@ export const useAddReviewModal = (
     disableNextButton,
     location,
     setLocation,
+    onSubmitCompanySuccess,
+    companyState: company,
   };
 };

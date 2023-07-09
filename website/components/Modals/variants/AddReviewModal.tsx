@@ -17,6 +17,7 @@ import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
 import { SingleValueSearch } from "src/components/TextField/variants/SingleValueSearch";
 import {
   AddReviewModalState,
+  CANNOT_FIND_COMPANY_STRING,
   InterviewStatus,
   useAddReviewModal,
 } from "src/lib/hooks/useAddReviewModal";
@@ -39,6 +40,8 @@ import { IInterviewReview } from "src/database/models/InterviewReview";
 import { coopNumberDisplay } from "src/lib/reviews/summary";
 import { LocationsSearchInput } from "src/components/TextField/variants/LocationSearchInput";
 import { getCountryFlag } from "src/components/CountryFlag/CountryFlag";
+import SearchOffIcon from "@mui/icons-material/SearchOff";
+import { SubmitDomainInput } from "src/components/SubmitDomainInput/SubmitDomainInput";
 interface IAddReviewModal {
   isOpen: boolean;
   company?: ICompanyClearbitData;
@@ -111,6 +114,8 @@ export const AddReviewModal = ({
     disableNextButton,
     setLocation,
     location,
+    onSubmitCompanySuccess,
+    companyState,
   } = useAddReviewModal(
     close,
     afterSubmit,
@@ -119,34 +124,50 @@ export const AddReviewModal = ({
     origin,
     interview
   );
+
+  const renderUploadDomain = () => {
+    return (
+      <>
+        <SubmitDomainInput onSuccess={onSubmitCompanySuccess} />
+        {renderBackButton()}
+      </>
+    );
+  };
+  const renderSearchCompany = () => {
+    return (
+      // This is so that the input doesn't flash when we close the modal
+      // We still want this to reset the displayed search input on close
+      company ? (
+        <SingleValueSearch
+          value={company.companyName}
+          icon={
+            company.logo ? (
+              <CompanyLogo logo={company.logo} />
+            ) : (
+              <StyledBusinessIcon />
+            )
+          }
+        />
+      ) : isOpen ? (
+        <CompanySearchInput
+          onValue={data => {
+            onChangeCompany(data);
+          }}
+          error={companyError}
+          emptyMenuItem={{
+            value: CANNOT_FIND_COMPANY_STRING,
+            icon: <SearchOffIcon />,
+          }}
+          initCompany={companyState}
+        />
+      ) : (
+        <CompanySearchInput />
+      )
+    );
+  };
   const renderHome = () => (
     <>
-      {
-        // This is so that the input doesn't flash when we close the modal
-        // We still want this to reset the displayed search input on close
-        company ? (
-          <SingleValueSearch
-            value={company.companyName}
-            icon={
-              company.logo ? (
-                <CompanyLogo logo={company.logo} />
-              ) : (
-                <StyledBusinessIcon />
-              )
-            }
-          />
-        ) : isOpen ? (
-          <CompanySearchInput
-            onValue={data => {
-              onChangeCompany(data);
-            }}
-            error={companyError}
-          />
-        ) : (
-          <CompanySearchInput />
-        )
-      }
-
+      {renderSearchCompany()}
       <Spacer height={4} />
       {
         // This is so that the input doesn't flash when we close the modal
@@ -157,6 +178,7 @@ export const AddReviewModal = ({
               onChangeRole(data);
             }}
             error={roleError}
+            disabled={state === AddReviewModalState.HOME_SUBMIT_DOMAIN}
           />
         ) : (
           <JobRoleSearchInput />
@@ -177,7 +199,11 @@ export const AddReviewModal = ({
       <Spacer height={8} />
       <ReviewTypesWrapper>
         <ReviewTypeWrapper>
-          <ReviewTypeButton bgcolor={Color.rating} onClick={onClickJobReview}>
+          <ReviewTypeButton
+            bgcolor={Color.rating}
+            onClick={onClickJobReview}
+            disabled={state === AddReviewModalState.HOME_SUBMIT_DOMAIN}
+          >
             <ReviewIcon />
             <Typography color="white" variant="h5" align="center">
               Job
@@ -188,6 +214,7 @@ export const AddReviewModal = ({
           <ReviewTypeButton
             bgcolor={Color.interview}
             onClick={onClickInterviewReview}
+            disabled={state === AddReviewModalState.HOME_SUBMIT_DOMAIN}
           >
             <InterviewIcon />
             <Typography color="white" variant="h5" align="center">
@@ -587,6 +614,8 @@ export const AddReviewModal = ({
       case AddReviewModalState.INTERVIEW_DELETE:
       case AddReviewModalState.INTERVIEW_LOADING:
         return renderInterviewReview();
+      case AddReviewModalState.HOME_SUBMIT_DOMAIN:
+        return renderUploadDomain();
       default:
         return renderHome();
     }

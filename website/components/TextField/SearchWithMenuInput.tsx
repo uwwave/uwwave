@@ -29,6 +29,7 @@ interface ISearchWithMenu {
   onOut?: () => void;
   error?: boolean;
   initialValue?: IMenuItem;
+  disabled?: boolean;
 }
 export const SearchWithMenuInput = ({
   menuItems,
@@ -42,6 +43,7 @@ export const SearchWithMenuInput = ({
   onOut,
   error,
   initialValue,
+  disabled,
 }: ISearchWithMenu) => {
   const [selectedValue, setSelectedValue] = useState(initialValue?.value ?? "");
   const [searchValue, setSearchValue] = useState(initialValue?.value ?? "");
@@ -107,9 +109,11 @@ export const SearchWithMenuInput = ({
         setIsInteracting(true);
         onIn?.();
       }}
+      disabled={disabled ?? false}
     >
       <form onSubmit={handleSubmit}>
         <StyledRoundedTextField
+          disabled={disabled}
           error={error}
           autoComplete="off"
           onFocus={() => {
@@ -175,8 +179,12 @@ export const SearchWithMenuInput = ({
   );
 };
 
-const MainWrapper = styled.div`
+interface IDisabled {
+  disabled: boolean;
+}
+const MainWrapper = styled.div<IDisabled>`
   position: relative;
+  ${props => (props.disabled ? "pointer-events: none;" : "")}
 `;
 
 interface IPaperWrapper {

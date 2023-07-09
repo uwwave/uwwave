@@ -26,54 +26,58 @@ export const AdminSideNav = (props: ISideNav) => {
   return (
     <Drawer open={isOpen} onClose={onClose}>
       <MainWrapper>
-        <List>
-          <ListItemButton
-            onClick={() => {
-              router.push("/");
-              onClose();
-            }}
-          >
-            <WaveLogo color="white" />
-            <Spacer width={16} />
-            <ListItemText primary="Wave Home Page" />
-          </ListItemButton>
-          <ListItemButton
-            onClick={() => {
-              router.push("/admin");
-              onClose();
-            }}
-          >
-            <ListItemText primary="Admin Home" />
-          </ListItemButton>
-          <ListItemButton
-            onClick={
-              user
-                ? () => {
-                    router.push("/user");
-                    onClose();
-                  }
-                : () => {
-                    openLoginModal();
-                    onClose();
-                  }
-            }
-          >
-            <ListItemIcon>
-              <LoginButton />
-            </ListItemIcon>
-            <ListItemText primary={user ? user.username : ""} />
-          </ListItemButton>
-          {user ? (
+        <StyledList>
+          <MainElements>
             <ListItemButton
               onClick={() => {
-                signOut();
+                router.push("/");
                 onClose();
               }}
             >
-              <ListItemText primary="Sign Out" />
+              <WaveLogo color="white" />
+              <Spacer width={16} />
+              <ListItemText primary="Wave Home Page" />
             </ListItemButton>
-          ) : null}
-        </List>
+            <ListItemButton
+              onClick={() => {
+                router.push("/admin");
+                onClose();
+              }}
+            >
+              <ListItemText primary="Admin Home" />
+            </ListItemButton>
+          </MainElements>
+          <div>
+            <ListItemButton
+              onClick={
+                user
+                  ? () => {
+                      router.push("/user");
+                      onClose();
+                    }
+                  : () => {
+                      openLoginModal();
+                      onClose();
+                    }
+              }
+            >
+              <ListItemIcon>
+                <LoginButton />
+              </ListItemIcon>
+              <ListItemText primary={user ? user.username : ""} />
+            </ListItemButton>
+            {user ? (
+              <ListItemButton
+                onClick={() => {
+                  signOut();
+                  onClose();
+                }}
+              >
+                <ListItemText primary="Sign Out" />
+              </ListItemButton>
+            ) : null}
+          </div>
+        </StyledList>
       </MainWrapper>
     </Drawer>
   );
@@ -86,4 +90,17 @@ const MainWrapper = styled.div`
   && {
     color: white;
   }
+`;
+
+const StyledList = styled(List)`
+  && {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+  }
+`;
+
+const MainElements = styled.div`
+  flex: 1;
 `;

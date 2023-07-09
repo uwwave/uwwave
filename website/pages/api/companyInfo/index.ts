@@ -19,8 +19,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       default:
         res.status(404).end();
     }
-  } catch (err) {
-    res.status(403).end(String(err));
+  } catch (err: any) {
+    if (err.body.error.message) {
+      res.status(403).end(err.body.error.message);
+    } else {
+      res.status(403).end(err);
+    }
   }
 };
 
@@ -30,25 +34,53 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
   const { companyName, domain } = req.body;
   const companyNameString = companyName as string;
   const domainString = domain as string;
+  if (!companyNameString && !domainString) {
+    throw "Must atleast supply domain string";
+  }
   const Company = clearbit.Company;
+  await connectToDb();
+  if (!companyNameString) {
+    //uploading non existing company
+    //check if domain exists
+    const existingDomain = await CompanyDomainsDoc.findOne({ domain: domain });
+    if (existingDomain) {
+      res.send(existingDomain.toObject());
+      return;
+    }
+
+    return new Promise((_, reject) => {
+      Company.find({ domain: domainString })
+        .then(async function (company: ICompanyClearbitData) {
+          const newCompany = new CompanyDomainsDoc({
+            ...company,
+            companyName: company.name,
+          });
+          await newCompany.save();
+          res.send(newCompany.toObject());
+          return;
+        })
+        .catch((x: any) => {
+          reject(x);
+        });
+    });
+  }
 
   return new Promise((_, reject) => {
+    //update existing company
     Company.find({ domain: domainString })
       .then(async function (company: ICompanyClearbitData) {
         if (!doCompanyNamesMatch(companyNameString, company.name)) {
-          reject(new Error("Company name does not match name from URL"));
-          return;
+          throw "Company name does not match name from URL";
         }
-        await connectToDb();
-        await CompanyDomainsDoc.findOneAndUpdate(
+        const out = await CompanyDomainsDoc.findOneAndUpdate(
           { companyName: companyNameString },
           { ...company },
           { new: true, upsert: true }
         );
-        res.send(company);
+        res.send(out.toObject());
       })
-      .catch(function (error: any) {
-        reject(error);
+      .catch((x: any) => {
+        reject(x);
       });
   });
 };
@@ -58,7 +90,6 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!companyName && !id) {
     throw "No company Name or id Provided";
   }
-  console.log(companyName);
   await connectToDb();
   const companyDomain = companyName
     ? await CompanyDomainsDoc.findOne({

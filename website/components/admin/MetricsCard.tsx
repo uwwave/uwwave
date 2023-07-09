@@ -24,7 +24,13 @@ export const MetricsCard = ({
 }: IMetricsCard) => {
   const renderGoal = () => {
     if (!goal) {
-      return null;
+      return (
+        <>
+          <Typography align="center" color="gray">{`No goal set`}</Typography>
+          <Spacer height={4} />
+          <BorderLinearProgress value={0} variant="determinate" />
+        </>
+      );
     }
     const percentage = Math.floor(
       ((value - (startingValue ?? 0)) / goal) * 100
@@ -74,19 +80,27 @@ export const MetricsCard = ({
     );
   };
   return (
-    <Card variant="outlined">
+    <Main>
       <CardContent>
-        <Typography variant="h5">{title}</Typography>
-
+        <Typography variant="h5" align="center">
+          {title}
+        </Typography>
         {renderValue()}
-
         <Spacer height={16} />
         {renderGoal()}
       </CardContent>
-    </Card>
+    </Main>
   );
 };
 
+const Main = styled(Card).attrs({
+  variant: "outlined",
+})`
+  && {
+    width: calc(33.33% - 32px);
+    min-height: 240px;
+  }
+`;
 const getProgressColor = (value: number): string => {
   if (value < 25) {
     return "#c0392b";
