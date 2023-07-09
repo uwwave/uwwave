@@ -8,8 +8,14 @@ import { Spacer } from "src/components/Spacer/Spacer";
 import { MetricsCard } from "src/components/admin/MetricsCard";
 
 const AboutPage = () => {
-  const { isLoading, accountsCreated, extensionInstalls, goals } =
-    useAdminStats();
+  const {
+    isLoading,
+    accountsCreated,
+    extensionInstalls,
+    goals,
+    jobReviews,
+    interviewReviews,
+  } = useAdminStats();
 
   const renderCards = () => (
     <>
@@ -26,11 +32,25 @@ const AboutPage = () => {
         startingValue={goals?.startingExtensionInstallations}
         description="Taken from Google Analytics (24-48 hour delay) of the number of unique visits to /setup?step=2"
       />
+      <MetricsCard
+        title="Total Job Reviews:"
+        value={jobReviews}
+        goal={goals?.jobReviews}
+        startingValue={goals?.startingJobReviews}
+      />
+      <MetricsCard
+        title="Total Interview Reviews:"
+        value={interviewReviews}
+        goal={goals?.interviewReviews}
+        startingValue={goals?.startingInterviewReviews}
+      />
     </>
   );
 
   const renderLoadingCards = () => (
     <>
+      <Skeleton variant="rounded" height={144} width={280} />
+      <Skeleton variant="rounded" height={144} width={280} />
       <Skeleton variant="rounded" height={144} width={280} />
       <Skeleton variant="rounded" height={144} width={280} />
     </>
@@ -53,4 +73,5 @@ export default AboutPage;
 const StatsWrapper = styled.div`
   display: flex;
   gap: 16px;
+  flex-wrap: wrap;
 `;

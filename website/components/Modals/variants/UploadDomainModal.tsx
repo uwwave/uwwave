@@ -22,7 +22,7 @@ export const UploadDomainModal = (props: IUploadDomainModal) => {
   const handleSubmit = () => {
     setError(false);
     setLoading(true);
-    Requests.addCompanyDomain(companyName, domain)
+    Requests.addCompanyDomain(domain, companyName)
       .then(res => {
         onClearbitCompanyData(res);
         setLoading(false);

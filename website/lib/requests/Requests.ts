@@ -11,6 +11,11 @@ export interface IJobKeyword {
   keywords: string[];
 }
 
+export interface IUserReviews {
+  jobReviews: number;
+  interviewReviews: number;
+}
+
 export interface IJobRoles {
   jobID: string;
   roles: string[];
@@ -31,6 +36,10 @@ export interface IMetricGoals {
   extensionInstallations?: number;
   startingAccountsCreated?: number;
   startingExtensionInstallations?: number;
+  jobReviews?: number;
+  startingJobReviews?: number;
+  interviewReviews?: number;
+  startingInterviewReviews?: number;
 }
 
 export interface ICompanyData {
@@ -98,8 +107,8 @@ export class Requests {
   }
 
   static async addCompanyDomain(
-    companyName: string,
-    domain: string
+    domain: string,
+    companyName?: string
   ): Promise<ICompanyClearbitData> {
     return axios
       .post(`/api/companyInfo`, { companyName, domain })
@@ -278,6 +287,10 @@ export class Requests {
 
   static getExtensionInstalls = async (): Promise<number> => {
     return axios.get(`/api/admin/metrics/extensionInstalls`).then(x => x.data);
+  };
+
+  static getUserReviews = async (): Promise<IUserReviews> => {
+    return axios.get(`/api/admin/metrics/userReviews`).then(x => x.data);
   };
 
   static getMetricGoals = async (): Promise<IMetricGoals> => {

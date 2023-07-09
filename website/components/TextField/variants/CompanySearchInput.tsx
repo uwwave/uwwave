@@ -1,5 +1,8 @@
 import React from "react";
-import { SearchWithMenuInput } from "src/components/TextField/SearchWithMenuInput";
+import {
+  IMenuItem,
+  SearchWithMenuInput,
+} from "src/components/TextField/SearchWithMenuInput";
 import BusinessIcon from "@mui/icons-material/Business";
 import styled from "styled-components";
 import { Color } from "src/styles/color";
@@ -12,24 +15,50 @@ interface ICompanySearchInput {
   onOut?: () => void;
   clearOnValue?: boolean;
   error?: boolean;
+  emptyMenuItem?: IMenuItem;
+  initCompany?: ICompanyClearbitData;
 }
 export const CompanySearchInput = ({
   onValue,
   onIn,
   onOut,
   error,
+  emptyMenuItem,
+  initCompany,
 }: ICompanySearchInput) => {
   const { companyInfo, handleSearch, isLoading } = useCompanySearch();
   return (
     <SearchWithMenuInput
       error={error}
-      menuItems={companyInfo.map(x => ({
-        value: x.companyName,
-        icon: x.logo ? <CompanyLogo logo={x.logo} /> : <StyledBusinessIcon />,
-      }))}
+      menuItems={
+        companyInfo.length
+          ? companyInfo.map(x => ({
+              value: x.companyName,
+              icon: x.logo ? (
+                <CompanyLogo logo={x.logo} />
+              ) : (
+                <StyledBusinessIcon />
+              ),
+            }))
+          : emptyMenuItem
+          ? [emptyMenuItem]
+          : []
+      }
       selectedIcon={<StyledBusinessIcon />}
       onChangeValue={val => {
+        if (val === emptyMenuItem?.value) {
+          onValue &&
+            onValue({
+              id: "0",
+              companyName: emptyMenuItem.value,
+              name: emptyMenuItem.value,
+            });
+          return;
+        }
         const data = companyInfo.find(x => x.companyName === val);
+        if (!data && initCompany) {
+          return;
+        }
         onValue && onValue(data);
       }}
       onChangeSearchValue={handleSearch}
@@ -38,6 +67,16 @@ export const CompanySearchInput = ({
       zIndex={101}
       onIn={onIn}
       onOut={onOut}
+      initialValue={
+        initCompany
+          ? {
+              value: initCompany.companyName,
+              icon: initCompany.logo ? (
+                <CompanyLogo logo={initCompany.logo} />
+              ) : undefined,
+            }
+          : undefined
+      }
     />
   );
 };

@@ -8,7 +8,7 @@ interface IReadMoreText {
 
 export const ReadMoreText = ({ max, text }: IReadMoreText) => {
   const [seeReadMore, setSeeReadMore] = useState<boolean>(false);
-  if (text.length) {
+  if (text.length > max) {
     if (seeReadMore) {
       return (
         <>

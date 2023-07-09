@@ -1,0 +1,20 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "uploadInternCompassArchiveReviews": "rm -r dist && tsc && node dist/src/scripts/uploadInternCompassArchiveReviews.js",
+    "test": "rm -r dist && tsc && node dist/src/scripts/test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "mongoose": "^7.3.2"
+  }
+}

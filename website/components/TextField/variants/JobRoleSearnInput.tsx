@@ -8,8 +8,13 @@ import { useJobsRolesSearch } from "src/lib/hooks/useJobRolesSearch";
 interface ICompanySearchInput {
   onValue?: (data?: IJobRole) => void;
   error?: boolean;
+  disabled?: boolean;
 }
-export const JobRoleSearchInput = ({ onValue, error }: ICompanySearchInput) => {
+export const JobRoleSearchInput = ({
+  onValue,
+  error,
+  disabled,
+}: ICompanySearchInput) => {
   const { rolesInfo, handleSearch, isLoading } = useJobsRolesSearch();
   return (
     <SearchWithMenuInput
@@ -26,6 +31,7 @@ export const JobRoleSearchInput = ({ onValue, error }: ICompanySearchInput) => {
       isLoading={isLoading}
       placeholder="Role"
       error={error}
+      disabled={disabled}
     />
   );
 };
