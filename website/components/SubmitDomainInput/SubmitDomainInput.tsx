@@ -1,7 +1,4 @@
-import styled from "styled-components";
 import { RoundedTextField } from "../TextField/RoundedTextField";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
 import { Spacer } from "../Spacer/Spacer";
 import Typography from "@mui/material/Typography";
 import { useSubmitDomainInput } from "src/lib/hooks/useSubmitDomainInput";
@@ -52,21 +49,3 @@ export const SubmitDomainInput = ({ onSuccess }: ISubmitDomainInput) => {
     </form>
   );
 };
-
-const Main = styled.div`
-  position: relative;
-`;
-
-const StyledCloseIcon = styled(CloseIcon)`
-  && {
-    color: white;
-  }
-`;
-
-const StyledIconButton = styled(IconButton)`
-  && {
-    position: absolute;
-    right: 0;
-    top: -8px;
-  }
-`;
