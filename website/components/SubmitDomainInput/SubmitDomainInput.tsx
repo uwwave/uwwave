@@ -19,33 +19,40 @@ export const SubmitDomainInput = ({ onSuccess }: ISubmitDomainInput) => {
     onSubmit();
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <RoundedTextField
-        required
-        autoFocus
-        disabled={isLoading}
-        value={val}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setVal(e.target.value);
-        }}
-        placeholder="https://example.com"
-        size="small"
-        error={!!error}
-      />
-
-      <Spacer height={8} />
-      {error ? (
-        <>
-          <Typography color="red" align="center">
-            {error}
-          </Typography>
-          <Spacer height={8} />
-        </>
-      ) : null}
+    <>
+      <Typography color="white" align="center">
+        Looks like we can't find the company you're looking for. Help us find it
+        by entering their website domain.
+      </Typography>
       <Spacer height={32} />
-      <Center>
-        <PrimaryButton type="submit">Submit</PrimaryButton>
-      </Center>
-    </form>
+      <form onSubmit={handleSubmit}>
+        <RoundedTextField
+          required
+          autoFocus
+          disabled={isLoading}
+          value={val}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setVal(e.target.value);
+          }}
+          placeholder="https://example.com"
+          size="small"
+          error={!!error}
+        />
+
+        <Spacer height={8} />
+        {error ? (
+          <>
+            <Typography color="red" align="center">
+              {error}
+            </Typography>
+            <Spacer height={8} />
+          </>
+        ) : null}
+        <Spacer height={16} />
+        <Center>
+          <PrimaryButton type="submit">Submit</PrimaryButton>
+        </Center>
+      </form>
+    </>
   );
 };
