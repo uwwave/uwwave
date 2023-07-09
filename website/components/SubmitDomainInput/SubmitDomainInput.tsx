@@ -22,7 +22,7 @@ export const SubmitDomainInput = ({ onSuccess }: ISubmitDomainInput) => {
     <>
       <Typography color="white" align="center">
         Looks like we can't find the company you're looking for. Help us find it
-        by entering their website domain.
+        by entering their website's domain.
       </Typography>
       <Spacer height={32} />
       <form onSubmit={handleSubmit}>
