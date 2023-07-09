@@ -17,7 +17,6 @@ interface IProfileImage {
 }
 export const ProfileImageWithModal = ({
   canEditPhoto,
-  onEditPhoto,
   imageURL,
   showEditIcon,
   width,
@@ -48,11 +47,7 @@ export const ProfileImageWithModal = ({
         onSubmitImage={onSubmitImage}
         isLoading={loading}
       />
-      <Main
-        widthSize={width ?? 160}
-        onClick={onEditPhoto}
-        disabled={!canEditPhoto}
-      >
+      <Main widthSize={width ?? 160} disabled={!canEditPhoto}>
         <ImageWrapper
           src={imageURL}
           widthSize={width ?? 160}
@@ -62,7 +57,13 @@ export const ProfileImageWithModal = ({
           }}
         />
         {canEditPhoto && showEditIcon ? (
-          <StyledIconButton onClick={onEditPhoto} />
+          <StyledIconButton
+            onClick={() => {
+              setIsOpen(true);
+            }}
+          >
+            <EditIcon />
+          </StyledIconButton>
         ) : null}
       </Main>
     </>

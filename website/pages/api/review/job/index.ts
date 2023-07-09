@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "src/pages/api/auth/[...nextauth]";
 import JobReviewDocument from "src/database/models/JobReview";
 import connectToDb from "src/database/mongo-db";
+import { validateLocation } from "src/lib/validator/location";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -70,6 +71,7 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     mentorshipRating,
     workLifeRating,
     meaningfulRating,
+    location,
   } = req.body;
   if (
     !role ||
@@ -89,6 +91,9 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
   if (review.length > 320) {
     throw "Review must be less than 320 characters";
   }
+  if (!validateLocation(location)) {
+    throw "Invalid Location";
+  }
   const newReview = new JobReviewDocument({
     role: role.id,
     company: company.id,
@@ -102,6 +107,7 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     review,
     date: new Date().getTime(),
     coopNumber,
+    location,
   });
   await newReview.save();
   res.status(200).end();
@@ -131,6 +137,7 @@ const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
     salary,
     review,
     coopNumber,
+    location,
   } = req.body;
   if (
     !id ||
@@ -151,6 +158,9 @@ const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
   if (review.length > 320) {
     throw "Review must be less than 320 characters";
   }
+  if (!validateLocation(location)) {
+    throw "Invalid Location";
+  }
   await JobReviewDocument.findOneAndUpdate(
     { _id: id, user: uid },
     {
@@ -165,6 +175,7 @@ const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
       salary,
       review,
       coopNumber,
+      location,
     },
     { upsert: false }
   );

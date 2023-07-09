@@ -14,7 +14,9 @@ import { Page } from "src/lib/types/page";
 export enum AddReviewModalState {
   HOME,
   HOME_ERROR,
-  REVIEW_JOB,
+  REVIEW_JOB_1,
+  REVIEW_JOB_2,
+  REVIEW_JOB_UPDATE,
   REVIEW_JOB_ERROR,
   REVIEW_JOB_LOADING,
   REVIEW_JOB_DELETE,
@@ -54,7 +56,7 @@ export const useAddReviewModal = (
 ) => {
   const [state, setState] = useState<AddReviewModalState>(
     reviewProp
-      ? AddReviewModalState.REVIEW_JOB
+      ? AddReviewModalState.REVIEW_JOB_UPDATE
       : interviewProp
       ? AddReviewModalState.INTERVIEW
       : AddReviewModalState.HOME
@@ -84,6 +86,8 @@ export const useAddReviewModal = (
   const [coopNumber, setCoopNumber] = useState<number>(
     reviewProp?.coopNumber ?? 1
   );
+
+  const [location, setLocation] = useState<string>(reviewProp?.location ?? "");
   const [reviewJobServerError, setReviewJobServerError] = useState<string>();
   const [interviewResources, setInterviewResourcesState] = useState<
     IInterviewResourceDisplay[]
@@ -113,7 +117,7 @@ export const useAddReviewModal = (
       setState(AddReviewModalState.HOME_ERROR);
       return;
     }
-    setState(AddReviewModalState.REVIEW_JOB);
+    setState(AddReviewModalState.REVIEW_JOB_1);
   };
 
   const onClickInterviewReview = () => {
@@ -150,7 +154,9 @@ export const useAddReviewModal = (
   const isUpdateInterview = !!interviewProp;
   const modalTitle: string = useMemo(() => {
     switch (state) {
-      case AddReviewModalState.REVIEW_JOB:
+      case AddReviewModalState.REVIEW_JOB_1:
+      case AddReviewModalState.REVIEW_JOB_2:
+      case AddReviewModalState.REVIEW_JOB_UPDATE:
       case AddReviewModalState.REVIEW_JOB_ERROR:
       case AddReviewModalState.REVIEW_JOB_LOADING:
       case AddReviewModalState.REVIEW_JOB_DELETE:
@@ -167,8 +173,19 @@ export const useAddReviewModal = (
 
   const companyAndRole = `${company?.companyName}, ${role?.role}`;
 
-  const onBackToHome = () => {
-    setState(AddReviewModalState.HOME);
+  const onBack = () => {
+    switch (state) {
+      case AddReviewModalState.REVIEW_JOB_2:
+        setState(AddReviewModalState.REVIEW_JOB_1);
+        return;
+      default:
+        setState(AddReviewModalState.HOME);
+        return;
+    }
+  };
+
+  const onNext = () => {
+    setState(AddReviewModalState.REVIEW_JOB_2);
   };
 
   const isBackToHomeDisabled = !!isUpdateReview;
@@ -192,6 +209,7 @@ export const useAddReviewModal = (
           salary,
           review,
           coopNumber,
+          location,
         });
       } else {
         await Requests.postJobReview({
@@ -205,11 +223,12 @@ export const useAddReviewModal = (
           salary,
           review,
           coopNumber,
+          location,
         });
       }
       setState(
         isUpdateReview
-          ? AddReviewModalState.REVIEW_JOB
+          ? AddReviewModalState.REVIEW_JOB_UPDATE
           : AddReviewModalState.HOME
       );
       onSuccess?.();
@@ -233,7 +252,7 @@ export const useAddReviewModal = (
       await Requests.deleteJobReview(reviewProp.id);
       setState(
         isUpdateReview
-          ? AddReviewModalState.REVIEW_JOB
+          ? AddReviewModalState.REVIEW_JOB_UPDATE
           : AddReviewModalState.HOME
       );
       onSuccess?.();
@@ -349,12 +368,12 @@ export const useAddReviewModal = (
   const toggleDeleteMode = () => {
     if (isUpdateReview) {
       if (
-        state === AddReviewModalState.REVIEW_JOB ||
+        state === AddReviewModalState.REVIEW_JOB_UPDATE ||
         state === AddReviewModalState.REVIEW_JOB_ERROR
       ) {
         setState(AddReviewModalState.REVIEW_JOB_DELETE);
       } else {
-        setState(AddReviewModalState.REVIEW_JOB);
+        setState(AddReviewModalState.REVIEW_JOB_UPDATE);
       }
     }
 
@@ -380,6 +399,42 @@ export const useAddReviewModal = (
     }).length;
   }, [interviewResources]);
 
+  const progress: string | undefined = useMemo(() => {
+    switch (state) {
+      case AddReviewModalState.REVIEW_JOB_1:
+        return "2/3";
+      case AddReviewModalState.REVIEW_JOB_2:
+        return "3/3";
+      default:
+        return undefined;
+    }
+  }, [state]);
+
+  const showNextButton: boolean = useMemo(() => {
+    switch (state) {
+      case AddReviewModalState.REVIEW_JOB_1:
+      case AddReviewModalState.REVIEW_JOB_2:
+        return true;
+      default:
+        return false;
+    }
+  }, [state]);
+
+  const disableNextButton: boolean = useMemo(() => {
+    if (!showNextButton) {
+      return true;
+    }
+    if (state === AddReviewModalState.REVIEW_JOB_2) {
+      return true;
+    }
+
+    if (salary < 0 || !location) {
+      return true;
+    }
+
+    return false;
+  }, [state, showNextButton, salary, location]);
+
   return {
     companyError,
     roleError,
@@ -392,7 +447,8 @@ export const useAddReviewModal = (
     modalTitle,
     role,
     companyAndRole,
-    onBackToHome,
+    onBack,
+    onNext,
     jobReviewErrorString,
     reviewCharacterCountText,
     onSubmitJobReview,
@@ -428,5 +484,10 @@ export const useAddReviewModal = (
     nValidResources,
     coopNumber,
     setCoopNumber,
+    progress,
+    showNextButton,
+    disableNextButton,
+    location,
+    setLocation,
   };
 };

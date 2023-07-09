@@ -13,7 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { LogoLoader } from "../Loader/LogoLoader";
 
-interface IMenuItem {
+export interface IMenuItem {
   value: string;
   icon?: React.ReactNode;
 }
@@ -28,6 +28,7 @@ interface ISearchWithMenu {
   onIn?: () => void;
   onOut?: () => void;
   error?: boolean;
+  initialValue?: IMenuItem;
 }
 export const SearchWithMenuInput = ({
   menuItems,
@@ -40,11 +41,12 @@ export const SearchWithMenuInput = ({
   onIn,
   onOut,
   error,
+  initialValue,
 }: ISearchWithMenu) => {
-  const [selectedValue, setSelectedValue] = useState("");
-  const [searchValue, setSearchValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState(initialValue?.value ?? "");
+  const [searchValue, setSearchValue] = useState(initialValue?.value ?? "");
   const [isInteracting, setIsInteracting] = useState(true);
-  const [init, setInit] = useState(false);
+  const [init, setInit] = useState(initialValue ? true : false);
   useEffect(() => {
     onChangeValue(selectedValue);
   }, [selectedValue]);
@@ -127,6 +129,7 @@ export const SearchWithMenuInput = ({
               <InputAdornment position="start">
                 {selectedValue ? (
                   menuItems.find(x => x.value === selectedValue)?.icon ??
+                  initialValue?.icon ??
                   selectedIcon
                 ) : (
                   <SearchIcon />

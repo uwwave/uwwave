@@ -13,6 +13,7 @@ export const getCountryFlag = (country: string) => {
   switch (country) {
     case "Canada":
       return <CanadaIcon />;
+    case "USA":
     case "United States":
       return <USIcon />;
     case "China":

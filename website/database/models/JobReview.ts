@@ -21,6 +21,10 @@ export interface IJobReview {
   upvoters: string[];
   downvoters: string[];
   coopNumber?: number;
+  externalURL?: string;
+  externalName?: string;
+  title?: string;
+  location?: string;
 }
 
 const schema: Schema = new mongoose.Schema({
@@ -72,6 +76,18 @@ const schema: Schema = new mongoose.Schema({
   ],
   coopNumber: {
     type: Number,
+  },
+  externalURL: {
+    type: String,
+  },
+  externalName: {
+    type: String,
+  },
+  title: {
+    type: String,
+  },
+  location: {
+    type: String,
   },
 });
 
