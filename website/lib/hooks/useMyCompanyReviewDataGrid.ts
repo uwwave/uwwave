@@ -33,6 +33,7 @@ export const useMyCompanyReviewsDataGrid = () => {
       ...x,
       roleName: x.role.role,
       username: x.user.username,
+      totalRating: x.mentorshipRating + x.workLifeRating + x.meaningfulRating,
     }));
   }, [jobReviews]);
 

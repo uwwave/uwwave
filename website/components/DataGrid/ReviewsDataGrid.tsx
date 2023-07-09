@@ -16,7 +16,6 @@ import {
   IVotesState,
 } from "src/lib/hooks/useCompanyReviewsDataGrid";
 import { JobTitleCell, getJobTitleCellProps } from "./components/JobTitleCell";
-import { StarsInput } from "../StarsInput/StarsInput";
 import Typography from "@mui/material/Typography";
 import { HelpfulCell } from "./components/HelpfullCell";
 import { useState } from "react";
@@ -30,6 +29,8 @@ import { useRouter } from "next/router";
 import { Page } from "src/lib/types/page";
 import { useViewport } from "src/lib/hooks/useViewport";
 import { RatingsDisplay } from "../StarsInput/RatingsDisplay";
+import { LocationText, Orientation } from "../LocationText/LocationText";
+import { ReadMoreText } from "../ReadmoreText/ReadMoreTest";
 
 interface IJobsDataGrid {
   jobReviewsLoading: boolean;
@@ -53,7 +54,7 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
     origin,
   } = props;
   const router = useRouter();
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(5);
   const { isMobile } = useViewport();
   const page: Page =
     origin !== undefined
@@ -90,6 +91,17 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
         );
         const isMine = user?.id === rowData.row.user.id;
         const state = voteState[rowData.row.id];
+        const location = rowData.row.location;
+        const country = location
+          ? location.startsWith("Remote in")
+            ? location.split("in ")[1]
+            : location.split(", ")[location.split(", ").length - 1]
+          : undefined;
+        const city = location
+          ? location.startsWith("Remote in")
+            ? "Remote"
+            : location.split(", ")[0]
+          : undefined;
         if (!state) {
           return null;
         }
@@ -101,28 +113,36 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
               imageURL={imageURL}
               url={url}
             />
-            <Spacer height={8} />
-            <Typography variant="caption">{formattedDate}</Typography>
+
             <div>
               <Spacer height={8} />
               <Typography>{`$${rowData.row.salary} CAD, hourly`}</Typography>
+              <Spacer width={4} />
+              <LocationText
+                city={city}
+                country={country}
+                orientation={Orientation.horizontal}
+              />
               <Spacer width={8} />
-
               <RatingsDisplay
                 mentorshipVal={rowData.row.mentorshipRating / 20}
                 workLifeVal={rowData.row.workLifeRating / 20}
                 meaningfulVal={rowData.row.meaningfulRating / 20}
               />
-              <Spacer height={8} />
+              <Spacer height={16} />
               <Typography>
                 {rowData.row.verified ? (
                   <StyledTooltip title="Verified Review" arrow placement="top">
                     <StyledVerifiedIcon />
                   </StyledTooltip>
                 ) : null}
-                <b>{rowData.row.review}</b>
+                <b>
+                  <ReadMoreText text={rowData.row.review} max={120} />
+                </b>
               </Typography>
             </div>
+            <Spacer height={8} />
+            <Typography>{formattedDate}</Typography>
 
             <Spacer height={8} />
             <div>
@@ -174,42 +194,34 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
       headerName: "Position",
       renderHeader: headerComponent,
       renderCell: () => <></>,
-      flex: 2,
+      flex: 3,
     },
     {
-      field: "rating",
-      headerName: "Overall",
-      align: "center",
+      flex: 4,
+      field: "totalRating",
+      headerName: "Review",
       headerAlign: "center",
       renderHeader: headerComponent,
       renderCell: rowData => {
-        const isMine = user?.id === rowData.row.user.id;
-        const averageRating = Math.floor(
-          (rowData.row.mentorshipRating / 20 +
-            rowData.row.workLifeRating / 20 +
-            rowData.row.meaningfulRating / 20) /
-            3
-        );
         return (
-          <Tooltip
-            arrow
-            title={
-              <RatingsDisplay
-                mentorshipVal={rowData.row.mentorshipRating / 20}
-                workLifeVal={rowData.row.workLifeRating / 20}
-                meaningfulVal={rowData.row.meaningfulRating / 20}
-              />
-            }
-            placement="top"
-          >
-            <div>
-              <StarsInput
-                color={isMine ? BackgroundColor.dark : Color.rating}
-                value={averageRating}
-                starsSize={16}
-              />
-            </div>
-          </Tooltip>
+          <div>
+            <RatingsDisplay
+              mentorshipVal={rowData.row.mentorshipRating / 20}
+              workLifeVal={rowData.row.workLifeRating / 20}
+              meaningfulVal={rowData.row.meaningfulRating / 20}
+            />
+            <Spacer height={16} />
+            <Typography>
+              {rowData.row.verified ? (
+                <StyledTooltip title="Verified Review" arrow placement="top">
+                  <StyledVerifiedIcon />
+                </StyledTooltip>
+              ) : null}
+              <b>
+                <ReadMoreText text={rowData.row.review} max={120} />
+              </b>
+            </Typography>
+          </div>
         );
       },
     },
@@ -229,28 +241,29 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
       ),
     },
     {
-      flex: 3,
-      field: "review",
-      headerName: "Review",
+      field: "location",
+      headerName: "Location",
+      align: "center",
       headerAlign: "center",
       renderHeader: headerComponent,
       renderCell: rowData => {
+        const location = rowData.row.location;
+        const country = location
+          ? location.startsWith("Remote in")
+            ? location.split("in ")[1]
+            : location.split(", ")[location.split(", ").length - 1]
+          : undefined;
+        const city = location
+          ? location.startsWith("Remote in")
+            ? "Remote"
+            : location.split(", ")[0]
+          : undefined;
         return (
-          <div>
-            <RatingsDisplay
-              mentorshipVal={rowData.row.mentorshipRating / 20}
-              workLifeVal={rowData.row.workLifeRating / 20}
-              meaningfulVal={rowData.row.meaningfulRating / 20}
-            />
-            <Typography>
-              {rowData.row.verified ? (
-                <StyledTooltip title="Verified Review" arrow placement="top">
-                  <StyledVerifiedIcon />
-                </StyledTooltip>
-              ) : null}
-              <b>{rowData.row.review}</b>
-            </Typography>
-          </div>
+          <LocationText
+            city={city}
+            country={country}
+            orientation={Orientation.vertical}
+          />
         );
       },
     },
@@ -262,7 +275,7 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
       renderHeader: headerComponent,
       renderCell: rowData => {
         const date = new Date(rowData.row.date);
-        const formattedDate = moment(date).format("MMMM D");
+        const formattedDate = moment(date).format("MMM D");
         const formattedYear = moment(date).format("YYYY");
         return (
           <div>

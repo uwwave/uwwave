@@ -9,6 +9,9 @@ interface ITertiaryButton {
   bold?: boolean;
   underline?: boolean;
   startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
+  disabled?: boolean;
+  marginTop?: number;
 }
 export const TertiaryButton = ({
   text,
@@ -17,10 +20,13 @@ export const TertiaryButton = ({
   bold,
   underline,
   startIcon,
+  disabled,
+  endIcon,
+  marginTop,
 }: ITertiaryButton) => {
   return (
-    <StyledButtonBase>
-      <Main onClick={onClick}>
+    <StyledButtonBase disabled={disabled} marginTop={marginTop}>
+      <Main onClick={onClick} disabled={disabled ?? false}>
         {startIcon}
         <StyledTypography
           fillColor={white ? "white" : undefined}
@@ -29,17 +35,22 @@ export const TertiaryButton = ({
         >
           {text}
         </StyledTypography>
+        {endIcon}
       </Main>
     </StyledButtonBase>
   );
 };
 
-const Main = styled.div`
+interface IDisabled {
+  disabled: boolean;
+}
+const Main = styled.div<IDisabled>`
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  gap: 4px;
+  cursor: ${props => (props.disabled ? "initial" : "pointer")};
+  gap: 8px;
+  opacity: ${props => (props.disabled ? 0.3 : 1)};
 `;
 
 interface IStyledTypography {
@@ -63,8 +74,12 @@ const StyledTypography = styled(Typography)<IStyledTypography>`
   }
 `;
 
-const StyledButtonBase = styled(ButtonBase)`
+interface IMarginTop {
+  marginTop?: number;
+}
+const StyledButtonBase = styled(ButtonBase)<IMarginTop>`
   && {
     border-radius: 4px;
+    ${props => (props.marginTop ? "margin-top: -4px;" : "")}
   }
 `;

@@ -7,6 +7,7 @@ import { useVoteHelpful } from "./useVoteHelpful";
 export interface IJobReviewRow extends IJobReview {
   roleName: string;
   username: string;
+  totalRating: number;
 }
 
 export enum VoteState {
@@ -53,6 +54,7 @@ export const useCompanyReviewsDataGrid = (companyID: string) => {
       ...x,
       roleName: x.role.role,
       username: x.user.username,
+      totalRating: x.mentorshipRating + x.workLifeRating + x.meaningfulRating,
     }));
   }, [jobReviews]);
 

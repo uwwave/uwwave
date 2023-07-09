@@ -71,7 +71,6 @@ const updateReviewVotes = async (
       if (!reviewDoc) {
         continue;
       }
-      console.log(reviewDoc.user.id, userId);
       if (reviewDoc.user.id === userId) {
         // you can't vote on your own
         continue;

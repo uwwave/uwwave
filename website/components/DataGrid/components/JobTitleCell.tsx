@@ -22,8 +22,19 @@ interface IData {
   company: ICompanyClearbitData;
   role: IJobRole;
   coopNumber?: number;
+  externalURL?: string;
+  externalName?: string;
+  title?: string;
 }
 export const getJobTitleCellProps = (rowData: IData, page?: Page) => {
+  if (rowData.externalName && rowData.externalName) {
+    return {
+      title: rowData.title ?? "External Review",
+      imageURL: "/link.png",
+      subtitle: rowData.externalName,
+      url: rowData.externalURL,
+    };
+  }
   const roleSubtitle = `${
     rowData.coopNumber
       ? `${rowData.role.role}${coopNumberSubtitleDisplay(rowData.coopNumber)}`

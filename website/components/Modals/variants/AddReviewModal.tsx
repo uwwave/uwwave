@@ -27,6 +27,7 @@ import { Checkbox } from "src/components/Checkbox/Checkbox";
 import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
 import { TertiaryButton } from "src/components/Buttons/TertiaryButton";
 import ChevronLeftIcon from "@mui/icons-material/ArrowBackIos";
+import ChevronRightIcon from "@mui/icons-material/ArrowForwardIos";
 import { Select } from "src/components/Select/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { InterviewResources } from "src/components/InterviewResources/InterviewResources";
@@ -36,6 +37,8 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { Page } from "src/lib/types/page";
 import { IInterviewReview } from "src/database/models/InterviewReview";
 import { coopNumberDisplay } from "src/lib/reviews/summary";
+import { LocationsSearchInput } from "src/components/TextField/variants/LocationSearchInput";
+import { getCountryFlag } from "src/components/CountryFlag/CountryFlag";
 interface IAddReviewModal {
   isOpen: boolean;
   company?: ICompanyClearbitData;
@@ -66,7 +69,8 @@ export const AddReviewModal = ({
     homeErrorMessage,
     modalTitle,
     companyAndRole,
-    onBackToHome,
+    onBack,
+    onNext,
     jobReviewErrorString,
     onSubmitJobReview,
     stars,
@@ -102,6 +106,11 @@ export const AddReviewModal = ({
     setWorkLifeStars,
     mentorshipStars,
     setMentorshipStars,
+    progress,
+    showNextButton,
+    disableNextButton,
+    setLocation,
+    location,
   } = useAddReviewModal(
     close,
     afterSubmit,
@@ -239,14 +248,24 @@ export const AddReviewModal = ({
   const renderBackButton = () =>
     isBackToHomeDisabled ? null : (
       <>
-        <Spacer height={32} />
+        <Spacer height={128} />
         <InputRow>
           <TertiaryButton
             startIcon={<StyledChevronLeftIcon />}
-            text="back"
+            text="Back"
             white
-            onClick={onBackToHome}
+            onClick={onBack}
           />
+          {progress ? <Typography color="white">{progress}</Typography> : null}
+          {showNextButton ? (
+            <TertiaryButton
+              endIcon={<StyledChevronRightIcon />}
+              text="Next"
+              white
+              onClick={onNext}
+              disabled={disableNextButton}
+            />
+          ) : null}
         </InputRow>
       </>
     );
@@ -385,6 +404,8 @@ export const AddReviewModal = ({
     <>
       {renderCompanyAndRoleTitle()}
       <Spacer height={24} />
+      {renderLocationInput()}
+      <Spacer height={8} />
       {renderCoopNumberInput()}
       <Spacer height={8} />
       {renderSalaryInput()}
@@ -398,6 +419,34 @@ export const AddReviewModal = ({
       {renderJobSubmitUpdateButton()}
       {renderDeleteButton()}
       {renderConfirmDelete()}
+      {renderBackButton()}
+    </>
+  );
+
+  const renderJobReview2 = () => (
+    <>
+      {renderCompanyAndRoleTitle()}
+      <Spacer height={24} />
+      {renderJobStarsInput()}
+      <Spacer height={32} />
+      {renderReviewTextField()}
+      {renderIsAnonymousInput()}
+      {renderErrorMessage()}
+      <Spacer height={8} />
+      {renderJobSubmitUpdateButton()}
+      {renderBackButton()}
+    </>
+  );
+
+  const renderJobReview1 = () => (
+    <>
+      {renderCompanyAndRoleTitle()}
+      <Spacer height={24} />
+      {renderLocationInput()}
+      <Spacer height={8} />
+      {renderCoopNumberInput()}
+      <Spacer height={8} />
+      {renderSalaryInput()}
       {renderBackButton()}
     </>
   );
@@ -431,6 +480,27 @@ export const AddReviewModal = ({
       </Select>
     </InputRow>
   );
+  const renderLocationInput = () => {
+    return (
+      <LocationsSearchInput
+        onValue={(data?: string) => {
+          setLocation(data ?? "");
+        }}
+        initialValue={
+          location
+            ? {
+                value: location,
+                icon: getCountryFlag(
+                  location.startsWith("Remote in")
+                    ? location.split(" in ")[1]
+                    : location.split(", ")[1]
+                ),
+              }
+            : undefined
+        }
+      />
+    );
+  };
 
   const renderCoopNumberInput = () => {
     return (
@@ -503,7 +573,11 @@ export const AddReviewModal = ({
 
   const renderState = () => {
     switch (state) {
-      case AddReviewModalState.REVIEW_JOB:
+      case AddReviewModalState.REVIEW_JOB_1:
+        return renderJobReview1();
+      case AddReviewModalState.REVIEW_JOB_2:
+        return renderJobReview2();
+      case AddReviewModalState.REVIEW_JOB_UPDATE:
       case AddReviewModalState.REVIEW_JOB_ERROR:
       case AddReviewModalState.REVIEW_JOB_LOADING:
       case AddReviewModalState.REVIEW_JOB_DELETE:
@@ -622,6 +696,12 @@ const Center = styled.div`
 `;
 
 const StyledChevronLeftIcon = styled(ChevronLeftIcon)`
+  && {
+    color: white;
+  }
+`;
+
+const StyledChevronRightIcon = styled(ChevronRightIcon)`
   && {
     color: white;
   }
