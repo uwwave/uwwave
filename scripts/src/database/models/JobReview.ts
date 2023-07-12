@@ -23,24 +23,31 @@ export interface IJobReview {
   coopNumber?: number;
   externalURL?: string;
   externalName?: string;
+  title?: string;
+  location?: string;
+  jobTerm?: string;
+  minSalary?: number;
+  maxSalary?: number;
 }
 
 export interface IExternalReviewPost {
   role: string;
   company: string;
   user: string;
-  mentorshipRating: number;
-  workLifeRating: number;
-  meaningfulRating: number;
+  mentorshipRating?: number;
+  workLifeRating?: number;
+  meaningfulRating?: number;
   salary: number;
-  review: string;
+  review?: string;
   date: number;
   upvoters: string[];
   downvoters: string[];
   externalURL: string;
   externalName: string;
-  title: string;
-  location: string;
+  title?: string;
+  location?: string;
+  minSalary?: number;
+  maxSalary?: number;
 }
 
 const schema: Schema = new mongoose.Schema({
@@ -69,6 +76,12 @@ const schema: Schema = new mongoose.Schema({
     type: Number,
   },
   salary: {
+    type: Number,
+  },
+  minSalary: {
+    type: Number,
+  },
+  maxSalary: {
     type: Number,
   },
   verified: {
@@ -100,9 +113,12 @@ const schema: Schema = new mongoose.Schema({
     type: String,
   },
   title: {
-    type: String
+    type: String,
   },
   location: {
+    type: String,
+  },
+  jobTerm: {
     type: String
   }
 });

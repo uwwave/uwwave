@@ -5,9 +5,9 @@ import * as jobs from "../../files/job.json"
 import JobReviewDocument, { IExternalReviewPost} from "../database/models/JobReview";
 import CompanyDocument from "../database/models/CompanyDomains"
 import fs from 'fs';
+import { DEFAULT_ROLE_ID, DEFAULT_USER_ID } from "../lib/consts";
 
-const DEFAULT_ROLE_ID = "649512cefa64fb130f275a86"
-const DEFAULT_USER_ID = "64aa216db0c9c54d34120ed6"
+
 const currencyConversions:{[key: string]: number} = {
     'USD':1.33,
     'CAD':1,

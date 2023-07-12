@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   IInterviewResourceDisplay,
   getInterviewResourceValidator,
@@ -10,6 +10,7 @@ import { IJobReview } from "src/database/models/JobReview";
 import { IJobRole } from "src/database/models/JobRole";
 import { Requests } from "src/lib/requests/Requests";
 import { Page } from "src/lib/types/page";
+import { generateSchoolTerms } from "../dates/dates";
 
 export enum AddReviewModalState {
   HOME,
@@ -28,11 +29,11 @@ export enum AddReviewModalState {
 }
 
 export enum InterviewStatus {
-  R1_ACCEPTED = "Ranked_1,_Accepted_offer",
-  R1_REJECTED = "Ranked_1,_Rejected_offer",
+  R1_ACCEPTED = "Accepted_offer",
+  R1_REJECTED = "Rejected_offer",
   RM = "Ranked_and_matched",
   R = "Ranked",
-  U = "Unranked",
+  U = "Unranked_/_No offer",
   COMPLETE = "Completed_Interview",
 }
 
@@ -89,6 +90,10 @@ export const useAddReviewModal = (
     reviewProp?.coopNumber ?? 1
   );
 
+  const [jobTerm, setJobTerm] = useState<string>(
+    reviewProp?.jobTerm ?? generateSchoolTerms(1)[0]
+  );
+
   const [location, setLocation] = useState<string>(reviewProp?.location ?? "");
   const [reviewJobServerError, setReviewJobServerError] = useState<string>();
   const [interviewResources, setInterviewResourcesState] = useState<
@@ -141,6 +146,10 @@ export const useAddReviewModal = (
   const onChangeRole = (data?: IJobRole) => {
     setRole(data);
   };
+
+  useEffect(() => {
+    setCompany(companyData);
+  }, [companyData]);
 
   const homeErrorMessage: string | undefined = useMemo(() => {
     if (state !== AddReviewModalState.HOME_ERROR) {
@@ -222,6 +231,7 @@ export const useAddReviewModal = (
           review,
           coopNumber,
           location,
+          jobTerm,
         });
       } else {
         await Requests.postJobReview({
@@ -236,6 +246,7 @@ export const useAddReviewModal = (
           review,
           coopNumber,
           location,
+          jobTerm,
         });
       }
       setState(
@@ -508,5 +519,7 @@ export const useAddReviewModal = (
     setLocation,
     onSubmitCompanySuccess,
     companyState: company,
+    jobTerm,
+    setJobTerm,
   };
 };

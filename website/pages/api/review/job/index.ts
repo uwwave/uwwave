@@ -72,6 +72,7 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     workLifeRating,
     meaningfulRating,
     location,
+    jobTerm,
   } = req.body;
   if (
     !role ||
@@ -108,6 +109,7 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     date: new Date().getTime(),
     coopNumber,
     location,
+    jobTerm,
   });
   await newReview.save();
   res.status(200).end();
@@ -138,6 +140,7 @@ const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
     review,
     coopNumber,
     location,
+    jobTerm,
   } = req.body;
   if (
     !id ||
@@ -176,6 +179,7 @@ const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
       review,
       coopNumber,
       location,
+      jobTerm,
     },
     { upsert: false }
   );

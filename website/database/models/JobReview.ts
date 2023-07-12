@@ -10,13 +10,13 @@ export interface IJobReview {
   company: ICompanyClearbitData;
   user: IUserData;
   id: string;
-  mentorshipRating: number;
-  workLifeRating: number;
-  meaningfulRating: number;
-  salary: number;
-  verified: boolean;
-  anonymous: boolean;
-  review: string;
+  mentorshipRating?: number;
+  workLifeRating?: number;
+  meaningfulRating?: number;
+  salary?: number;
+  verified?: boolean;
+  anonymous?: boolean;
+  review?: string;
   date: number;
   upvoters: string[];
   downvoters: string[];
@@ -25,6 +25,9 @@ export interface IJobReview {
   externalName?: string;
   title?: string;
   location?: string;
+  jobTerm?: string;
+  minSalary?: number;
+  maxSalary?: number;
 }
 
 const schema: Schema = new mongoose.Schema({
@@ -53,6 +56,12 @@ const schema: Schema = new mongoose.Schema({
     type: Number,
   },
   salary: {
+    type: Number,
+  },
+  minSalary: {
+    type: Number,
+  },
+  maxSalary: {
     type: Number,
   },
   verified: {
@@ -87,6 +96,9 @@ const schema: Schema = new mongoose.Schema({
     type: String,
   },
   location: {
+    type: String,
+  },
+  jobTerm: {
     type: String,
   },
 });
