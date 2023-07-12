@@ -39,19 +39,19 @@ export const coopNumberDisplay = (num: number): string => {
 
 export const coopNumberSubtitleDisplay = (num: number): string => {
   if (num >= 7) {
-    return ` - ${num}+ previous co-ops`;
+    return `${num}+ previous co-ops`;
   }
   switch (num) {
     case 0:
       return "";
     case 1:
-      return " - 1st co-op";
+      return "1st co-op";
     case 2:
-      return " - 2nd co-op";
+      return "2nd co-op";
     case 3:
-      return " - 3rd co-op";
+      return "3rd co-op";
       break;
     default:
-      return ` - ${num}th co-op`;
+      return `${num}th co-op`;
   }
 };

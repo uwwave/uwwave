@@ -42,8 +42,7 @@ const jobs = __importStar(require("../../files/job.json"));
 const JobReview_1 = __importDefault(require("../database/models/JobReview"));
 const CompanyDomains_1 = __importDefault(require("../database/models/CompanyDomains"));
 const fs_1 = __importDefault(require("fs"));
-const DEFAULT_ROLE_ID = "649512cefa64fb130f275a86";
-const DEFAULT_USER_ID = "64aa216db0c9c54d34120ed6";
+const consts_1 = require("../lib/consts");
 const currencyConversions = {
     'USD': 1.33,
     'CAD': 1,
@@ -107,9 +106,9 @@ const fire = () => __awaiter(void 0, void 0, void 0, function* () {
             }
         }
         ExternalReviewPost.push({
-            role: DEFAULT_ROLE_ID,
+            role: consts_1.DEFAULT_ROLE_ID,
             company: companyDocument.id,
-            user: DEFAULT_USER_ID,
+            user: consts_1.DEFAULT_USER_ID,
             mentorshipRating: x.mentorship_rating * 20,
             workLifeRating: x.work_life_balance_rating * 20,
             meaningfulRating: x.meaningful_work_rating * 20,

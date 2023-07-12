@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "uploadInternCompassArchiveReviews": "rm -r dist && tsc && node dist/src/scripts/uploadInternCompassArchiveReviews.js",
+    "uploadMegathreadData": "rm -r dist && tsc && node dist/src/scripts/uploadMegathreadData.js",
     "test": "rm -r dist && tsc && node dist/src/scripts/test.js"
   },
   "keywords": [],

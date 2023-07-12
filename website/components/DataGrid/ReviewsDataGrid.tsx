@@ -42,6 +42,12 @@ interface IJobsDataGrid {
   onEditReview: () => void;
   origin?: Page;
 }
+
+export const isDataMegathread = (data: { externalName?: string }): boolean => {
+  return data.externalName
+    ? data.externalName.toLowerCase().includes("megathread")
+    : false;
+};
 export const ReviewsDataGrid = (props: IJobsDataGrid) => {
   const {
     jobReviewRows,
@@ -116,20 +122,40 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
 
             <div>
               <Spacer height={8} />
-              <Typography>{`$${rowData.row.salary} CAD, hourly`}</Typography>
+              {isDataMegathread(rowData.row) ? null : (
+                <Typography>{`$${rowData.row.salary} CAD, hourly`}</Typography>
+              )}
+              {!isDataMegathread(rowData.row) ? null : rowData.row.minSalary &&
+                rowData.row.maxSalary &&
+                rowData.row.minSalary !== rowData.row.maxSalary ? (
+                <Typography>{`$${rowData.row.minSalary} - $${rowData.row.maxSalary} CAD, hourly`}</Typography>
+              ) : (
+                <Typography>{`$${rowData.row.salary} CAD, hourly`}</Typography>
+              )}
               <Spacer width={4} />
-              <LocationText
-                city={city}
-                country={country}
-                orientation={Orientation.horizontal}
-              />
-              <Spacer width={8} />
-              <RatingsDisplay
-                mentorshipVal={rowData.row.mentorshipRating / 20}
-                workLifeVal={rowData.row.workLifeRating / 20}
-                meaningfulVal={rowData.row.meaningfulRating / 20}
-              />
-              <Spacer height={16} />
+              {isDataMegathread(rowData.row) ? null : (
+                <>
+                  <LocationText
+                    city={city}
+                    country={country}
+                    orientation={Orientation.horizontal}
+                  />
+                  <Spacer width={8} />
+                </>
+              )}
+
+              {rowData.row.mentorshipRating &&
+              rowData.row.workLifeRating &&
+              rowData.row.meaningfulRating ? (
+                <>
+                  <RatingsDisplay
+                    mentorshipVal={rowData.row.mentorshipRating / 20}
+                    workLifeVal={rowData.row.workLifeRating / 20}
+                    meaningfulVal={rowData.row.meaningfulRating / 20}
+                  />
+                  <Spacer height={16} />
+                </>
+              ) : null}
               <Typography>
                 {rowData.row.verified ? (
                   <StyledTooltip title="Verified Review" arrow placement="top">
@@ -137,7 +163,7 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
                   </StyledTooltip>
                 ) : null}
                 <b>
-                  <ReadMoreText text={rowData.row.review} max={120} />
+                  <ReadMoreText text={rowData.row.review ?? ""} max={120} />
                 </b>
               </Typography>
             </div>
@@ -205,12 +231,18 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
       renderCell: rowData => {
         return (
           <div>
-            <RatingsDisplay
-              mentorshipVal={rowData.row.mentorshipRating / 20}
-              workLifeVal={rowData.row.workLifeRating / 20}
-              meaningfulVal={rowData.row.meaningfulRating / 20}
-            />
-            <Spacer height={16} />
+            {rowData.row.mentorshipRating &&
+            rowData.row.workLifeRating &&
+            rowData.row.meaningfulRating ? (
+              <>
+                <RatingsDisplay
+                  mentorshipVal={rowData.row.mentorshipRating / 20}
+                  workLifeVal={rowData.row.workLifeRating / 20}
+                  meaningfulVal={rowData.row.meaningfulRating / 20}
+                />
+                <Spacer height={16} />
+              </>
+            ) : null}
             <Typography>
               {rowData.row.verified ? (
                 <StyledTooltip title="Verified Review" arrow placement="top">
@@ -218,7 +250,7 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
                 </StyledTooltip>
               ) : null}
               <b>
-                <ReadMoreText text={rowData.row.review} max={120} />
+                <ReadMoreText text={rowData.row.review ?? ""} max={120} />
               </b>
             </Typography>
           </div>
@@ -231,14 +263,33 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
       align: "center",
       headerAlign: "center",
       renderHeader: headerComponent,
-      renderCell: rowData => (
-        <div>
-          <Typography align="center">{`$${rowData.row.salary}`}</Typography>
-          <Typography align="center" variant="caption">
-            CAD, hourly
-          </Typography>
-        </div>
-      ),
+      renderCell: rowData => {
+        const isMegathread = isDataMegathread(rowData.row);
+        if (isMegathread) {
+          return (
+            <div>
+              <Typography align="center">
+                {rowData.row.minSalary &&
+                rowData.row.maxSalary &&
+                rowData.row.minSalary !== rowData.row.maxSalary
+                  ? `$${rowData.row.minSalary} - $${rowData.row.maxSalary}`
+                  : `$${rowData.row.salary}`}
+              </Typography>
+              <Typography align="center" variant="caption">
+                CAD, hourly
+              </Typography>
+            </div>
+          );
+        }
+        return (
+          <div>
+            <Typography align="center">{`$${rowData.row.salary}`}</Typography>
+            <Typography align="center" variant="caption">
+              CAD, hourly
+            </Typography>
+          </div>
+        );
+      },
     },
     {
       field: "location",
@@ -247,6 +298,9 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
       headerAlign: "center",
       renderHeader: headerComponent,
       renderCell: rowData => {
+        if (isDataMegathread(rowData.row)) {
+          return null;
+        }
         const location = rowData.row.location;
         const country = location
           ? location.startsWith("Remote in")

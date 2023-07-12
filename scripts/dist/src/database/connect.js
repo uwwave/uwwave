@@ -10,7 +10,7 @@ dotenv_1.default.config();
 const connectToDb = () => {
     if (mongoose_1.default.connection.readyState >= 1)
         return;
-    const databaseName = "test"; //"staging" or "test"
+    const databaseName = "staging"; //"staging" or "test"
     const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.5tyquge.mongodb.net/${databaseName}?retryWrites=true&w=majority`;
     return mongoose_1.default.connect(uri, {
         autoIndex: true,

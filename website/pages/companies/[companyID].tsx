@@ -320,7 +320,7 @@ const SpecificCompanyPage = () => {
       label: `Job Listings ${jobsCount ? `(${jobsCount})` : ""}`,
     };
     const ratingsLabel = {
-      label: `Ratings  ${
+      label: `Reviews  ${
         jobReviewRows.length ? `(${jobReviewRows.length})` : ""
       }`,
     };

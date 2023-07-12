@@ -78,14 +78,17 @@ const HomePage = () => {
                 </MobileSubTitle>
               ) : (
                 <SubTitle>
-                  Upgraded Search, Interview Ratings, Multi-shortlists & More
+                  Salaries, Job Ratings, Interview Reviews, Upgraded Job Search
+                  & More
                 </SubTitle>
               )}
             </SubTitleWrapper>
-            <Spacer height={16} />
+            <Spacer height={32} />
             {isMobile ? null : (
               <Center>
-                <PrimaryButton href="/setup">Get Started</PrimaryButton>
+                <PrimaryButton href="/setup">
+                  Start Browsing Jobs this Co-op Cycle
+                </PrimaryButton>
               </Center>
             )}
             {isMobile ? null : <Spacer height={40} />}

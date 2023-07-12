@@ -1,0 +1,3044 @@
+[
+    {
+        "companyName": "1Password",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "1Password",
+        "roleTitle": null,
+        "salary": 29,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "1Password",
+        "roleTitle": null,
+        "salary": 32,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "1Password",
+        "roleTitle": null,
+        "salary": 42,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Abbott ADD",
+        "roleTitle": null,
+        "salary": 22.05,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Abnormal Security",
+        "roleTitle": null,
+        "salary": 65.65,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Accedo",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Accedo",
+        "roleTitle": null,
+        "salary": 27,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Achievers inc",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Achievers inc",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Addepar",
+        "roleTitle": null,
+        "salary": 40,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Addepar",
+        "roleTitle": null,
+        "salary": 48,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "ADP",
+        "roleTitle": null,
+        "salary": 44,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Altice USA",
+        "roleTitle": null,
+        "salary": 23,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Altice USA",
+        "roleTitle": null,
+        "salary": 34,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Amazon",
+        "roleTitle": null,
+        "salary": 57,
+        "coopNumber": null
+    },
+    {
+        "companyName": "AMD",
+        "roleTitle": null,
+        "salary": 27,
+        "coopNumber": null
+    },
+    {
+        "companyName": "AMD",
+        "roleTitle": null,
+        "salary": 21.88,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "AMD",
+        "roleTitle": null,
+        "salary": 29.33,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "American Express",
+        "roleTitle": null,
+        "salary": 34.5,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Apple",
+        "roleTitle": "Hardware Role",
+        "salary": 39,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Apple",
+        "roleTitle": "System Level Test Engineer",
+        "salary": 42,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Arctic Wolf",
+        "roleTitle": null,
+        "salary": 23,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Arctic Wolf",
+        "roleTitle": null,
+        "salary": 34,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Arctic Wolf",
+        "roleTitle": null,
+        "salary": 23,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Arctic Wolf",
+        "roleTitle": null,
+        "salary": 34,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Aterlo Networks",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Athelas",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Athos",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Atolio",
+        "roleTitle": null,
+        "salary": 34,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Atolio",
+        "roleTitle": null,
+        "salary": 38,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Atolio",
+        "roleTitle": null,
+        "salary": 38,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Atolio",
+        "roleTitle": null,
+        "salary": 42,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "Autodesk",
+        "roleTitle": null,
+        "salary": 24,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Autodesk",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Autonomic",
+        "roleTitle": null,
+        "salary": 38,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Autonomic",
+        "roleTitle": null,
+        "salary": 40,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Autonomic",
+        "roleTitle": null,
+        "salary": 41,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Axonify",
+        "roleTitle": null,
+        "salary": 850,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Axonify",
+        "roleTitle": null,
+        "salary": 1200,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "Bank of America",
+        "roleTitle": null,
+        "salary": 22,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Bank of America (Merrill Lynch)",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "BDO",
+        "roleTitle": null,
+        "salary": 34.36,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "BDO",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "BDO",
+        "roleTitle": null,
+        "salary": 32,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Bentley Systems",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Bentley Systems",
+        "roleTitle": null,
+        "salary": 33,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "BETS Program",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "BetterUp",
+        "roleTitle": null,
+        "salary": 8500,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Bitbuy",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Bitgo (Lumina)",
+        "roleTitle": null,
+        "salary": 10000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Blackberry",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Blackberry",
+        "roleTitle": null,
+        "salary": 21,
+        "coopNumber": null
+    },
+    {
+        "companyName": "bld.ai",
+        "roleTitle": null,
+        "salary": 7000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Bloomberg",
+        "roleTitle": null,
+        "salary": 48,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Bloomberg",
+        "roleTitle": null,
+        "salary": 5100,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Bloq",
+        "roleTitle": null,
+        "salary": 5400,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Bloq",
+        "roleTitle": null,
+        "salary": 950,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Bloq",
+        "roleTitle": null,
+        "salary": 6200,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Bloq",
+        "roleTitle": null,
+        "salary": 950,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Bluescape",
+        "roleTitle": null,
+        "salary": 34,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "BMO Business Analyst",
+        "roleTitle": null,
+        "salary": 24,
+        "coopNumber": null
+    },
+    {
+        "companyName": "BMO Product Analyst",
+        "roleTitle": null,
+        "salary": 28,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "BMO Software Developer",
+        "roleTitle": null,
+        "salary": 29.50,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Bolt",
+        "roleTitle": null,
+        "salary": 56,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Bonfire Interactive",
+        "roleTitle": null,
+        "salary": 24,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Boosted.AI",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Borrowell",
+        "roleTitle": "Mobile Developer",
+        "salary": 35,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Brookfield Annuity",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Brookfield Renewables",
+        "roleTitle": null,
+        "salary": 26,
+        "coopNumber": null
+    },
+    {
+        "companyName": "CAAT Pension Plan",
+        "roleTitle": null,
+        "salary": 18,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Canadian Food Inspection Agency",
+        "roleTitle": "Full-stack developer",
+        "salary": 24.77,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Canix",
+        "roleTitle": null,
+        "salary": 6400,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Capco",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Capital1",
+        "roleTitle": null,
+        "salary": 38,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Capital1",
+        "roleTitle": null,
+        "salary": 39,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "Carta",
+        "roleTitle": null,
+        "salary": 1150,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Carta",
+        "roleTitle": "Software Engineering",
+        "salary": 30.75,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Carfax",
+        "roleTitle": "Software Developer",
+        "salary": 26,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Castleton Commodities",
+        "roleTitle": null,
+        "salary": 38,
+        "coopNumber": null
+    },
+    {
+        "companyName": "CEGN",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "C.E. McMahon Professional Corporation",
+        "roleTitle": null,
+        "salary": 19,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Cepton",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Cerebras Systems",
+        "roleTitle": null,
+        "salary": 38,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Ceridian",
+        "roleTitle": null,
+        "salary": 27,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Ceridian",
+        "roleTitle": null,
+        "salary": 38,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Ceridian",
+        "roleTitle": null,
+        "salary": 4800,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Ceridian",
+        "roleTitle": null,
+        "salary": 31,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Certik",
+        "roleTitle": null,
+        "salary": 7000,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "CGI",
+        "roleTitle": null,
+        "salary": 18,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Chisel.ai",
+        "roleTitle": null,
+        "salary": 40,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Christie Digital Systems",
+        "roleTitle": null,
+        "salary": 18,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Christie Digital Systems",
+        "roleTitle": null,
+        "salary": 23,
+        "coopNumber": null
+    },
+    {
+        "companyName": "CIBC",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Cisco",
+        "roleTitle": null,
+        "salary": 31,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Cisco",
+        "roleTitle": null,
+        "salary": 33,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Cisco Meraki",
+        "roleTitle": null,
+        "salary": 67,
+        "coopNumber": null
+    },
+    {
+        "companyName": "CodeWithChris",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Cohere",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Cohere",
+        "roleTitle": null,
+        "salary": 50,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Coherent Logix",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Coherent Logix",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Cohesity",
+        "roleTitle": null,
+        "salary": 49,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Coinbase",
+        "roleTitle": null,
+        "salary": 50,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Coinsquare",
+        "roleTitle": null,
+        "salary": 28,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Coinsquare",
+        "roleTitle": null,
+        "salary": 44,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Compound",
+        "roleTitle": null,
+        "salary": 10200,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Connected",
+        "roleTitle": null,
+        "salary": 37,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "The Co-operators",
+        "roleTitle": null,
+        "salary": 21,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Core Avionics",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Core Avionics",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Coursera",
+        "roleTitle": null,
+        "salary": 7000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Cover Technologies Inc",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Creospark",
+        "roleTitle": null,
+        "salary": 18,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Curinos",
+        "roleTitle": null,
+        "salary": 34,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "D2L",
+        "roleTitle": null,
+        "salary": 28,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Databrick",
+        "roleTitle": null,
+        "salary": 55,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Datadog",
+        "roleTitle": null,
+        "salary": 40,
+        "coopNumber": null
+    },
+    {
+        "companyName": "data.world",
+        "roleTitle": null,
+        "salary": 1400,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Deep Breathe",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Deep Breathe",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Deep Genomics",
+        "roleTitle": null,
+        "salary": 60000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Dejero",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Deloitte",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Delphia Asset Management",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Delphia Asset Management",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Digitaled",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Digital Extremes",
+        "roleTitle": "Marketing",
+        "salary": 20,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "DocuSign",
+        "roleTitle": null,
+        "salary": 52,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Draper",
+        "roleTitle": null,
+        "salary": 1400,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Dreamschools",
+        "roleTitle": null,
+        "salary": 19,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Dreamschools",
+        "roleTitle": null,
+        "salary": 24,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Dropbase",
+        "roleTitle": null,
+        "salary": 29,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Dropbase",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "DRW",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    },
+    {
+        "companyName": "DRW",
+        "roleTitle": null,
+        "salary": 37,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Ecobee",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Ecompliance",
+        "roleTitle": null,
+        "salary": 26,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Ecompliance",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Elekta",
+        "roleTitle": null,
+        "salary": 27,
+        "coopNumber": "2A"
+    },
+    {
+        "companyName": "Embark Trucks",
+        "roleTitle": null,
+        "salary": 10000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "The Empire Life Insurance Company",
+        "roleTitle": null,
+        "salary": 22,
+        "coopNumber": null
+    },
+    {
+        "companyName": "The Empire Life Insurance Company",
+        "roleTitle": null,
+        "salary": 28,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Enlighted Inc",
+        "roleTitle": null,
+        "salary": 36,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Eon Media",
+        "roleTitle": null,
+        "salary": 3800,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Equifax D&A",
+        "roleTitle": null,
+        "salary": 22,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Equitable Life Insurance Company",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Equitable Life Insurance Company",
+        "roleTitle": null,
+        "salary": 23,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "ESCRYPT",
+        "roleTitle": null,
+        "salary": 26,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "ESCRYPT",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "eSentire",
+        "roleTitle": null,
+        "salary": 24.50,
+        "coopNumber": null
+    },
+    {
+        "companyName": "EY",
+        "roleTitle": null,
+        "salary": 28,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Facebook",
+        "roleTitle": null,
+        "salary": 6200,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Faire",
+        "roleTitle": "Developer",
+        "salary": 32,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Faire (Developer role)",
+        "roleTitle": null,
+        "salary": 50,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Fleet Complete",
+        "roleTitle": null,
+        "salary": 26,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Fleet Complete",
+        "roleTitle": null,
+        "salary": 32,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Fleet Labs",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Fleet Labs",
+        "roleTitle": null,
+        "salary": 27,
+        "coopNumber": null
+    },
+    {
+        "companyName": "⁠Flex AI",
+        "roleTitle": null,
+        "salary": 5000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "The Flight Deck",
+        "roleTitle": null,
+        "salary": 23,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Flipp",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Flipp",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Float",
+        "roleTitle": null,
+        "salary": 50,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Ford",
+        "roleTitle": null,
+        "salary": 23.13,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Ford",
+        "roleTitle": null,
+        "salary": 29.27,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Ford",
+        "roleTitle": null,
+        "salary": 25.77,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Ford",
+        "roleTitle": null,
+        "salary": 26.80,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Ford",
+        "roleTitle": null,
+        "salary": 28,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Forethought AI",
+        "roleTitle": null,
+        "salary": 6000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Forethought AI",
+        "roleTitle": null,
+        "salary": 8000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Freshbooks",
+        "roleTitle": null,
+        "salary": 33,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Freshbooks",
+        "roleTitle": null,
+        "salary": 70000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Genesys Laboratories",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Genesys Laboratories",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Geotab",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Get ResQ",
+        "roleTitle": null,
+        "salary": 36,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Glu",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Glu",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Google",
+        "roleTitle": null,
+        "salary": 1538,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Google",
+        "roleTitle": null,
+        "salary": 4000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Google",
+        "roleTitle": null,
+        "salary": 1700,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Google",
+        "roleTitle": null,
+        "salary": 2100,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Groq Inc",
+        "roleTitle": null,
+        "salary": 37,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Groq Inc",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Groq Inc",
+        "roleTitle": null,
+        "salary": 42,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "Gsoft",
+        "roleTitle": null,
+        "salary": 40,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "H2Analytics",
+        "roleTitle": null,
+        "salary": 23,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Halp",
+        "roleTitle": null,
+        "salary": 38,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "HeadSpin",
+        "roleTitle": null,
+        "salary": 32,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "High Q Technologies",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Hockeystick",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Hockeystick",
+        "roleTitle": null,
+        "salary": 21,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Home Depot (Dev)",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "HomeX",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": null
+    },
+    {
+        "companyName": "HomeX",
+        "roleTitle": null,
+        "salary": 33,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "HOOPP (Health Care of Ontario Pension Plan)",
+        "roleTitle": null,
+        "salary": 22.25,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Huawei",
+        "roleTitle": null,
+        "salary": 27,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Huawei",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Huawei",
+        "roleTitle": null,
+        "salary": 34,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Huawei",
+        "roleTitle": null,
+        "salary": 42,
+        "coopNumber": "masters"
+    },
+    {
+        "companyName": "Hubdoc",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "HubSpot",
+        "roleTitle": null,
+        "salary": 50,
+        "coopNumber": null
+    },
+    {
+        "companyName": "HubSpot",
+        "roleTitle": null,
+        "salary": 54,
+        "coopNumber": null
+    },
+    {
+        "companyName": "IBM",
+        "roleTitle": null,
+        "salary": 26.50,
+        "coopNumber": null
+    },
+    {
+        "companyName": "IBM",
+        "roleTitle": null,
+        "salary": 28,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "IBM",
+        "roleTitle": null,
+        "salary": 31,
+        "coopNumber": null
+    },
+    {
+        "companyName": "⁠Imagine Communications Corp",
+        "roleTitle": null,
+        "salary": 21,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "⁠Imagine Communications Corp",
+        "roleTitle": null,
+        "salary": 24,
+        "coopNumber": null
+    },
+    {
+        "companyName": "⁠Imagine Communications Corp",
+        "roleTitle": null,
+        "salary": 26,
+        "coopNumber": null
+    },
+    {
+        "companyName": "⁠Imagine Communications Corp",
+        "roleTitle": null,
+        "salary": 29,
+        "coopNumber": null
+    },
+    {
+        "companyName": "⁠Imagine Communications Corp",
+        "roleTitle": null,
+        "salary": 31,
+        "coopNumber": null
+    },
+    {
+        "companyName": "⁠Imagine Communications Corp",
+        "roleTitle": null,
+        "salary": 33,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Index Exchange",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": null
+    },
+    {
+        "companyName": "⁠Inflight",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": null
+    },
+    {
+        "companyName": "⁠Inflight",
+        "roleTitle": null,
+        "salary": 26.5,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "⁠Information Builders",
+        "roleTitle": null,
+        "salary": 50,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Intact Labs",
+        "roleTitle": null,
+        "salary": 30.5,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Intact Labs",
+        "roleTitle": "Data Science",
+        "salary": 32,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Intact Labs",
+        "roleTitle": "Data Science",
+        "salary": 39,
+        "coopNumber": "5/6"
+    },
+    {
+        "companyName": "Intel",
+        "roleTitle": null,
+        "salary": 33,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Intel",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Intel",
+        "roleTitle": null,
+        "salary": 42,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "⁠Insticator",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": null
+    },
+    {
+        "companyName": "⁠Insticator",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Instinet Canada",
+        "roleTitle": null,
+        "salary": 36,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Instinet Canada",
+        "roleTitle": null,
+        "salary": 3000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Integrate.ai",
+        "roleTitle": null,
+        "salary": 1550,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Intuit",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Intuit",
+        "roleTitle": null,
+        "salary": 37,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Intuit",
+        "roleTitle": null,
+        "salary": 47,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "iS5 Communications",
+        "roleTitle": null,
+        "salary": 32,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "ISARA",
+        "roleTitle": null,
+        "salary": 1228,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Jane Street",
+        "roleTitle": null,
+        "salary": 16667,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Jane Street",
+        "roleTitle": null,
+        "salary": 2100,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Jays Care Foundation",
+        "roleTitle": null,
+        "salary": 18,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Jobox.ai",
+        "roleTitle": null,
+        "salary": 5700,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Kaleidascape",
+        "roleTitle": null,
+        "salary": 1920,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "Kambeo",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Kambeo",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": null
+    },
+    {
+        "companyName": "KeepTruckin",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": null
+    },
+    {
+        "companyName": "KGS research",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Kiavi",
+        "roleTitle": null,
+        "salary": 9000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Kinaxis",
+        "roleTitle": null,
+        "salary": 24,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Kinaxis",
+        "roleTitle": null,
+        "salary": 34,
+        "coopNumber": "1st+2nd"
+    },
+    {
+        "companyName": "Kinaxis",
+        "roleTitle": null,
+        "salary": 28,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Kodiak Robotics",
+        "roleTitle": null,
+        "salary": 8000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Kodiak Robotics",
+        "roleTitle": null,
+        "salary": 9000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Konrad Group",
+        "roleTitle": null,
+        "salary": 6000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "LCBO",
+        "roleTitle": "PM role",
+        "salary": 1100,
+        "coopNumber": null
+    },
+    {
+        "companyName": "League",
+        "roleTitle": null,
+        "salary": 33,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "League",
+        "roleTitle": null,
+        "salary": 41,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "Level",
+        "roleTitle": null,
+        "salary": 13000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Level",
+        "roleTitle": null,
+        "salary": 200,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Level",
+        "roleTitle": null,
+        "salary": 100,
+        "coopNumber": null
+    },
+    {
+        "companyName": "LifeWorks",
+        "roleTitle": null,
+        "salary": 22.5,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Lifion by Adp",
+        "roleTitle": null,
+        "salary": 40,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Lifion by Adp",
+        "roleTitle": null,
+        "salary": 44,
+        "coopNumber": null
+    },
+    {
+        "companyName": "⁠Linkedin",
+        "roleTitle": null,
+        "salary": 55,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Loblaw",
+        "roleTitle": "Data Science",
+        "salary": 31,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Mastercard Foundation",
+        "roleTitle": null,
+        "salary": 19.5,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "⁠Mattermost",
+        "roleTitle": null,
+        "salary": 29,
+        "coopNumber": null
+    },
+    {
+        "companyName": "⁠Mattermost",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    },
+    {
+        "companyName": "⁠Mattermost",
+        "roleTitle": null,
+        "salary": 45,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Manulife",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Manulife",
+        "roleTitle": null,
+        "salary": 26,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "McAfee",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Microart Services",
+        "roleTitle": null,
+        "salary": 26,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Microsoft",
+        "roleTitle": null,
+        "salary": 50,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Microsoft",
+        "roleTitle": null,
+        "salary": 2500,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Molex",
+        "roleTitle": null,
+        "salary": 23,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Molex",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "MotoInsight",
+        "roleTitle": null,
+        "salary": 3000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Moveworks",
+        "roleTitle": null,
+        "salary": 9500,
+        "coopNumber": null
+    },
+    {
+        "companyName": "NASDAQ",
+        "roleTitle": null,
+        "salary": 28,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Newfront Insurance",
+        "roleTitle": null,
+        "salary": 90,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "Nextroll",
+        "roleTitle": null,
+        "salary": 57,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Nissan",
+        "roleTitle": null,
+        "salary": 19,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Nissan",
+        "roleTitle": null,
+        "salary": 23,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Nokia",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Nokia",
+        "roleTitle": null,
+        "salary": 33,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Nokia",
+        "roleTitle": null,
+        "salary": 33,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Noom",
+        "roleTitle": null,
+        "salary": 47,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Noom",
+        "roleTitle": null,
+        "salary": 1500,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Norm Li",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Norm Li",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Nvidia",
+        "roleTitle": null,
+        "salary": 36,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Nvidia",
+        "roleTitle": null,
+        "salary": 30.5,
+        "coopNumber": "2b"
+    },
+    {
+        "companyName": "Nvidia",
+        "roleTitle": null,
+        "salary": 33,
+        "coopNumber": "3a"
+    },
+    {
+        "companyName": "Nvidia",
+        "roleTitle": null,
+        "salary": 34.5,
+        "coopNumber": "3b"
+    },
+    {
+        "companyName": "Nvidia",
+        "roleTitle": null,
+        "salary": 36,
+        "coopNumber": "4a"
+    },
+    {
+        "companyName": "NuraLogix",
+        "roleTitle": null,
+        "salary": 28,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Nuro",
+        "roleTitle": null,
+        "salary": 9000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Nuvalence",
+        "roleTitle": null,
+        "salary": 55,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Nuvalence",
+        "roleTitle": null,
+        "salary": 60,
+        "coopNumber": null
+    },
+    {
+        "companyName": "OANDA",
+        "roleTitle": null,
+        "salary": 48000,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "OANDA",
+        "roleTitle": null,
+        "salary": 65000,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Okta",
+        "roleTitle": null,
+        "salary": 40,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Okta",
+        "roleTitle": null,
+        "salary": 45,
+        "coopNumber": null
+    },
+    {
+        "companyName": "OMERS",
+        "roleTitle": null,
+        "salary": 24,
+        "coopNumber": null
+    },
+    {
+        "companyName": "OMERS",
+        "roleTitle": null,
+        "salary": 28,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Onsemi",
+        "roleTitle": null,
+        "salary": 30.29,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Ontario Institute for Cancer Research",
+        "roleTitle": null,
+        "salary": 18.6,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Ontario Institute for Cancer Research",
+        "roleTitle": null,
+        "salary": 21,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Ontario Ministry of Health",
+        "roleTitle": null,
+        "salary": 17.27,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Ontario Ministry of Health",
+        "roleTitle": null,
+        "salary": 18.42,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "OpenText",
+        "roleTitle": null,
+        "salary": 21,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "OpenText",
+        "roleTitle": null,
+        "salary": 30.25,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "OPSEU Pension Trust",
+        "roleTitle": null,
+        "salary": 1020,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Oracle",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Oracle",
+        "roleTitle": null,
+        "salary": 37,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Penfield.AI",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Penfield.AI",
+        "roleTitle": null,
+        "salary": 50,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Pepsico",
+        "roleTitle": null,
+        "salary": 22,
+        "coopNumber": null
+    },
+    {
+        "companyName": "PlayStation",
+        "roleTitle": null,
+        "salary": 25.3,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "PlayStation",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "PointClickCare",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "PointClickCare",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "PointClickCare",
+        "roleTitle": null,
+        "salary": 32,
+        "coopNumber": null
+    },
+    {
+        "companyName": "primer.ai",
+        "roleTitle": null,
+        "salary": 50,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Prodigy Education",
+        "roleTitle": null,
+        "salary": 33,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Qualcomm",
+        "roleTitle": null,
+        "salary": 32,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Qualcomm",
+        "roleTitle": null,
+        "salary": 33,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Qualcomm",
+        "roleTitle": null,
+        "salary": 37,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Qualcomm",
+        "roleTitle": null,
+        "salary": 1500,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Radix Labs",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Raposa Research",
+        "roleTitle": null,
+        "salary": 100,
+        "coopNumber": null
+    },
+    {
+        "companyName": "RBC (Business Analyst)",
+        "roleTitle": null,
+        "salary": 22,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "RBC (Data Analyst)",
+        "roleTitle": null,
+        "salary": 28,
+        "coopNumber": null
+    },
+    {
+        "companyName": "RBC (Risk Management)",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "RBC (Soft Dev)",
+        "roleTitle": null,
+        "salary": 21.5,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "RBC (Soft Dev)",
+        "roleTitle": null,
+        "salary": 23.5,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "RBC (Soft Dev)",
+        "roleTitle": null,
+        "salary": 27.75,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Reebee",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Reebee",
+        "roleTitle": null,
+        "salary": 1096,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Relay Financial",
+        "roleTitle": null,
+        "salary": 44,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Relic Entertainment",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Remitbee (See Blacklist)",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Replicant Inc",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Replicant Inc",
+        "roleTitle": null,
+        "salary": 37,
+        "coopNumber": null
+    },
+    {
+        "companyName": "ResQ",
+        "roleTitle": null,
+        "salary": 36,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Ritual",
+        "roleTitle": null,
+        "salary": 46,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "Robinhood",
+        "roleTitle": null,
+        "salary": 48,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Robinhood",
+        "roleTitle": null,
+        "salary": 2000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Roblox",
+        "roleTitle": null,
+        "salary": 56,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Roblox",
+        "roleTitle": null,
+        "salary": 1000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Roblox",
+        "roleTitle": null,
+        "salary": 62,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Roblox",
+        "roleTitle": "DS",
+        "salary": 60,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Roblox",
+        "roleTitle": null,
+        "salary": 7000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Rocscience",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Rocscience",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Rocscience",
+        "roleTitle": null,
+        "salary": 28,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Rogers",
+        "roleTitle": null,
+        "salary": 21.25,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Rogers",
+        "roleTitle": null,
+        "salary": 23.75,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Rogers",
+        "roleTitle": null,
+        "salary": 25.75,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Samsung Research America",
+        "roleTitle": null,
+        "salary": 39,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Samsung Research America",
+        "roleTitle": null,
+        "salary": 9000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Samsung Research America",
+        "roleTitle": "Hardware",
+        "salary": 41,
+        "coopNumber": "2a"
+    },
+    {
+        "companyName": "SAP",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "SAP",
+        "roleTitle": null,
+        "salary": 24,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "SAP",
+        "roleTitle": "Machine Learning",
+        "salary": 40,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Scotiabank (Data Science/Soft Dev)",
+        "roleTitle": null,
+        "salary": 31,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Scrawlr",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Scrawlr",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Shinydocs",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Shinydocs",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Shopify",
+        "roleTitle": null,
+        "salary": 40,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Shopify",
+        "roleTitle": null,
+        "salary": 77000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Shoplogic",
+        "roleTitle": null,
+        "salary": 27,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Sibros",
+        "roleTitle": null,
+        "salary": 45,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Sibros",
+        "roleTitle": null,
+        "salary": 700,
+        "coopNumber": null
+    },
+    {
+        "companyName": "SideFX",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    },
+    {
+        "companyName": "SideFX",
+        "roleTitle": null,
+        "salary": 45,
+        "coopNumber": null
+    },
+    {
+        "companyName": "SideFX",
+        "roleTitle": null,
+        "salary": 47,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "Simplii Financial (CIBC) (Product Analyst)",
+        "roleTitle": null,
+        "salary": 26,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Skydio",
+        "roleTitle": null,
+        "salary": 52,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Skydio (Hardware)",
+        "roleTitle": null,
+        "salary": 41,
+        "coopNumber": "2a"
+    },
+    {
+        "companyName": "Smile CDR",
+        "roleTitle": null,
+        "salary": 36,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Snap Inc",
+        "roleTitle": null,
+        "salary": 9000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Snap Inc",
+        "roleTitle": null,
+        "salary": 2500,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Snap Inc",
+        "roleTitle": null,
+        "salary": 500,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Snowflake computing",
+        "roleTitle": null,
+        "salary": 43,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Snowflake computing",
+        "roleTitle": null,
+        "salary": 55,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Solana Labs",
+        "roleTitle": null,
+        "salary": 60,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Solana Labs",
+        "roleTitle": null,
+        "salary": 3000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "SoundHound",
+        "roleTitle": null,
+        "salary": 6300,
+        "coopNumber": null
+    },
+    {
+        "companyName": "SPC Commerce",
+        "roleTitle": null,
+        "salary": 27,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Splunk",
+        "roleTitle": null,
+        "salary": 22,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Splunk",
+        "roleTitle": null,
+        "salary": 44,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Splunk",
+        "roleTitle": null,
+        "salary": 60,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Square",
+        "roleTitle": null,
+        "salary": 38,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Square",
+        "roleTitle": null,
+        "salary": 1000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Squaredance",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Squarepoint Capital",
+        "roleTitle": null,
+        "salary": 85000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Squarepoint Capital",
+        "roleTitle": null,
+        "salary": 1500,
+        "coopNumber": null
+    },
+    {
+        "companyName": "SS&C Technologies",
+        "roleTitle": null,
+        "salary": 26,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "SS&C Technologies",
+        "roleTitle": null,
+        "salary": 27,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "SS&C Technologies",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "SS&C Technologies",
+        "roleTitle": null,
+        "salary": 32,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Stablecorp",
+        "roleTitle": null,
+        "salary": 22.5,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Stackadapt",
+        "roleTitle": null,
+        "salary": 50,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "Stealth Startup",
+        "roleTitle": null,
+        "salary": 64,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Stratum ai",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Stratum ai",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Super (Snapcommerce)",
+        "roleTitle": null,
+        "salary": 33,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Super (Snapcommerce)",
+        "roleTitle": null,
+        "salary": 24,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Super (Snapcommerce)",
+        "roleTitle": "supply intern",
+        "salary": 38,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Sync.com",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Sync.com",
+        "roleTitle": null,
+        "salary": 15,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Sync.com",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": null
+    },
+    {
+        "companyName": "System 1",
+        "roleTitle": null,
+        "salary": 28,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Tailscale",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Tealbook",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    },
+    {
+        "companyName": "TD",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "TD",
+        "roleTitle": null,
+        "salary": 29.66,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "TD",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "TD (non-SWE)",
+        "roleTitle": null,
+        "salary": 27.5,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Teledyne Dalsa",
+        "roleTitle": null,
+        "salary": 22.5,
+        "coopNumber": "1B"
+    },
+    {
+        "companyName": "Tesla (Unspecified Roles)",
+        "roleTitle": null,
+        "salary": 32,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Tesla (Unspecified Roles)",
+        "roleTitle": null,
+        "salary": 28,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Tesla (Firmware)",
+        "roleTitle": null,
+        "salary": 48,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Tesla (Firmware)",
+        "roleTitle": null,
+        "salary": 850,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Tesla (Hardware)",
+        "roleTitle": null,
+        "salary": 46.88,
+        "coopNumber": "2a"
+    },
+    {
+        "companyName": "TextNow",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    },
+    {
+        "companyName": "TextNow",
+        "roleTitle": null,
+        "salary": 1500,
+        "coopNumber": null
+    },
+    {
+        "companyName": "theScore",
+        "roleTitle": null,
+        "salary": 24,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "theScore",
+        "roleTitle": null,
+        "salary": 33,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Thomson Reuters",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Thomson Reuters",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Thomson Reuters",
+        "roleTitle": null,
+        "salary": 39,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Thomson Reuters",
+        "roleTitle": null,
+        "salary": 32,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Thumbtack",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Thumbtack",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Titanium Agency",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Titanium Agency",
+        "roleTitle": null,
+        "salary": 27,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Titanium Agency",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    },
+    {
+        "companyName": "TOOLBX",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": null
+    },
+    {
+        "companyName": "TOOLBX",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "TOOLBX",
+        "roleTitle": null,
+        "salary": 45,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "TTC (Toronto Transit Commission)",
+        "roleTitle": null,
+        "salary": 27.65,
+        "coopNumber": 6
+    },
+    {
+        "companyName": "Trexo Robotics",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Trexo Robotics",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Tribalscale",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Trustwave Holdings",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Tulip Retail",
+        "roleTitle": null,
+        "salary": 800,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Tulip Retail",
+        "roleTitle": null,
+        "salary": 1000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Tulip Retail",
+        "roleTitle": null,
+        "salary": 1200,
+        "coopNumber": null
+    },
+    {
+        "companyName": "TutorOcean",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Tweepsmap",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Tweepsmap",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Twitter",
+        "roleTitle": null,
+        "salary": 40,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Twitter",
+        "roleTitle": null,
+        "salary": 1000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Uber",
+        "roleTitle": null,
+        "salary": 44,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Uber",
+        "roleTitle": null,
+        "salary": 1500,
+        "coopNumber": null
+    },
+    {
+        "companyName": "⁠Ubisoft",
+        "roleTitle": null,
+        "salary": 29.33,
+        "coopNumber": "2B"
+    },
+    {
+        "companyName": "Ultimate Software",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Ultimate Software",
+        "roleTitle": null,
+        "salary": 32,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Union Bank of Switzerland (UBS Group AG)",
+        "roleTitle": null,
+        "salary": 24,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Untether AI",
+        "roleTitle": null,
+        "salary": 21,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Untether AI",
+        "roleTitle": null,
+        "salary": 24,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Uplift",
+        "roleTitle": null,
+        "salary": 38,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Uptake Canada",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Uptake Canada",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Uptake Canada",
+        "roleTitle": null,
+        "salary": 24,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Veeva Systems",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Vendia",
+        "roleTitle": null,
+        "salary": 55,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Veriday",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Versett",
+        "roleTitle": null,
+        "salary": 32,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Versett",
+        "roleTitle": null,
+        "salary": 25,
+        "coopNumber": null
+    },
+    {
+        "companyName": "VerticalScope",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Vidyard",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Vidyard",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Vidyard",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Vidyard",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Vidyard",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Vidyard",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Vidyard",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Vidyard",
+        "roleTitle": null,
+        "salary": null,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Voiceflow",
+        "roleTitle": null,
+        "salary": 40,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Voiceflow",
+        "roleTitle": null,
+        "salary": 55,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Voiceform",
+        "roleTitle": null,
+        "salary": 20,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Voiceform",
+        "roleTitle": null,
+        "salary": 50,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Voiceform",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Waabi Innovation",
+        "roleTitle": null,
+        "salary": 52,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Waabi Innovation",
+        "roleTitle": null,
+        "salary": 500,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Wattpad",
+        "roleTitle": null,
+        "salary": 4500,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Wattpad",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Wattpad",
+        "roleTitle": null,
+        "salary": 37,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Wealthsimple",
+        "roleTitle": null,
+        "salary": 7450,
+        "coopNumber": 4
+    },
+    {
+        "companyName": "Wind River",
+        "roleTitle": null,
+        "salary": 24,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Wind River",
+        "roleTitle": null,
+        "salary": 29,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Wish",
+        "roleTitle": null,
+        "salary": 40,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Wish",
+        "roleTitle": null,
+        "salary": 60,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Wish",
+        "roleTitle": null,
+        "salary": 44,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Wish",
+        "roleTitle": null,
+        "salary": 9100,
+        "coopNumber": 5
+    },
+    {
+        "companyName": "WSIB Innovation Lab",
+        "roleTitle": null,
+        "salary": 29.5,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "WSIB Innovation Lab",
+        "roleTitle": null,
+        "salary": 30.25,
+        "coopNumber": 2
+    },
+    {
+        "companyName": "Xanadu",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": 1
+    },
+    {
+        "companyName": "Yext",
+        "roleTitle": null,
+        "salary": 50,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Yext",
+        "roleTitle": null,
+        "salary": 5000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Yugabyte",
+        "roleTitle": null,
+        "salary": 10000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Yugabyte",
+        "roleTitle": null,
+        "salary": 8000,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Yugabyte",
+        "roleTitle": null,
+        "salary": 1500,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Zenreach/Greenfield",
+        "roleTitle": null,
+        "salary": 29,
+        "coopNumber": 3
+    },
+    {
+        "companyName": "Zighra",
+        "roleTitle": null,
+        "salary": 40,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Zynga",
+        "roleTitle": null,
+        "salary": 30,
+        "coopNumber": null
+    },
+    {
+        "companyName": "Zynga",
+        "roleTitle": null,
+        "salary": 35,
+        "coopNumber": null
+    }
+]

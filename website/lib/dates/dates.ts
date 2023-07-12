@@ -62,3 +62,40 @@ export const getEarliestDeadline = (jobs: JobsPageRowData[]) => {
   });
   return out;
 };
+
+export const generateSchoolTerms = (numTerms: number): string[] => {
+  const terms: string[] = [];
+  let termDate = moment();
+
+  for (let i = 0; i < numTerms; i++) {
+    const term = getTermName(termDate);
+    terms.push(term);
+    termDate = termDate.subtract(4, "months");
+  }
+
+  return terms;
+};
+
+const getTermName = (date: moment.Moment): string => {
+  const year = date.format("YYYY");
+  const month = date.format("MMMM");
+  const term = getTerm(month);
+  return `${term} ${year}`;
+};
+
+const getTerm = (month: string): string => {
+  switch (month) {
+    case "January":
+    case "February":
+    case "March":
+    case "April":
+      return "Winter";
+    case "May":
+    case "June":
+    case "July":
+    case "August":
+      return "Spring";
+    default:
+      return "Fall";
+  }
+};

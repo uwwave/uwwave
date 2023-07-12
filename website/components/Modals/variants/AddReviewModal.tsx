@@ -42,6 +42,7 @@ import { LocationsSearchInput } from "src/components/TextField/variants/Location
 import { getCountryFlag } from "src/components/CountryFlag/CountryFlag";
 import SearchOffIcon from "@mui/icons-material/SearchOff";
 import { SubmitDomainInput } from "src/components/SubmitDomainInput/SubmitDomainInput";
+import { generateSchoolTerms } from "src/lib/dates/dates";
 interface IAddReviewModal {
   isOpen: boolean;
   company?: ICompanyClearbitData;
@@ -116,6 +117,8 @@ export const AddReviewModal = ({
     location,
     onSubmitCompanySuccess,
     companyState,
+    jobTerm,
+    setJobTerm,
   } = useAddReviewModal(
     close,
     afterSubmit,
@@ -275,7 +278,7 @@ export const AddReviewModal = ({
   const renderBackButton = () =>
     isBackToHomeDisabled ? null : (
       <>
-        <Spacer height={128} />
+        <Spacer height={64} />
         <InputRow>
           <TertiaryButton
             startIcon={<StyledChevronLeftIcon />}
@@ -433,6 +436,8 @@ export const AddReviewModal = ({
       <Spacer height={24} />
       {renderLocationInput()}
       <Spacer height={8} />
+      {renderTermDateInput()}
+      <Spacer height={8} />
       {renderCoopNumberInput()}
       <Spacer height={8} />
       {renderSalaryInput()}
@@ -470,6 +475,8 @@ export const AddReviewModal = ({
       {renderCompanyAndRoleTitle()}
       <Spacer height={24} />
       {renderLocationInput()}
+      <Spacer height={8} />
+      {renderTermDateInput()}
       <Spacer height={8} />
       {renderCoopNumberInput()}
       <Spacer height={8} />
@@ -529,14 +536,49 @@ export const AddReviewModal = ({
     );
   };
 
+  const renderTermDateInput = () => {
+    return (
+      <InputRow>
+        <InputLabel>Date</InputLabel>
+        <StyledSelect
+          value={jobTerm}
+          onChange={(e: any) => setJobTerm(e.target.value)}
+          size="small"
+          MenuProps={{
+            PaperProps: {
+              style: {
+                maxHeight: 240,
+              },
+            },
+          }}
+        >
+          {generateSchoolTerms(32).map(item => {
+            return (
+              <MenuItem value={item} key={item}>
+                {item}
+              </MenuItem>
+            );
+          })}
+        </StyledSelect>
+      </InputRow>
+    );
+  };
+
   const renderCoopNumberInput = () => {
     return (
       <InputRow>
         <InputLabel>Co-op number</InputLabel>
-        <Select
+        <StyledSelect
           value={coopNumber}
           onChange={(e: any) => setCoopNumber(e.target.value)}
           size="small"
+          MenuProps={{
+            PaperProps: {
+              style: {
+                maxHeight: 240,
+              },
+            },
+          }}
         >
           {[1, 2, 3, 4, 5, 6, 7, 0].map(item => {
             return (
@@ -545,7 +587,7 @@ export const AddReviewModal = ({
               </MenuItem>
             );
           })}
-        </Select>
+        </StyledSelect>
       </InputRow>
     );
   };
@@ -705,7 +747,11 @@ const InputRow = styled.div`
 
 const NumberInput = styled(RoundedTextField)`
   && {
-    width: 96px;
+    width: 144px;
+    text-align: center;
+  }
+
+  && div input {
     text-align: center;
   }
 `;
@@ -755,5 +801,12 @@ const DeleteButton = styled(PrimaryButton)`
   && {
     background-color: ${Color.ambitious}!important;
     box-shadow: 3px 4px ${Color.red2};
+  }
+`;
+
+const StyledSelect = styled(Select)`
+  && {
+    width: 144px;
+    text-align: center;
   }
 `;

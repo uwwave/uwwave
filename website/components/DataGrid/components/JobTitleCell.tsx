@@ -8,6 +8,7 @@ import { IJobRole } from "src/database/models/JobRole";
 import { Page } from "src/lib/types/page";
 import { coopNumberSubtitleDisplay } from "src/lib/reviews/summary";
 import { useViewport } from "src/lib/hooks/useViewport";
+import { isDataMegathread } from "../ReviewsDataGrid";
 
 interface IJobTitleCell {
   subtitle: string;
@@ -16,38 +17,38 @@ interface IJobTitleCell {
   imageURL?: string;
 }
 
-interface IData {
+export interface IData {
   user: IUserData;
-  anonymous: boolean;
+  anonymous?: boolean;
   company: ICompanyClearbitData;
   role: IJobRole;
   coopNumber?: number;
   externalURL?: string;
   externalName?: string;
   title?: string;
+  jobTerm?: string;
 }
 export const getJobTitleCellProps = (rowData: IData, page?: Page) => {
   if (rowData.externalName && rowData.externalName) {
+    const isMegathread = isDataMegathread(rowData);
     return {
-      title: rowData.title ?? "External Review",
-      imageURL: "/link.png",
-      subtitle: rowData.externalName,
+      title: isMegathread
+        ? rowData.externalName
+        : rowData.title ?? "External Review",
+      imageURL: isMegathread ? "/reddit.png" : "/link.png",
+      subtitle: isMegathread
+        ? "Reddit submissions from r/uwaterloo"
+        : rowData.externalName,
       url: rowData.externalURL,
     };
   }
-  const roleSubtitle = `${
-    rowData.coopNumber
-      ? `${rowData.role.role}${coopNumberSubtitleDisplay(rowData.coopNumber)}`
-      : rowData.role.role
-  }`;
+
   const user = rowData.user;
   const isProfilePage = page === Page.PROFILE;
   //TITLE
-  const companyPageTitle = rowData.anonymous
-    ? "Anonymous"
-    : rowData.user.username;
-  const profilePageTitle = rowData.company.companyName;
-  const title = isProfilePage ? profilePageTitle : companyPageTitle;
+  const title = `${rowData.role.role}${
+    rowData.anonymous ? " (Anonymous)" : ""
+  }`;
   //PROFILE IMAGE
   const companyPageImage = rowData.anonymous
     ? ProfilePicture.UW_LOGO_GREY
@@ -55,9 +56,12 @@ export const getJobTitleCellProps = (rowData: IData, page?: Page) => {
   const profilePageImage = rowData.company.logo ?? "/logo-empty.png";
   const imageURL = page === Page.PROFILE ? profilePageImage : companyPageImage;
   //SUBTITLE
-  const companyPageSubtitle = rowData.anonymous ? "" : roleSubtitle;
-  const profilePageSubtitle = rowData.anonymous ? "anonymous" : roleSubtitle;
-  const subtitle = isProfilePage ? profilePageSubtitle : companyPageSubtitle;
+  const coopNumberString = rowData.coopNumber
+    ? coopNumberSubtitleDisplay(rowData.coopNumber)
+    : "";
+  const subtitle = `${rowData.jobTerm ?? ""}${
+    rowData.jobTerm && coopNumberString ? ", " : ""
+  }${coopNumberString}`;
   //URL
   const companyPageURL = `/companies/${rowData.company.id}`;
   const profilePageURL = rowData.anonymous

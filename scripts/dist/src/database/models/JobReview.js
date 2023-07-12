@@ -35,6 +35,12 @@ const schema = new mongoose_1.default.Schema({
     salary: {
         type: Number,
     },
+    minSalary: {
+        type: Number,
+    },
+    maxSalary: {
+        type: Number,
+    },
     verified: {
         type: Boolean,
     },
@@ -64,9 +70,12 @@ const schema = new mongoose_1.default.Schema({
         type: String,
     },
     title: {
-        type: String
+        type: String,
     },
     location: {
+        type: String,
+    },
+    jobTerm: {
         type: String
     }
 });
