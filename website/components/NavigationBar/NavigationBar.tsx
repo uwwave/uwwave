@@ -24,6 +24,11 @@ import { Page } from "src/lib/types/page";
 import { useViewport } from "src/lib/hooks/useViewport";
 import MenuIcon from "@mui/icons-material/Menu";
 import { SideNav } from "./SideNav";
+import { CANNOT_FIND_COMPANY_STRING } from "src/lib/hooks/useAddReviewModal";
+import SearchOffIcon from "@mui/icons-material/SearchOff";
+import { useLoginModalContext } from "src/lib/context/LoginModal/LoginModalContext";
+import { SubmitAnyDomainModal } from "../Modals/variants/SubmitAnyDomainModal";
+import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
 
 export const NavigationBar = () => {
   const { isMobile } = useViewport();
@@ -32,11 +37,14 @@ export const NavigationBar = () => {
   const { totalTaggedJobs } = useJobTagsContext();
   const { extensionData, isLoading: isExtensionLoading } =
     useExtensionsDataContext();
-  const { isLoading: userLoading } = useUserContext();
+  const { isLoading: userLoading, isLoggedIn } = useUserContext();
   const areJobs = !!Object.keys(extensionData).length;
   const router = useRouter();
   const [showLogo, setShowLogo] = useState(true);
   const [sideNavOpen, setSideNavOpen] = useState(false);
+  const [submitDomainOpen, setSubmitDomainOpen] = useState(false);
+  const [company, setCompany] = useState<ICompanyClearbitData | undefined>();
+  const { open } = useLoginModalContext();
 
   const path = router.pathname;
   const color = textColor ?? "white";
@@ -129,8 +137,24 @@ export const NavigationBar = () => {
               if (!data) {
                 return;
               }
+              if (
+                data.id === "0" &&
+                data.companyName === CANNOT_FIND_COMPANY_STRING
+              ) {
+                if (isLoggedIn) {
+                  setSubmitDomainOpen(true);
+                } else {
+                  open();
+                }
+                return;
+              }
               router.push(`/companies/${data.id}`);
             }}
+            emptyMenuItem={{
+              value: CANNOT_FIND_COMPANY_STRING,
+              icon: <SearchOffIcon />,
+            }}
+            initCompany={company}
           />
         </SearchWrapper>
         {isLoading || isMobile ? null : (
@@ -151,6 +175,17 @@ export const NavigationBar = () => {
         isOpen={sideNavOpen}
         onClose={() => {
           setSideNavOpen(false);
+        }}
+      />
+      <SubmitAnyDomainModal
+        isOpen={submitDomainOpen}
+        onClose={() => {
+          setSubmitDomainOpen(false);
+        }}
+        onSuccess={(data: ICompanyClearbitData) => {
+          router.push(`/companies/${data.id}`);
+          setSubmitDomainOpen(false);
+          setCompany(data);
         }}
       />
       {isLoading || isMobile ? null : <NotificationBanner />}

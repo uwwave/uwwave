@@ -31,8 +31,8 @@ export const useMyCompanyReviewsDataGrid = () => {
   const jobReviewRows: IJobReviewRow[] = useMemo(() => {
     return jobReviews.map(x => ({
       ...x,
-      roleName: x.role.role,
-      username: x.user.username,
+      roleName: x.role?.role ?? "",
+      username: x.user?.username ?? "",
       totalRating:
         (x.mentorshipRating ?? 0) +
         (x.workLifeRating ?? 0) +

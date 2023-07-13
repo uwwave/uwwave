@@ -6,9 +6,9 @@ import CompanyDomains from "src/database/models/CompanyDomains";
 import JobRole from "src/database/models/JobRole";
 import UserData from "src/database/models/UserData";
 export interface IJobReview {
-  role: IJobRole;
-  company: ICompanyClearbitData;
-  user: IUserData;
+  role: IJobRole | null;
+  company: ICompanyClearbitData | null;
+  user: IUserData | null;
   id: string;
   mentorshipRating?: number;
   workLifeRating?: number;

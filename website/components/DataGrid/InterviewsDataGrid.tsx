@@ -87,7 +87,7 @@ export const InterviewsDataGrid = (props: IJobsDataGrid) => {
           rowData.row,
           page
         );
-        const isMine = user?.id === rowData.row.user.id;
+        const isMine = !!rowData.row.user && user?.id === rowData.row.user.id;
         const state = voteState[rowData.row.id];
         if (!state) {
           return null;
@@ -187,7 +187,7 @@ export const InterviewsDataGrid = (props: IJobsDataGrid) => {
       headerAlign: "center",
       renderHeader: headerComponent,
       renderCell: rowData => {
-        const isMine = user?.id === rowData.row.user.id;
+        const isMine = !!rowData.row.user && user?.id === rowData.row.user.id;
         return (
           <StarsInput
             color={isMine ? BackgroundColor.dark : Color.interview}
@@ -263,7 +263,7 @@ export const InterviewsDataGrid = (props: IJobsDataGrid) => {
         if (!state) {
           return null;
         }
-        const isMine = user?.id === rowData.row.user.id;
+        const isMine = !!rowData.row.user && user?.id === rowData.row.user.id;
         return (
           <div>
             {isMine ? (

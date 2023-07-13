@@ -1,14 +1,14 @@
 import { Color } from "src/styles/color";
 import styled from "styled-components";
 import Typography from "@mui/material/Typography";
-import { IUserData } from "src/database/models/UserData";
-import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
 import { ProfilePicture, getProfileImage } from "src/lib/types/profiles";
-import { IJobRole } from "src/database/models/JobRole";
 import { Page } from "src/lib/types/page";
 import { coopNumberSubtitleDisplay } from "src/lib/reviews/summary";
 import { useViewport } from "src/lib/hooks/useViewport";
 import { isDataMegathread } from "../ReviewsDataGrid";
+import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
+import { IJobRole } from "src/database/models/JobRole";
+import { IUserData } from "src/database/models/UserData";
 
 interface IJobTitleCell {
   subtitle: string;
@@ -16,18 +16,18 @@ interface IJobTitleCell {
   url?: string;
   imageURL?: string;
 }
-
 export interface IData {
-  user: IUserData;
+  user: IUserData | null;
   anonymous?: boolean;
-  company: ICompanyClearbitData;
-  role: IJobRole;
+  company: ICompanyClearbitData | null;
+  role: IJobRole | null;
   coopNumber?: number;
   externalURL?: string;
   externalName?: string;
   title?: string;
   jobTerm?: string;
 }
+
 export const getJobTitleCellProps = (rowData: IData, page?: Page) => {
   if (rowData.externalName && rowData.externalName) {
     const isMegathread = isDataMegathread(rowData);
@@ -46,14 +46,14 @@ export const getJobTitleCellProps = (rowData: IData, page?: Page) => {
   const user = rowData.user;
   const isProfilePage = page === Page.PROFILE;
   //TITLE
-  const title = `${rowData.role.role}${
+  const title = `${rowData.role?.role ?? ""}${
     rowData.anonymous ? " (Anonymous)" : ""
   }`;
   //PROFILE IMAGE
   const companyPageImage = rowData.anonymous
     ? ProfilePicture.UW_LOGO_GREY
     : getProfileImage(user?.profilePicture);
-  const profilePageImage = rowData.company.logo ?? "/logo-empty.png";
+  const profilePageImage = rowData.company?.logo ?? "/logo-empty.png";
   const imageURL = page === Page.PROFILE ? profilePageImage : companyPageImage;
   //SUBTITLE
   const coopNumberString = rowData.coopNumber
@@ -63,10 +63,14 @@ export const getJobTitleCellProps = (rowData: IData, page?: Page) => {
     rowData.jobTerm && coopNumberString ? ", " : ""
   }${coopNumberString}`;
   //URL
-  const companyPageURL = `/companies/${rowData.company.id}`;
+  const companyPageURL = rowData.company
+    ? `/companies/${rowData.company.id}`
+    : `/`;
   const profilePageURL = rowData.anonymous
     ? undefined
-    : `/user/${rowData.user.id}`;
+    : rowData.user
+    ? `/user/${rowData.user.id}`
+    : undefined;
   const url = isProfilePage ? companyPageURL : profilePageURL;
 
   return {

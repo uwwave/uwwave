@@ -32,14 +32,17 @@ export const CompanySearchInput = ({
       error={error}
       menuItems={
         companyInfo.length
-          ? companyInfo.map(x => ({
-              value: x.companyName,
-              icon: x.logo ? (
-                <CompanyLogo logo={x.logo} />
-              ) : (
-                <StyledBusinessIcon />
-              ),
-            }))
+          ? [
+              ...companyInfo.map(x => ({
+                value: x.companyName,
+                icon: x.logo ? (
+                  <CompanyLogo logo={x.logo} />
+                ) : (
+                  <StyledBusinessIcon />
+                ),
+              })),
+              ...(emptyMenuItem ? [emptyMenuItem] : []),
+            ]
           : emptyMenuItem
           ? [emptyMenuItem]
           : []

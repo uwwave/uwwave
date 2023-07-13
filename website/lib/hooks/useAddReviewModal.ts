@@ -68,7 +68,7 @@ export const useAddReviewModal = (
     companyData
   );
   const [role, setRole] = useState<IJobRole | undefined>(
-    reviewProp?.role ?? interviewProp?.role
+    reviewProp?.role ?? interviewProp?.role ?? undefined
   );
   const [stars, setStars] = useState<number>(
     (interviewProp?.difficulty ?? 60) / 20

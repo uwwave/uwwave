@@ -112,6 +112,7 @@ export const BaseModal = (props: ModalProps): JSX.Element => {
             </TypographyWrapper>
           )}
         </DialogActionsWrapper>
+        <Spacer height={16} />
       </MainContentWrapper>
     </DialogWrapper>
   );

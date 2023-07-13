@@ -69,7 +69,9 @@ export const useLocationsSearch = () => {
         // Sort alphabetically if no special priority
         return a.city.localeCompare(b.city);
       });
-      setLocations(matchedLocations.slice(0, 8));
+      setLocations(
+        val.length <= 3 ? matchedLocations.slice(0, 8) : matchedLocations
+      );
     } else {
       setLocations([
         { city: "Waterloo", state: "ON", country: "Canada" },

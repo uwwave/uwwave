@@ -4,6 +4,8 @@ import { doCompanyNamesMatch } from "src/lib/companyDomainSearch/companyDomainSe
 import CompanyDomainsDoc, {
   ICompanyClearbitData,
 } from "src/database/models/CompanyDomains";
+import { getServerSession } from "next-auth";
+import { nextAuthOptions } from "src/pages/api/auth/[...nextauth]";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const clearbit = require("clearbit")(process.env.CLEARBIT);
 
@@ -31,6 +33,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 export default handler;
 
 const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
+  const session = await getServerSession(req, res, nextAuthOptions);
+  if (!session || !session.user) {
+    throw "Must be signed in";
+  }
   const { companyName, domain } = req.body;
   const companyNameString = companyName as string;
   const domainString = domain as string;

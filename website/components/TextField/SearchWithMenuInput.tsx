@@ -209,6 +209,8 @@ const StyledMenuList = styled(MenuList)<IMenuList>`
   && {
     padding: 0;
     height: ${props => (props.show ? "auto" : 0)};
+    max-height: 240px;
+    overflow-y: auto;
   }
 `;
 

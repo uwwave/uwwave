@@ -51,8 +51,8 @@ export const useInterviewReviewsDataGrid = (companyID: string) => {
   const reviewRows: IInterviewReviewRow[] = useMemo(() => {
     return reviews.map(x => ({
       ...x,
-      roleName: x.role.role,
-      username: x.user.username,
+      roleName: x.role?.role ?? "",
+      username: x.user?.username ?? "",
     }));
   }, [reviews]);
 
@@ -60,7 +60,7 @@ export const useInterviewReviewsDataGrid = (companyID: string) => {
     if (!user) {
       return [];
     }
-    return reviewRows.filter(x => x.user.id === user.id);
+    return reviewRows.filter(x => x.user?.id && x.user.id === user.id);
   }, [reviewRows, user]);
 
   return {

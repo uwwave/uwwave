@@ -95,7 +95,9 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
           rowData.row,
           page
         );
-        const isMine = user?.id === rowData.row.user.id;
+        const isMine = rowData.row.user?.id
+          ? user?.id === rowData.row.user.id
+          : false;
         const state = voteState[rowData.row.id];
         const location = rowData.row.location;
         const country = location
@@ -354,7 +356,9 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
         if (!state) {
           return null;
         }
-        const isMine = user?.id === rowData.row.user.id;
+        const isMine = rowData.row.user?.id
+          ? user?.id === rowData.row.user.id
+          : false;
         return (
           <div>
             {isMine ? (

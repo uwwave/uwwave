@@ -1,10 +1,10 @@
 import Typography from "@mui/material/Typography";
 import { BaseModal } from "../BaseModal";
 import { Spacer } from "src/components/Spacer/Spacer";
-import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import { Requests } from "src/lib/requests/Requests";
 import { useState } from "react";
+import { RoundedTextField } from "src/components/TextField/RoundedTextField";
 
 interface IUploadDomainModal {
   companyName: string;
@@ -44,20 +44,23 @@ export const UploadDomainModal = (props: IUploadDomainModal) => {
       confirmText="Submit"
       onCloseModal={onClose}
       disableConfirm={disableConfirm}
+      dark
     >
-      <Typography align="center" variant="h5">
+      <Typography align="center" variant="h5" color="white">
         <b>Submit Company Domain for:</b>
       </Typography>
-      <Typography align="center">{companyName}</Typography>
+      <Typography align="center" color="white">
+        {companyName}
+      </Typography>
       <Spacer height={32} />
-      <Typography align="center">
+      <Typography align="center" color="white">
         This helps us find valuable info that benefit you and fellow job
         seekers.
       </Typography>
       <Spacer height={32} />
       <Center>
         <TextFieldWrapper>
-          <TextField
+          <RoundedTextField
             disabled={loading}
             error={error}
             variant="outlined"

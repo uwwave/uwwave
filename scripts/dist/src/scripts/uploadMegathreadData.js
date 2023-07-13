@@ -1,5 +1,11 @@
 "use strict";
 //TODO: Make sure you updated the correct consts for roleID and userID when switching from staging to prod
+//DESCRIPTION: 
+/*
+This scripts updates the reddit megathread job reviews that only supply salaries.
+There should only one description per company since the megathread is a spreadsheet that is maintained over the years
+I used chatgbt to scrape the spreadsheet to get initial values, some aren't acurate and are discarded
+*/
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
