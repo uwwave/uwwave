@@ -32,8 +32,8 @@ export const useUserInterviewReviewsDataGrid = (userID: string) => {
   const reviewRows: IInterviewReviewRow[] = useMemo(() => {
     return reviews.map(x => ({
       ...x,
-      roleName: x.role.role,
-      username: x.user.username,
+      roleName: x.role?.role ?? "",
+      username: x.user?.username ?? "",
     }));
   }, [reviews]);
 
