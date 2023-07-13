@@ -11,9 +11,9 @@ import {
 } from "src/lib/hooks/useAddReviewModal";
 
 export interface IInterviewReview {
-  role: IJobRole;
-  company: ICompanyClearbitData;
-  user: IUserData;
+  role: IJobRole | null;
+  company: ICompanyClearbitData | null;
+  user: IUserData | null;
   id: string;
   difficulty: number;
   status: InterviewStatus;

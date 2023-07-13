@@ -6,7 +6,9 @@ import { Page } from "src/lib/types/page";
 import { coopNumberSubtitleDisplay } from "src/lib/reviews/summary";
 import { useViewport } from "src/lib/hooks/useViewport";
 import { isDataMegathread } from "../ReviewsDataGrid";
-import { IJobReviewRow } from "src/lib/hooks/useCompanyReviewsDataGrid";
+import { ICompanyClearbitData } from "src/database/models/CompanyDomains";
+import { IJobRole } from "src/database/models/JobRole";
+import { IUserData } from "src/database/models/UserData";
 
 interface IJobTitleCell {
   subtitle: string;
@@ -14,8 +16,19 @@ interface IJobTitleCell {
   url?: string;
   imageURL?: string;
 }
+export interface IData {
+  user: IUserData | null;
+  anonymous?: boolean;
+  company: ICompanyClearbitData | null;
+  role: IJobRole | null;
+  coopNumber?: number;
+  externalURL?: string;
+  externalName?: string;
+  title?: string;
+  jobTerm?: string;
+}
 
-export const getJobTitleCellProps = (rowData: IJobReviewRow, page?: Page) => {
+export const getJobTitleCellProps = (rowData: IData, page?: Page) => {
   if (rowData.externalName && rowData.externalName) {
     const isMegathread = isDataMegathread(rowData);
     return {
