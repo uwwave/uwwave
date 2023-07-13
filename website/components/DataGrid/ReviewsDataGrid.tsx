@@ -20,7 +20,6 @@ import Typography from "@mui/material/Typography";
 import { HelpfulCell } from "./components/HelpfullCell";
 import { useState } from "react";
 import { IUserData } from "src/database/models/UserData";
-import moment from "moment";
 import { EditReviewButton } from "./components/EditReviewButton";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { Spacer } from "../Spacer/Spacer";
@@ -31,6 +30,7 @@ import { useViewport } from "src/lib/hooks/useViewport";
 import { RatingsDisplay } from "../StarsInput/RatingsDisplay";
 import { LocationText, Orientation } from "../LocationText/LocationText";
 import { ReadMoreText } from "../ReadmoreText/ReadMoreTest";
+import { getReviewTimeDifference } from "src/lib/dates/dates";
 
 interface IJobsDataGrid {
   jobReviewsLoading: boolean;
@@ -41,6 +41,7 @@ interface IJobsDataGrid {
   jobReviewRows: IJobReviewRow[];
   onEditReview: () => void;
   origin?: Page;
+  removeHeader?: boolean;
 }
 
 export const isDataMegathread = (data: { externalName?: string }): boolean => {
@@ -58,6 +59,7 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
     user,
     onEditReview,
     origin,
+    removeHeader,
   } = props;
   const router = useRouter();
   const [pageSize, setPageSize] = useState(5);
@@ -89,8 +91,7 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
       field: "date",
       renderHeader: () => null,
       renderCell: rowData => {
-        const date = new Date(rowData.row.date);
-        const formattedDate = moment(date).format("MMMM D, YYYY");
+        const formattedDate = getReviewTimeDifference(rowData.row.date);
         const { title, imageURL, subtitle, url } = getJobTitleCellProps(
           rowData.row,
           page
@@ -242,9 +243,9 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
                   workLifeVal={rowData.row.workLifeRating / 20}
                   meaningfulVal={rowData.row.meaningfulRating / 20}
                 />
-                <Spacer height={16} />
               </>
             ) : null}
+            {rowData.row.review ? <Spacer height={16} /> : null}
             <Typography>
               {rowData.row.verified ? (
                 <StyledTooltip title="Verified Review" arrow placement="top">
@@ -330,16 +331,11 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
       headerAlign: "center",
       renderHeader: headerComponent,
       renderCell: rowData => {
-        const date = new Date(rowData.row.date);
-        const formattedDate = moment(date).format("MMM D");
-        const formattedYear = moment(date).format("YYYY");
+        const formattedDate = getReviewTimeDifference(rowData.row.date);
         return (
           <div>
             <Typography variant="subtitle2" align="center">
               {formattedDate}
-            </Typography>
-            <Typography variant="subtitle2" align="center">
-              {formattedYear}
             </Typography>
           </div>
         );
@@ -387,6 +383,8 @@ export const ReviewsDataGrid = (props: IJobsDataGrid) => {
   return (
     <Main>
       <StyledGrid
+        hideHeader={removeHeader ?? false}
+        custom
         isMobile={isMobile}
         sortModel={sortModel}
         onSortModelChange={(model: any) => setSortModel(model)}
@@ -467,6 +465,7 @@ interface IGrid {
   pageSize: number;
   minHeight: number;
   isMobile: boolean;
+  hideHeader: boolean;
 }
 const StyledGrid = styled(props => (
   <DataGrid {...props} loadingOverlay={<CustomLoadingOverlay />} />
@@ -499,6 +498,36 @@ const StyledGrid = styled(props => (
       min-width: 100% !important;
       width: 100% !important;
     }`
+      : ""}
+
+   ${props =>
+    props.hideHeader
+      ? `
+    && .MuiDataGrid-columnHeaders{
+      display: none;
+    }
+
+    && .MuiDataGrid-virtualScroller{
+      margin-top: 0!important;
+    }
+   `
+      : ""}
+
+   ${props =>
+    props.hideHeader
+      ? `
+    && .MuiDataGrid-columnHeaders{
+      display: none;
+    }
+
+    && .MuiDataGrid-virtualScroller{
+      margin-top: 0!important;
+    }
+
+    && .MuiDataGrid-footerContainer{
+      display: none;
+    }
+   `
       : ""}
 `;
 

@@ -32,10 +32,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 export default handler;
 const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
   const { companyID, userID } = req.query;
-  if (!companyID && !userID) {
-    throw "must provied companyID or userID not provided";
-  }
   await connectToDb();
+  if (!companyID && !userID) {
+    //get the recent
+    const jobReviews = await JobReviewDocument.find()
+      .sort({ date: -1 })
+      .limit(5)
+      .populate("company role user");
+    const populatedJobReviews = jobReviews.map(review => review.toObject());
+    res.send(populatedJobReviews);
+    return;
+  }
+
   const jobReviews = companyID
     ? await JobReviewDocument.find({ company: companyID }).populate(
         "company role user"

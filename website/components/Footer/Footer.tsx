@@ -30,7 +30,7 @@ export const Footer = (props: IFooter) => {
   const { dark } = props;
   const router = useRouter();
   const pathname = router.pathname;
-  const useDarkFooter = pathname === "/" || pathname === "/about" || dark;
+  const useDarkFooter = pathname === "/about" || dark;
   const { isMobile } = useViewport();
   const renderDesktopLinks = () => (
     <>

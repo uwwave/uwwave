@@ -196,6 +196,10 @@ export class Requests {
       .then(x => x.data);
   }
 
+  static async getRecentReviews(): Promise<IJobReview[]> {
+    return axios.get(`/api/review/job`).then(x => x.data);
+  }
+
   static async getUserJobReviews(userID: string): Promise<IJobReview[]> {
     return axios.get(`/api/review/job?userID=${userID}`).then(x => x.data);
   }
@@ -238,6 +242,10 @@ export class Requests {
     return axios
       .get(`/api/review/interview?companyID=${companyID}`)
       .then(x => x.data);
+  }
+
+  static async getRecentInterviewReviews(): Promise<IInterviewReview[]> {
+    return axios.get(`/api/review/interview`).then(x => x.data);
   }
 
   static async getUserInterviewReviews(
