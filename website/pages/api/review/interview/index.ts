@@ -36,7 +36,14 @@ export default handler;
 const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
   const { companyID, userID } = req.query;
   if (!companyID && !userID) {
-    throw "must provied companyID or userID not provided";
+    //get the recent
+    const jobReviews = await InterviewReviewDocument.find()
+      .sort({ date: -1 })
+      .limit(5)
+      .populate("company role user");
+    const populatedJobReviews = jobReviews.map(review => review.toObject());
+    res.send(populatedJobReviews);
+    return;
   }
   await connectToDb();
   const reviews = companyID
@@ -54,6 +61,7 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
 const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, nextAuthOptions);
   const user = session?.user as any;
+
   if (!user) {
     throw "Not authorized";
   }

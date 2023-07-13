@@ -10,6 +10,7 @@ import { PrimaryButton } from "src/components/Buttons/PrimaryButton";
 import { Footer } from "src/components/Footer/Footer";
 import { useViewport } from "src/lib/hooks/useViewport";
 import { ExtensionAnimation } from "src/components/Homepage/Animation/ExtensionAnimation";
+import { RecentReviews } from "src/components/Homepage/RecentReviews/RecentReviews";
 
 const generatePillars = (
   pillars: number,
@@ -104,6 +105,7 @@ const HomePage = () => {
           </WaveDesignWrapper>
         </Container>
       </HeroWrapper>
+      <RecentReviews />
       <Footer />
     </>
   );

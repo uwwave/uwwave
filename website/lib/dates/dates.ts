@@ -99,3 +99,28 @@ const getTerm = (month: string): string => {
       return "Fall";
   }
 };
+
+export const getReviewTimeDifference = (timestamp: number): string => {
+  const currentTime = moment();
+  const givenTime = moment(timestamp);
+
+  const duration = moment.duration(currentTime.diff(givenTime));
+  const days = duration.asDays();
+  const weeks = duration.asWeeks();
+  const months = duration.asMonths();
+  const years = duration.asYears();
+
+  if (days < 1) {
+    return "Today";
+  } else if (days <= 6) {
+    return `${Math.floor(days)} day${Math.floor(days) === 1 ? "" : "s"} ago`;
+  } else if (weeks <= 3) {
+    return `${Math.floor(weeks)} week${Math.floor(weeks) === 1 ? "" : "s"} ago`;
+  } else if (months <= 11) {
+    return `${Math.floor(months)} month${
+      Math.floor(months) === 1 ? "" : "s"
+    } ago`;
+  } else {
+    return `${Math.floor(years)} year${Math.floor(years) === 1 ? "" : "s"} ago`;
+  }
+};

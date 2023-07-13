@@ -18,7 +18,6 @@ import Typography from "@mui/material/Typography";
 import { HelpfulCell } from "./components/HelpfullCell";
 import { useState } from "react";
 import { IUserData } from "src/database/models/UserData";
-import moment from "moment";
 import { EditReviewButton } from "./components/EditReviewButton";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { Spacer } from "../Spacer/Spacer";
@@ -28,6 +27,7 @@ import { Page } from "src/lib/types/page";
 import { IInterviewReviewRow } from "src/lib/hooks/useInterviewReviewsDataGrid";
 import { ResourcesCell } from "./components/ResourcesCell";
 import { useViewport } from "src/lib/hooks/useViewport";
+import { getReviewTimeDifference } from "src/lib/dates/dates";
 
 interface IJobsDataGrid {
   isLoading: boolean;
@@ -38,6 +38,7 @@ interface IJobsDataGrid {
   reviewRows: IInterviewReviewRow[];
   onEditReview: () => void;
   origin?: Page;
+  removeHeader?: boolean;
 }
 export const InterviewsDataGrid = (props: IJobsDataGrid) => {
   const {
@@ -49,6 +50,7 @@ export const InterviewsDataGrid = (props: IJobsDataGrid) => {
     user,
     onEditReview,
     origin,
+    removeHeader,
   } = props;
   const router = useRouter();
   const { isMobile } = useViewport();
@@ -81,8 +83,7 @@ export const InterviewsDataGrid = (props: IJobsDataGrid) => {
       field: "date",
       renderHeader: () => null,
       renderCell: rowData => {
-        const date = new Date(rowData.row.date);
-        const formattedDate = moment(date).format("MMMM D, YYYY");
+        const formattedDate = getReviewTimeDifference(rowData.row.date);
         const { title, imageURL, subtitle, url } = getJobTitleCellProps(
           rowData.row,
           page
@@ -237,16 +238,11 @@ export const InterviewsDataGrid = (props: IJobsDataGrid) => {
       headerAlign: "center",
       renderHeader: headerComponent,
       renderCell: rowData => {
-        const date = new Date(rowData.row.date);
-        const formattedDate = moment(date).format("MMMM D");
-        const formattedYear = moment(date).format("YYYY");
+        const formattedDate = getReviewTimeDifference(rowData.row.date);
         return (
           <div>
             <Typography variant="subtitle2" align="center">
               {formattedDate}
-            </Typography>
-            <Typography variant="subtitle2" align="center">
-              {formattedYear}
             </Typography>
           </div>
         );
@@ -293,6 +289,7 @@ export const InterviewsDataGrid = (props: IJobsDataGrid) => {
   return (
     <Main>
       <StyledGrid
+        hideHeader={removeHeader ?? false}
         isMobile={isMobile}
         sortModel={sortModel}
         onSortModelChange={(model: any) => setSortModel(model)}
@@ -373,6 +370,7 @@ interface IGrid {
   pageSize: number;
   minHeight: number;
   isMobile: boolean;
+  hideHeader: boolean;
 }
 const StyledGrid = styled(props => (
   <DataGrid {...props} loadingOverlay={<CustomLoadingOverlay />} />
@@ -405,6 +403,22 @@ const StyledGrid = styled(props => (
       min-width: 100% !important;
       width: 100% !important;
     }`
+      : ""}
+    ${props =>
+    props.hideHeader
+      ? `
+    && .MuiDataGrid-columnHeaders{
+      display: none;
+    }
+
+    && .MuiDataGrid-virtualScroller{
+      margin-top: 0!important;
+    }
+
+    && .MuiDataGrid-footerContainer{
+      display: none;
+    }
+    `
       : ""}
 `;
 
