@@ -37,6 +37,8 @@ import { ShowMoreButton } from "src/components/Buttons/ShowMoreButton";
 import { InterviewsDataGrid } from "src/components/DataGrid/InterviewsDataGrid";
 import { salaryDisplay, starsDisplay } from "src/lib/reviews/summary";
 import { JobsDataGrid } from "src/components/DataGrid/JobsDataGrid";
+import { useLoginModalContext } from "src/lib/context/LoginModal/LoginModalContext";
+import { useUserContext } from "src/lib/context/User/UserContext";
 
 const SpecificJobPage = () => {
   const router = useRouter();
@@ -73,6 +75,8 @@ const SpecificJobPage = () => {
     recommendedJobLogos,
   } = useJobPage(jobID);
   const [submitDomainModal, setSubmitDomainModal] = useState(false);
+  const { isLoggedIn } = useUserContext();
+  const { open } = useLoginModalContext();
   useEffect(() => {
     if (!job) {
       return;
@@ -109,7 +113,11 @@ const SpecificJobPage = () => {
             positionTitle={companyInfo.positionTitle}
             companyURL={companyURL}
             onOpenSubmitDomain={() => {
-              setSubmitDomainModal(true);
+              if (isLoggedIn) {
+                setSubmitDomainModal(true);
+              } else {
+                open();
+              }
             }}
             companyPageURL={company ? `/companies/${company.id}` : undefined}
           />

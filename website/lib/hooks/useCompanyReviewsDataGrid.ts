@@ -52,8 +52,8 @@ export const useCompanyReviewsDataGrid = (companyID: string) => {
   const jobReviewRows: IJobReviewRow[] = useMemo(() => {
     return jobReviews.map(x => ({
       ...x,
-      roleName: x.role.role,
-      username: x.user.username,
+      roleName: x.role?.role ?? "",
+      username: x.user?.username ?? "",
       totalRating:
         (x.mentorshipRating ?? 0) +
         (x.workLifeRating ?? 0) +
@@ -65,7 +65,7 @@ export const useCompanyReviewsDataGrid = (companyID: string) => {
     if (!user) {
       return [];
     }
-    return jobReviewRows.filter(x => x.user.id === user.id);
+    return jobReviewRows.filter(x => x.user?.id === user.id);
   }, [jobReviewRows]);
 
   return {

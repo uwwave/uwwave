@@ -27,6 +27,8 @@ import { salaryDisplay, starsDisplay } from "src/lib/reviews/summary";
 import { useViewport } from "src/lib/hooks/useViewport";
 import { Center } from "src/components/Center/Center";
 import { isMobile as isMobileDevice } from "react-device-detect";
+import { useLoginModalContext } from "src/lib/context/LoginModal/LoginModalContext";
+import { useUserContext } from "src/lib/context/User/UserContext";
 
 const SpecificCompanyPage = () => {
   const router = useRouter();
@@ -58,6 +60,8 @@ const SpecificCompanyPage = () => {
     reviewsSummary,
   } = useCompanyPage(companyID);
   const [submitDomainModal, setSubmitDomainModal] = useState(false);
+  const { isLoggedIn } = useUserContext();
+  const { open } = useLoginModalContext();
   useEffect(() => {
     if (!companyInfo) {
       return;
@@ -121,7 +125,11 @@ const SpecificCompanyPage = () => {
               positionTitle={companyInfo.companyName}
               companyURL={companyInfo.domain}
               onOpenSubmitDomain={() => {
-                setSubmitDomainModal(true);
+                if (isLoggedIn) {
+                  setSubmitDomainModal(true);
+                } else {
+                  open();
+                }
               }}
             />
             {isMobile ? null : <Spacer height={24} />}
@@ -206,7 +214,11 @@ const SpecificCompanyPage = () => {
   const renderSettings = () => (
     <ConfigTab
       onClick={() => {
-        setSubmitDomainModal(true);
+        if (!isLoggedIn) {
+          open();
+        } else {
+          setSubmitDomainModal(true);
+        }
       }}
       companyURL={companyInfo?.domain}
     />

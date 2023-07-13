@@ -10,6 +10,7 @@ import { useLoginModalContext } from "src/lib/context/LoginModal/LoginModalConte
 import { useUserContext } from "src/lib/context/User/UserContext";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
+import { AddReviewButton } from "src/components/NavigationBar/AddReviewButton";
 
 interface ISideNav {
   isOpen: boolean;
@@ -34,6 +35,9 @@ export const SideNav = (props: ISideNav) => {
             <ListItemText primary="Home" />
           </ListItemButton>
           <ListItemButton>
+            <AddReviewButton />
+          </ListItemButton>
+          <ListItemButton>
             <ListItemText
               primary="About"
               onClick={() => {
@@ -42,6 +46,8 @@ export const SideNav = (props: ISideNav) => {
               }}
             />
           </ListItemButton>
+        </List>
+        <List>
           <ListItemButton
             onClick={
               user
@@ -83,4 +89,7 @@ const MainWrapper = styled.div`
   && {
     color: white;
   }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;

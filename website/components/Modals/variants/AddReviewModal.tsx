@@ -704,7 +704,7 @@ const ReviewTypesWrapper = styled.div`
 
 const ReviewTypeWrapper = styled.div`
   display: flex;
-  width: 100%;
+  width: 50%;
   align-items: center;
   flex-direction: column;
   gap: 16px;
