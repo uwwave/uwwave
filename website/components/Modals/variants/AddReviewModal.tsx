@@ -122,7 +122,7 @@ export const AddReviewModal = ({
   } = useAddReviewModal(
     close,
     afterSubmit,
-    company ?? reviewProp?.company ?? interview?.company,
+    company ?? reviewProp?.company ?? interview?.company ?? undefined,
     reviewProp,
     origin,
     interview
